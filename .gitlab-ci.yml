@@ -1,0 +1,45 @@
+stages:
+  - develop
+  - production
+
+cache:
+  paths:
+    - node_modules/
+
+deploy-production:
+  stage: production
+  environment:
+    name: production
+  only:
+    - master
+  tags:
+    - production
+  when: manual
+  script:
+    - npm install
+    - npm run build
+    - sudo chown -R gitlab-runner:gitlab-runner $TARGET_DIR
+    - rsync --delete -r ./out/ $TARGET_DIR
+    - rm * -rf
+    - sudo chown -R enigma:enigma $TARGET_DIR
+
+deploy-development:
+  stage: develop
+  environment:
+    name: develop
+  only:
+    - develop
+  when: manual
+  script:
+    - sudo npm config set -g production false
+    - npm install
+    - npm run build
+    - NOW="$(date +'%Y%m%d%H%M')"
+    - source $PY_ENV_PATH
+    - pip install fandogh_cli PyYAML --upgrade
+    - fandogh login --username $FANDOGH_USR --password $FANDOGH_PASS
+    - python create_env_file.py -t .env.sample -o --modify_manifest --manifest_path .fandogh/broker-manifest.yml --docker_image_version $NOW --fandogh_image_name broker
+    - ls . | grep -vE ".env|out|Dockerfile|.fandogh|docker_confs" | xargs rm -rf
+    - fandogh image publish -v $NOW
+    - fandogh service apply -f .fandogh/broker-manifest.yml -h
+    - rm * -rf

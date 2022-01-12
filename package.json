@@ -1,22 +1,90 @@
 {
   "name": "raw",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "antd": "^4.17.3",
+    "apisauce": "^2.1.3",
+    "i18next": "^21.6.2",
     "next": "12.0.7",
+    "next-compose-plugins": "^2.2.1",
+    "next-images": "^1.8.4",
+    "next-pwa": "^5.4.4",
+    "next-redux-wrapper": "^7.0.5",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-i18next": "^11.15.1",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1"
   },
   "devDependencies": {
-    "@types/node": "16.11.12",
+    "@babel/eslint-parser": "^7.16.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.5",
+    "@emotion/babel-plugin": "^11.7.1",
+    "@emotion/eslint-plugin": "^11.7.0",
+    "@next/bundle-analyzer": "^12.0.7",
     "@types/react": "17.0.37",
-    "eslint": "8.4.1",
-    "eslint-config-next": "12.0.7",
-    "typescript": "4.5.2"
-  }
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
+    "autoprefixer": "^10.4.2",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^27.4.4",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "eslint": "^8.4.1",
+    "eslint-config-airbnb": "^19.0.2",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-css-modules": "^2.11.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-emotion": "^11.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "^7.0.4",
+    "postcss": "^8.2.15",
+    "prettier": "^2.5.1",
+    "stylelint-config-standard": "^24.0.0",
+    "stylelint-order": "^5.0.0",
+    "tailwindcss": "^3.0.13",
+    "typescript": "^4.5.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged --no-stash",
+      "pre-push": "npm run type-check"
+    }
+  },
+  "lint-staged": {
+    "*.{css,less,styl,scss,sass,sss}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{md,graphql}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
+  "scripts": {
+    "analyze": "cross-env ANALYZE=true yarn build",
+    "build": "next build && next export",
+    "dev": "next dev",
+    "fix": "npm run fix-js && npm run fix-css",
+    "fix-css": "npm run lint-css --fix",
+    "fix-js": "npm run lint-js --fix",
+    "lint": "npm run lint-js",
+    "lint-css": "npx stylelint \"**/*.ts\"",
+    "lint-js": "eslint --ignore-path .gitignore --ignore-pattern \"!**/.*\" .",
+    "start": "next start",
+    "test": "jest --watchAll",
+    "test:ci": "jest --ci",
+    "type-check": "tsc"
+  },
+  "version": "0.1.0"
 }

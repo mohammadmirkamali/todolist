@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -13,8 +14,20 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "types": [],
+    "typeRoots": ["./", "./node_modules/@types"],
+    "downlevelIteration": true,
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"],
+  "include": ["@types/jest", "emotion.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "paths": {
+    "components/*": ["./components/*"],
+    "services/*": ["./services/*"],
+    "interfaces/*": ["./interfaces/*"],
+    "utils/*": ["./utils/*"],
+    "public/*": ["./public/*"],
+    "store/*": ["./store/*"],
+    "lib/*": ["./lib/*"]
+  }
 }
