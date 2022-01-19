@@ -14,7 +14,7 @@ import 'services/i18n';
 const EnigmaApp = ({ Component, pageProps }: AppProps): React.ReactElement => (
   <ThemeProvider theme={theme}>
     <ConfigProvider direction="rtl">
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </ConfigProvider>
   </ThemeProvider>
 );

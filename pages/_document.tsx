@@ -10,6 +10,7 @@ class MyDocument extends Document {
         <Head>
           <link rel="manifest" href="/manifest.json" />
           <link rel="apple-touch-icon" href="/logo.webp" />
+          <script src="https://kit.fontawesome.com/8a29a8fe72.js" />
           <meta name="theme-color" content="#fff" />
         </Head>
         <body>

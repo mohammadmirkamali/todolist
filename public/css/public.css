@@ -55,3 +55,11 @@ input:-webkit-autofill:active {
   background-color: #888;
   border-radius: 12px;
 }
+
+@layer components {
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

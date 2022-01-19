@@ -1,13 +1,13 @@
-import { AccountType } from 'types/account.type';
-import * as type from './account.constants';
+import { MainType } from 'types/main.type';
+import * as type from './main.constants';
 
-const initialState: AccountType = {
+const initialState: MainType = {
   coursesLoading: false,
   courses: null,
 };
 
 // eslint-disable-next-line default-param-last
-const accountReducer = (state = initialState, action): AccountType => {
+const accountReducer = (state = initialState, action): MainType => {
   switch (action.type) {
     case type.GET_COURSE_REQUEST:
       return { ...state, coursesLoading: true, courses: null };

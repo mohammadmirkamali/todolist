@@ -1,4 +1,5 @@
 import '@emotion/react';
+import { theme } from 'tailwind.config';
 
 type BreakpointsProp = Array<string> & {
   sm?: string;
@@ -23,16 +24,7 @@ export default {
   },
 
   breakpoints,
-  border: ['1px solid rgba(191, 190, 190, 0.5)'],
-  colors: {
-    purple: [],
-    green: ['#1de9b6'],
-    red: [],
-    yellow: [],
-    gray: ['#707070'],
-    blue: [],
-  },
-  shadows: {
-    card: '0 0 4px rgba(0, 0, 0, 0.125)',
-  },
+  borders: theme.border,
+  colors: theme.colors,
+  shadows: theme.shadows,
 };

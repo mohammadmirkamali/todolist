@@ -1,7 +1,8 @@
 import { ApiResponse } from 'apisauce';
 
-export type ResType<DataType> = ApiResponse<{
-  data: DataType;
+export type ResType = ApiResponse<{
+  data: any; // eslint-disable-line
+  workshops: any; // eslint-disable-line
   message: string;
   status: string;
 }>;

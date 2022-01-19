@@ -1,6 +1,17 @@
 {
   "global": {
+    "exit": "خروج",
+    "profile": "پروفایل",
+    "notFound": "موردی یافت نشد.",
+    "search": "جستجو کنید ...",
     "title": "{{title}} | تعالی",
-    "homeHead": "تعالی | خانه"
+    "homeHead": "مدرسه مجازی تعالی | خانه"
+  },
+  "navbar": {
+    "home": "خانه",
+    "posts": "وبلاگ",
+    "finance": "حمایت مالی",
+    "conditions": "قوانین و مقررات",
+    "contactUs": "تماس با ما"
   }
 }
