@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
-import { Button, Modal } from 'antd';
+import { Modal } from 'antd';
+import { SubmitForm } from 'components/Common/formField';
 
-export const SButton = styled(Button)`
+export const SSubmitForm = styled(SubmitForm)`
   border-radius: 8px;
-  height: 50px;
-  font-size: 20px;
-  margin-top: 40px;
+  height: 40px;
+  font-size: 18px;
+  margin-top: 30px;
+  width: 400px;
 `;
 
 export const SModal = styled(Modal)`
