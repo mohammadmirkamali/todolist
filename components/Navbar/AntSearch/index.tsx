@@ -34,7 +34,7 @@ const AntSearch: React.FC<SearchType> = ({ options }) => {
       suffixIcon={null}
       onSelect={onSelect}
       onFocus={(): void => setFocus(true)}
-      isDown={scrollDirection === 'down' ? 1 : 0}
+      isdown={scrollDirection === 'down' ? 1 : 0}
       onSearch={(e): void => setOpen(e.length > 0)}
       notFoundContent={<>{t('global.notFound')}</>}
       onBlur={(): void => (setOpen(false), setFocus(false))}

@@ -12,6 +12,7 @@ import { SDiv } from 'components/Common/commonStyle';
 import { SExit, SNav, SUser } from './style';
 import { useScroll } from 'hooks/useScroll';
 import AntSearch from './AntSearch';
+import Login from 'components/Account/Login/login';
 
 const items = [
   { name: 'home', tab: '/' },
@@ -23,8 +24,9 @@ const items = [
 
 const Navbar: React.FC = () => {
   const courses = useSelector((state) => state.main.courses);
-  const [visible, setVisible] = useState(false);
   const scrollDirection = useScroll();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   const [tab] = useState(router.route);
@@ -36,11 +38,7 @@ const Navbar: React.FC = () => {
   const tabs = (style): ReactElement[] =>
     items.map((item) => (
       <Link href={item.tab} key={item.tab}>
-        <div
-          className={`${style} cursor-pointer ${
-            item.tab === tab ? 'text-blue-1' : 'text-gray-3'
-          } hover:text-[#000]`}
-        >
+        <div className={`${style} ${item.tab === tab ? 'text-blue-1' : 'text-gray-3'}`}>
           {t(`navbar.${item.name}`)}
         </div>
       </Link>
@@ -53,17 +51,17 @@ const Navbar: React.FC = () => {
   );
 
   return (
-    <div className="relative  ">
+    <div className="relative">
       <SNav
         className="border-b border-b-gray-1"
-        isDown={scrollDirection === 'down' ? 1 : 0}
+        isdown={scrollDirection === 'down' ? 1 : 0}
       >
         <Drawer
           closeIcon={<CloseOutlined className="text-[25px] m-[10px]" />}
-          onClose={(): void => setVisible(false)}
+          onClose={(): void => setIsDrawerVisible(false)}
           headerStyle={{ border: 'none' }}
           title={DrawerTitle}
-          visible={visible}
+          visible={isDrawerVisible}
           width={330}
         >
           {tabs('p-5 border-t border-t-gray-4 w-[190px] first:border-none text-[18px]')}
@@ -73,13 +71,18 @@ const Navbar: React.FC = () => {
 
         <div className="absolute right-[40px] flex">
           <div className="border-l-2 border-l-gray-1 items-center hidden lg:flex">
-            <SUser className=" text-[30px] cursor-pointer">{t('global.profile')}</SUser>
+            <SUser
+              onClick={() => setIsModalVisible(true)}
+              className=" text-[30px] cursor-pointer"
+            >
+              {t('global.profile')}
+            </SUser>
             <SExit title={t('global.exit')}>
               <LogoutOutlined className="text-[20px] px-[20px] cursor-pointer " />
             </SExit>
           </div>
           <div className="text-[25px] pl-[10px] pt-[5px] lg:hidden">
-            <MenuOutlined onClick={(): void => setVisible(true)} />
+            <MenuOutlined onClick={(): void => setIsDrawerVisible(true)} />
           </div>
 
           <AntSearch
@@ -87,11 +90,15 @@ const Navbar: React.FC = () => {
           />
         </div>
 
-        <SDiv className="text-[20px] hidden lg:flex">{tabs('mx-[18px]')}</SDiv>
+        <SDiv className="text-[20px] hidden lg:flex">
+          {tabs('mx-[18px] cursor-pointer hover:text-[#000}')}
+        </SDiv>
 
         <div className="absolute left-[40px]">
           <Image src="/main-logo.webp" width={120} height={60} priority />
         </div>
+
+        <Login isVisible={isModalVisible} setIsVisible={setIsModalVisible} />
       </SNav>
     </div>
   );

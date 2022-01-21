@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Tooltip } from 'antd';
 
-export const SNav = styled.nav<{ isDown: number }>`
+export const SNav = styled.nav<{ isdown: number }>`
   height: 70px;
   width: 100%;
   position: fixed;
@@ -11,7 +11,8 @@ export const SNav = styled.nav<{ isDown: number }>`
   justify-content: center;
   align-items: center;
   transition: all 0.5s;
-  transform: ${({ isDown }): string => (isDown ? 'translateY(-100%)' : 'translateY(0)')};
+  z-index: 100;
+  transform: ${({ isdown }): string => (isdown ? 'translateY(-100%)' : 'translateY(0)')};
 `;
 
 export const SExit = styled(Tooltip)`

@@ -18,7 +18,7 @@ module.exports = {
       ],
       rules: {
         'react/prop-types': 'off',
-        '@typescript-eslint/explicit-function-return-type': ['warn'],
+        '@typescript-eslint/explicit-function-return-type': [0],
         'import/extensions': [
           'error',
           'ignorePackages',

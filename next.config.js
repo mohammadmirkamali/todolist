@@ -24,6 +24,7 @@ const withPwa = withPWA({
 
 const nextConfig = {
   poweredByHeader: false,
+  images: { domains: ['dl.taalei-edu.ir', 'taalei-edu.ir'] },
   webpack: (config, { isServer }) => {
     // Do whatever you want in build-time
     // ask Webpack to replace @sentry/node imports with @sentry/browser when building the browser's bundle.
