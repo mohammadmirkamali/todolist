@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
 import account from './account/account.reducer';
-import main from './main/main.reducer';
 
 const appReducer = combineReducers({
   account,
-  main,
 });
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

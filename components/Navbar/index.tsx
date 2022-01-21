@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { t } from 'i18next';
 import Link from 'next/link';
 
-import { getCoursesAction } from 'store/main/main.action';
+import { getCoursesAction } from 'store/account/account.action';
 import { SDiv } from 'components/Common/commonStyle';
 import { SExit, SNav, SUser } from './style';
 import { useScroll } from 'hooks/useScroll';
@@ -23,7 +23,7 @@ const items = [
 ];
 
 const Navbar: React.FC = () => {
-  const courses = useSelector((state) => state.main.courses);
+  const courses = useSelector((state) => state.account.courses);
   const scrollDirection = useScroll();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
