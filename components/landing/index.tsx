@@ -5,7 +5,7 @@ import HeroSection from './heroSection';
 import Slider from './slider';
 
 const Landing = (): JSX.Element => {
-  const { courses } = useSelector((state) => state.main);
+  const { courses } = useSelector((state) => state.account);
 
   if (!courses) {
     return <Skeleton active paragraph={{ rows: 7 }} className="p-[80px]" />;

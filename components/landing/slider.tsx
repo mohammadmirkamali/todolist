@@ -6,7 +6,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
 import { t } from 'i18next';
-import { CourseType } from 'types/main.type';
+import { CourseType } from 'types/account.type';
 import Card from 'components/Common/Card';
 
 type SliderType = { courses: CourseType[]; title: string };
