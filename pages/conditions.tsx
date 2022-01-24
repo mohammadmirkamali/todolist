@@ -1,8 +1,10 @@
-import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import React from 'react';
 import { t } from 'i18next';
-import Navbar from 'components/Navbar';
-import Conditions from 'components/Conditions';
+
+const Navbar = dynamic(() => import('components/Navbar'));
+const Conditions = dynamic(() => import('components/Conditions'));
+const Head = dynamic(() => import('next/head'));
 
 const ConditionsPage: React.FC = () => (
   <>

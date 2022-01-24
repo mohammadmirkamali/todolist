@@ -1,8 +1,10 @@
-import Head from 'next/head';
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { t } from 'i18next';
-import Landing from 'components/Landing';
-import Navbar from 'components/Navbar';
+
+const Navbar = dynamic(() => import('components/Navbar'));
+const Landing = dynamic(() => import('components/Landing'));
+const Head = dynamic(() => import('next/head'));
 
 const Home: React.FC = () => (
   <>

@@ -1,8 +1,10 @@
-import Head from 'next/head';
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { t } from 'i18next';
-import Navbar from 'components/Navbar';
-import Posts from 'components/Posts';
+
+const Navbar = dynamic(() => import('components/Navbar'));
+const Posts = dynamic(() => import('components/Posts'));
+const Head = dynamic(() => import('next/head'));
 
 const PostsPage: React.FC = () => (
   <>
