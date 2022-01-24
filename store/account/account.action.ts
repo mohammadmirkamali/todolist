@@ -8,7 +8,6 @@ export const getCoursesAction = () => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_COURSE_REQUEST });
     const response: ResType = await request.get(CourseUrl());
-
     if (response.ok) {
       dispatch({ type: type.GET_COURSE_SUCCESS, payload: response.data.workshops.data });
       return response.data;

@@ -14,7 +14,7 @@ const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
       footer={null}
       width={600}
       visible={isVisible}
-      onCancel={() => setIsVisible(false)}
+      onCancel={(): void => setIsVisible(false)}
     >
       {step === 1 && <Step1 setStep={setStep} />}
       {step === 2 && <Step2 setStep={setStep} />}

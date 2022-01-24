@@ -10,6 +10,8 @@
     "hour": "ساعت",
     "person": "نفر",
     "register": "ثبت نام",
+    "minute": "دقیقه",
+    "number": "عدد",
     "homeHead": "مدرسه مجازی تعالی | خانه"
   },
   "account": {
@@ -37,6 +39,9 @@
     "newCourses": "جدیدترین ها",
     "newCoursesInfo": "دوره هایی که به تازگی منتشر  شده",
     "popularCourses": "محبوب ترین ها ",
+    "infoStudent": "دانشجویان فعال",
+    "infoCourses": " دروه آموزی برگزار شده",
+    "infoTime": " دوره آموزشی",
     "popularCoursesInfo": "دوره هایی که اکثر کاربران در آن ثبت نام کرده اند"
   }
 }

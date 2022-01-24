@@ -61,7 +61,6 @@ export const SUser = styled.div`
     border-radius: 10px;
   }
   :hover {
-    // color: ${({ theme }): string => theme.colors.blue[0]};
     transform: scale(0.95);
   }
 `;

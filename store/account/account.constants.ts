@@ -5,3 +5,4 @@ export const POST_PHONE_REQUEST = 'POST_PHONE_REQUEST';
 export const POST_PHONE_SUCCESS = 'POST_PHONE_SUCCESS';
 
 export const USER_LOGOUT = 'USER_LOGOUT';
+export const HYDRATE = 'HYDRATE';

@@ -1,3 +1,4 @@
+import { HYDRATE } from 'next-redux-wrapper';
 import { AccountType } from 'types/account.type';
 import * as type from './account.constants';
 
@@ -10,8 +11,9 @@ const initialState: AccountType = {
 
 // eslint-disable-next-line default-param-last
 const accountReducer = (state = initialState, action): AccountType => {
-  console.log(action.type);
   switch (action.type) {
+    case HYDRATE:
+      return { ...state };
     case type.GET_COURSE_REQUEST:
       return { ...state, coursesLoading: true, courses: null };
     case type.GET_COURSE_SUCCESS:

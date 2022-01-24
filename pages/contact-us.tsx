@@ -1,8 +1,10 @@
-import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import React from 'react';
 import { t } from 'i18next';
-import Navbar from 'components/Navbar';
-import ContactUs from 'components/ContactUs';
+
+const Navbar = dynamic(() => import('components/Navbar'));
+const ContactUs = dynamic(() => import('components/ContactUs'));
+const Head = dynamic(() => import('next/head'));
 
 const ContactUsPage: React.FC = () => (
   <>

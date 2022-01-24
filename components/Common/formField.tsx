@@ -1,13 +1,14 @@
 import { Button } from 'antd';
 import { useFormikContext } from 'formik';
-import React from 'react';
+import React, { ReactElement } from 'react';
 
-const FormField = ({ name, className, ...rest }) => {
+export type FieldType = { name: string; className: string };
+const FormField = ({ name, className, ...rest }): ReactElement => {
   const { setFieldTouched, errors, touched, values, handleChange } = useFormikContext();
   return (
     <div className="flex flex-col items-start">
       <input
-        onBlur={() => setFieldTouched(name)}
+        onBlur={(): void => setFieldTouched(name)}
         className={`${className}  ${
           touched[name] && errors[name] ? 'border-red-0' : 'border-gray-5'
         }`}
@@ -23,7 +24,8 @@ const FormField = ({ name, className, ...rest }) => {
   );
 };
 
-export const SubmitForm = ({ title, loading, ...rest }) => {
+type SubmitType = { title: string; loading: boolean };
+export const SubmitForm: React.FC<SubmitType> = ({ title, loading, ...rest }) => {
   const { handleSubmit, dirty } = useFormikContext();
   return (
     <Button

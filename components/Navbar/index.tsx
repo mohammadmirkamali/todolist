@@ -38,7 +38,11 @@ const Navbar: React.FC = () => {
   const tabs = (style): ReactElement[] =>
     items.map((item) => (
       <Link href={item.tab} key={item.tab}>
-        <div className={`${style} ${item.tab === tab ? 'text-blue-1' : 'text-gray-3'}`}>
+        <div
+          className={`${style} ${
+            item.tab === tab ? 'text-blue-1' : 'text-gray-3'
+          } hover:text-black`}
+        >
           {t(`navbar.${item.name}`)}
         </div>
       </Link>
@@ -72,7 +76,7 @@ const Navbar: React.FC = () => {
         <div className="absolute right-[40px] flex">
           <div className="border-l-2 border-l-gray-1 items-center hidden lg:flex">
             <SUser
-              onClick={() => setIsModalVisible(true)}
+              onClick={(): void => setIsModalVisible(true)}
               className=" text-[30px] cursor-pointer"
             >
               {t('global.profile')}

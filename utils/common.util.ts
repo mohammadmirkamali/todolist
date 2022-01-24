@@ -1,4 +1,4 @@
-export const BadgeCategory = (type: string) => {
+export const BadgeCategory = (type): { name: string; color: string } | undefined => {
   // see antd badge color : https://ant.design/components/badge/
   const types = [
     { name: 'حماة', color: 'cyan' },

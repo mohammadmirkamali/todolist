@@ -7,7 +7,7 @@ import { SSubmitForm } from './style';
 import FormField from 'components/Common/formField';
 import AppForm from 'components/Common/appForm';
 
-const Step2 = ({ setStep }) => {
+const Step2: React.FC<{ setStep: (num) => void }> = ({ setStep }) => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.account.postPhoneLoading);
   const validationSchema = Yup.object({
@@ -25,7 +25,7 @@ const Step2 = ({ setStep }) => {
       <AppForm
         initialValues={{ number: '' }}
         validationSchema={validationSchema}
-        onSubmit={(values) => {
+        onSubmit={(values): void => {
           values.number && setStep(2);
           // console.log(values.number);
           dispatch(postCheckPhoneAction('phone=09356942668'));
