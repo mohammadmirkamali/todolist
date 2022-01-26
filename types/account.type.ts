@@ -2,6 +2,7 @@ export type CourseType = {
   category_name: string;
   price_string: string;
   teacher_name: string;
+  teacher_title: string;
   workshop_title: string;
   teacher_avatar: string;
   category_image: string;
