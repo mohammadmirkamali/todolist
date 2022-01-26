@@ -15,7 +15,7 @@ const Items: React.FC<ItemsType> = ({ title, count, text, img }) => (
         {({ isVisible }): ReactElement => (
           <div>
             {isVisible && (
-              <CountUp end={count} duration={1} separator="," className="ml-[10px]" />
+              <CountUp end={count} duration={1} separator="," className="ml-[5px]" />
             )}
             {t(`global.${title}`)}
           </div>

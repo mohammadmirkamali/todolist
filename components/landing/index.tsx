@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import HeroSection from './heroSection';
 import Slider from './slider';
 import Info from './Info';
+import Teachers from './teachers';
 
 const Landing = (): JSX.Element => {
   const { courses } = useSelector((state) => state.account);
@@ -17,12 +18,13 @@ const Landing = (): JSX.Element => {
   const newest = [...courses].sort((a, b) => time(b.created_at) - time(a.created_at));
 
   return (
-    <div className="pt-[70px] bg-gray-0 relative flex flex-col min-h-full">
-      <HeroSection />
+    <div className="pt-[70px] bg-blue-7 relative flex-col min-h-full center">
+      <HeroSection courses={courses} />
       <Slider courses={courses} title="myCourses" />
       <Slider courses={newest} title="newCourses" />
       <Slider courses={mostPopular} title="popularCourses" />
       <Info />
+      <Teachers courses={courses} />
     </div>
   );
 };

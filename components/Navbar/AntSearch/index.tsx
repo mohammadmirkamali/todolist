@@ -9,10 +9,10 @@ import { SSelect } from './style';
 import useWindowSize from 'hooks/useWidowsSize';
 import { useScroll } from 'hooks/useScroll';
 
-type SearchType = { options: { name: string; id: number }[] };
+type SearchType = { options: { name: string; id: number }[]; landing?: boolean };
 
-const AntSearch: React.FC<SearchType> = ({ options }) => {
-  const [focus, setFocus] = useState(false);
+const AntSearch: React.FC<SearchType> = ({ options, landing }) => {
+  const [focus, setFocus] = useState(landing);
   const [open, setOpen] = useState(false);
   const scrollDirection = useScroll();
   const [size] = useWindowSize();
@@ -30,16 +30,23 @@ const AntSearch: React.FC<SearchType> = ({ options }) => {
       showSearch
       size="large"
       open={open}
+      landing={landing}
       focus={focus ? 1 : 0}
-      suffixIcon={null}
+      suffixIcon={
+        landing ? (
+          <SearchOutlined className="text-[25px] translate-x-[15px] translate-y-[-5px]" />
+        ) : null
+      }
       onSelect={onSelect}
       onFocus={(): void => setFocus(true)}
       isdown={scrollDirection === 'down' ? 1 : 0}
       onSearch={(e): void => setOpen(e.length > 0)}
       notFoundContent={<>{t('global.notFound')}</>}
-      onBlur={(): void => (setOpen(false), setFocus(false))}
+      onBlur={(): void => (setOpen(false), !landing && setFocus(false))}
       placeholder={
-        !focus && size > 768 ? (
+        landing ? (
+          t(size > 768 ? 'landing.searchTitle' : 'global.search')
+        ) : !focus && size > 768 ? (
           <SearchOutlined className="text-[20px] m-[-2px]" />
         ) : (
           t('global.search')
@@ -50,7 +57,9 @@ const AntSearch: React.FC<SearchType> = ({ options }) => {
         <Option
           value={option.name}
           key={option.id}
-          className="!text-[16px] w-screen md:w-[400px]"
+          className={`!text-[16px] w-[${landing ? '250px' : '300px'}] md:w-[${
+            landing ? '550px' : '400px'
+          }]`}
         >
           {option.name}
         </Option>

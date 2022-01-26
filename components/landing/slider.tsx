@@ -5,15 +5,14 @@ import { Navigation, Pagination } from 'swiper';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
-import { t } from 'i18next';
 import { CourseType } from 'types/account.type';
 import Card from 'components/Common/Card';
+import Title from './title';
 
 type SliderType = { courses: CourseType[]; title: string };
 const Slider: React.FC<SliderType> = ({ courses, title }) => (
   <div>
-    <div>{t(`landing.${title}`)}</div>
-    <div>{t(`landing.${title}Info`)}</div>
+    <Title title={`landing.${title}`} subTitle={`landing.${title}Info`} />
     <Swiper
       modules={[Navigation, Pagination]}
       className="xl:w-[1280px] md:w-[650px] w-[320px] md:h-[360px]"
