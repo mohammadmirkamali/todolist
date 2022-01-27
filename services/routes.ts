@@ -8,3 +8,4 @@ export const FinanceRoute = (): string => `https://idpay.ir/taaleei`;
 export const DownloadRoute = (): string => `https://dl.taalei-edu.ir/taalei.apk`;
 export const TelNumber = (): string => `0915 424 1197`;
 export const ContactUsRoute = (): string => `${baseURL}/p/contact_us`;
+export const PostsRoute = (): string => `${baseURL}/posts`;
