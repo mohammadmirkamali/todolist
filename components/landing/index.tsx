@@ -5,12 +5,14 @@ import HeroSection from './heroSection';
 import Slider from './slider';
 import Info from './Info';
 import Teachers from './teachers';
+import Footer from 'components/Footer';
+import AskUs from './askUs';
 
 const Landing = (): JSX.Element => {
   const { courses } = useSelector((state) => state.account);
 
   if (!courses) {
-    return <Skeleton active paragraph={{ rows: 7 }} className="p-[80px]" />;
+    return <Skeleton active paragraph={{ rows: 4 }} className="p-[80px]" />;
   }
 
   const time = (date): number => new Date(date).getTime();
@@ -25,6 +27,8 @@ const Landing = (): JSX.Element => {
       <Slider courses={mostPopular} title="popularCourses" />
       <Info />
       <Teachers courses={courses} />
+      <AskUs />
+      <Footer />
     </div>
   );
 };
