@@ -8,14 +8,14 @@ const Teachers: React.FC<TeacherType> = ({ courses }) => {
   const teachers = [...new Set(courses.map((item) => item.teacher_name))];
 
   return (
-    <div className="center flex-col">
+    <div className="center flex-col overflow-hidden">
       <Title title="landing.teacherTitle" subTitle="landing.teacherSubTitle" />
       <div className="grid grid-cols-[repeat(2,180px)] md:grid-cols-[repeat(5,220px)]">
         {teachers.map((teacher) => {
           const item = courses.find((course) => course.teacher_name === teacher);
           return (
             <div
-              className="center flex-col my-[10px] md:m-[20px] text-center hover:text-blue-2 grayscale-[.8] hover:grayscale-0"
+              className="center flex-col my-[10px] md:m-[20px] duration-300 text-center hover:text-blue-2 contrast-[.6] hover:contrast-100"
               key={item.id}
             >
               <Image

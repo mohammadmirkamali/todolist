@@ -24,7 +24,7 @@ const FormField = ({ name, className, ...rest }): ReactElement => {
   );
 };
 
-type SubmitType = { title: string; loading: boolean };
+type SubmitType = { title: string; loading?: boolean };
 export const SubmitForm: React.FC<SubmitType> = ({ title, loading, ...rest }) => {
   const { handleSubmit, dirty } = useFormikContext();
   return (

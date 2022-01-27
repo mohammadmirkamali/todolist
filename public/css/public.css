@@ -62,4 +62,12 @@ input:-webkit-autofill:active {
     justify-content: center;
     align-items: center;
   }
+
+  .toLeft {
+    direction: rtl;
+  }
+
+  .toRight {
+    direction: ltr;
+  }
 }

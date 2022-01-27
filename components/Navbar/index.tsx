@@ -13,13 +13,14 @@ import { SExit, SNav, SUser } from './style';
 import { useScroll } from 'hooks/useScroll';
 import AntSearch from './AntSearch';
 import Login from 'components/Account/Login/login';
+import * as url from 'services/routes';
 
 const items = [
   { name: 'home', tab: '/' },
-  { name: 'posts', tab: '/posts' },
-  { name: 'finance', tab: 'https://idpay.ir/taaleei' },
-  { name: 'conditions', tab: '/conditions' },
-  { name: 'contactUs', tab: '/contact-us' },
+  { name: 'posts', tab: url.PostsRoute() },
+  { name: 'finance', tab: url.FinanceRoute() },
+  { name: 'conditions', tab: url.ConditionRoute() },
+  { name: 'contactUs', tab: url.ContactUsRoute() },
 ];
 
 const Navbar: React.FC = () => {
@@ -98,8 +99,10 @@ const Navbar: React.FC = () => {
           {tabs('mx-[18px] cursor-pointer hover:text-[#000}')}
         </SDiv>
 
-        <div className="absolute left-[40px]">
-          <Image src="/main-logo.webp" width={120} height={60} priority />
+        <div className="absolute left-[40px] cursor-pointer">
+          <Link href="/">
+            <Image src="/main-logo.webp" width={120} height={60} priority />
+          </Link>
         </div>
 
         <Login isVisible={isModalVisible} setIsVisible={setIsModalVisible} />
