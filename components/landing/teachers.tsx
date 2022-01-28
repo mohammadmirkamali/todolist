@@ -10,7 +10,7 @@ const Teachers: React.FC<TeacherType> = ({ courses }) => {
   return (
     <div className="center flex-col overflow-hidden">
       <Title title="landing.teacherTitle" subTitle="landing.teacherSubTitle" />
-      <div className="grid grid-cols-[repeat(2,180px)] md:grid-cols-[repeat(5,220px)]">
+      <div className="grid grid-cols-[repeat(2,170px)] md:grid-cols-[repeat(5,220px)]">
         {teachers.map((teacher) => {
           const item = courses.find((course) => course.teacher_name === teacher);
           return (
@@ -20,12 +20,12 @@ const Teachers: React.FC<TeacherType> = ({ courses }) => {
             >
               <Image
                 src={item.teacher_avatar}
-                width={150}
-                height={150}
+                width={120}
+                height={120}
                 className="rounded-full "
               />
               <div className="text-[16px] my-[5px] font-bold">{item.teacher_name}</div>
-              <div className="text-[12px] ">{item.teacher_title}</div>
+              <div className="text-[12px] w-[120px]">{item.teacher_title}</div>
             </div>
           );
         })}

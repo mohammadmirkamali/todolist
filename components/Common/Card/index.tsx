@@ -3,7 +3,6 @@ import { t } from 'i18next';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { CourseRoute } from 'store/account/account.service';
 import { CourseType } from 'types/account.type';
 import { BadgeCategory, faNumber } from 'utils/common.util';
 import { SBadge, SContainer } from './style';
@@ -13,7 +12,7 @@ const Card: React.FC<{ course: CourseType }> = ({ course }) => {
   const time = (course.workshop_time_to_min / 60).toFixed(0);
 
   return (
-    <Link href={CourseRoute(course.id)}>
+    <Link href={`/${course.id}`}>
       <SContainer className="w-[300px] h-[310px] bg-white border border-gray-5 cursor-pointer relative rounded-[6px] m-[10px]">
         {badge && <SBadge text={badge.name} color={badge.color} placement="start" />}
 

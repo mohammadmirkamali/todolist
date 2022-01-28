@@ -13,6 +13,7 @@
     "minute": "دقیقه",
     "number": "عدد",
     "approve": "تایید",
+    "course": "جلسه",
     "homeHead": "مدرسه مجازی تعالی | خانه"
   },
   "account": {
@@ -30,6 +31,11 @@
     "finance": "حمایت مالی",
     "conditions": "قوانین و مقررات",
     "contactUs": "تماس با ما"
+  },
+  "course": {
+    "lessons": "جلسات",
+    "students": "دانشجو",
+    "info": "اطلاعات"
   },
   "landing": {
     "title": "دانشکده آنلاین تعالی",

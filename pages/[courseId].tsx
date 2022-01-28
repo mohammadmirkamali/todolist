@@ -3,6 +3,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { t } from 'i18next';
 import dynamic from 'next/dynamic';
+import { useSelector } from 'react-redux';
 
 const Navbar = dynamic(() => import('components/Navbar'));
 const Course = dynamic(() => import('components/Course'));
@@ -10,15 +11,18 @@ const Head = dynamic(() => import('next/head'));
 
 const CoursePage: React.FC = () => {
   const router = useRouter();
+  const course = useSelector((state) => state.account.courses)?.find(
+    (item) => item.id === Number(router.query.courseId),
+  );
 
   return (
     <>
       <Head>
-        <title>{t('global.homeHead')}</title>
+        <title>{t('global.title', { title: course?.workshop_title })}</title>
       </Head>
 
       <Navbar />
-      <Course />
+      {course && <Course course={course} />}
     </>
   );
 };

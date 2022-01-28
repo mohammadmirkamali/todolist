@@ -1,12 +1,14 @@
 import React from 'react';
 import { Skeleton } from 'antd';
 import { useSelector } from 'react-redux';
+import dynamic from 'next/dynamic';
 import HeroSection from './heroSection';
 import Slider from './slider';
-import Info from './Info';
-import Teachers from './teachers';
-import Footer from 'components/Footer';
-import AskUs from './askUs';
+
+const Info = dynamic(() => import('./Info'));
+const Teachers = dynamic(() => import('./teachers'));
+const Footer = dynamic(() => import('components/Footer'));
+const AskUs = dynamic(() => import('./askUs'));
 
 const Landing = (): JSX.Element => {
   const { courses } = useSelector((state) => state.account);
@@ -15,6 +17,7 @@ const Landing = (): JSX.Element => {
     return <Skeleton active paragraph={{ rows: 4 }} className="p-[80px]" />;
   }
 
+  console.log(courses);
   const time = (date): number => new Date(date).getTime();
   const mostPopular = [...courses].sort((a, b) => b.count_students - a.count_students);
   const newest = [...courses].sort((a, b) => time(b.created_at) - time(a.created_at));
