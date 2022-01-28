@@ -23,13 +23,13 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
 
   return (
     <div className="bg-gray-0 pt-[110px] duration-300 md:pt-[70px] min-h-screen flex xl:block flex-col center">
-      <div className=" w-[300px] h-[700px] md:w-[600px] xl:px-[370px] pt-[20px] xl:justify-self-start xl:w-full ">
-        <div className="w-full bg-white rounded-[8px]">
+      <div className=" w-[300px] md:w-[600px] xl:px-[370px] pt-[20px] xl:justify-self-start xl:w-full ">
+        <div className="w-full bg-white border-b border-b-gray-1 xl:border-b-white rounded-[8px] ">
           <h2 className="h-[70px] center w-full font-bold text-[26px] m-[0px]">
             {course.workshop_title}
           </h2>
           <Image src={course.workshop_img} layout="responsive" width={530} height={300} />
-          <p className="mx-[40px] py-[50px]  text-[18px]">
+          <p className="mx-[40px] my-[50px]  text-[18px]">
             {course.workshop_description}
           </p>
         </div>
