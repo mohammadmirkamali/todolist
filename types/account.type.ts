@@ -8,9 +8,14 @@ export type CourseType = {
   category_image: string;
   workshop_img: string;
   created_at: string;
+  workshop_time: string;
+  workshop_description: string;
   workshop_time_to_min: number;
   workshop_price: number;
   count_students: number;
+  lessons_count: number;
+  rates_avg: number;
+  count_rates: number;
   id: number;
 };
 
