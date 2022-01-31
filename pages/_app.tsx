@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from '@emotion/react';
 import type { AppProps } from 'next/app';
 import { ConfigProvider } from 'antd';
-import { wrapper } from 'store/store';
+import ReduxLayout from 'store/with-redux-store';
 import theme from 'services/theme';
 import 'public/css/fontiran.css';
 import 'public/css/antd-rtl.css';
@@ -14,9 +14,11 @@ import 'services/i18n';
 const EnigmaApp = ({ Component, pageProps }: AppProps): React.ReactElement => (
   <ThemeProvider theme={theme}>
     <ConfigProvider direction="rtl">
-      <Component {...pageProps} />
+      <ReduxLayout>
+        <Component {...pageProps} />
+      </ReduxLayout>
     </ConfigProvider>
   </ThemeProvider>
 );
 
-export default wrapper.withRedux(EnigmaApp);
+export default EnigmaApp;

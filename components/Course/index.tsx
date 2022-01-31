@@ -2,10 +2,12 @@ import { ClockCircleOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import { t } from 'i18next';
-import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 import { Button, Rate } from 'antd';
-import { CourseType } from 'types/account.type';
 import { faNumber } from 'utils/common.util';
+import { getChapterAction } from 'store/course/course.action';
+import { CourseType } from 'types/course.type';
 
 const SButton = styled(Button)`
   width: 240px;
@@ -19,23 +21,32 @@ const SButton = styled(Button)`
 `;
 
 const Course: React.FC<{ course: CourseType }> = ({ course }) => {
-  const lessons = Array.from(Array(course.lessons_count), (_, i) => i + 1);
+  const dispatch = useDispatch();
+  const chapters = useSelector((state) => state.course.chapters);
+
+  useEffect(() => {
+    !chapters && dispatch(getChapterAction(course.id));
+  }, []);
 
   return (
     <div className="bg-gray-0 pt-[110px] duration-300 md:pt-[70px] min-h-screen flex xl:block flex-col center">
-      <div className=" w-[300px] md:w-[600px] xl:px-[370px] pt-[20px] xl:justify-self-start xl:w-full ">
-        <div className="w-full bg-white border-b border-b-gray-1 xl:border-b-white rounded-[8px] ">
+      <div className=" w-[300px] md:w-[600px] xl:px-[370px] py-[20px] xl:justify-self-start xl:w-full ">
+        <div className="w-full bg-white rounded-[8px]">
           <h2 className="h-[70px] center w-full font-bold text-[26px] m-[0px]">
             {course.workshop_title}
           </h2>
-          <Image src={course.workshop_img} layout="responsive" width={530} height={300} />
-          <p className="mx-[40px] my-[50px]  text-[18px]">
-            {course.workshop_description}
-          </p>
+          <Image
+            src={course.workshop_img}
+            layout="responsive"
+            width={530}
+            height={300}
+            priority
+          />
+          <p className="mx-[40px] py-[50px] text-[18px]">{course.workshop_description}</p>
         </div>
       </div>
 
-      <div className="w-[300px] border-b border-b-gray-1 md:w-[600px] xl:absolute left-0 top-[70px]  xl:w-[350px] xl:h-[calc(100vh-70px)] bg-white z-10">
+      <div className="w-[300px] border-b border-b-gray-1 md:w-[600px] xl:fixed left-0 top-[70px]  xl:w-[350px] xl:h-[calc(100%-70px)] bg-white z-10">
         <div className="h-[70px] center w-full border-b-gray-1 border-b font-bold text-[18px]">
           {t('course.info')}
         </div>
@@ -46,6 +57,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
               src={course.teacher_avatar}
               width={60}
               height={60}
+              priority
               className="rounded-full"
             />
             <div className="mr-[10px]">
@@ -78,7 +90,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
 
           <div className="py-[7px] flex items-center">
             <i className="fas fa-money-bill-wave text-[25px] pr-[15px]" />
-            <div className="px-[20px] toRight">
+            <div className="px-[20px] toLeft">
               {course.workshop_price
                 ? `${faNumber(course.workshop_price / 1000)} ${t('global.tooman')}`
                 : t('global.free')}
@@ -98,19 +110,35 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
         </div>
       </div>
 
-      <div className="w-[300px] h-[470px] md:w-[600px]   xl:absolute right-0 top-[70px] bg-white xl:w-[350px] xl:h-[calc(100vh-70px)]">
+      <div className="w-[300px] h-[470px] md:w-[600px]   xl:fixed right-0 top-[70px] bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
         <div className="h-[70px] center w-full border-b-gray-1 border-b font-bold text-[18px]">
           {t('course.lessons')}
         </div>
         <div className="overflow-auto h-[400px] xl:h-[90%] toRight">
-          {lessons.map((item) => (
-            <div
-              key={item}
-              className="text-[16px] px-[40px] cursor-pointer toLeft py-[20px] hover:bg-gray-4 duration-300"
-            >
-              {t('global.course')} {item}
-            </div>
-          ))}
+          {chapters &&
+            chapters.map((chapter, index) => (
+              <div key={chapter.name} className="toLeft">
+                <div className="font-bold px-[40px] border-b border-b-gray-1 py-[7px] text-[16px]">
+                  {chapter.name}
+                </div>
+                {chapters[index].lessons.map((item) => (
+                  <div
+                    key={item.lesson_title}
+                    className={`text-[16px] px-[40px] py-[15px] ${
+                      !item.lesson_free ? 'cursor-not-allowed' : 'cursor-pointer'
+                    } hover:bg-gray-4 duration-300`}
+                  >
+                    <div>
+                      {item.lesson_title}
+                      <div className="text-[13px] pr-[10px] inline-block">
+                        {item.lesson_free ? `(${t('global.free')})` : ''}
+                      </div>
+                    </div>
+                    <div>{faNumber(item.time_string)}</div>
+                  </div>
+                ))}
+              </div>
+            ))}
         </div>
       </div>
     </div>
