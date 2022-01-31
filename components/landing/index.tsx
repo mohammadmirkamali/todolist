@@ -11,19 +11,18 @@ const Footer = dynamic(() => import('components/Footer'));
 const AskUs = dynamic(() => import('./askUs'));
 
 const Landing = (): JSX.Element => {
-  const { courses } = useSelector((state) => state.account);
+  const { courses } = useSelector((state) => state.course);
 
   if (!courses) {
     return <Skeleton active paragraph={{ rows: 4 }} className="p-[80px]" />;
   }
 
-  console.log(courses);
   const time = (date): number => new Date(date).getTime();
   const mostPopular = [...courses].sort((a, b) => b.count_students - a.count_students);
   const newest = [...courses].sort((a, b) => time(b.created_at) - time(a.created_at));
 
   return (
-    <div className="pt-[70px] bg-blue-7 relative flex-col min-h-full center">
+    <div className="pt-[70px] bg-gray-0 relative flex-col min-h-full center">
       <HeroSection courses={courses} />
       <Slider courses={courses} title="myCourses" />
       <Slider courses={newest} title="newCourses" />

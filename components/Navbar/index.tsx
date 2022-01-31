@@ -7,10 +7,9 @@ import Image from 'next/image';
 import { t } from 'i18next';
 import Link from 'next/link';
 
-import { getCoursesAction } from 'store/account/account.action';
+import { getCoursesAction } from 'store/course/course.action';
 import { SDiv } from 'components/Common/commonStyle';
 import { SExit, SNav, SUser } from './style';
-import { useScroll } from 'hooks/useScroll';
 import AntSearch from './AntSearch';
 import Login from 'components/Account/Login/login';
 import * as url from 'services/routes';
@@ -24,8 +23,7 @@ const items = [
 ];
 
 const Navbar: React.FC = () => {
-  const courses = useSelector((state) => state.account.courses);
-  const scrollDirection = useScroll();
+  const courses = useSelector((state) => state.course.courses);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const dispatch = useDispatch();
@@ -38,7 +36,7 @@ const Navbar: React.FC = () => {
 
   const tabs = (style): ReactElement[] =>
     items.map((item) => (
-      <Link href={item.tab} key={item.tab}>
+      <Link href={item.tab} key={item.tab} passHref>
         <div
           className={`${style} ${
             item.tab === tab ? 'text-blue-1' : 'text-gray-3'
@@ -57,10 +55,7 @@ const Navbar: React.FC = () => {
 
   return (
     <div className="relative">
-      <SNav
-        className="border-b border-b-gray-1"
-        isdown={scrollDirection === 'down' ? 1 : 0}
-      >
+      <SNav className="border-b border-b-gray-1">
         <Drawer
           closeIcon={<CloseOutlined className="text-[25px] m-[10px]" />}
           onClose={(): void => setIsDrawerVisible(false)}
@@ -99,11 +94,11 @@ const Navbar: React.FC = () => {
           {tabs('mx-[18px] cursor-pointer hover:text-[#000}')}
         </SDiv>
 
-        <div className="absolute left-[40px] cursor-pointer">
-          <Link href="/">
+        <Link href="/" passHref>
+          <div className="absolute left-[40px] cursor-pointer">
             <Image src="/main-logo.webp" width={120} height={60} priority />
-          </Link>
-        </div>
+          </div>
+        </Link>
 
         <Login isVisible={isModalVisible} setIsVisible={setIsModalVisible} />
       </SNav>

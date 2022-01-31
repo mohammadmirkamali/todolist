@@ -70,4 +70,9 @@ input:-webkit-autofill:active {
   .toRight {
     direction: ltr;
   }
+  .disable {
+    color: #00000040;
+    background: #f5f5f5;
+    cursor: not-allowed !important;
+  }
 }

@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { Select } from 'antd';
 import { t } from 'i18next';
 
-import { CourseRoute } from 'store/account/account.service';
 import { SSelect } from './style';
 import useWindowSize from 'hooks/useWidowsSize';
 import { useScroll } from 'hooks/useScroll';
@@ -22,7 +21,7 @@ const AntSearch: React.FC<SearchType> = ({ options, landing }) => {
   const onSelect = (name: string): void => {
     const selected = options.find((item) => item.name === name);
     setOpen(false);
-    router.push(CourseRoute(selected.id));
+    router.push(`/${selected.id}`);
   };
 
   return (
@@ -30,7 +29,7 @@ const AntSearch: React.FC<SearchType> = ({ options, landing }) => {
       showSearch
       size="large"
       open={open}
-      landing={landing}
+      landing={landing ? 1 : 0}
       focus={focus ? 1 : 0}
       suffixIcon={
         landing ? (
