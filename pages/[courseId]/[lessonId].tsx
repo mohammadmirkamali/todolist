@@ -26,7 +26,26 @@ const LessonPage: React.FC = () => {
 export default LessonPage;
 
 export const getStaticPaths = async () => {
-  const paths = [{ params: { courseId: '245', lessonId: '1' } }];
+  const paths = [
+    { params: { courseId: '245', lessonId: '3574' } },
+    { params: { courseId: '245', lessonId: '3575' } },
+    { params: { courseId: '245', lessonId: '3576' } },
+    { params: { courseId: '245', lessonId: '3577' } },
+    { params: { courseId: '245', lessonId: '3578' } },
+    { params: { courseId: '245', lessonId: '3579' } },
+    { params: { courseId: '245', lessonId: '3580' } },
+    { params: { courseId: '245', lessonId: '3581' } },
+    { params: { courseId: '245', lessonId: '3582' } },
+    { params: { courseId: '245', lessonId: '3583' } },
+    { params: { courseId: '245', lessonId: '3584' } },
+    { params: { courseId: '245', lessonId: '3585' } },
+    { params: { courseId: '245', lessonId: '3586' } },
+    { params: { courseId: '245', lessonId: '3587' } },
+    { params: { courseId: '245', lessonId: '3588' } },
+    { params: { courseId: '245', lessonId: '3598' } },
+    { params: { courseId: '245', lessonId: '3599' } },
+    { params: { courseId: '245', lessonId: '3600' } },
+  ];
   return { paths, fallback: false };
 };
 

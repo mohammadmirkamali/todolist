@@ -32,7 +32,7 @@ export default CoursePage;
 
 export const getStaticPaths = async () => {
   try {
-    const res = await request.get('https://taalei-edu.ir/api/v2/get_lesson/1262');
+    // const res = await request.get('https://taalei-edu.ir/api/v2/get_lesson/1262');
     const paths = [
       { params: { courseId: '246' } },
       { params: { courseId: '245' } },
@@ -43,7 +43,9 @@ export const getStaticPaths = async () => {
       { params: { courseId: '225' } },
       { params: { courseId: '220' } },
       { params: { courseId: '216' } },
-      { params: { courseId: '183' } },
+      { params: { courseId: '204' } },
+      { params: { courseId: '166' } },
+      { params: { courseId: '134' } },
     ];
     return { paths, fallback: false };
   } catch (error) {

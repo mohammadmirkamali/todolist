@@ -22,14 +22,17 @@ export type CourseType = {
 export type ChapterType = {
   id: number;
   name: string;
-  lessons: { time_string: string; lesson_title: string; lesson_free: number }[];
+  lessons: {
+    time_string: string;
+    lesson_title: string;
+    lesson_free: number;
+    lesson_id: number;
+  }[];
 };
 
 export type CourseReducerType = {
   coursesLoading: boolean;
   coursesError: boolean;
   courses: CourseType[];
-  chapterLoading: boolean;
-  chapterError: boolean;
-  chapters: ChapterType[];
+  chapters: { [id: number]: { loading: boolean; error: boolean; data: ChapterType[] } };
 };
