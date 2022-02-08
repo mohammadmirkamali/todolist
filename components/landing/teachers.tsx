@@ -22,6 +22,7 @@ const Teachers: React.FC<TeacherType> = ({ courses }) => {
                 src={item.teacher_avatar}
                 width={120}
                 height={120}
+                alt={item.teacher_title}
                 className="rounded-full "
               />
               <div className="text-[16px] my-[5px] font-bold">{item.teacher_name}</div>

@@ -1,13 +1,15 @@
 import { ClockCircleOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import { t } from 'i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect } from 'react';
-import { Button, Rate } from 'antd';
-import { faNumber } from 'utils/common.util';
+import { Button, message, Rate, Skeleton } from 'antd';
 import { getChapterAction } from 'store/course/course.action';
+import { faNumber } from 'utils/common.util';
 import { CourseType } from 'types/course.type';
+import { LessonRoute } from 'services/routes';
 
 const SButton = styled(Button)`
   width: 240px;
@@ -22,11 +24,21 @@ const SButton = styled(Button)`
 
 const Course: React.FC<{ course: CourseType }> = ({ course }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const id = useRouter().query.courseId as string;
   const chapters = useSelector((state) => state.course.chapters);
+  const data = chapters?.[id]?.data;
+  const profile = true; // to do ...
 
   useEffect(() => {
-    !chapters && dispatch(getChapterAction(course.id));
-  }, []);
+    (!chapters || !chapters?.[id]) && dispatch(getChapterAction(id));
+  }, [id]);
+
+  const onLesson = (item): void => {
+    item.lesson_free || profile
+      ? router.push(LessonRoute(id, item.lesson_id))
+      : message.warning(t('course.notAllow'));
+  };
 
   return (
     <div className="bg-gray-0 pt-[110px] duration-300 md:pt-[70px] min-h-screen flex xl:block flex-col center">
@@ -38,6 +50,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           <Image
             src={course.workshop_img}
             layout="responsive"
+            alt={course.workshop_title}
             width={530}
             height={300}
             priority
@@ -58,6 +71,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
               width={60}
               height={60}
               priority
+              alt={course.teacher_title}
               className="rounded-full"
             />
             <div className="mr-[10px]">
@@ -83,22 +97,24 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           </div>
 
           <div className="py-[7px] flex items-center">
-            <Image src="/book.webp" width={50} height={50} />
+            <Image src="/book.webp" width={50} height={50} alt="" />
             <div className="px-[15px] toRight">{faNumber(course.lessons_count)}</div>
             <div>{t('global.course')}</div>
           </div>
 
-          <div className="py-[7px] flex items-center">
-            <i className="fas fa-money-bill-wave text-[25px] pr-[15px]" />
-            <div className="px-[20px] toLeft">
-              {course.workshop_price
-                ? `${faNumber(course.workshop_price / 1000)} ${t('global.tooman')}`
-                : t('global.free')}
+          {!profile && (
+            <div className="py-[7px] flex items-center">
+              <i className="fas fa-money-bill-wave text-[25px] pr-[15px]" />
+              <div className="px-[20px] toLeft">
+                {course.workshop_price
+                  ? `${faNumber(course.workshop_price / 1000)} ${t('global.tooman')}`
+                  : t('global.free')}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="py-[7px] flex items-center pr-[15px]">
-            <Rate value={course.count_rates} allowHalf />
+            <Rate value={course.rates_avg} allowHalf />
             <div className="px-[15px] toRight">
               {`${faNumber(course.rates_avg)} ( ${t('global.person')} ${faNumber(
                 course.count_rates.toLocaleString(),
@@ -106,7 +122,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
             </div>
           </div>
 
-          <SButton>{t('global.register')}</SButton>
+          {!profile && <SButton>{t('global.register')}</SButton>}
         </div>
       </div>
 
@@ -115,17 +131,28 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           {t('course.lessons')}
         </div>
         <div className="overflow-auto h-[400px] xl:h-[90%] toRight">
-          {chapters &&
-            chapters.map((chapter, index) => (
-              <div key={chapter.name} className="toLeft">
-                <div className="font-bold px-[40px] border-b border-b-gray-1 py-[7px] text-[16px]">
-                  {chapter.name}
-                </div>
-                {chapters[index].lessons.map((item) => (
+          {!data ? (
+            <div className="m-[15px]">
+              <Skeleton active />
+              <Skeleton active />
+            </div>
+          ) : (
+            data.map((key) => (
+              <div key={key.name} className="toLeft">
+                {data.length > 1 && (
+                  <div className="font-bold px-[40px] border-b border-b-gray-1 py-[7px] text-[16px]">
+                    {key.name}
+                  </div>
+                )}
+                {key?.lessons.map((item) => (
                   <div
+                    onClick={(): void => onLesson(item)}
+                    aria-hidden="true"
                     key={item.lesson_title}
                     className={`text-[16px] px-[40px] py-[15px] ${
-                      !item.lesson_free ? 'cursor-not-allowed' : 'cursor-pointer'
+                      item.lesson_free || profile
+                        ? 'cursor-pointer'
+                        : 'cursor-not-allowed'
                     } hover:bg-gray-4 duration-300`}
                   >
                     <div>
@@ -138,7 +165,8 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
                   </div>
                 ))}
               </div>
-            ))}
+            ))
+          )}
         </div>
       </div>
     </div>

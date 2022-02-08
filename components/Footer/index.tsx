@@ -32,7 +32,7 @@ const Footer: React.FC = () => (
     <div className=" w-[300px] h-[200px] py-[30px] md:py-[10px] px-[50px]">
       <div className="font-bold text-[18px] mb-[15px]">{t('footer.category')}</div>
       {categories.map((item) => (
-        <Link href={item.route} key={item.name}>
+        <Link href={item.route} key={item.name} passHref>
           <div className="text-[16px] cursor-pointer my-[10px]  hover:text-blue-2">
             {t(`footer.${item.name}`)}
           </div>
@@ -42,7 +42,7 @@ const Footer: React.FC = () => (
     <div className=" w-[300px] border-y md:border-x md:border-y-0 border-gray-3 h-[200px] py-[30px] md:py-[10px] px-[50px]">
       <div className="font-bold text-[18px] mb-[15px]">{t('footer.access')}</div>
       {access.map((item) => (
-        <Link href={item.route} key={item.name}>
+        <Link href={item.route} key={item.name} passHref>
           <div className="text-[16px] cursor-pointer my-[10px]  hover:text-blue-2">
             {t(`footer.${item.name}`)}
           </div>
@@ -50,7 +50,7 @@ const Footer: React.FC = () => (
       ))}
     </div>
     <div className=" w-[300px] h-[200px] py-[30px] md:py-[10px] pr-[50px]">
-      <Image src="/logo.webp" width={50} height={50} />
+      <Image src="/logo.webp" width={50} height={50} alt="" />
       <p>{t('footer.designBy')}</p>
       <p className="text-[12px]">{t('footer.taali')}</p>
       <SButton href={url.DownloadRoute()}>

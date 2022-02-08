@@ -20,14 +20,14 @@ export const getCoursesAction = () => {
 
 export const getChapterAction = (id) => {
   return async (dispatch): Promise<unknown> => {
-    dispatch({ type: type.GET_CHAPTER_REQUEST });
+    dispatch({ type: type.GET_CHAPTER_REQUEST, id });
     const response: ResType = await request.get(CourseUrl(id));
     if (response.ok) {
-      dispatch({ type: type.GET_CHAPTER_SUCCESS, payload: response.data.chapters });
+      dispatch({ type: type.GET_CHAPTER_SUCCESS, payload: response.data.chapters, id });
       return response.data;
     }
 
-    dispatch({ type: type.GET_CHAPTER_ERROR });
+    dispatch({ type: type.GET_CHAPTER_ERROR, id });
     return false;
   };
 };

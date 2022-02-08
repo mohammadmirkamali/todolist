@@ -9,6 +9,8 @@ export const DownloadRoute = (): string => `https://dl.taalei-edu.ir/taalei.apk`
 export const TelNumber = (): string => `0915 424 1197`;
 export const ContactUsRoute = (): string => `${baseURL}/p/contact_us`;
 export const PostsRoute = (): string => `${baseURL}/posts`;
+export const CourseRoute = (id): string => `/${id}`;
+export const LessonRoute = (courseId, lessonId): string => `/${courseId}/${lessonId}`;
 
 export const CheckAuthPhoneUrl = (): string => `/auth/checkAuthPhone`;
 export const AllCoursesUrl = (): string => `/api/v2/workshops/s/فلسفه`;

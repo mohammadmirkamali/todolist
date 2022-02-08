@@ -5,8 +5,6 @@ const initialState: CourseReducerType = {
   coursesLoading: false,
   courses: null,
   coursesError: false,
-  chapterLoading: false,
-  chapterError: false,
   chapters: null,
 };
 
@@ -25,16 +23,29 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
     case type.GET_COURSE_ERROR:
       return { ...state, coursesLoading: false, courses: null, coursesError: true };
     case type.GET_CHAPTER_REQUEST:
-      return { ...state, chapterLoading: true, chapters: null, chapterError: null };
+      return {
+        ...state,
+        chapters: {
+          ...state.chapters,
+          [action.id]: { loading: true, data: null, error: null },
+        },
+      };
     case type.GET_CHAPTER_SUCCESS:
       return {
         ...state,
-        chapterLoading: false,
-        chapters: action.payload,
-        chapterError: null,
+        chapters: {
+          ...state.chapters,
+          [action.id]: { loading: false, data: action.payload, error: null },
+        },
       };
     case type.GET_CHAPTER_ERROR:
-      return { ...state, chapterLoading: false, chapters: null, chapterError: true };
+      return {
+        ...state,
+        chapters: {
+          ...state.chapters,
+          [action.id]: { loading: true, data: null, error: true },
+        },
+      };
 
     default:
       return state;

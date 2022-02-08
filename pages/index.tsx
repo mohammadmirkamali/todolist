@@ -10,6 +10,7 @@ const Home: React.FC = () => (
   <>
     <Head>
       <title>{t('global.homeHead')}</title>
+      <meta name="description" content={t('global.description')} />
     </Head>
 
     <Navbar />

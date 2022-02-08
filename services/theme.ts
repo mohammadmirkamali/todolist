@@ -17,6 +17,7 @@ const breakpoints: BreakpointsProp = ['768px', '1200px'];
 breakpoints.sm = breakpoints[0];
 breakpoints.lg = breakpoints[1];
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   mediaQueries: {
     sm: `@media screen and (min-width: ${breakpoints[0]})`,

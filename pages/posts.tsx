@@ -10,6 +10,7 @@ const PostsPage: React.FC = () => (
   <>
     <Head>
       <title>{t('global.title', { title: t('navbar.posts') })}</title>
+      <meta name="description" content={t('global.description')} />
     </Head>
 
     <Navbar />

@@ -23,6 +23,5 @@ export const useScroll = (): string => {
     };
   });
 
-  // console.log(scrollDirection);
   return scrollDirection;
 };

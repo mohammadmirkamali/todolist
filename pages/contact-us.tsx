@@ -10,6 +10,7 @@ const ContactUsPage: React.FC = () => (
   <>
     <Head>
       <title>{t('global.title', { title: t('navbar.contactUs') })}</title>
+      <meta name="description" content={t('global.description')} />
     </Head>
 
     <Navbar />

@@ -8,7 +8,7 @@ type ItemsType = { title: string; count: number; text: string; img: string };
 const Items: React.FC<ItemsType> = ({ title, count, text, img }) => (
   <div className="center flex-col">
     <div className="z-2 bg-white center rounded-full h-[150px] w-[150px]">
-      <Image src={`/${img}.webp`} width={90} height={90} />
+      <Image src={`/${img}.webp`} width={90} height={90} alt="" />
     </div>
     <div className="font-bold text-[28px] mt-[10px] center">
       <VisibilitySensor>

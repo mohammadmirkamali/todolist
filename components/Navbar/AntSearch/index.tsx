@@ -7,6 +7,7 @@ import { t } from 'i18next';
 import { SSelect } from './style';
 import useWindowSize from 'hooks/useWidowsSize';
 import { useScroll } from 'hooks/useScroll';
+import { CourseRoute } from 'services/routes';
 
 type SearchType = { options: { name: string; id: number }[]; landing?: boolean };
 
@@ -21,7 +22,7 @@ const AntSearch: React.FC<SearchType> = ({ options, landing }) => {
   const onSelect = (name: string): void => {
     const selected = options.find((item) => item.name === name);
     setOpen(false);
-    router.push(`/${selected.id}`);
+    router.push(CourseRoute(selected.id));
   };
 
   return (
@@ -37,6 +38,7 @@ const AntSearch: React.FC<SearchType> = ({ options, landing }) => {
         ) : null
       }
       onSelect={onSelect}
+      value={null}
       onFocus={(): void => setFocus(true)}
       isdown={scrollDirection === 'down' ? 1 : 0}
       onSearch={(e): void => setOpen(e.length > 0)}

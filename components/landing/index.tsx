@@ -12,6 +12,7 @@ const AskUs = dynamic(() => import('./askUs'));
 
 const Landing = (): JSX.Element => {
   const { courses } = useSelector((state) => state.course);
+  const profile = false; // to do ...
 
   if (!courses) {
     return <Skeleton active paragraph={{ rows: 4 }} className="p-[80px]" />;
@@ -24,7 +25,7 @@ const Landing = (): JSX.Element => {
   return (
     <div className="pt-[70px] bg-gray-0 relative flex-col min-h-full center">
       <HeroSection courses={courses} />
-      <Slider courses={courses} title="myCourses" />
+      {profile && <Slider courses={courses} title="myCourses" />}
       <Slider courses={newest} title="newCourses" />
       <Slider courses={mostPopular} title="popularCourses" />
       <Info />
