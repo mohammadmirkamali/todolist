@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
 
   const DrawerTitle = (
     <div className="absolute left-[40px] top-[15px]">
-      <Image src="/main-logo.webp" width={80} height={40} />
+      <Image src="/main-logo.webp" width={80} height={40} alt="" />
     </div>
   );
 
@@ -96,7 +96,7 @@ const Navbar: React.FC = () => {
 
         <Link href="/" passHref>
           <div className="absolute left-[40px] cursor-pointer">
-            <Image src="/main-logo.webp" width={120} height={60} priority />
+            <Image src="/main-logo.webp" width={120} height={60} priority alt="" />
           </div>
         </Link>
 

@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { t } from 'i18next';
 import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
-import request from 'services/request';
 
 const Navbar = dynamic(() => import('components/Navbar'));
 const Course = dynamic(() => import('components/Course'));
@@ -20,6 +19,7 @@ const CoursePage: React.FC = () => {
     <>
       <Head>
         <title>{t('global.title', { title: course?.workshop_title })}</title>
+        <meta name="description" content={t('global.description')} />
       </Head>
 
       <Navbar />
@@ -31,22 +31,10 @@ const CoursePage: React.FC = () => {
 export default CoursePage;
 
 export const getStaticPaths = async () => {
+  const ids = [240, 210, 183, 177, 174, 166, 134];
   try {
     // const res = await request.get('https://taalei-edu.ir/api/v2/get_lesson/1262');
-    const paths = [
-      { params: { courseId: '246' } },
-      { params: { courseId: '245' } },
-      { params: { courseId: '240' } },
-      { params: { courseId: '235' } },
-      { params: { courseId: '228' } },
-      { params: { courseId: '227' } },
-      { params: { courseId: '225' } },
-      { params: { courseId: '220' } },
-      { params: { courseId: '216' } },
-      { params: { courseId: '204' } },
-      { params: { courseId: '166' } },
-      { params: { courseId: '134' } },
-    ];
+    const paths = ids.map((id) => ({ params: { courseId: id.toString() } }));
     return { paths, fallback: false };
   } catch (error) {
     const paths = [];

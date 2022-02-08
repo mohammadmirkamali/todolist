@@ -5,9 +5,9 @@ import { Navigation, Pagination } from 'swiper';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
-import { CourseType } from 'types/account.type';
 import Card from 'components/Common/Card';
 import Title from './title';
+import { CourseType } from 'types/course.type';
 
 type SliderType = { courses: CourseType[]; title: string };
 const Slider: React.FC<SliderType> = ({ courses, title }) => (

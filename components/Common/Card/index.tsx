@@ -13,7 +13,7 @@ const Card: React.FC<{ course: CourseType }> = ({ course }) => {
   const time = (course.workshop_time_to_min / 60).toFixed(0);
 
   return (
-    <Link href={CourseRoute(course.id)}>
+    <Link href={CourseRoute(course.id)} passHref>
       <SContainer className="w-[300px] h-[310px] bg-white border border-gray-5 cursor-pointer relative rounded-[6px] m-[10px]">
         {badge && <SBadge text={badge.name} color={badge.color} placement="start" />}
 
@@ -28,6 +28,7 @@ const Card: React.FC<{ course: CourseType }> = ({ course }) => {
             src={course.workshop_img}
             width={300}
             height={170}
+            alt={course.workshop_title}
             className="img  mt-[-20px]"
           />
         </div>
@@ -40,6 +41,7 @@ const Card: React.FC<{ course: CourseType }> = ({ course }) => {
               src={course.teacher_avatar}
               width={27}
               height={27}
+              alt={course.teacher_name}
               className="rounded-full"
             />
             <div className="mr-[8px]">{course.teacher_name}</div>

@@ -3,7 +3,7 @@
 module.exports = {
   parser: '@babel/eslint-parser',
 
-  extends: ['airbnb', 'plugin:css-modules/recommended', 'prettier'],
+  extends: ['airbnb', 'plugin:css-modules/recommended', 'prettier', 'eslint-config-next'],
 
   overrides: [
     {

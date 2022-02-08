@@ -1,4 +1,4 @@
 export type AccountType = {
   postPhoneLoading: boolean;
-  postPhone: any;
+  postPhone: any; // eslint-disable-line
 };

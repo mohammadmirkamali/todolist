@@ -19,15 +19,20 @@ export type CourseType = {
   id: number;
 };
 
+export type LessonType = {
+  time_string: string;
+  lesson_title: string;
+  workshop_title: string;
+  lesson_file: string;
+  lesson_free: number;
+  lesson_id: number;
+  has_exam: number;
+  attaches: { attach_type: string; attach_link: string }[];
+};
 export type ChapterType = {
   id: number;
   name: string;
-  lessons: {
-    time_string: string;
-    lesson_title: string;
-    lesson_free: number;
-    lesson_id: number;
-  }[];
+  lessons: LessonType[];
 };
 
 export type CourseReducerType = {

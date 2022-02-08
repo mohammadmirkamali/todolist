@@ -10,6 +10,7 @@ const ConditionsPage: React.FC = () => (
   <>
     <Head>
       <title>{t('global.title', { title: t('navbar.conditions') })}</title>
+      <meta name="description" content={t('global.description')} />
     </Head>
 
     <Navbar />
