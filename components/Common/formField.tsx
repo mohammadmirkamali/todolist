@@ -3,21 +3,35 @@ import { useFormikContext } from 'formik';
 import React, { ReactElement } from 'react';
 
 export type FieldType = { name: string; className: string };
-const FormField = ({ name, className, ...rest }): ReactElement => {
+const FormField = ({ name, type, className, ...rest }): ReactElement => {
   const { setFieldTouched, errors, touched, values, handleChange } = useFormikContext();
 
   return (
     <div className="flex flex-col items-start">
-      <input
-        onBlur={(): void => setFieldTouched(name)}
-        className={`${className}  ${
-          touched[name] && errors[name] ? 'border-red-0' : 'border-gray-5'
-        }`}
-        onChange={handleChange}
-        value={values[name]}
-        id={name}
-        {...rest}
-      />
+      {type === 'textarea' ? (
+        <textarea
+          onBlur={(): void => setFieldTouched(name)}
+          className={`${className} ${
+            touched[name] && errors[name] ? 'border-red-0' : 'border-gray-5'
+          }`}
+          onChange={handleChange}
+          value={values[name]}
+          id={name}
+          {...rest}
+        />
+      ) : (
+        <input
+          onBlur={(): void => setFieldTouched(name)}
+          className={`${className}  ${
+            touched[name] && errors[name] ? 'border-red-0' : 'border-gray-5'
+          }`}
+          onChange={handleChange}
+          value={values[name]}
+          type={type}
+          id={name}
+          {...rest}
+        />
+      )}
       {touched[name] && errors[name] && (
         <div className="text-red-0 text-[12px] text-left">{errors[name]}</div>
       )}
