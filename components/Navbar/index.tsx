@@ -1,4 +1,9 @@
-import { LogoutOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons';
+import {
+  LogoutOutlined,
+  MenuOutlined,
+  CloseOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -9,7 +14,7 @@ import Link from 'next/link';
 
 import { getCoursesAction } from 'store/course/course.action';
 import { SDiv } from 'components/Common/commonStyle';
-import { SExit, SNav, SUser } from './style';
+import { SButton, SExit, SNav } from './style';
 import AntSearch from './AntSearch';
 import Login from 'components/Account/Login/login';
 import * as url from 'services/routes';
@@ -23,12 +28,13 @@ const items = [
 ];
 
 const Navbar: React.FC = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [tab] = useState(router.route);
   const courses = useSelector((state) => state.course.courses);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const [tab] = useState(router.route);
+  const profile = false;
 
   useEffect(() => {
     !courses && dispatch(getCoursesAction());
@@ -53,6 +59,10 @@ const Navbar: React.FC = () => {
     </div>
   );
 
+  const handleClick = (): void => {
+    profile ? router.push(url.ProfileRoute('account')) : setIsModalVisible(true);
+  };
+
   return (
     <div className="relative">
       <SNav className="border-b border-b-gray-1">
@@ -65,23 +75,27 @@ const Navbar: React.FC = () => {
           width={330}
         >
           {tabs('p-5 border-t border-t-gray-4 w-[190px] first:border-none text-[18px]')}
-          <SUser className=" text-[30px] mt-[10px]">{t('global.profile')}</SUser>
-          <LogoutOutlined className="text-[20px] px-[130px] pt-[15px]" />
+          <SButton onClick={handleClick}>
+            {profile && <UserOutlined />}
+            <p>{t(`account.${profile ? 'profile' : 'signIn'}`)}</p>
+          </SButton>
+          {profile && <LogoutOutlined className="text-[20px] px-[130px] pt-[15px]" />}
         </Drawer>
 
         <div className="absolute right-[40px] flex">
-          <div className="border-l-2 border-l-gray-1 items-center hidden lg:flex">
-            <SUser
-              onClick={(): void => setIsModalVisible(true)}
-              className=" text-[30px] cursor-pointer"
-            >
-              {t('global.profile')}
-            </SUser>
-            <SExit title={t('global.exit')}>
-              <LogoutOutlined className="text-[20px] px-[20px] cursor-pointer " />
-            </SExit>
+          <div className="border-l-2 border-l-gray-1 text-gray-3 items-center hidden xl:flex pl-[20px]">
+            <SButton onClick={handleClick}>
+              {profile && <UserOutlined />}
+              <p>{t(`account.${profile ? 'profile' : 'signIn'}`)}</p>
+            </SButton>
+            {profile && (
+              <SExit title={t('global.exit')}>
+                <LogoutOutlined className="text-[20px] pr-[20px] cursor-pointer " />
+              </SExit>
+            )}
           </div>
-          <div className="text-[25px] pl-[10px] pt-[5px] lg:hidden">
+
+          <div className="text-[25px] pl-[10px] pt-[5px] xl:hidden">
             <MenuOutlined onClick={(): void => setIsDrawerVisible(true)} />
           </div>
 
@@ -90,7 +104,7 @@ const Navbar: React.FC = () => {
           />
         </div>
 
-        <SDiv className="text-[20px] hidden lg:flex">
+        <SDiv className="text-[20px] hidden xl:flex">
           {tabs('mx-[18px] cursor-pointer hover:text-[#000}')}
         </SDiv>
 

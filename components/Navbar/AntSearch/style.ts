@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Select } from 'antd';
 
-type SelectType = { focus: number; isdown: number; landing: number };
+type SelectType = { focus: number; landing: number };
 export const SSelect = styled(Select)<SelectType>`
   width: ${({ landing }): string => (landing === 1 ? '250px' : '100vw')};
   position: ${({ landing }): string => (landing === 1 ? 'unset' : 'fixed')};
@@ -11,7 +11,6 @@ export const SSelect = styled(Select)<SelectType>`
   font-size: 20px;
   transition: all 0.3s;
 
-  transform: ${({ isdown }): string => (isdown ? 'translateY(-100%)' : 'translateY(0)')};
   ${({ theme }): string => theme.mediaQueries.sm} {
     .ant-select-selector {
       border-radius: ${({ focus }): string => (focus ? '8px' : '20px ')} !important;

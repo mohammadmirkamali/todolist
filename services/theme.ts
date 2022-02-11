@@ -11,7 +11,7 @@ type BreakpointsProp = Array<string> & {
  * https://github.com/system-ui/theme-specification
  */
 
-const breakpoints: BreakpointsProp = ['768px', '1200px'];
+const breakpoints: BreakpointsProp = ['768px', '1280px'];
 
 // aliases
 breakpoints.sm = breakpoints[0];
