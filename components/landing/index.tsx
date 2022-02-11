@@ -22,6 +22,7 @@ const Landing = (): JSX.Element => {
   const mostPopular = [...courses].sort((a, b) => b.count_students - a.count_students);
   const newest = [...courses].sort((a, b) => time(b.created_at) - time(a.created_at));
 
+  // console.log(courses.map((k) => k.teacher_name.replaceAll(' ', '-')));
   return (
     <div className="pt-[70px] bg-gray-0 relative flex-col min-h-full center">
       <HeroSection courses={courses} />

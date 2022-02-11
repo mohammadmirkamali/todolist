@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Tooltip } from 'antd';
+import { Button, Tooltip } from 'antd';
 
 export const SNav = styled.nav`
   height: 70px;
@@ -21,45 +21,22 @@ export const SExit = styled(Tooltip)`
   }
 `;
 
-export const SUser = styled.div`
+export const SButton = styled(Button)`
   transition: all 0.3s;
-  padding: 0 7px 0 15px;
-  border-radius: 10px;
-  background: #211a58;
-  color: #fff;
-  height: 50px;
-  position: relative;
-  transform: scale(0.9);
+  color: ${({ theme }): string => theme.colors.gray[3]};
   font-size: 20px;
+  height: 40px;
+  width: 100%;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-right: 14px;
-
-  :before {
-    content: '';
-    position: absolute;
-    top: 5px;
-    right: -11px;
-    height: 40px;
-    width: 40px;
-    background-image: linear-gradient(220deg, #211a58, #211a58, #fff0, #fff0);
-    transform: rotate(45deg);
-    border-radius: 10px;
+  p {
+    margin: 2px 7px 0 0;
+    font-size: 18px;
   }
 
-  :after {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: -11px;
-    height: 40px;
-    width: 40px;
-    background-image: linear-gradient(-317deg, #211a58, #211a58, #fff0, #fff0);
-    transform: rotate(45deg);
-    border-radius: 10px;
-  }
-  :hover {
-    transform: scale(0.95);
+  ${({ theme }): string => theme.mediaQueries.lg} {
+    width: 160px;
   }
 `;

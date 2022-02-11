@@ -5,11 +5,12 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import { t } from 'i18next';
+import Link from 'next/link';
 import { Button, message, Rate, Skeleton } from 'antd';
 import { getChapterAction } from 'store/course/course.action';
 import { faNumber } from 'utils/common.util';
 import { CourseType } from 'types/course.type';
-import { LessonRoute } from 'services/routes';
+import { LessonRoute, ProfileRoute } from 'services/routes';
 
 const SButton = styled(Button)`
   width: 240px;
@@ -65,20 +66,22 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
         </div>
 
         <div className="text-[18px] pr-[30px]">
-          <div className="py-[30px] flex items-center">
-            <Image
-              src={course.teacher_avatar}
-              width={60}
-              height={60}
-              priority
-              alt={course.teacher_title}
-              className="rounded-full"
-            />
-            <div className="mr-[10px]">
-              <div className="font-bold text-[20px]">{course.teacher_name}</div>
-              <div className="text-[16px]">{course.teacher_title}</div>
+          <Link href={ProfileRoute(course.teacher_name.replaceAll(' ', '-'))} passHref>
+            <div className="py-[30px] flex items-center cursor-pointer">
+              <Image
+                src={course.teacher_avatar}
+                width={60}
+                height={60}
+                priority
+                alt={course.teacher_name}
+                className="rounded-full"
+              />
+              <div className="mr-[10px]">
+                <div className="font-bold text-[20px]">{course.teacher_name}</div>
+                <div className="text-[16px]">{course.teacher_title}</div>
+              </div>
             </div>
-          </div>
+          </Link>
 
           <div className="py-[10px] flex items-center">
             <ClockCircleOutlined className="text-[30px] pr-[10px]" />
@@ -116,7 +119,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           <div className="py-[7px] flex items-center pr-[15px]">
             <Rate value={course.rates_avg} allowHalf />
             <div className="px-[15px] toRight">
-              {`${faNumber(course.rates_avg)} ( ${t('global.person')} ${faNumber(
+              {`( ${t('global.person')} ${faNumber(
                 course.count_rates.toLocaleString(),
               )} ) `}
             </div>

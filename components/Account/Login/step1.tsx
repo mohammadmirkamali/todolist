@@ -34,7 +34,7 @@ const Step2: React.FC<{ setStep: (num) => void }> = ({ setStep }) => {
         <FormField
           name="number"
           type="number"
-          placeholder={t('account.phoneNumber')}
+          placeholder={t('account.number')}
           className="w-[400px] rtl h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px] mt-[70px]"
         />
 

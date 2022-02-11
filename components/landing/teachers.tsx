@@ -1,5 +1,7 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
+import { ProfileRoute } from 'services/routes';
 import { CourseType } from 'types/course.type';
 import Title from './title';
 
@@ -14,20 +16,23 @@ const Teachers: React.FC<TeacherType> = ({ courses }) => {
         {teachers.map((teacher) => {
           const item = courses.find((course) => course.teacher_name === teacher);
           return (
-            <div
-              className="center flex-col my-[10px] md:m-[20px] duration-300 text-center opacity-70 hover:opacity-100 hover:text-blue-2 grayscale-[1] hover:grayscale-0"
+            <Link
+              href={ProfileRoute(teacher.replaceAll(' ', '-'))}
               key={item.id}
+              passHref
             >
-              <Image
-                src={item.teacher_avatar}
-                width={120}
-                height={120}
-                alt={item.teacher_title}
-                className="rounded-full "
-              />
-              <div className="text-[16px] my-[5px] font-bold">{item.teacher_name}</div>
-              <div className="text-[12px] w-[120px]">{item.teacher_title}</div>
-            </div>
+              <div className="center flex-col cursor-pointer my-[10px] md:m-[20px] duration-300 text-center opacity-70 hover:opacity-100 hover:text-blue-2 grayscale-[1] hover:grayscale-0">
+                <Image
+                  src={item.teacher_avatar}
+                  width={120}
+                  height={120}
+                  alt={item.teacher_title}
+                  className="rounded-full "
+                />
+                <div className="text-[16px] my-[5px] font-bold">{item.teacher_name}</div>
+                <div className="text-[12px] w-[120px]">{item.teacher_title}</div>
+              </div>
+            </Link>
           );
         })}
       </div>

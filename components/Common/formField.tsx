@@ -5,6 +5,7 @@ import React, { ReactElement } from 'react';
 export type FieldType = { name: string; className: string };
 const FormField = ({ name, className, ...rest }): ReactElement => {
   const { setFieldTouched, errors, touched, values, handleChange } = useFormikContext();
+
   return (
     <div className="flex flex-col items-start">
       <input
@@ -30,7 +31,7 @@ export const SubmitForm: React.FC<SubmitType> = ({ title, loading, ...rest }) =>
   return (
     <Button
       type="primary"
-      onSubmit={handleSubmit}
+      onClick={(): void => handleSubmit()}
       loading={loading}
       disabled={!dirty}
       {...rest}
