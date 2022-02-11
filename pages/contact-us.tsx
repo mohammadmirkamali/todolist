@@ -2,8 +2,9 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 import { t } from 'i18next';
 
-const Navbar = dynamic(() => import('components/Navbar'));
 const ContactUs = dynamic(() => import('components/ContactUs'));
+const Navbar = dynamic(() => import('components/Navbar'));
+const Footer = dynamic(() => import('components/Footer'));
 const Head = dynamic(() => import('next/head'));
 
 const ContactUsPage: React.FC = () => (
@@ -15,6 +16,7 @@ const ContactUsPage: React.FC = () => (
 
     <Navbar />
     <ContactUs />
+    <Footer />
   </>
 );
 

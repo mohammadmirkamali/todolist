@@ -4,6 +4,7 @@ import { t } from 'i18next';
 
 const Navbar = dynamic(() => import('components/Navbar'));
 const Conditions = dynamic(() => import('components/Conditions'));
+const Footer = dynamic(() => import('components/Footer'));
 const Head = dynamic(() => import('next/head'));
 
 const ConditionsPage: React.FC = () => (
@@ -15,6 +16,7 @@ const ConditionsPage: React.FC = () => (
 
     <Navbar />
     <Conditions />
+    <Footer />
   </>
 );
 
