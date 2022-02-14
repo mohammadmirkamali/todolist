@@ -43,13 +43,13 @@ const Navbar: React.FC = () => {
   const tabs = (style): ReactElement[] =>
     items.map((item) => (
       <Link href={item.tab} key={item.tab} passHref>
-        <div
+        <a
           className={`${style} ${
             item.tab === tab ? 'text-blue-1' : 'text-gray-3'
           } hover:text-black`}
         >
           {t(`navbar.${item.name}`)}
-        </div>
+        </a>
       </Link>
     ));
 
@@ -108,10 +108,10 @@ const Navbar: React.FC = () => {
           {tabs('mx-[18px] cursor-pointer hover:text-[#000}')}
         </SDiv>
 
-        <Link href="/" passHref>
-          <div className="absolute left-[40px] cursor-pointer">
+        <Link href={url.HomeRoute()} passHref>
+          <a className="absolute left-[40px] cursor-pointer">
             <Image src="/main-logo.webp" width={120} height={60} priority alt="" />
-          </div>
+          </a>
         </Link>
 
         <Login isVisible={isModalVisible} setIsVisible={setIsModalVisible} />

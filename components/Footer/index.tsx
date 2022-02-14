@@ -33,9 +33,9 @@ const Footer: React.FC = () => (
       <div className="font-bold text-[18px] mb-[15px]">{t('footer.category')}</div>
       {categories.map((item) => (
         <Link href={item.route} key={item.name} passHref>
-          <div className="text-[16px] cursor-pointer my-[10px]  hover:text-blue-2">
+          <a className="text-[16px] cursor-pointer my-[10px] text-white  hover:text-blue-2 duration-300 block">
             {t(`footer.${item.name}`)}
-          </div>
+          </a>
         </Link>
       ))}
     </div>
@@ -43,9 +43,9 @@ const Footer: React.FC = () => (
       <div className="font-bold text-[18px] mb-[15px]">{t('footer.access')}</div>
       {access.map((item) => (
         <Link href={item.route} key={item.name} passHref>
-          <div className="text-[16px] cursor-pointer my-[10px]  hover:text-blue-2">
+          <a className="text-[16px] cursor-pointer my-[10px] text-white hover:text-blue-2 duration-300 block">
             {t(`footer.${item.name}`)}
-          </div>
+          </a>
         </Link>
       ))}
     </div>
