@@ -39,7 +39,6 @@ const Message: React.FC = () => {
             <p className="m-0 pr-[10px]">{t(`account.${field}`)}</p>
             <FormField
               name={field}
-              contenteditable
               type={
                 field === 'number' ? 'number' : field === 'message' ? 'textarea' : 'text'
               }

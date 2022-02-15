@@ -15,5 +15,6 @@ export const CourseRoute = (id): string => `/${id}`;
 export const LessonRoute = (courseId, lessonId): string => `/${courseId}/${lessonId}`;
 
 export const CheckAuthPhoneUrl = (): string => `/auth/checkAuthPhone`;
+export const PostsUrl = (): string => `/api/v2/getPosts`;
 export const AllCoursesUrl = (): string => `/api/v2/workshops/s/فلسفه`;
 export const CourseUrl = (id): string => `/api/v2/workshop/${id}/getLessons`;

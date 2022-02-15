@@ -45,7 +45,7 @@ const Card: React.FC<{ course: CourseType }> = ({ course }) => {
                 alt={course.teacher_name}
                 className="rounded-full"
               />
-              <div className="mr-[8px]">{course.teacher_name}</div>
+              <div className="mr-[8px] text-gray-3">{course.teacher_name}</div>
             </div>
           </div>
 

@@ -29,6 +29,20 @@ export type LessonType = {
   has_exam: number;
   attaches: { attach_type: string; attach_link: string }[];
 };
+
+export type PostType = {
+  post_img: string;
+  user_name: string;
+  user_avatar: string;
+  datetime_formatDifference: string;
+  created_at: string;
+  post_text: string;
+  post_title: string;
+  post_film: string;
+  post_type: string;
+  post_id: number;
+};
+
 export type ChapterType = {
   id: number;
   name: string;
@@ -39,5 +53,8 @@ export type CourseReducerType = {
   coursesLoading: boolean;
   coursesError: boolean;
   courses: CourseType[];
+  postsLoading: boolean;
+  postsError: boolean;
+  posts: PostType[];
   chapters: { [id: number]: { loading: boolean; error: boolean; data: ChapterType[] } };
 };
