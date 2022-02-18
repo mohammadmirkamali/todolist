@@ -3,8 +3,8 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { t } from 'i18next';
 import { useSelector } from 'react-redux';
-import Loading from 'components/Common/Loading';
 
+const PageLoading = dynamic(() => import('components/Common/pageLoading'));
 const Navbar = dynamic(() => import('components/Navbar'));
 const Profile = dynamic(() => import('components/Profile'));
 const Head = dynamic(() => import('next/head'));
@@ -19,7 +19,7 @@ const ProfilePage: React.FC = () => {
       </Head>
 
       <Navbar />
-      {courses ? <Profile allCourses={courses} /> : <Loading />}
+      {courses ? <Profile allCourses={courses} /> : <PageLoading />}
     </>
   );
 };

@@ -31,6 +31,7 @@ const Navbar: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [tab] = useState(router.route);
+  const [searching, setSearching] = useState(false);
   const courses = useSelector((state) => state.course.courses);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
@@ -104,13 +105,16 @@ const Navbar: React.FC = () => {
           </div>
 
           <AntSearch
+            setSearching={setSearching}
             options={courses?.map((item) => ({ name: item.workshop_title, id: item.id }))}
           />
         </div>
 
-        <SDiv className="text-[20px] hidden xl:flex">
-          {tabs('mx-[18px] cursor-pointer hover:text-[#000}')}
-        </SDiv>
+        {!searching && (
+          <SDiv className="text-[20px] hidden xl:flex">
+            {tabs('mx-[18px] cursor-pointer hover:text-[#000}')}
+          </SDiv>
+        )}
 
         <Link href={url.HomeRoute()} passHref>
           <a className="absolute left-[40px] cursor-pointer">

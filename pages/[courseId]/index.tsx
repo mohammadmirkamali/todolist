@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 
 const Navbar = dynamic(() => import('components/Navbar'));
+const PageLoading = dynamic(() => import('components/Common/pageLoading'));
 const Course = dynamic(() => import('components/Course'));
 const Head = dynamic(() => import('next/head'));
 
@@ -23,7 +24,7 @@ const CoursePage: React.FC = () => {
       </Head>
 
       <Navbar />
-      {course && <Course course={course} />}
+      {course ? <Course course={course} /> : <PageLoading />}
     </>
   );
 };

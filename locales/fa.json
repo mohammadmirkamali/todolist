@@ -93,6 +93,11 @@
   "course": {
     "lessons": "جلسات",
     "students": "دانشجو",
+    "comments": "نظرات",
+    "sendComment": "ارسال نظر",
+    "relatedCourses": "دوره های مرتبط",
+    "rateStudents": "نفرات برتر",
+    "attaches": "پیوست ها",
     "voiceDownload": "دانلود صوت",
     "videoDownload": "دانلود فیلم",
     "pdfDownload": "دانلود درسنامه",
