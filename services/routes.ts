@@ -14,6 +14,11 @@ export const ProfileRoute = (name): string => `/profile/${name}`;
 export const CourseRoute = (id): string => `/${id}`;
 export const LessonRoute = (courseId, lessonId): string => `/${courseId}/${lessonId}`;
 
+export const ProfileUrl = (): string => `/api/v2/getProfile`;
+export const PostsUrl = (): string => `/api/v2/getPosts`;
+export const AllCoursesUrl = (): string => `/api/v2/workshops/s/فلسفه`;
+export const CourseUrl = (id): string => `/api/v2/workshop/${id}/getLessons`;
+
 export const CheckAuthPhoneUrl = (): string => `/api/v2/auth/checkAuthPhone`;
 export const CheckAuthEmailUrl = (): string => `/api/v2/auth/checkAuthEmail`;
 export const ForgetPasswordUrl = (): string => `/api/v2/auth/ForgetPassword_step0`;
@@ -24,6 +29,3 @@ export const EmailVerifyUrl = (): string => `/api/v2/auth/AuthVerifyEmail`;
 export const RegisterUrl = (): string => `/api/v2/auth/registerRequiredFields`;
 export const LoginUrl = (): string => `/api/v2/auth/loginUsingPassword`;
 export const FillFormUrl = (): string => `/api/v2/auth/RegisterRequiredFields`;
-export const PostsUrl = (): string => `/api/v2/getPosts`;
-export const AllCoursesUrl = (): string => `/api/v2/workshops/s/فلسفه`;
-export const CourseUrl = (id): string => `/api/v2/workshop/${id}/getLessons`;
