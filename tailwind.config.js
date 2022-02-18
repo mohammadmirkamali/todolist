@@ -17,6 +17,7 @@ module.exports = {
         'rgba(0,0,0,0.5)',
         '#6c757d', // 8
         'rgb(64 52 52)',
+        '#696969', // 10 next default
       ],
       blue: [
         '#1890ff',

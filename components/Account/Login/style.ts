@@ -6,14 +6,18 @@ export const SSubmitForm = styled(SubmitForm)`
   border-radius: 8px;
   height: 40px;
   font-size: 18px;
-  margin-top: 30px;
-  width: 400px;
+  margin-top: 50px;
+  width: 250px;
+
+  ${({ theme }): string => theme.mediaQueries.sm} {
+    width: 400px;
+  }
 `;
 
 export const SModal = styled(Modal)`
   border-radius: 12px;
   .ant-modal-body {
-    height: 480px;
+    min-height: 480px;
     display: flex;
     justify-content: center;
     align-items: center;

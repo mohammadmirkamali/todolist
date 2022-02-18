@@ -21,7 +21,7 @@ const Teachers: React.FC<TeacherType> = ({ courses }) => {
               key={item.id}
               passHref
             >
-              <div className="center flex-col cursor-pointer my-[10px] md:m-[20px] duration-300 text-center opacity-70 hover:opacity-100 hover:text-blue-2 grayscale-[1] hover:grayscale-0">
+              <a className="center flex-col cursor-pointer my-[10px] md:m-[20px] transition-all duration-500 text-center opacity-70 hover:opacity-100 hover:text-blue-2 grayscale-[1] hover:grayscale-0">
                 <Image
                   src={item.teacher_avatar}
                   width={120}
@@ -31,7 +31,7 @@ const Teachers: React.FC<TeacherType> = ({ courses }) => {
                 />
                 <div className="text-[16px] my-[5px] font-bold">{item.teacher_name}</div>
                 <div className="text-[12px] w-[120px]">{item.teacher_title}</div>
-              </div>
+              </a>
             </Link>
           );
         })}

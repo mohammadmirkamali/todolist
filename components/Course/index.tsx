@@ -65,9 +65,9 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           {t('course.info')}
         </div>
 
-        <div className="text-[18px] pr-[30px]">
+        <div className="text-[18px] pr-[30px] text-gray-10">
           <Link href={ProfileRoute(course.teacher_name.replaceAll(' ', '-'))} passHref>
-            <div className="py-[30px] flex items-center cursor-pointer">
+            <a className="py-[30px] flex items-center cursor-pointer text-gray-10 hover:text-black duration-300">
               <Image
                 src={course.teacher_avatar}
                 width={60}
@@ -76,11 +76,11 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
                 alt={course.teacher_name}
                 className="rounded-full"
               />
-              <div className="mr-[10px]">
+              <div className="mr-[10px] ">
                 <div className="font-bold text-[20px]">{course.teacher_name}</div>
                 <div className="text-[16px]">{course.teacher_title}</div>
               </div>
-            </div>
+            </a>
           </Link>
 
           <div className="py-[10px] flex items-center">

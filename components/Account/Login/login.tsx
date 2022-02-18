@@ -1,11 +1,43 @@
-import React, { useState } from 'react';
-import Step1 from './step1';
-import Step2 from './step2';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import ForgotPasswordCode from './forgotPasswordCode';
+import ForgotPasswordNew from './forgotPasswordNew';
+import EnterPassword from './enterPassword';
+import EnterNumber from './enterNumber';
+import EnterCode from './enterCode';
+import FillForm from './fillForm';
 import { SModal } from './style';
 
 type ModalType = { isVisible: boolean; setIsVisible: (value) => void };
 const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState('number');
+  const [mobile, setMobile] = useState('');
+  const { user } = useSelector((state) => state.account);
+
+  useEffect(() => {
+    user && setIsVisible(false), setStep('number');
+  }, [user]);
+
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const Step = (): ReactElement => {
+    switch (step) {
+      case 'number':
+        return <EnterNumber setStep={setStep} setMobile={setMobile} />;
+      case 'VerifyMobile' || 'AuthVerifyEmail':
+        return <EnterCode setStep={setStep} mobile={mobile} step={step} />;
+      case 'loginUsingPassword':
+        return <EnterPassword setStep={setStep} auth={mobile} />;
+      case 'forgotPasswordCode':
+        return <ForgotPasswordCode setStep={setStep} auth={mobile} />;
+      case 'forgotPasswordNew':
+        return <ForgotPasswordNew setIsVisible={setIsVisible} setStep={setStep} />;
+      case 'fillForm':
+        return <FillForm setIsVisible={setIsVisible} setStep={setStep} />;
+
+      default:
+        return <EnterNumber setStep={setStep} setMobile={setMobile} />;
+    }
+  };
 
   return (
     <SModal
@@ -13,11 +45,11 @@ const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
       title={null}
       footer={null}
       width={600}
+      destroyOnClose
       visible={isVisible}
-      onCancel={(): void => setIsVisible(false)}
+      onCancel={(): void => (setIsVisible(false), setStep('number'))}
     >
-      {step === 1 && <Step1 setStep={setStep} />}
-      {step === 2 && <Step2 setStep={setStep} />}
+      <Step />
     </SModal>
   );
 };

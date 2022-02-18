@@ -93,7 +93,7 @@ const Lesson: React.FC = () => {
             />
           )}
           <Link href={CourseRoute(id)} passHref>
-            <div>
+            <a className="mt-[12px]">
               <Image
                 src="/book.webp"
                 width={40}
@@ -101,7 +101,7 @@ const Lesson: React.FC = () => {
                 alt=""
                 className="hover:translate-y-[-5px] justify-self-center duration-500 cursor-pointer"
               />
-            </div>
+            </a>
           </Link>
           {nextPage && (
             <LeftOutlined
@@ -159,37 +159,41 @@ const Lesson: React.FC = () => {
         ) : (
           <div className="absolute p-[20px] flex-col flex-wrap flex text-[15px] bg-white bottom-[490px] rounded-[8px]  w-full xl:bottom-0 h-[150px]">
             <Link href={lesson.lesson_file} passHref>
-              <div className="mb-5 rounded-[4px] cursor-pointer hover:text-blue-10 duration-300">
+              <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
                 <DownloadOutlined className="ml-[8px] text-[20px]" />
                 {t('global.download')}
-              </div>
+              </a>
             </Link>
             {mp3 && (
               <Link href={mp3.attach_link} passHref>
-                <div className="mb-5 rounded-[4px] cursor-pointer hover:text-blue-10 duration-300">
+                <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
                   <DownloadOutlined className="ml-[8px] text-[20px]" />
                   {t('course.voiceDownload')}
-                </div>
+                </a>
               </Link>
             )}
             {pdf && (
               <Link href={pdf.attach_link} passHref>
-                <div className="mb-5 rounded-[4px] cursor-pointer hover:text-blue-10 duration-300">
+                <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
                   <DownloadOutlined className="ml-[8px] text-[20px]" />
                   {t('course.pdfDownload')}
-                </div>
+                </a>
               </Link>
             )}
             {lesson.has_exam === 1 && (
-              <div className="mb-5 rounded-[4px] items-center flex cursor-pointer hover:text-blue-10 duration-300">
+              <div className="mb-5 rounded-[4px] items-center flex cursor-pointer text-gray-3 hover:text-black duration-300">
                 <FileDoneOutlined className="ml-[8px] text-[25px]" /> {t('course.exam')}
               </div>
             )}
-            <Checkbox className="hover:text-blue-10 duration-300">
-              <div className="mb-5">{t('course.isSeen')}</div>
+            <Checkbox className="text-gray-3 hover:text-black duration-300">
+              <div className="mb-5 text-gray-3 hover:text-black">
+                {t('course.isSeen')}
+              </div>
             </Checkbox>
-            <Checkbox className="hover:text-blue-10 duration-300">
-              {t('course.coversation')}
+            <Checkbox className="text-gray-3 hover:text-black duration-300">
+              <div className="text-gray-3 hover:text-black duration-300">
+                {t('course.coversation')}
+              </div>
             </Checkbox>
           </div>
         )}

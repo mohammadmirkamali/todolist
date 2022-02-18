@@ -43,20 +43,22 @@ const Navbar: React.FC = () => {
   const tabs = (style): ReactElement[] =>
     items.map((item) => (
       <Link href={item.tab} key={item.tab} passHref>
-        <div
+        <a
           className={`${style} ${
             item.tab === tab ? 'text-blue-1' : 'text-gray-3'
-          } hover:text-black`}
+          } hover:text-black `}
         >
           {t(`navbar.${item.name}`)}
-        </div>
+        </a>
       </Link>
     ));
 
   const DrawerTitle = (
-    <div className="absolute left-[40px] top-[15px]">
-      <Image src="/main-logo.webp" width={80} height={40} alt="" />
-    </div>
+    <Link href={url.HomeRoute()}>
+      <a className="absolute left-[30px] top-[15px]">
+        <Image src="/main-logo.webp" width={80} height={40} alt="" />
+      </a>
+    </Link>
   );
 
   const handleClick = (): void => {
@@ -74,12 +76,14 @@ const Navbar: React.FC = () => {
           visible={isDrawerVisible}
           width={330}
         >
-          {tabs('p-5 border-t border-t-gray-4 w-[190px] first:border-none text-[18px]')}
-          <SButton onClick={handleClick}>
-            {profile && <UserOutlined />}
-            <p>{t(`account.${profile ? 'profile' : 'signIn'}`)}</p>
-          </SButton>
-          {profile && <LogoutOutlined className="text-[20px] px-[130px] pt-[15px]" />}
+          <div className="flex flex-col">
+            {tabs('p-5 border-t border-t-gray-4 w-[190px] first:border-none text-[18px]')}
+            <SButton onClick={handleClick} className="mt-[20px]">
+              {profile && <UserOutlined />}
+              <p>{t(`account.${profile ? 'profile' : 'signIn'}`)}</p>
+            </SButton>
+            {profile && <LogoutOutlined className="text-[20px] px-[130px] pt-[15px]" />}
+          </div>
         </Drawer>
 
         <div className="absolute right-[40px] flex">
@@ -108,10 +112,10 @@ const Navbar: React.FC = () => {
           {tabs('mx-[18px] cursor-pointer hover:text-[#000}')}
         </SDiv>
 
-        <Link href="/" passHref>
-          <div className="absolute left-[40px] cursor-pointer">
+        <Link href={url.HomeRoute()} passHref>
+          <a className="absolute left-[40px] cursor-pointer">
             <Image src="/main-logo.webp" width={120} height={60} priority alt="" />
-          </div>
+          </a>
         </Link>
 
         <Login isVisible={isModalVisible} setIsVisible={setIsModalVisible} />
