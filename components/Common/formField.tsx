@@ -8,18 +8,7 @@ const FormField = ({ name, type, className, ...rest }): ReactElement => {
 
   return (
     <div className="flex flex-col items-start">
-      {type === 'textarea' ? (
-        <textarea
-          onBlur={(): void => setFieldTouched(name)}
-          className={`${className} ${
-            touched[name] && errors[name] ? 'border-red-0' : 'border-gray-5'
-          }`}
-          onChange={handleChange}
-          value={values[name]}
-          id={name}
-          {...rest}
-        />
-      ) : (
+      {type !== 'textarea' ? (
         <input
           onBlur={(): void => setFieldTouched(name)}
           className={`${className}  ${
@@ -28,6 +17,17 @@ const FormField = ({ name, type, className, ...rest }): ReactElement => {
           onChange={handleChange}
           value={values[name]}
           type={type}
+          id={name}
+          {...rest}
+        />
+      ) : (
+        <textarea
+          onBlur={(): void => setFieldTouched(name)}
+          className={`${className} ${
+            touched[name] && errors[name] ? 'border-red-0' : 'border-gray-5'
+          }`}
+          onChange={handleChange}
+          value={values[name]}
           id={name}
           {...rest}
         />

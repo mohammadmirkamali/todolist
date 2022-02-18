@@ -68,11 +68,11 @@ input:-webkit-autofill:active {
   }
 
   .toLeft {
-    direction: rtl;
+    direction: rtl !important;
   }
 
   .toRight {
-    direction: ltr;
+    direction: ltr !important;
   }
   .disable {
     color: #00000040;
