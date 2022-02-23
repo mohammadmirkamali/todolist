@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import { t } from 'i18next';
 import * as Yup from 'yup';
 import { message } from 'antd';
-import { setCookie } from 'nookies';
+import { useDispatch } from 'react-redux';
 
 import { EmailVerifyUrl, MobileVerifyUrl } from 'services/routes';
 import FormField from 'components/Common/formField';
 import AppForm from 'components/Common/appForm';
 import { SSubmitForm } from './style';
 import request from 'services/request';
+import { postLoginAction } from 'store/account/account.action';
 
 type CodeType = { setStep: (num) => void; mobile: string; step: string };
 const EnterCode: React.FC<CodeType> = ({ setStep, mobile, step }) => {
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const isEmail = step === 'AuthVerifyEmail';
   const url = isEmail ? EmailVerifyUrl() : MobileVerifyUrl();
   const validationSchema = Yup.object({
@@ -34,7 +36,7 @@ const EnterCode: React.FC<CodeType> = ({ setStep, mobile, step }) => {
           const res: any = await request.post(url, body); // eslint-disable-line
           setLoading(false);
           if (res.ok) {
-            setCookie(null, 'taalei', res.data.token.replaceAll('Bearer ', ''));
+            dispatch(postLoginAction(res.data.user));
             setStep('fillForm');
           } else {
             message.error(res.status === 400 ? res.data.error : t('global.apiError'));

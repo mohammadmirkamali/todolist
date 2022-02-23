@@ -1,5 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { ReactElement, useState } from 'react';
 import ForgotPasswordCode from './forgotPasswordCode';
 import ForgotPasswordNew from './forgotPasswordNew';
 import EnterPassword from './enterPassword';
@@ -12,11 +11,6 @@ type ModalType = { isVisible: boolean; setIsVisible: (value) => void };
 const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
   const [step, setStep] = useState('number');
   const [mobile, setMobile] = useState('');
-  const { user } = useSelector((state) => state.account);
-
-  useEffect(() => {
-    user && setIsVisible(false), setStep('number');
-  }, [user]);
 
   // eslint-disable-next-line react/no-unstable-nested-components
   const Step = (): ReactElement => {
@@ -26,7 +20,7 @@ const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
       case 'VerifyMobile' || 'AuthVerifyEmail':
         return <EnterCode setStep={setStep} mobile={mobile} step={step} />;
       case 'loginUsingPassword':
-        return <EnterPassword setStep={setStep} auth={mobile} />;
+        return <EnterPassword setStep={setStep} auth={mobile} visible={setIsVisible} />;
       case 'forgotPasswordCode':
         return <ForgotPasswordCode setStep={setStep} auth={mobile} />;
       case 'forgotPasswordNew':

@@ -1,6 +1,6 @@
 {
   "global": {
-    "exit": "خروج",
+    "exit": "خروج از حساب کاربری",
     "notFound": "موردی یافت نشد.",
     "search": "جستجو کنید ...",
     "title": "{{title}} | تعالی",
@@ -52,7 +52,9 @@
     "addEmailCode": "کد تایید ایمیل را وارد کنید.",
     "editProfile": "ویرایش پروفایل",
     "birth": "سال تولد",
+    "birthPlaceholder": "1374",
     "email": "ایمیل",
+    "emailPlaceholder": "ایمیل",
     "fillForm": "تکمیل اطلاعات",
     "code": "کد یک بار مصرف",
     "validEmail": "ایمیل معتبر وارد کنید.",
@@ -62,6 +64,9 @@
     "password": "رمز عبور",
     "forgotPassword": "فراموشی رمز عبور",
     "changePassword": "تغییر رمز عبور",
+    "changePasswordPlaceholder": "کد یکبار مصرف",
+    "name": "نام و نام خانوادگی",
+    "namePlaceholder": "نام و نام خانوادگی",
     "currentPassword": "رمز عبور فعلی",
     "newPassword": "رمز عبور جدید",
     "successChangePassword": "رمز عبور با موفقیت تغییر کرد.",

@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
 import { Drawer } from 'antd';
 import Image from 'next/image';
@@ -13,16 +14,15 @@ import { t } from 'i18next';
 import Link from 'next/link';
 
 import { getCoursesAction } from 'store/course/course.action';
-import { SDiv } from 'components/Common/commonStyle';
-import { SButton, SExit, SNav } from './style';
-import AntSearch from './AntSearch';
+import { getUserAction, logoutAction } from 'store/account/account.action';
 import Login from 'components/Account/Login/login';
+import { SButton, SExit, SNav } from './style';
 import * as url from 'services/routes';
+import AntSearch from './AntSearch';
 
 const items = [
   { name: 'home', tab: '/' },
   { name: 'posts', tab: url.PostsRoute() },
-  { name: 'finance', tab: url.FinanceRoute() },
   { name: 'conditions', tab: url.ConditionRoute() },
   { name: 'contactUs', tab: url.ContactUsRoute() },
 ];
@@ -35,11 +35,13 @@ const Navbar: React.FC = () => {
   const courses = useSelector((state) => state.course.courses);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-  const profile = false;
+  const user = useSelector((state) => state.account.user);
 
   useEffect(() => {
+    const token = parseCookies().taalei;
+    token && !user && dispatch(getUserAction());
     !courses && dispatch(getCoursesAction());
-  }, [courses]);
+  }, [courses, user]);
 
   const tabs = (style): ReactElement[] =>
     items.map((item) => (
@@ -63,7 +65,7 @@ const Navbar: React.FC = () => {
   );
 
   const handleClick = (): void => {
-    profile ? router.push(url.ProfileRoute('account')) : setIsModalVisible(true);
+    user ? router.push(url.ProfileRoute('user')) : setIsModalVisible(true);
   };
 
   return (
@@ -80,22 +82,27 @@ const Navbar: React.FC = () => {
           <div className="flex flex-col">
             {tabs('p-5 border-t border-t-gray-4 w-[190px] first:border-none text-[18px]')}
             <SButton onClick={handleClick} className="mt-[20px]">
-              {profile && <UserOutlined />}
-              <p>{t(`account.${profile ? 'profile' : 'signIn'}`)}</p>
+              {user && <UserOutlined />}
+              <p>{t(`account.${user ? 'profile' : 'signIn'}`)}</p>
             </SButton>
-            {profile && <LogoutOutlined className="text-[20px] px-[130px] pt-[15px]" />}
+            {user && <LogoutOutlined className="text-[20px] px-[130px] pt-[15px]" />}
           </div>
         </Drawer>
 
         <div className="absolute right-[40px] flex">
           <div className="border-l-2 border-l-gray-1 text-gray-3 items-center hidden xl:flex pl-[20px]">
             <SButton onClick={handleClick}>
-              {profile && <UserOutlined />}
-              <p>{t(`account.${profile ? 'profile' : 'signIn'}`)}</p>
+              {user && <UserOutlined />}
+              <p>{t(`account.${user ? 'profile' : 'signIn'}`)}</p>
             </SButton>
-            {profile && (
-              <SExit title={t('global.exit')}>
-                <LogoutOutlined className="text-[20px] pr-[20px] cursor-pointer " />
+            {user && (
+              <SExit title={t('global.exit')} placement="left">
+                <LogoutOutlined
+                  onClick={(): void => {
+                    dispatch(logoutAction());
+                  }}
+                  className="text-[20px] pr-[20px] cursor-pointer "
+                />
               </SExit>
             )}
           </div>
@@ -111,9 +118,9 @@ const Navbar: React.FC = () => {
         </div>
 
         {!searching && (
-          <SDiv className="text-[20px] hidden xl:flex">
+          <div className="text-[20px] hidden xl:flex">
             {tabs('mx-[18px] cursor-pointer hover:text-[#000}')}
-          </SDiv>
+          </div>
         )}
 
         <Link href={url.HomeRoute()} passHref>

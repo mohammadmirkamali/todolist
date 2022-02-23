@@ -1,22 +1,22 @@
-import { Modal } from 'antd';
+import { message, Modal } from 'antd';
 import { t } from 'i18next';
-import React from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 import AppForm from 'components/Common/appForm';
 import FormField from 'components/Common/formField';
 import { SSubmitForm } from './style';
+import { ForgetPasswordNewUrl } from 'services/routes';
+import request from 'services/request';
 
 type EditPasswordType = {
   visible: boolean;
   setIsModalVisible: (e) => void;
 };
 
-const fields = ['currentPassword', 'newPassword', 'repeatNewPassword'];
+const fields = ['newPassword', 'repeatNewPassword'];
 const EditPassword: React.FC<EditPasswordType> = ({ visible, setIsModalVisible }) => {
+  const [loading, setLoading] = useState(false);
   const validationSchema = Yup.object({
-    currentPassword: Yup.string()
-      .min(8, t('account.min8'))
-      .required(t('account.emptyField')),
     newPassword: Yup.string().min(8, t('account.min8')).required(t('account.emptyField')),
     repeatNewPassword: Yup.string()
       .min(8, t('account.min8'))
@@ -36,11 +36,19 @@ const EditPassword: React.FC<EditPasswordType> = ({ visible, setIsModalVisible }
         <div className="text-[26px] font-bold">{t(`account.changePassword`)}</div>
 
         <AppForm
-          initialValues={{ currentPassword: '', newPassword: '', repeatNewPassword: '' }}
+          initialValues={{ newPassword: '', repeatNewPassword: '' }}
           validationSchema={validationSchema}
-          onSubmit={(values): void => {
-            // console.log(values, 22);
-            // dispatch(postCheckPhoneAction('phone=09356942668'));
+          onSubmit={async (values): Promise<void> => {
+            setLoading(true);
+            const body = { password: values.newPassword };
+            const res = await request.post(ForgetPasswordNewUrl(), body);
+            setLoading(false);
+            if (res.ok) {
+              setIsModalVisible(false);
+              message.success(t('account.successChangePassword'));
+            } else {
+              message.error(t('global.apiError'));
+            }
           }}
         >
           {fields.map((item, index) => (
@@ -58,7 +66,7 @@ const EditPassword: React.FC<EditPasswordType> = ({ visible, setIsModalVisible }
             </div>
           ))}
 
-          <SSubmitForm title={t('account.approved')} />
+          <SSubmitForm loading={loading} title={t('account.approved')} />
         </AppForm>
       </div>
     </Modal>

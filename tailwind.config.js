@@ -18,6 +18,9 @@ module.exports = {
         '#6c757d', // 8
         'rgb(64 52 52)',
         '#696969', // 10 next default
+        '#fafafa',
+        '#888', // 12 hover
+        '#1a1a1a',
       ],
       blue: [
         '#1890ff',
@@ -38,7 +41,7 @@ module.exports = {
     backgroundImage: {
       search: "url('public/logo.webp)",
     },
-    border: [],
+    border: ['1px solid #888'],
     shadows: [],
   },
   plugins: [],
