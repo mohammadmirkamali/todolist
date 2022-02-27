@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CloseOutlined } from '@ant-design/icons';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Skeleton } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -18,6 +17,7 @@ import {
 import { getPostsAction } from 'store/course/course.action';
 import { PostsRoute } from 'services/routes';
 import Card from './card';
+import PageLoading from 'components/Common/pageLoading';
 
 const Posts: React.FC = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const Posts: React.FC = () => {
   }, []);
 
   if (!posts) {
-    return <Skeleton active paragraph={{ rows: 4 }} className="p-[80px]" />;
+    return <PageLoading />;
   }
 
   return (

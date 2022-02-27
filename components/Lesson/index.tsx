@@ -1,12 +1,6 @@
-import {
-  DownloadOutlined,
-  FileDoneOutlined,
-  LeftOutlined,
-  RightOutlined,
-} from '@ant-design/icons';
+import { DownloadOutlined, FileDoneOutlined } from '@ant-design/icons';
 import { Checkbox, message, Skeleton } from 'antd';
 import { t } from 'i18next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -24,6 +18,7 @@ import { CourseRoute, LessonRoute } from 'services/routes';
 import { getChapterAction } from 'store/course/course.action';
 import { LessonType } from 'types/course.type';
 import { faNumber } from 'utils/common.util';
+import { LeftArrow, MenuItems, RightArrow } from 'components/Common/AnitmateLogo';
 
 const Lesson: React.FC = () => {
   const dispatch = useDispatch();
@@ -86,32 +81,26 @@ const Lesson: React.FC = () => {
 
       <div className="w-[300px] mb-[20px] rounded-[8px] xl:rounded mt-[170px] xl:mt-0 xl:mb-0 h-[470px] md:w-[600px] xl:pb-[23rem] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
         <div className="h-[70px] center w-full border-b-gray-1 relative px-[40px] border-b font-bold text-[18px]">
-          {prePage && (
-            <RightOutlined
-              onClick={(): void => onLesson(prePage)}
-              className="text-[20px] hover:translate-x-[5px] absolute right-12 duration-500 cursor-pointer"
-            />
-          )}
+          <RightArrow
+            disable={!prePage}
+            className="right-12 absolute"
+            onClick={(): void => prePage && onLesson(prePage)}
+          />
+
           <Link href={CourseRoute(id)} passHref>
-            <a className="mt-[12px]">
-              <Image
-                src="/book.webp"
-                width={40}
-                height={40}
-                alt=""
-                className="hover:translate-y-[-5px] justify-self-center duration-500 cursor-pointer"
-              />
+            <a>
+              <MenuItems />
             </a>
           </Link>
-          {nextPage && (
-            <LeftOutlined
-              onClick={(): void => onLesson(nextPage)}
-              className="text-[20px] absolute left-12 hover:translate-x-[-5px] duration-500 cursor-pointer"
-            />
-          )}
+
+          <LeftArrow
+            disable={!nextPage}
+            className="left-12 absolute"
+            onClick={(): void => nextPage && onLesson(nextPage)}
+          />
         </div>
 
-        <div className="overflow-auto h-[400px] xl:h-[100%] toRight pb-[200px] ">
+        <div className="overflow-auto h-[400px] xl:h-[100%] toRight">
           {!data ? (
             <div className="m-[15px]">
               <Skeleton active />

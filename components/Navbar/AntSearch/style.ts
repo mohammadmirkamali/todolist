@@ -11,15 +11,26 @@ export const SSelect = styled(Select)<SelectType>`
   font-size: 20px;
   transition: all 0.3s;
 
+  .ant-select-selector {
+    border-color: ${({ focus, theme }): string =>
+      focus && theme.colors.gray[12]} !important;
+    box-shadow: none !important;
+    :hover {
+      border: ${({ theme }): string => theme.borders[0]} !important;
+    }
+  }
+
   ${({ theme }): string => theme.mediaQueries.sm} {
     .ant-select-selector {
       border-radius: ${({ focus }): string => (focus ? '8px' : '20px ')} !important;
       height: ${({ landing }): string => landing === 1 && '50px'} !important;
+      padding-top: ${({ landing }): string => landing === 1 && '5px'} !important;
+
       input {
         height: ${({ landing }): string => landing === 1 && '50px'} !important;
       }
-      padding-top: ${({ landing }): string => landing === 1 && '5px'} !important;
     }
+
     transform: translateY(0);
     margin: ${({ landing }): string => (landing === 1 ? '12px 0' : '4px 12px')};
     position: unset;

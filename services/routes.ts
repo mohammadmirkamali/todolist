@@ -18,7 +18,10 @@ export const ProfileUrl = (): string => `/api/v2/getProfile`;
 export const PostsUrl = (): string => `/api/v2/getPosts`;
 export const AllCoursesUrl = (): string => `/api/v2/workshops/s/فلسفه`;
 export const CourseUrl = (id): string => `/api/v2/workshop/${id}/getLessons`;
+export const WebinarUrl = (id): string => `/api/v2/webinar/${id}`;
+export const WorkshopUrl = (id): string => `/api/v2/workshop/${id}`;
 
+export const UserUrl = (): string => `/api/v2/getInforUser`;
 export const CheckAuthPhoneUrl = (): string => `/api/v2/auth/checkAuthPhone`;
 export const CheckAuthEmailUrl = (): string => `/api/v2/auth/checkAuthEmail`;
 export const ForgetPasswordUrl = (): string => `/api/v2/auth/ForgetPassword_step0`;
@@ -26,6 +29,7 @@ export const ForgetPasswordCodedUrl = (): string => `/api/v2/auth/ForgetPassword
 export const ForgetPasswordNewUrl = (): string => `/api/v2/auth/ForgetPassword_step2`;
 export const MobileVerifyUrl = (): string => `/api/v2/auth/mobileVerifyCode`;
 export const EmailVerifyUrl = (): string => `/api/v2/auth/AuthVerifyEmail`;
-export const RegisterUrl = (): string => `/api/v2/auth/registerRequiredFields`;
 export const LoginUrl = (): string => `/api/v2/auth/loginUsingPassword`;
 export const FillFormUrl = (): string => `/api/v2/auth/RegisterRequiredFields`;
+export const ChangeMobileUrl = (): string => `/api/v2/auth/changeMobileOrEmail`;
+export const ConfirmMobileUrl = (): string => `/api/v2/auth/confirmMobileOrEmail`;

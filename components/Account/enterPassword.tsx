@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { t } from 'i18next';
 import * as Yup from 'yup';
 import { message } from 'antd';
@@ -8,12 +8,12 @@ import { SSubmitForm } from './style';
 import AppForm from 'components/Common/appForm';
 import FormField from 'components/Common/formField';
 import request from 'services/request';
-import { ForgetPasswordUrl } from 'services/routes';
+import { ForgetPasswordUrl, LoginUrl } from 'services/routes';
 
-type PasswordType = { auth: string; setStep: (item) => void };
-const EnterPassword: React.FC<PasswordType> = ({ auth, setStep }) => {
+type PasswordType = { auth: string; setStep: (item) => void; visible: (item) => void };
+const EnterPassword: React.FC<PasswordType> = ({ auth, setStep, visible }) => {
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.account.userLoading);
+  const [loading, setLoading] = useState(false);
   const validationSchema = Yup.object({
     password: Yup.string().required(t('account.emptyField')),
   });
@@ -35,9 +35,18 @@ const EnterPassword: React.FC<PasswordType> = ({ auth, setStep }) => {
       <AppForm
         initialValues={{ password: '' }}
         validationSchema={validationSchema}
-        onSubmit={(values): void => {
+        onSubmit={async (values): Promise<void> => {
+          setLoading(true);
           const body = { auth, AuthType: 'mobile', password: values.password };
-          dispatch(postLoginAction(body));
+          const res: any = await request.post(LoginUrl(), body); // eslint-disable-line
+          setLoading(false);
+          if (res.ok) {
+            visible(false);
+            setStep('number');
+            dispatch(postLoginAction(res.data.user));
+          } else {
+            message.error(t('global.apiError'));
+          }
         }}
       >
         <FormField

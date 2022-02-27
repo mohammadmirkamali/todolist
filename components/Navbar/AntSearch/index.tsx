@@ -8,9 +8,13 @@ import { SSelect } from './style';
 import useWindowSize from 'hooks/useWidowsSize';
 import { CourseRoute } from 'services/routes';
 
-type SearchType = { options: { name: string; id: number }[]; landing?: boolean };
+type SearchType = {
+  options: { name: string; id: number }[];
+  landing?: boolean;
+  setSearching: (e) => void;
+};
 
-const AntSearch: React.FC<SearchType> = ({ options, landing }) => {
+const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => {
   const [focus, setFocus] = useState(landing);
   const [open, setOpen] = useState(false);
   const [size] = useWindowSize();
@@ -37,10 +41,12 @@ const AntSearch: React.FC<SearchType> = ({ options, landing }) => {
       }
       onSelect={onSelect}
       value={null}
-      onFocus={(): void => setFocus(true)}
+      onFocus={(): void => (setFocus(true), setSearching(true))}
       onSearch={(e): void => setOpen(e.length > 0)}
       notFoundContent={<>{t('global.notFound')}</>}
-      onBlur={(): void => (setOpen(false), !landing && setFocus(false))}
+      onBlur={(): void => (
+        setOpen(false), !landing && (setFocus(false), setSearching(false))
+      )}
       placeholder={
         landing ? (
           t(size > 768 ? 'landing.searchTitle' : 'global.search')

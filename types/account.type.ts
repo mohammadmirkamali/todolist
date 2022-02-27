@@ -12,7 +12,5 @@ export type UserType = {
 };
 
 export type AccountType = {
-  userLoading: boolean;
-  userError: boolean;
   user: UserType;
 };

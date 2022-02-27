@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
-import { setCookie } from 'nookies';
+import { useDispatch } from 'react-redux';
 import { t } from 'i18next';
 import * as Yup from 'yup';
 import { SSubmitForm } from './style';
@@ -8,10 +8,12 @@ import AppForm from 'components/Common/appForm';
 import FormField from 'components/Common/formField';
 import request from 'services/request';
 import { ForgetPasswordCodedUrl } from 'services/routes';
+import { postLoginAction } from 'store/account/account.action';
 
 type ForgotType = { setStep: (num) => void; auth: string };
 const ForgotPasswordCode: React.FC<ForgotType> = ({ setStep, auth }) => {
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const validationSchema = Yup.object({
     number: Yup.number().required(t('account.emptyField')),
   });
@@ -32,7 +34,7 @@ const ForgotPasswordCode: React.FC<ForgotType> = ({ setStep, auth }) => {
             if (res.data.error) {
               message.error(res.data.error);
             } else {
-              setCookie(null, 'taalei', res.data.token.replace('Bearer ', ''));
+              dispatch(postLoginAction(res.data.user));
               setStep('forgotPasswordNew');
             }
           } else {
