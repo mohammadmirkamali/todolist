@@ -27,7 +27,7 @@ const Lesson: React.FC = () => {
   const id = router.query.courseId as string;
   const lessonId = router.query.lessonId as string;
   const chapters = useSelector((state) => state.course.chapters);
-  const data = chapters?.[id]?.data;
+  const data = chapters?.[id]?.data?.data;
   const lessons = data?.map((item) => item.lessons.map((k) => k)).flat();
   const index = lessons?.findIndex((item) => item.lesson_id === Number(lessonId));
   const lesson = lessons?.[index] as LessonType;
