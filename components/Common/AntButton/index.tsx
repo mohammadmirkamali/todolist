@@ -3,14 +3,19 @@ import { Button } from 'antd';
 import React from 'react';
 
 export const SButton = styled(Button)`
+  border-radius: 8px;
+  transition: all 0.3s;
+  border: 1px solid;
+  color: ${({ theme }): string => theme.colors.gray[12]};
+  border-color: ${({ theme }): string => theme.colors.gray[5]};
   :hover {
-    color: #000 !important;
-    border: ${({ theme }): string => theme.borders[0]};
+    color: #000;
+    border-color: #000;
   }
 
   :focus {
-    color: #000 !important;
-    border: ${({ theme }): string => theme.borders[0]};
+    color: #000;
+    border-color: #000;
   }
 `;
 

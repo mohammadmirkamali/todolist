@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     colors: {
       purple: [],
-      green: ['#1de9b6', '#79b832'],
+      green: ['#1de9b6', '#79b832', 'rgb(129,178,20)'],
       red: ['#E53935'],
       yellow: [],
       gray: [
@@ -41,7 +41,7 @@ module.exports = {
     backgroundImage: {
       search: "url('public/logo.webp)",
     },
-    border: ['1px solid #888'],
+    border: ['1px solid #6c757d !important', '1px solid #000'],
     shadows: [],
   },
   plugins: [],

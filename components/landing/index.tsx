@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import HeroSection from './heroSection';
 import Slider from './slider';
 import { CourseType } from 'types/course.type';
+import request from 'services/request';
+import { WebinarUrl } from 'services/routes';
 
 const Info = dynamic(() => import('./Info'));
 const Teachers = dynamic(() => import('./teachers'));

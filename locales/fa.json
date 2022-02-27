@@ -11,9 +11,11 @@
     "register": "ثبت نام",
     "minute": "دقیقه",
     "see": "مشاهده",
+    "date": "تاریخ",
     "number": "عدد",
     "approve": "تایید",
     "course": "جلسه",
+    "courses": "جلسات",
     "newest": "جدیدترین",
     "mostPopular": "محبوب ترین",
     "download": "دانلود",
@@ -23,6 +25,8 @@
     "retray": "تلاش مجدد",
     "send": "ارسال",
     "name": "نام",
+    "online": "آنلاین",
+    "status": "وضعیت",
     "family": "نام خانوادگی",
     "sex": "جنسیت",
     "man": "مرد",
@@ -102,6 +106,7 @@
     "sendComment": "ارسال نظر",
     "relatedCourses": "دوره های مرتبط",
     "rateStudents": "نفرات برتر",
+    "yourRate": "جایگاه شما",
     "attaches": "پیوست ها",
     "voiceDownload": "دانلود صوت",
     "videoDownload": "دانلود فیلم",
@@ -131,6 +136,14 @@
     "addEmail": "ایمیل خود را وارد کنید",
     "teacherSubTitle": "مربیانی که از دید کاربران بهترین شیوه تدریس را دارند.",
     "popularCoursesInfo": "دوره هایی که اکثر کاربران در آن ثبت نام کرده اند"
+  },
+  "webinar": {
+    "active": "درحال ثبت نام",
+    "headline": "سرفصل ها",
+    "register": "ثبت نام رویداد",
+    "link": "لینک ورود",
+    "to": "الی",
+    "type": "نوع رویداد"
   },
   "footer": {
     "category": "دسته بندی ها",

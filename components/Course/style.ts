@@ -1,17 +1,17 @@
 import styled from '@emotion/styled';
-import { Button } from 'antd';
+import AntButton from 'components/Common/AntButton';
 
-export const SButton = styled(Button)`
+export const SButton = styled(AntButton)`
   width: 240px;
   height: 40px;
   margin: 40px 0;
   border-radius: 8px;
-  font-size: 20px;
+  font-size: 18px;
   ${({ theme }): string => theme.mediaQueries.sm} {
     width: 290px;
   }
 `;
-export const SComment = styled(Button)`
+export const SComment = styled(AntButton)`
   width: 240px;
   height: 35px;
   border-radius: 8px;

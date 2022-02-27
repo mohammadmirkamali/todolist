@@ -7,7 +7,7 @@ import { LessonRoute } from 'services/routes';
 import { faNumber } from 'utils/common.util';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const Lessons = ({ profile, id, data }) => {
+const Lessons = ({ user, id, data }) => {
   const router = useRouter();
   //   const onLesson = (item): void => {
   //     item.lesson_free || profile
@@ -35,9 +35,7 @@ const Lessons = ({ profile, id, data }) => {
                 <a>
                   <div
                     className={`text-[16px] px-[40px] py-[15px] text-black ${
-                      item.lesson_free || profile
-                        ? 'cursor-pointer'
-                        : 'cursor-not-allowed'
+                      item.lesson_free || user ? 'cursor-pointer' : 'cursor-not-allowed'
                     } hover:bg-gray-4 duration-300`}
                   >
                     <div>

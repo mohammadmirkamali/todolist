@@ -15,7 +15,7 @@ import Link from 'next/link';
 
 import { getCoursesAction } from 'store/course/course.action';
 import { getUserAction, logoutAction } from 'store/account/account.action';
-import Login from 'components/Account/Login/login';
+import Login from 'components/Account/login';
 import { SButton, SExit, SNav } from './style';
 import * as url from 'services/routes';
 import AntSearch from './AntSearch';

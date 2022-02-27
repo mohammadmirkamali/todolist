@@ -1,5 +1,5 @@
 import { EditOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { message, Select } from 'antd';
@@ -13,7 +13,6 @@ import { SSelect } from './style';
 import { UserType } from 'types/account.type';
 import request from 'services/request';
 import { ChangeMobileUrl } from 'services/routes';
-import ForgotPasswordNew from 'components/Account/Login/forgotPasswordNew';
 
 const { Option } = Select;
 const time = (date): number => new Date(date).getTime();

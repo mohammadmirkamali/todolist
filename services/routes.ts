@@ -20,8 +20,8 @@ export const AllCoursesUrl = (): string => `/api/v2/workshops/s/فلسفه`;
 export const CourseUrl = (id): string => `/api/v2/workshop/${id}/getLessons`;
 export const WebinarUrl = (id): string => `/api/v2/webinar/${id}`;
 export const WorkshopUrl = (id): string => `/api/v2/workshop/${id}`;
-export const UserUrl = (): string => `/api/v2/getInforUser`;
 
+export const UserUrl = (): string => `/api/v2/getInforUser`;
 export const CheckAuthPhoneUrl = (): string => `/api/v2/auth/checkAuthPhone`;
 export const CheckAuthEmailUrl = (): string => `/api/v2/auth/checkAuthEmail`;
 export const ForgetPasswordUrl = (): string => `/api/v2/auth/ForgetPassword_step0`;

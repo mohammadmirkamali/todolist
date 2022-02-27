@@ -8,6 +8,7 @@ const initialState: CourseReducerType = {
   postsLoading: false,
   posts: null,
   postsError: false,
+  webinar: null,
   chapters: null,
 };
 
@@ -38,6 +39,31 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
     case type.GET_COURSE_ERROR:
       return { ...state, coursesLoading: false, courses: null, coursesError: true };
 
+    case type.GET_WEBINAR_REQUEST:
+      return {
+        ...state,
+        webinar: {
+          ...state.webinar,
+          [action.id]: { loading: true, data: null, error: null },
+        },
+      };
+    case type.GET_WEBINAR_SUCCESS:
+      return {
+        ...state,
+        webinar: {
+          ...state.webinar,
+          [action.id]: { loading: false, data: action.payload, error: null },
+        },
+      };
+    case type.GET_WEBINAR_ERROR:
+      return {
+        ...state,
+        webinar: {
+          ...state.webinar,
+          [action.id]: { loading: true, data: null, error: true },
+        },
+      };
+
     case type.GET_CHAPTER_REQUEST:
       return {
         ...state,
@@ -51,7 +77,15 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
         ...state,
         chapters: {
           ...state.chapters,
-          [action.id]: { loading: false, data: action.payload, error: null },
+          [action.id]: {
+            loading: false,
+            data: {
+              data: action.payload,
+              topRate: action.workShop.top_users,
+              userRate: action.workShop.user_rate,
+            },
+            error: null,
+          },
         },
       };
     case type.GET_CHAPTER_ERROR:

@@ -24,7 +24,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
   const [swiper, setSwiper] = useState({} as any); // eslint-disable-line
   const [slideId, setSlideId] = useState(0);
   const data = chapters?.[id]?.data;
-  const profile = true; // to do ...
+  const user = useSelector((state) => state.account.user);
 
   useEffect(() => {
     (!chapters || !chapters?.[id]) && dispatch(getChapterAction(id));
@@ -39,6 +39,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
 
   return (
     <div className="bg-gray-0 pt-[110px] duration-300 md:pt-[70px] min-h-screen flex xl:block flex-col center">
+      {/* title and description */}
       <div className=" w-[300px] md:w-[600px] xl:px-[370px] py-[20px] xl:justify-self-start xl:w-full ">
         <div className="w-full bg-white rounded-[8px]">
           <h2 className="h-[70px] center w-full font-bold text-[26px] m-[0px]">
@@ -68,16 +69,17 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
         </div>
       </div>
 
+      {/* information */}
       <div className="w-[300px] border-b border-b-gray-1 md:w-[600px] xl:fixed left-0 top-[70px]  xl:w-[350px] xl:h-[calc(100%-70px)] bg-white z-10">
-        <div className="h-[70px] center w-full border-b-gray-1 border-b font-bold text-[18px]">
+        <div className="h-[55px] center w-full border-b-gray-1 border-b font-bold text-[18px]">
           {t('course.info')}
         </div>
 
-        <Information course={course} profile={profile} />
+        <Information course={course} user={user} data={data} />
       </div>
 
       <div className="w-[300px] h-[620px] md:w-[600px]   xl:fixed right-0 top-[70px] bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
-        <div className="h-[70px] center w-full flex flex-row-reverse border-b-gray-1 border-b text-gray-3 text-[18px]">
+        <div className="h-[55px] center w-full flex flex-row-reverse border-b-gray-1 border-b text-gray-3 text-[18px]">
           {tabs.map((item, index) => (
             <span
               key={item}
@@ -108,7 +110,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
               <UserComment />
             </SwiperSlide>
             <SwiperSlide className="min-h-full overflow-auto">
-              <Lessons profile={profile} data={data} id={id} />
+              <Lessons user={user} data={data?.data} id={id} />
             </SwiperSlide>
           </Swiper>
         </div>
