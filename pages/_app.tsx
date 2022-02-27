@@ -2,6 +2,7 @@ import React from 'react';
 import { ThemeProvider } from '@emotion/react';
 import type { AppProps } from 'next/app';
 import { ConfigProvider } from 'antd';
+import NextNProgress from 'nextjs-progressbar';
 import ReduxLayout from 'store/with-redux-store';
 import theme from 'services/theme';
 import 'video-react/dist/video-react.css';
@@ -17,6 +18,13 @@ const EnigmaApp = ({ Component, pageProps }: AppProps): React.ReactElement => (
     <ConfigProvider direction="rtl">
       <ReduxLayout>
         <Component {...pageProps} />
+        <NextNProgress
+          color="#29D"
+          startPosition={0.3}
+          stopDelayMs={200}
+          height={3}
+          showOnShallow
+        />
       </ReduxLayout>
     </ConfigProvider>
   </ThemeProvider>
