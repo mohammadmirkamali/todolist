@@ -11,7 +11,7 @@ import { faNumber } from 'utils/common.util';
 
 const SSubmitForm = styled(SubmitForm)`
   border-radius: 8px;
-  height: 35px;
+  height: 40px;
   font-size: 16px;
   width: 70px;
   margin-right: 10px;
@@ -47,12 +47,12 @@ const AskUs: React.FC = () => {
             // console.log(values.email);
           }}
         >
-          <div className="flex">
+          <div className="flex mt-4">
             <FormField
               name="email"
               type="email"
               placeholder={t('landing.addEmail')}
-              className="w-[200px]  h-[35px] border overflow-hidden rounded-[8px] px-[5px] text-[14px]"
+              className="w-[200px] h-[40px] overflow-hidden px-[5px] text-[14px]"
             />
 
             <SSubmitForm title={t('global.approve')} />
