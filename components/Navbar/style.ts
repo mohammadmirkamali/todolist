@@ -24,8 +24,7 @@ export const SExit = styled(Tooltip)`
 
 export const SButton = styled(AntButton)`
   transition: all 0.3s;
-  color: ${({ theme }): string => theme.colors.white};
-  background-color: ${({ theme }): string => theme.colors.blue[2]};
+  color: ${({ theme }): string => theme.colors.gray[3]};
   font-size: 20px;
   height: 40px;
   width: 100%;
