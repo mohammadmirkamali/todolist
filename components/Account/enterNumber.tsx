@@ -24,7 +24,7 @@ const EnterNumber: React.FC<NumberType> = ({ setStep, setMobile }) => {
   return (
     <div className=" flex flex-col justify-center items-center">
       <div className="text-[26px] font-bold">{t('account.signIn')}</div>
-      <div className="text-[18px] my-[15px]">
+      <div className="text-[18px] mt-[15px]">
         {t(`account.signInInfo${isEmail ? 'Email' : ''}`)}
       </div>
 
@@ -62,7 +62,7 @@ const EnterNumber: React.FC<NumberType> = ({ setStep, setMobile }) => {
           name="number"
           type={isEmail ? 'email' : 'number'}
           placeholder={t(`account.${isEmail ? 'email' : 'number'}`)}
-          className="w-[250px] md:w-[400px] toRight h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px]"
+          className="w-[250px] md:w-[400px] toRight h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px] mt-[50px]"
         />
 
         <SSubmitForm loading={loading} title={t('account.approved')} />
