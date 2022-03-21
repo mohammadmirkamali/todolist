@@ -11,7 +11,7 @@ import { CourseRoute } from 'services/routes';
 type SearchType = {
   options: { name: string; id: number }[];
   landing?: boolean;
-  setSearching: (e) => void;
+  setSearching?: (e) => void;
 };
 
 const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => {
@@ -41,11 +41,11 @@ const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => 
       }
       onSelect={onSelect}
       value={null}
-      onFocus={(): void => (setFocus(true), setSearching(true))}
+      onFocus={(): void => (setFocus(true), !landing && setSearching(true))}
       onSearch={(e): void => setOpen(e.length > 0)}
       notFoundContent={<>{t('global.notFound')}</>}
       onBlur={(): void => (
-        setOpen(false), !landing && (setFocus(false), setSearching(false))
+        setOpen(false), !landing && (setFocus(false), !landing && setSearching(false))
       )}
       placeholder={
         landing ? (
