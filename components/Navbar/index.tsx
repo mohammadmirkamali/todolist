@@ -23,6 +23,7 @@ import AntSearch from './AntSearch';
 const items = [
   { name: 'home', tab: '/' },
   { name: 'posts', tab: url.PostsRoute() },
+  { name: 'webinar', tab: url.WebinarRoute() },
   { name: 'conditions', tab: url.ConditionRoute() },
   { name: 'contactUs', tab: url.ContactUsRoute() },
 ];
