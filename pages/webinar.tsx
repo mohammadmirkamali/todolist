@@ -18,7 +18,7 @@ const WebinarPage: React.FC = () => {
   // const webinar = useSelector((state) => state.course.webinar?.[id].data);
 
   // useEffect(() => {
-  //   id && !webinar && dispatch(getWebinarAction(id));
+  //   id && !webinar && dispatch(getWebinarAction(id));npm
   // }, [id, webinar]);
 
   return (

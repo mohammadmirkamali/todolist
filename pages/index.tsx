@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const PageLoading = dynamic(() => import('components/Common/pageLoading'));
 const Navbar = dynamic(() => import('components/Navbar'));
-const Landing = dynamic(() => import('components/Landing'));
+const Landing = dynamic(() => import('components/landing'));
 const Head = dynamic(() => import('next/head'));
 
 const Home: React.FC = () => {
