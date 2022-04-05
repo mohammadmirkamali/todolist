@@ -8,6 +8,7 @@ import FormField from 'components/Common/formField';
 import AppForm from 'components/Common/appForm';
 
 const Step2: React.FC<{ setStep: (num) => void }> = ({ setStep }) => {
+
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.account.postPhoneLoading);
   const validationSchema = Yup.object({
