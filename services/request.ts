@@ -3,7 +3,7 @@ import { parseCookies } from 'nookies';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'https://taalei-edu.ir';
-const newURL = process.env.NEXT_PUBLIC_NEW_URL || 'https://taalei-edu.com';
+const newURL = process.env.NEXT_PUBLIC_NEW_URL || 'https://api.taalei-edu.com';
 
 // create main request configs
 const request = ((): ApisauceInstance => {
