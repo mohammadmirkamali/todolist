@@ -1,4 +1,4 @@
-import { baseURL } from './request';
+import { baseURL, newURL } from './request';
 
 export const DoatRoute = (): string => `${baseURL}/categories/129/دعاة`;
 export const HomatRoute = (): string => `${baseURL}/categories/128/حماة`;
@@ -22,15 +22,15 @@ export const CourseUrl = (id): string => `/api/v2/workshop/${id}/getLessons`;
 export const WebinarUrl = (id): string => `/api/v2/webinar/${id}`;
 export const WorkshopUrl = (id): string => `/api/v2/workshop/${id}`;
 
-export const UserUrl = (): string => `/api/v2/getInforUser`;
-export const CheckAuthPhoneUrl = (): string => `/api/v2/auth/checkAuthPhone`;
-export const CheckAuthEmailUrl = (): string => `/api/v2/auth/checkAuthEmail`;
-export const ForgetPasswordUrl = (): string => `/api/v2/auth/ForgetPassword_step0`;
-export const ForgetPasswordCodedUrl = (): string => `/api/v2/auth/ForgetPassword_step1`;
-export const ForgetPasswordNewUrl = (): string => `/api/v2/auth/ForgetPassword_step2`;
-export const MobileVerifyUrl = (): string => `/api/v2/auth/mobileVerifyCode`;
-export const EmailVerifyUrl = (): string => `/api/v2/auth/AuthVerifyEmail`;
-export const LoginUrl = (): string => `/api/v2/auth/loginUsingPassword`;
-export const FillFormUrl = (): string => `/api/v2/auth/RegisterRequiredFields`;
-export const ChangeMobileUrl = (): string => `/api/v2/auth/changeMobileOrEmail`;
-export const ConfirmMobileUrl = (): string => `/api/v2/auth/confirmMobileOrEmail`;
+export const UserUrl = (): string => `${newURL}/getInforUser`;
+export const CheckAuthPhoneUrl = (): string => `${newURL}/auth/checkAuthPhone`;
+export const CheckAuthEmailUrl = (): string => `${newURL}/auth/checkAuthEmail`;
+export const ForgetPasswordUrl = (): string => `${newURL}/auth/ForgetPassword_step0`;
+export const ForgetPasswordCodedUrl = (): string => `${newURL}/auth/ForgetPassword_step1`;
+export const ForgetPasswordNewUrl = (): string => `${newURL}/auth/ForgetPassword_step2`;
+export const MobileVerifyUrl = (): string => `${newURL}/auth/mobileVerifyCode`;
+export const EmailVerifyUrl = (): string => `${newURL}/auth/AuthVerifyEmail`;
+export const LoginUrl = (): string => `${newURL}/auth/loginUsingPassword`;
+export const FillFormUrl = (): string => `${newURL}/auth/RegisterRequiredFields`;
+export const ChangeMobileUrl = (): string => `${newURL}/auth/changeMobileOrEmail`;
+export const ConfirmMobileUrl = (): string => `${newURL}/auth/confirmMobileOrEmail`;
