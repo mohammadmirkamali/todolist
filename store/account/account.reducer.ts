@@ -2,17 +2,14 @@ import { AccountType } from 'types/account.type';
 import * as type from './account.constants';
 
 const initialState: AccountType = {
-  postPhoneLoading: false,
-  postPhone: null,
+  user: null,
 };
 
 // eslint-disable-next-line default-param-last
 const accountReducer = (state = initialState, action): AccountType => {
   switch (action.type) {
-    case type.POST_PHONE_REQUEST:
-      return { ...state, postPhoneLoading: true, postPhone: null };
-    case type.POST_PHONE_SUCCESS:
-      return { ...state, postPhoneLoading: false, postPhone: action.payload };
+    case type.GET_USER_SUCCESS:
+      return { ...state, user: action.payload };
 
     default:
       return state;

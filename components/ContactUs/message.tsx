@@ -14,10 +14,10 @@ export const SSubmitForm = styled(SubmitForm)`
   margin-top: 10px;
 `;
 
-const fields = ['name', 'email', 'number', 'message'];
+const fields = ['nameFamily', 'email', 'number', 'message'];
 const Message: React.FC = () => {
   const validationSchema = Yup.object({
-    name: Yup.string(),
+    nameFamily: Yup.string(),
     email: Yup.string(),
     number: Yup.number().required(t('account.emptyField')),
     message: Yup.string().required(t('account.emptyField')),
@@ -27,7 +27,13 @@ const Message: React.FC = () => {
       <h2 className="font-bold m-0 mt-[-20px] text-[30px]">{t('contactUs.title')}</h2>
       <h3 className="text-[18px] mb-[20px]">{t('contactUs.subtitle')}</h3>
       <AppForm
-        initialValues={{ name: '', number: '', email: '', message: '', captcha: '' }}
+        initialValues={{
+          nameFamily: '',
+          number: '',
+          email: '',
+          message: '',
+          captcha: '',
+        }}
         validationSchema={validationSchema}
         onSubmit={(values): void => {
           // console.log(values, 22);
@@ -39,7 +45,6 @@ const Message: React.FC = () => {
             <p className="m-0 pr-[10px]">{t(`account.${field}`)}</p>
             <FormField
               name={field}
-              contenteditable
               type={
                 field === 'number' ? 'number' : field === 'message' ? 'textarea' : 'text'
               }

@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     colors: {
       purple: [],
-      green: ['#1de9b6', '#79b832'],
+      green: ['#1de9b6', '#79b832', 'rgb(129,178,20)'],
       red: ['#E53935'],
       yellow: [],
       gray: [
@@ -17,6 +17,10 @@ module.exports = {
         'rgba(0,0,0,0.5)',
         '#6c757d', // 8
         'rgb(64 52 52)',
+        '#696969', // 10 next default
+        '#fafafa',
+        '#888', // 12 hover
+        '#1a1a1a',
       ],
       blue: [
         '#1890ff',
@@ -37,7 +41,7 @@ module.exports = {
     backgroundImage: {
       search: "url('public/logo.webp)",
     },
-    border: [],
+    border: ['1px solid #6c757d !important', '1px solid #000'],
     shadows: [],
   },
   plugins: [],

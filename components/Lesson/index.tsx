@@ -1,12 +1,6 @@
-import {
-  DownloadOutlined,
-  FileDoneOutlined,
-  LeftOutlined,
-  RightOutlined,
-} from '@ant-design/icons';
+import { DownloadOutlined, FileDoneOutlined } from '@ant-design/icons';
 import { Checkbox, message, Skeleton } from 'antd';
 import { t } from 'i18next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -24,6 +18,7 @@ import { CourseRoute, LessonRoute } from 'services/routes';
 import { getChapterAction } from 'store/course/course.action';
 import { LessonType } from 'types/course.type';
 import { faNumber } from 'utils/common.util';
+import { LeftArrow, MenuItems, RightArrow } from 'components/Common/AnitmateLogo';
 
 const Lesson: React.FC = () => {
   const dispatch = useDispatch();
@@ -32,7 +27,7 @@ const Lesson: React.FC = () => {
   const id = router.query.courseId as string;
   const lessonId = router.query.lessonId as string;
   const chapters = useSelector((state) => state.course.chapters);
-  const data = chapters?.[id]?.data;
+  const data = chapters?.[id]?.data?.data;
   const lessons = data?.map((item) => item.lessons.map((k) => k)).flat();
   const index = lessons?.findIndex((item) => item.lesson_id === Number(lessonId));
   const lesson = lessons?.[index] as LessonType;
@@ -86,32 +81,26 @@ const Lesson: React.FC = () => {
 
       <div className="w-[300px] mb-[20px] rounded-[8px] xl:rounded mt-[170px] xl:mt-0 xl:mb-0 h-[470px] md:w-[600px] xl:pb-[23rem] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
         <div className="h-[70px] center w-full border-b-gray-1 relative px-[40px] border-b font-bold text-[18px]">
-          {prePage && (
-            <RightOutlined
-              onClick={(): void => onLesson(prePage)}
-              className="text-[20px] hover:translate-x-[5px] absolute right-12 duration-500 cursor-pointer"
-            />
-          )}
+          <RightArrow
+            disable={!prePage}
+            className="right-12 absolute"
+            onClick={(): void => prePage && onLesson(prePage)}
+          />
+
           <Link href={CourseRoute(id)} passHref>
-            <div>
-              <Image
-                src="/book.webp"
-                width={40}
-                height={40}
-                alt=""
-                className="hover:translate-y-[-5px] justify-self-center duration-500 cursor-pointer"
-              />
-            </div>
+            <a>
+              <MenuItems />
+            </a>
           </Link>
-          {nextPage && (
-            <LeftOutlined
-              onClick={(): void => onLesson(nextPage)}
-              className="text-[20px] absolute left-12 hover:translate-x-[-5px] duration-500 cursor-pointer"
-            />
-          )}
+
+          <LeftArrow
+            disable={!nextPage}
+            className="left-12 absolute"
+            onClick={(): void => nextPage && onLesson(nextPage)}
+          />
         </div>
 
-        <div className="overflow-auto h-[400px] xl:h-[100%] toRight pb-[200px] ">
+        <div className="overflow-auto h-[400px] xl:h-[100%] toRight">
           {!data ? (
             <div className="m-[15px]">
               <Skeleton active />
@@ -159,37 +148,41 @@ const Lesson: React.FC = () => {
         ) : (
           <div className="absolute p-[20px] flex-col flex-wrap flex text-[15px] bg-white bottom-[490px] rounded-[8px]  w-full xl:bottom-0 h-[150px]">
             <Link href={lesson.lesson_file} passHref>
-              <div className="mb-5 rounded-[4px] cursor-pointer hover:text-blue-10 duration-300">
+              <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
                 <DownloadOutlined className="ml-[8px] text-[20px]" />
                 {t('global.download')}
-              </div>
+              </a>
             </Link>
             {mp3 && (
               <Link href={mp3.attach_link} passHref>
-                <div className="mb-5 rounded-[4px] cursor-pointer hover:text-blue-10 duration-300">
+                <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
                   <DownloadOutlined className="ml-[8px] text-[20px]" />
                   {t('course.voiceDownload')}
-                </div>
+                </a>
               </Link>
             )}
             {pdf && (
               <Link href={pdf.attach_link} passHref>
-                <div className="mb-5 rounded-[4px] cursor-pointer hover:text-blue-10 duration-300">
+                <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
                   <DownloadOutlined className="ml-[8px] text-[20px]" />
                   {t('course.pdfDownload')}
-                </div>
+                </a>
               </Link>
             )}
             {lesson.has_exam === 1 && (
-              <div className="mb-5 rounded-[4px] items-center flex cursor-pointer hover:text-blue-10 duration-300">
+              <div className="mb-5 rounded-[4px] items-center flex cursor-pointer text-gray-3 hover:text-black duration-300">
                 <FileDoneOutlined className="ml-[8px] text-[25px]" /> {t('course.exam')}
               </div>
             )}
-            <Checkbox className="hover:text-blue-10 duration-300">
-              <div className="mb-5">{t('course.isSeen')}</div>
+            <Checkbox className="text-gray-3 hover:text-black duration-300">
+              <div className="mb-5 text-gray-3 hover:text-black">
+                {t('course.isSeen')}
+              </div>
             </Checkbox>
-            <Checkbox className="hover:text-blue-10 duration-300">
-              {t('course.coversation')}
+            <Checkbox className="text-gray-3 hover:text-black duration-300">
+              <div className="text-gray-3 hover:text-black duration-300">
+                {t('course.coversation')}
+              </div>
             </Checkbox>
           </div>
         )}

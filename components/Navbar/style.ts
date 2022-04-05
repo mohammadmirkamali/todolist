@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { Button, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
+import AntButton from 'components/Common/AntButton';
 
 export const SNav = styled.nav`
   height: 70px;
@@ -21,7 +22,7 @@ export const SExit = styled(Tooltip)`
   }
 `;
 
-export const SButton = styled(Button)`
+export const SButton = styled(AntButton)`
   transition: all 0.3s;
   color: ${({ theme }): string => theme.colors.gray[3]};
   font-size: 20px;

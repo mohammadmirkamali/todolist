@@ -1,19 +1,35 @@
 /* eslint-disable arrow-body-style */
+import { destroyCookie, setCookie } from 'nookies';
 import request from 'services/request';
-import { CheckAuthPhoneUrl } from 'services/routes';
-import { ResType } from 'types/commen.type';
+import { UserUrl } from 'services/routes';
 import * as type from './account.constants';
 
-export const postCheckPhoneAction = (number) => {
+export const postLoginAction = (user) => {
   return async (dispatch): Promise<unknown> => {
-    dispatch({ type: type.POST_PHONE_REQUEST });
-    const response: ResType = await request.post(CheckAuthPhoneUrl(), number);
+    const token = user.api_token.replace('Bearer ', '');
+    setCookie(null, 'taalei', token);
+    dispatch({ type: type.GET_USER_SUCCESS, payload: user });
+    return user;
+  };
+};
 
+export const getUserAction = () => {
+  return async (dispatch): Promise<unknown> => {
+    const response = await request.post(UserUrl());
     if (response.ok) {
-      dispatch({ type: type.POST_PHONE_SUCCESS, payload: response });
-      return response.data;
+      dispatch({ type: type.GET_USER_SUCCESS, payload: response.data });
+      return true;
     }
+    return false;
+  };
+};
 
-    return null;
+export const logoutAction = () => {
+  return async (dispatch): Promise<unknown> => {
+    request.setHeader('authorization', '');
+    destroyCookie(null, 'taalei', { path: '/' });
+    dispatch({ type: type.GET_USER_SUCCESS, payload: '' });
+
+    return false;
   };
 };

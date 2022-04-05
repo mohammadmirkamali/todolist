@@ -36,7 +36,6 @@ const Track: React.FC = () => {
         <FormField
           name="value"
           autoFocus
-          contenteditable
           type="text"
           placeholder={t(`contactUs.messageInfo`)}
           className="w-full border h-[40px] rounded-[8px] px-[15px] text-[18px]"
