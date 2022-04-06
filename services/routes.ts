@@ -6,6 +6,8 @@ export const RoatRoute = (): string => `${baseURL}/categories/130/رعاة`;
 export const ConditionRoute = (): string => `/conditions`;
 export const FinanceRoute = (): string => `https://idpay.ir/taaleei`;
 export const DownloadRoute = (): string => `https://dl.taalei-edu.ir/taalei.apk`;
+export const CookieRoute = (): string =>
+  `'https://api.taalei-edu.com/sanctum/csrf-cookie'`;
 export const TelNumber = (): string => `0915 424 1197`;
 export const ContactUsRoute = (): string => `/contact-us`;
 export const PostsRoute = (): string => `/posts`;

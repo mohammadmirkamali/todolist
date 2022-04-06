@@ -11,13 +11,13 @@ type ModalType = { isVisible: boolean; setIsVisible: (value) => void };
 const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
   const [step, setStep] = useState('number');
   const [mobile, setMobile] = useState('');
-
+  console.log('step:', step); // eslint-disable-line
   // eslint-disable-next-line react/no-unstable-nested-components
   const Step = (): ReactElement => {
     switch (step) {
       case 'number':
         return <EnterNumber setStep={setStep} setMobile={setMobile} />;
-      case 'VerifyMobile' || 'AuthVerifyEmail':
+      case 'RegisterVerifyMobile' || 'AuthVerifyEmail':
         return <EnterCode setStep={setStep} mobile={mobile} step={step} />;
       case 'loginUsingPassword':
         return <EnterPassword setStep={setStep} auth={mobile} visible={setIsVisible} />;

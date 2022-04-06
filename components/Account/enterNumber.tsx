@@ -7,7 +7,7 @@ import { SSubmitForm } from './style';
 import FormField from 'components/Common/formField';
 import AppForm from 'components/Common/appForm';
 import request from 'services/request';
-import { CheckAuthEmailUrl, CheckAuthPhoneUrl } from 'services/routes';
+import { CheckAuthEmailUrl, CheckAuthPhoneUrl, CookieRoute } from 'services/routes';
 
 type NumberType = { setStep: (item) => void; setMobile: (item) => void };
 
@@ -46,8 +46,8 @@ const EnterNumber: React.FC<NumberType> = ({ setStep, setMobile }) => {
           const body = isEmail
             ? { email: values.number }
             : { phone: `0${values.number}` };
-          await request.get('https://api.taalei-edu.com/sanctum/csrf-cookie');
-                    const res: any = await request.post(url, body); // eslint-disable-line
+          await request.get(CookieRoute());
+          const res: any = await request.post(url, body); // eslint-disable-line
           setLoading(false);
           if (res.ok) {
             setStep(res.data.next);
