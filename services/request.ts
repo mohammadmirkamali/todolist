@@ -1,26 +1,33 @@
-import Axios from 'axios';
+import { ApisauceInstance, create } from 'apisauce';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'https://taalei-edu.com';
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'https://taalei-edu.ir';
 const newURL = process.env.NEXT_PUBLIC_NEW_URL || 'https://api.taalei-edu.com';
 
-const request = Axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
-  headers: {
-    'X-Requested-With': 'XMLHttpRequest',
-  },
-  withCredentials: true,
-});
+// create main request configs
+const request = ((): ApisauceInstance => {
+  const headers = {
+    'Content-Type': 'application/json',
+    'Accept-Language': 'fa',
+  };
 
-request.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      if (error.response.status !== 401) {
-        return error;
-      }
+  // eslint-disable-next-line no-underscore-dangle
+  return create({
+    baseURL,
+    headers,
+    withCredentials: true,
+  });
+})();
 
+request.axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response.status !== 401) {
       return error;
-    },
+    }
+
+    return error;
+  },
 );
 
 export default request;
