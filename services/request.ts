@@ -11,7 +11,6 @@ const request = ((): ApisauceInstance => {
     'Accept-Language': 'fa',
   };
 
-  // eslint-disable-next-line no-underscore-dangle
   return create({
     baseURL,
     headers,
