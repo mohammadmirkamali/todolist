@@ -60,6 +60,7 @@ const EnterNumber: React.FC<NumberType> = ({ setStep, setMobile }) => {
         }}
       >
         <FormField
+          autoFocus
           name="number"
           type={isEmail ? 'email' : 'number'}
           placeholder={t(`account.${isEmail ? 'email' : 'number'}`)}

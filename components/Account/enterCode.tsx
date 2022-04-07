@@ -44,6 +44,7 @@ const EnterCode: React.FC<CodeType> = ({ setStep, mobile, step }) => {
         }}
       >
         <FormField
+          autoFocus
           name="number"
           type="number"
           placeholder="1234"

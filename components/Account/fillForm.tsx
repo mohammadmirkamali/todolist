@@ -60,6 +60,7 @@ const FillForm: React.FC<CodeType> = ({ setIsVisible, setStep }) => {
       >
         <p className="m-0 w-full mr-[15px] mt-[20px]">{t('global.name')}</p>
         <FormField
+          autoFocus
           name="name"
           type="text"
           placeholder={t('global.name')}

@@ -44,6 +44,7 @@ const ForgotPasswordCode: React.FC<ForgotType> = ({ setStep, auth }) => {
       >
         <p className="w-full m-0 mt-[60px] ">{t('account.code')}</p>
         <FormField
+          autoFocus
           name="number"
           type="number"
           placeholder="1234"

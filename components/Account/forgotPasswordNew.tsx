@@ -44,6 +44,7 @@ const ForgotPasswordNew: React.FC<ForgotType> = ({ setIsVisible, setStep }) => {
       >
         <p className="w-full m-0 mt-[60px] ">{t('account.newPassword')}</p>
         <FormField
+          autoFocus
           name="value"
           type="password"
           placeholder={t('account.newPassword')}

@@ -10,7 +10,9 @@ const AppForm = (props): ReactElement => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {(): ReactElement => <>{children}</>}
+      {({ handleSubmit }): ReactElement => (
+        <form onSubmit={handleSubmit}>{children}</form>
+      )}
     </Formik>
   );
 };

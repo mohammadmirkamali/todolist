@@ -50,6 +50,7 @@ const EnterPassword: React.FC<PasswordType> = ({ auth, setStep, visible }) => {
         }}
       >
         <FormField
+          autoFocus
           name="password"
           type="password"
           placeholder={t('account.password')}
