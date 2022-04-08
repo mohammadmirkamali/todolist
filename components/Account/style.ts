@@ -15,7 +15,7 @@ export const SSubmitForm = styled(SubmitForm)`
 `;
 
 export const SModal = styled(Modal)`
-  border-radius: 12px;
+  border-radius: 8px;
   .ant-modal-body {
     min-height: 480px;
     display: flex;
@@ -23,7 +23,7 @@ export const SModal = styled(Modal)`
     align-items: center;
   }
   .ant-modal-content {
-    border-radius: 20px;
+    border-radius: 12px;
   }
 
   input {

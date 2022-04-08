@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import React from 'react';
 
 export const SButton = styled(Button)`
-  border-radius: 8px;
+  border-radius: 6px;
   transition: all 0.3s;
   border: 1px solid;
   color: ${({ theme }): string => theme.colors.gray[12]};
