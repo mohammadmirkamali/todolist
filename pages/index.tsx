@@ -2,14 +2,15 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { t } from 'i18next';
 import { useSelector } from 'react-redux';
+import { LoadingBox } from 'utils/component.util';
 
-const PageLoading = dynamic(() => import('components/Common/pageLoading'));
 const Navbar = dynamic(() => import('components/Navbar'));
 const Landing = dynamic(() => import('components/landing'));
 const Head = dynamic(() => import('next/head'));
 
 const Home: React.FC = () => {
-  const { courses } = useSelector((state) => state.course);
+  const courses = useSelector((state) => state.course.courses);
+  const error = useSelector((state) => state.course.coursesError);
   return (
     <>
       <Head>
@@ -18,7 +19,11 @@ const Home: React.FC = () => {
       </Head>
 
       <Navbar />
-      {courses ? <Landing courses={courses} /> : <PageLoading />}
+      <LoadingBox
+        data={courses}
+        error={error}
+        component={<Landing courses={courses} />}
+      />
     </>
   );
 };

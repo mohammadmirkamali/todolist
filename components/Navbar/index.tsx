@@ -3,12 +3,13 @@ import {
   MenuOutlined,
   CloseOutlined,
   UserOutlined,
+  StarFilled,
 } from '@ant-design/icons';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
-import { Drawer } from 'antd';
+import { Avatar, Drawer, Tooltip } from 'antd';
 import Image from 'next/image';
 import { t } from 'i18next';
 import Link from 'next/link';
@@ -19,6 +20,7 @@ import Login from 'components/Account/login';
 import { SButton, SExit, SNav } from './style';
 import * as url from 'services/routes';
 import AntSearch from './AntSearch';
+import { faNumber } from 'utils/common.util';
 
 const items = [
   { name: 'home', tab: '/' },
@@ -65,10 +67,6 @@ const Navbar: React.FC = () => {
     </Link>
   );
 
-  const handleClick = (): void => {
-    user ? router.push(url.ProfileRoute('user')) : setIsModalVisible(true);
-  };
-
   return (
     <div className="relative">
       <SNav className="border-b border-b-gray-1">
@@ -82,34 +80,44 @@ const Navbar: React.FC = () => {
         >
           <div className="flex flex-col">
             {tabs('p-5 border-t border-t-gray-4 w-[190px] first:border-none text-[18px]')}
-            <SButton onClick={handleClick} className="mt-[20px]">
-              {user && <UserOutlined />}
-              <p>{t(`account.${user ? 'profile' : 'signIn'}`)}</p>
-            </SButton>
-            {user && <LogoutOutlined className="text-[20px] px-[130px] pt-[15px]" />}
           </div>
         </Drawer>
 
         <div className="absolute right-[40px] flex">
-          <div className="border-l-2 border-l-gray-1 text-gray-3 items-center hidden xl:flex pl-[20px]">
-            <SButton onClick={handleClick}>
-              {user && <UserOutlined />}
-              <p>{t(`account.${user ? 'profile' : 'signIn'}`)}</p>
-            </SButton>
-            {user && (
-              <SExit title={t('global.exit')} placement="left">
-                <LogoutOutlined
-                  onClick={(): void => {
-                    dispatch(logoutAction());
-                  }}
-                  className="text-[20px] pr-[20px] cursor-pointer "
-                />
-              </SExit>
-            )}
+          <div className="text-[25px] pl-[10px] ml-[10px] md:pt-[4px] xl:hidden">
+            <MenuOutlined onClick={(): void => setIsDrawerVisible(true)} />
           </div>
 
-          <div className="text-[25px] pl-[10px] pt-[5px] xl:hidden">
-            <MenuOutlined onClick={(): void => setIsDrawerVisible(true)} />
+          <div className="md:border-l-2 border-l-gray-1 text-gray-3 items-center flex pl-[20px]">
+            {!user ? (
+              <SButton onClick={(): void => setIsModalVisible(true)}>
+                <p>{t(`account.signIn`)}</p>
+              </SButton>
+            ) : (
+              <>
+                <Link href={url.ProfileRoute('user')}>
+                  <a>
+                    <Tooltip title={t('global.seeProfile')}>
+                      <Avatar icon={<UserOutlined />} size={40} />
+                    </Tooltip>
+                  </a>
+                </Link>
+                <Tooltip title={t('global.star')}>
+                  <div className="text-[20px] center mr-[12px]">
+                    <StarFilled />
+                    <span className="text-[18px] mr-[6px] mt-[4px]">{faNumber(223)}</span>
+                  </div>
+                </Tooltip>
+                <SExit title={t('global.exit')} placement="left">
+                  <LogoutOutlined
+                    onClick={(): void => {
+                      dispatch(logoutAction());
+                    }}
+                    className="text-[20px] pr-[20px] cursor-pointer "
+                  />
+                </SExit>
+              </>
+            )}
           </div>
 
           <AntSearch
@@ -125,7 +133,7 @@ const Navbar: React.FC = () => {
         )}
 
         <Link href={url.HomeRoute()} passHref>
-          <a className="absolute left-[40px] cursor-pointer">
+          <a className="absolute left-[10px] md:left-[40px] cursor-pointer">
             <Image src="/main-logo.webp" width={120} height={60} priority alt="" />
           </a>
         </Link>

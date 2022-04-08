@@ -1,15 +1,20 @@
 import { Button } from 'antd';
 import { useFormikContext } from 'formik';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
 
-export type FieldType = { name: string; className: string };
-const FormField = ({ name, type, className, ...rest }): ReactElement => {
+const FormField = (props): ReactElement => {
+  const ref = useRef(null);
+  const { name, type, autoFocus = false, className, ...rest } = props;
   const { setFieldTouched, errors, touched, values, handleChange } = useFormikContext();
+  useEffect(() => {
+    autoFocus && ref?.current?.focus(); // autoFocus just work in this way in production
+  }, [autoFocus]);
 
   return (
     <div className="flex flex-col items-start">
       {type !== 'textarea' ? (
         <input
+          ref={ref}
           onBlur={(): void => setFieldTouched(name)}
           className={`${className}  ${
             touched[name] && errors[name] ? 'border-red-0' : 'border-gray-5'
