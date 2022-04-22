@@ -1,4 +1,22 @@
-import { baseURL, newURL } from './request';
+import { baseURL } from './request';
+
+export const AllCoursesUrl = (): string => `/api/v1/workshops`;
+export const CourseUrl = (id): string => `/api/v1/workshops/${id}`;
+export const CookieRoute = (): string => `/sanctum/csrf-cookie`;
+
+export const CheckAuthPhoneUrl = (): string => `/api/v1/checkAuthPhone`;
+export const CheckAuthEmailUrl = (): string => `/api/v1/checkAuthEmail`;
+export const MobileVerifyUrl = (): string => `/api/v1/RegisterVerifyCode`;
+export const LoginUrl = (): string => `/api/v1/loginUsingPassword`;
+export const FillFormUrl = (): string => `/api/v1/RequiredFieldsFill`;
+export const EmailVerifyUrl = (): string => `/api/v1/AuthVerifyEmail`;
+export const ForgetPasswordUrl = (): string => `/api/v1/ForgetPassword_step0`;
+export const ForgetPasswordCodedUrl = (): string => `/api/v1/ForgetPassword_step1`;
+export const ForgetPasswordNewUrl = (): string => `/api/v1/ForgetPassword_step2`;
+
+export const UserUrl = (): string => `/getInforUser`;
+export const ChangeMobileUrl = (): string => `/auth/changeMobileOrEmail`;
+export const ConfirmMobileUrl = (): string => `/auth/confirmMobileOrEmail`;
 
 export const DoatRoute = (): string => `${baseURL}/categories/129/دعاة`;
 export const HomatRoute = (): string => `${baseURL}/categories/128/حماة`;
@@ -6,7 +24,6 @@ export const RoatRoute = (): string => `${baseURL}/categories/130/رعاة`;
 export const ConditionRoute = (): string => `/conditions`;
 export const FinanceRoute = (): string => `https://idpay.ir/taaleei`;
 export const DownloadRoute = (): string => `https://dl.taalei-edu.ir/taalei.apk`;
-export const CookieRoute = (): string => `${newURL}/sanctum/csrf-cookie`;
 export const TelNumber = (): string => `0915 424 1197`;
 export const ContactUsRoute = (): string => `/contact-us`;
 export const PostsRoute = (): string => `/posts`;
@@ -18,20 +35,5 @@ export const LessonRoute = (courseId, lessonId): string => `/${courseId}/${lesso
 
 export const ProfileUrl = (): string => `/api/v2/getProfile`;
 export const PostsUrl = (): string => `/api/v2/getPosts`;
-export const AllCoursesUrl = (): string => `/api/v2/workshops/s/فلسفه`;
-export const CourseUrl = (id): string => `/api/v2/workshop/${id}/getLessons`;
 export const WebinarUrl = (id): string => `/api/v2/webinar/${id}`;
 export const WorkshopUrl = (id): string => `/api/v2/workshop/${id}`;
-
-export const UserUrl = (): string => `${newURL}/getInforUser`;
-export const CheckAuthPhoneUrl = (): string => `${newURL}/auth/checkAuthPhone`;
-export const CheckAuthEmailUrl = (): string => `${newURL}/auth/checkAuthEmail`;
-export const ForgetPasswordUrl = (): string => `${newURL}/auth/ForgetPassword_step0`;
-export const ForgetPasswordCodedUrl = (): string => `${newURL}/auth/ForgetPassword_step1`;
-export const ForgetPasswordNewUrl = (): string => `${newURL}/auth/ForgetPassword_step2`;
-export const MobileVerifyUrl = (): string => `${newURL}/auth/RegisterVerifyCode`;
-export const EmailVerifyUrl = (): string => `${newURL}/auth/AuthVerifyEmail`;
-export const LoginUrl = (): string => `${newURL}/auth/loginUsingPassword`;
-export const FillFormUrl = (): string => `${newURL}/auth/RequiredFieldsFill`;
-export const ChangeMobileUrl = (): string => `${newURL}/auth/changeMobileOrEmail`;
-export const ConfirmMobileUrl = (): string => `${newURL}/auth/confirmMobileOrEmail`;

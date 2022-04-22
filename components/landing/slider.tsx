@@ -7,9 +7,9 @@ import 'swiper/css/pagination';
 import 'swiper/css';
 import Card from 'components/Common/Card';
 import Title from './title';
-import { CourseType } from 'types/course.type';
+import { CoursesType } from 'types/course.type';
 
-type SliderType = { courses: CourseType[]; title: string };
+type SliderType = { courses: CoursesType[]; title: string };
 const Slider: React.FC<SliderType> = ({ courses, title }) => (
   <div>
     <Title title={`landing.${title}`} subTitle={`landing.${title}Info`} />

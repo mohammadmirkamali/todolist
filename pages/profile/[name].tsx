@@ -20,7 +20,7 @@ const ProfilePage: React.FC = () => {
       </Head>
 
       <Navbar />
-      {courses ? <Profile allCourses={courses} user={user} /> : <PageLoading />}
+      {/* {courses ? <Profile allCourses={courses} user={user} /> : <PageLoading />} */}
     </>
   );
 };

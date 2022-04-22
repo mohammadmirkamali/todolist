@@ -7,7 +7,6 @@ import {
 } from '@ant-design/icons';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
 import { Avatar, Drawer, Tooltip } from 'antd';
 import Image from 'next/image';
@@ -15,7 +14,7 @@ import { t } from 'i18next';
 import Link from 'next/link';
 
 import { getCoursesAction } from 'store/course/course.action';
-import { getUserAction, logoutAction } from 'store/account/account.action';
+import { logoutAction } from 'store/account/account.action';
 import Login from 'components/Account/login';
 import { SButton, SExit, SNav } from './style';
 import * as url from 'services/routes';
@@ -41,10 +40,8 @@ const Navbar: React.FC = () => {
   const user = useSelector((state) => state.account.user);
 
   useEffect(() => {
-    const token = parseCookies().taalei;
-    token && !user && dispatch(getUserAction());
     !courses && dispatch(getCoursesAction());
-  }, [courses, user]);
+  }, []);
 
   const tabs = (style): ReactElement[] =>
     items.map((item) => (
@@ -120,10 +117,12 @@ const Navbar: React.FC = () => {
             )}
           </div>
 
-          <AntSearch
-            setSearching={setSearching}
-            options={courses?.map((item) => ({ name: item.workshop_title, id: item.id }))}
-          />
+          {courses && (
+            <AntSearch
+              setSearching={setSearching}
+              options={courses.map((item) => ({ name: item.title, id: item.id }))}
+            />
+          )}
         </div>
 
         {!searching && (

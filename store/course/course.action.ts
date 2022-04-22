@@ -1,12 +1,6 @@
 /* eslint-disable arrow-body-style */
 import request from 'services/request';
-import {
-  AllCoursesUrl,
-  CourseUrl,
-  PostsUrl,
-  WebinarUrl,
-  WorkshopUrl,
-} from 'services/routes';
+import { AllCoursesUrl, CourseUrl, PostsUrl, WebinarUrl } from 'services/routes';
 import { ResType } from 'types/commen.type';
 import * as type from './course.constants';
 
@@ -15,7 +9,7 @@ export const getCoursesAction = () => {
     dispatch({ type: type.GET_COURSE_REQUEST });
     const response: ResType = await request.get(AllCoursesUrl());
     if (response.ok) {
-      dispatch({ type: type.GET_COURSE_SUCCESS, payload: response.data.workshops.data });
+      dispatch({ type: type.GET_COURSE_SUCCESS, payload: response.data });
       return response.data;
     }
 
@@ -28,12 +22,10 @@ export const getChapterAction = (id) => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_CHAPTER_REQUEST, id });
     const response: ResType = await request.get(CourseUrl(id));
-    const workShop = await request.get(WorkshopUrl(id));
     if (response.ok) {
       dispatch({
         type: type.GET_CHAPTER_SUCCESS,
-        payload: response.data.chapters,
-        workShop: workShop.data,
+        payload: response.data,
         id,
       });
       return response.data;

@@ -18,17 +18,12 @@ const tabs = ['attaches', 'comments', 'lessons'];
 
 const Course: React.FC<{ course: CourseType }> = ({ course }) => {
   const dispatch = useDispatch();
-  const id = useRouter().query.courseId as string;
-  const chapters = useSelector((state) => state.course.chapters);
-  const { courses } = useSelector((state) => state.course);
+  const courses = useSelector((state) => state.course.courses);
+  // const id = useRouter().query.courseId as string;
   const [swiper, setSwiper] = useState({} as any); // eslint-disable-line
   const [slideId, setSlideId] = useState(0);
-  const data = chapters?.[id]?.data;
+  // const data = course.chapters?.[id]?.data;
   const user = useSelector((state) => state.account.user);
-
-  useEffect(() => {
-    (!chapters || !chapters?.[id]) && dispatch(getChapterAction(id));
-  }, [id]);
 
   const onSlide = (item): void => {
     const index = item.activeIndex;
@@ -37,35 +32,38 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
     setSlideId(index === length + 1 ? 0 : !index ? length - 1 : index - 1);
   };
 
+  // console.log(courses);
   return (
     <div className="bg-gray-0 pt-[110px] duration-300 md:pt-[70px] min-h-screen flex xl:block flex-col center">
       {/* title and description */}
       <div className=" w-[300px] md:w-[600px] xl:px-[370px] py-[20px] xl:justify-self-start xl:w-full ">
         <div className="w-full bg-white rounded-[8px]">
           <h2 className="h-[70px] center w-full font-bold text-[26px] m-[0px]">
-            {course.workshop_title}
+            {course.title}
           </h2>
           <Image
-            src={course.workshop_img}
+            src={course.image}
             layout="responsive"
-            alt={course.workshop_title}
+            alt={course.title}
             width={530}
             height={300}
             priority
           />
-          <p className="mx-[40px] py-[50px] text-[18px]">{course.workshop_description}</p>
+          <p className="mx-[40px] py-[50px] text-[18px]">{course.description}</p>
         </div>
         <div className="w-full bg-white rounded-[8px] overflow-hidden">
           <h3 className="h-[70px] center w-full font-bold text-[22px] m-[0px]">
             {t('course.relatedCourses')}
           </h3>
-          <ScrollContainer className="flex overflow-auto">
-            {[...courses].map((item) => (
-              <div className="scale-[.8] m-[-27px]" key={item.id}>
-                <Card course={item} />
-              </div>
-            ))}
-          </ScrollContainer>
+          {courses && (
+            <ScrollContainer className="flex overflow-auto">
+              {[...courses].slice(0, 5).map((item) => (
+                <div className="scale-[.8] m-[-27px]" key={item.id}>
+                  <Card course={item} />
+                </div>
+              ))}
+            </ScrollContainer>
+          )}
         </div>
       </div>
 
@@ -75,7 +73,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           {t('course.info')}
         </div>
 
-        <Information course={course} user={user} data={data} />
+        <Information course={course} user={user} />
       </div>
 
       <div className="w-[300px] h-[620px] md:w-[600px]   xl:fixed right-0 top-[70px] bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
@@ -110,7 +108,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
               <UserComment />
             </SwiperSlide>
             <SwiperSlide className="min-h-full overflow-auto">
-              <Lessons user={user} data={data?.data} id={id} />
+              {/* <Lessons user={user} course={course} /> */}
             </SwiperSlide>
           </Swiper>
         </div>

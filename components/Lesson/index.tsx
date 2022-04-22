@@ -33,8 +33,8 @@ const Lesson: React.FC = () => {
   const lesson = lessons?.[index] as LessonType;
   const prePage = index ? lessons[index - 1] : null;
   const nextPage = lessons && index + 1 !== lessons?.length && lessons[index + 1];
-  const mp3 = lesson?.attaches?.find((item) => item.attach_type === 'mp3');
-  const pdf = lesson?.attaches?.find((item) => item.attach_type === 'pdf');
+  // const mp3 = lesson?.attaches?.find((item) => item.attach_type === 'mp3');
+  // const pdf = lesson?.attaches?.find((item) => item.attach_type === 'pdf');
 
   useEffect(() => {
     (!chapters || !chapters?.[id]) && dispatch(getChapterAction(id));
@@ -55,12 +55,12 @@ const Lesson: React.FC = () => {
           </div>
         ) : (
           <div className="w-full bg-white rounded-[8px]">
-            <div className="py-[15px] text-center px-[25px]">
+            {/* <div className="py-[15px] text-center px-[25px]">
               <h2 className="font-bold m-0 text-[20px]">{lesson?.workshop_title}</h2>
               <h3 className="text-[16px] m-0">{lesson?.lesson_title}</h3>
-            </div>
+            </div> */}
 
-            <React.Fragment key={lesson.lesson_file}>
+            {/* <React.Fragment key={lesson.lesson_file}>
               <Player className="toRight">
                 <source src={lesson.lesson_file} />
                 <ControlBar>
@@ -74,7 +74,7 @@ const Lesson: React.FC = () => {
                   />
                 </ControlBar>
               </Player>
-            </React.Fragment>
+            </React.Fragment> */}
           </div>
         )}
       </div>
@@ -147,33 +147,33 @@ const Lesson: React.FC = () => {
           </div>
         ) : (
           <div className="absolute p-[20px] flex-col flex-wrap flex text-[15px] bg-white bottom-[490px] rounded-[8px]  w-full xl:bottom-0 h-[150px]">
-            <Link href={lesson.lesson_file} passHref>
+            {/* <Link href={lesson.lesson_file} passHref>
               <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
                 <DownloadOutlined className="ml-[8px] text-[20px]" />
                 {t('global.download')}
               </a>
-            </Link>
-            {mp3 && (
+            </Link> */}
+            {/* {mp3 && (
               <Link href={mp3.attach_link} passHref>
                 <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
                   <DownloadOutlined className="ml-[8px] text-[20px]" />
                   {t('course.voiceDownload')}
                 </a>
               </Link>
-            )}
-            {pdf && (
+            )} */}
+            {/* {pdf && (
               <Link href={pdf.attach_link} passHref>
                 <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
                   <DownloadOutlined className="ml-[8px] text-[20px]" />
                   {t('course.pdfDownload')}
                 </a>
               </Link>
-            )}
-            {lesson.has_exam === 1 && (
+            )} */}
+            {/* {lesson.has_exam === 1 && (
               <div className="mb-5 rounded-[4px] items-center flex cursor-pointer text-gray-3 hover:text-black duration-300">
                 <FileDoneOutlined className="ml-[8px] text-[25px]" /> {t('course.exam')}
               </div>
-            )}
+            )} */}
             <Checkbox className="text-gray-3 hover:text-black duration-300">
               <div className="mb-5 text-gray-3 hover:text-black">
                 {t('course.isSeen')}

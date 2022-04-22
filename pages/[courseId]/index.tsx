@@ -1,49 +1,42 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import React from 'react';
-import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { t } from 'i18next';
 import dynamic from 'next/dynamic';
-import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import request from 'services/request';
+import { CourseUrl } from 'services/routes';
+import { CourseType } from 'types/course.type';
+import { getChapterAction } from 'store/course/course.action';
+import PageLoading from 'components/Common/pageLoading';
 
 const Navbar = dynamic(() => import('components/Navbar'));
-const PageLoading = dynamic(() => import('components/Common/pageLoading'));
 const Course = dynamic(() => import('components/Course'));
 const Head = dynamic(() => import('next/head'));
 
-const CoursePage: React.FC = () => {
+type PageType = { data: CourseType };
+const CoursePage: React.FC<PageType> = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
-  const course = useSelector((state) => state.course.courses)?.find(
-    (item) => item.id === Number(router.query.courseId),
-  );
+  const id = router.query.courseId as string;
+  const chapters = useSelector((state) => state.course.chapters);
+  const data = chapters?.[id]?.data;
+  const error = chapters?.[id]?.error;
+  useEffect(() => {
+    id && !chapters?.[id] && dispatch(getChapterAction(Number(id)));
+  }, [chapters, id]);
 
   return (
     <>
       <Head>
-        <title>{t('global.title', { title: course?.workshop_title })}</title>
+        <title>{t('global.title', { title: data?.title })}</title>
         <meta name="description" content={t('global.description')} />
       </Head>
 
       <Navbar />
-      {course ? <Course course={course} /> : <PageLoading />}
+      {data ? <Course course={data} /> : error ? <div>error</div> : <PageLoading />}
     </>
   );
 };
 
 export default CoursePage;
-
-export const getStaticPaths = async () => {
-  const ids = [240, 210, 183, 177, 174, 166, 134];
-  try {
-    // const res = await request.get('https://taalei-edu.ir/api/v2/get_lesson/1262');
-    const paths = ids.map((id) => ({ params: { courseId: id.toString() } }));
-    return { paths, fallback: false };
-  } catch (error) {
-    const paths = [];
-    return { paths, fallback: false };
-  }
-};
-
-export const getStaticProps = () => {
-  const postData = {};
-  return { props: { postData } };
-};
