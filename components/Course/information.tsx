@@ -51,7 +51,7 @@ const Information: React.FC<InfoType> = ({ course, user }) => (
 
     <div className="py-[7px] flex items-center text-[16px]">
       <ClockCircleOutlined className="text-[20px] pr-[10px]" />
-      <div className="px-[20px] toRight">{faNumber(course.time / 3600)}</div>
+      <div className="px-[20px] toRight">{faNumber(Math.floor(course.time / 3600))}</div>
       <div>{t('global.hour')}</div>
     </div>
 
