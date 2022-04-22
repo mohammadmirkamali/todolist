@@ -79,11 +79,7 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
           ...state.chapters,
           [action.id]: {
             loading: false,
-            data: {
-              data: action.payload,
-              topRate: action.workShop.top_users,
-              userRate: action.workShop.user_rate,
-            },
+            data: action.payload,
             error: null,
           },
         },

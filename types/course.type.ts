@@ -1,33 +1,45 @@
-export type CourseType = {
-  category_name: string;
-  price_string: string;
-  teacher_name: string;
-  teacher_title: string;
-  workshop_title: string;
-  teacher_avatar: string;
-  category_image: string;
-  workshop_img: string;
-  created_at: string;
-  workshop_time: string;
-  workshop_description: string;
-  workshop_time_to_min: number;
-  workshop_price: number;
-  count_students: number;
-  lessons_count: number;
-  rates_avg: number;
-  count_rates: number;
+export type CoursesType = {
   id: number;
+  price: number;
+  discount: number;
+  created_at: string;
+  title: string;
+  thumb: string;
+  time: number;
+  description: string;
+  updated_at: string;
+  lessons: number[];
+  categories: { title: string; image: string }[];
+  teachers: { nickname: string; avatar: string }[];
 };
 
 export type LessonType = {
-  time_string: string;
-  lesson_title: string;
-  workshop_title: string;
-  lesson_file: string;
-  lesson_free: number;
-  lesson_id: number;
-  has_exam: number;
-  attaches: { attach_type: string; attach_link: string }[];
+  id: number;
+  time: number;
+  description: string;
+  title: string;
+  files: { file: string }[];
+};
+
+export type ChapterType = {
+  id: number;
+  name: string;
+  lessons: LessonType[];
+};
+
+export type CourseType = {
+  create_at: string;
+  image: string;
+  title: string;
+  description: string;
+  discount: number;
+  id: number;
+  price: number;
+  progress_percent: number;
+  time: number;
+  chapters: ChapterType[];
+  categories: { title: string; image: string }[];
+  teachers: { nickname: string; avatar: string }[];
 };
 
 export type PostType = {
@@ -41,12 +53,6 @@ export type PostType = {
   post_film: string;
   post_type: string;
   post_id: number;
-};
-
-export type ChapterType = {
-  id: number;
-  name: string;
-  lessons: LessonType[];
 };
 
 export type TopRateType = {
@@ -80,7 +86,7 @@ export type WebinarType = {
 export type CourseReducerType = {
   coursesLoading: boolean;
   coursesError: boolean;
-  courses: CourseType[];
+  courses: CoursesType[];
   postsLoading: boolean;
   postsError: boolean;
   posts: PostType[];

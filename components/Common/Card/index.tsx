@@ -4,13 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { CourseRoute } from 'services/routes';
-import { CourseType } from 'types/course.type';
+import { CoursesType } from 'types/course.type';
 import { BadgeCategory, faNumber } from 'utils/common.util';
 import { SBadge, SContainer } from './style';
 
-const Card: React.FC<{ course: CourseType }> = ({ course }) => {
-  const badge = BadgeCategory(course.category_name);
-  const time = (course.workshop_time_to_min / 60).toFixed(0);
+const Card: React.FC<{ course: CoursesType }> = ({ course }) => {
+  const badge = BadgeCategory(course.categories[0]?.title);
+  const time = (course.time / 3600).toFixed(0);
 
   return (
     <Link href={CourseRoute(course.id)} passHref>
@@ -26,26 +26,26 @@ const Card: React.FC<{ course: CourseType }> = ({ course }) => {
 
           <div className="h-[160px] overflow-hidden rounded-tl-[6px] rounded-tr-[6px]">
             <Image
-              src={course.workshop_img}
+              src={course.thumb}
               width={300}
               height={170}
-              alt={course.workshop_title}
+              alt={course.title}
               className="img  mt-[-20px]"
             />
           </div>
 
           <div className="h-[130px] flex justify-center flex-col">
-            <h2 className="mx-[30px] text-[18px] font-bold">{course.workshop_title}</h2>
+            <h2 className="mx-[30px] text-[18px] font-bold">{course.title}</h2>
 
             <div className="flex items-center mr-[30px] mt-[6px] text-[16px]">
               <Image
-                src={course.teacher_avatar}
+                src={course.teachers[0].avatar}
                 width={27}
                 height={27}
-                alt={course.teacher_name}
+                alt={course.teachers[0].nickname}
                 className="rounded-full"
               />
-              <div className="mr-[8px] text-gray-3">{course.teacher_name}</div>
+              <div className="mr-[8px] text-gray-3">{course.teachers[0].nickname}</div>
             </div>
           </div>
 
@@ -55,13 +55,13 @@ const Card: React.FC<{ course: CourseType }> = ({ course }) => {
 
             <i className="fas fa-user-graduate ml-[6px]" />
             <div className="ml-[17px]">{`${faNumber(
-              course.count_students.toLocaleString(),
+              (course.price / 1000).toLocaleString(),
             )} ${t('global.person')}`}</div>
 
             <i className="fas fa-money-bill-wave ml-[6px] mt-[3px]" />
             <div>
-              {course.workshop_price
-                ? `${faNumber(course.workshop_price / 1000)} ${t('global.tooman')}`
+              {course.price
+                ? `${faNumber(course.price / 1000)} ${t('global.tooman')}`
                 : t('global.free')}
             </div>
           </div>
