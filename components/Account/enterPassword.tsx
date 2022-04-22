@@ -37,7 +37,7 @@ const EnterPassword: React.FC<PasswordType> = ({ auth, setStep, visible }) => {
         validationSchema={validationSchema}
         onSubmit={async (values): Promise<void> => {
           setLoading(true);
-          const body = { auth, AuthType: 'mobile', password: values.password };
+          const body = { mobile: auth, password: values.password };
           const res: any = await request.post(LoginUrl(), body); // eslint-disable-line
           setLoading(false);
           if (res.ok) {
