@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import dynamic from 'next/dynamic';
 import HeroSection from './heroSection';
 import Slider from './slider';

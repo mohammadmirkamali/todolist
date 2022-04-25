@@ -65,81 +65,77 @@ const Navbar: React.FC = () => {
   );
 
   return (
-    <div className="relative">
-      <SNav className="border-b border-b-gray-1">
-        <Drawer
-          closeIcon={<CloseOutlined className="text-[25px] m-[10px]" />}
-          onClose={(): void => setIsDrawerVisible(false)}
-          headerStyle={{ border: 'none' }}
-          title={DrawerTitle}
-          visible={isDrawerVisible}
-          width={330}
-        >
-          <div className="flex flex-col">
-            {tabs('p-5 border-t border-t-gray-4 w-[190px] first:border-none text-[18px]')}
-          </div>
-        </Drawer>
+    <SNav className="border-b border-b-gray-1 justify-center md:justify-start xl:justify-center">
+      <Drawer
+        closeIcon={<CloseOutlined className="text-[25px] m-[10px]" />}
+        onClose={(): void => setIsDrawerVisible(false)}
+        headerStyle={{ border: 'none' }}
+        title={DrawerTitle}
+        visible={isDrawerVisible}
+        width={330}
+      >
+        <div className="flex flex-col">
+          {tabs('p-5 border-t border-t-gray-4 w-[190px] first:border-none text-[18px]')}
+        </div>
+      </Drawer>
 
-        <div className="absolute right-[40px] flex">
-          <div className="text-[25px] pl-[10px] ml-[10px] md:pt-[4px] xl:hidden">
-            <MenuOutlined onClick={(): void => setIsDrawerVisible(true)} />
-          </div>
+      <div className="md:flex md:absolute right-[20px]">
+        <div className="text-[25px] mr-[50px] md:ml-[30px] md:mr-0 translate-y-[18px] md:translate-y-0 xl:hidden">
+          <MenuOutlined onClick={(): void => setIsDrawerVisible(true)} />
+        </div>
 
-          <div className="md:border-l-2 border-l-gray-1 text-gray-3 items-center flex pl-[20px]">
-            {!user ? (
-              <SButton onClick={(): void => setIsModalVisible(true)}>
-                <p>{t(`account.signIn`)}</p>
-              </SButton>
-            ) : (
-              <>
-                <Link href={url.ProfileRoute('user')}>
-                  <a>
-                    <Tooltip title={t('global.seeProfile')}>
-                      <Avatar icon={<UserOutlined />} size={40} />
-                    </Tooltip>
-                  </a>
-                </Link>
-                <Tooltip title={t('global.star')}>
-                  <div className="text-[20px] center mr-[12px]">
-                    <StarFilled />
-                    <span className="text-[18px] mr-[6px] mt-[4px]">{faNumber(223)}</span>
-                  </div>
-                </Tooltip>
-                <SExit title={t('global.exit')} placement="left">
-                  <LogoutOutlined
-                    onClick={(): void => {
-                      dispatch(logoutAction());
-                    }}
-                    className="text-[20px] pr-[20px] cursor-pointer "
-                  />
-                </SExit>
-              </>
-            )}
-          </div>
-
-          {courses && (
-            <AntSearch
-              setSearching={setSearching}
-              options={courses.map((item) => ({ name: item.title, id: item.id }))}
-            />
+        <div className="md:border-l-2 border-l-gray-1 text-gray-3 items-center hidden xl:flex pl-[20px]">
+          {!user ? (
+            <SButton onClick={(): void => setIsModalVisible(true)}>
+              <p>{t(`account.signIn`)}</p>
+            </SButton>
+          ) : (
+            <>
+              <Link href={url.ProfileRoute('user')}>
+                <a>
+                  <Tooltip title={t('global.seeProfile')}>
+                    <Avatar icon={<UserOutlined />} size={40} />
+                  </Tooltip>
+                </a>
+              </Link>
+              <Tooltip title={t('global.star')}>
+                <div className="text-[20px] center mr-[12px]">
+                  <StarFilled />
+                  <span className="text-[18px] mr-[6px] mt-[4px]">{faNumber(223)}</span>
+                </div>
+              </Tooltip>
+              <SExit title={t('global.exit')} placement="left">
+                <LogoutOutlined
+                  onClick={(): void => {
+                    dispatch(logoutAction());
+                  }}
+                  className="text-[20px] pr-[20px] cursor-pointer "
+                />
+              </SExit>
+            </>
           )}
         </div>
 
-        {!searching && (
-          <div className="text-[20px] hidden xl:flex">
-            {tabs('mx-[18px] cursor-pointer hover:text-[#000}')}
-          </div>
-        )}
+        <AntSearch
+          setSearching={setSearching}
+          options={courses?.map((item) => ({ name: item.title, id: item.id }))}
+        />
+      </div>
 
-        <Link href={url.HomeRoute()} passHref>
-          <a className="absolute left-[10px] md:left-[40px] cursor-pointer">
-            <Image src="/main-logo.webp" width={120} height={60} priority alt="" />
-          </a>
-        </Link>
+      {!searching && (
+        <div className="text-[20px] hidden xl:flex">
+          {tabs('mx-[18px] cursor-pointer hover:text-[#000}')}
+        </div>
+      )}
 
-        <Login isVisible={isModalVisible} setIsVisible={setIsModalVisible} />
-      </SNav>
-    </div>
+      <Link href={url.HomeRoute()}>
+        <a className="absolute left-[10px] md:left-[40px] cursor-pointer">
+          <Image src="/main-logo.webp" width={120} height={60} priority alt="" />
+        </a>
+      </Link>
+
+      <Login isVisible={isModalVisible} setIsVisible={setIsModalVisible} />
+    </SNav>
   );
 };
 

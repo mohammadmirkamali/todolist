@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Select } from 'antd';
 import { t } from 'i18next';
 
-import { SSelect } from './style';
+import { SContainer, SSelect } from './style';
 import useWindowSize from 'hooks/useWidowsSize';
 import { CourseRoute } from 'services/routes';
 
@@ -14,61 +14,56 @@ type SearchType = {
   setSearching?: (e) => void;
 };
 
+const { Option } = Select;
+
 const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => {
   const [focus, setFocus] = useState(landing);
-  const [open, setOpen] = useState(false);
   const [size] = useWindowSize();
-  const { Option } = Select;
   const router = useRouter();
 
   const onSelect = (name: string): void => {
     const selected = options.find((item) => item.name === name);
-    setOpen(false);
+    setFocus(false);
     router.push(CourseRoute(selected.id));
   };
 
   return (
-    <SSelect
-      showSearch
-      size="large"
-      open={open}
-      landing={landing ? 1 : 0}
+    <SContainer
       focus={focus ? 1 : 0}
-      suffixIcon={
-        landing ? (
-          <SearchOutlined className="text-[25px] translate-x-[15px] translate-y-[-5px]" />
-        ) : null
-      }
-      onSelect={onSelect}
-      value={null}
-      onFocus={(): void => (setFocus(true), !landing && setSearching(true))}
-      onSearch={(e): void => setOpen(e.length > 0)}
-      notFoundContent={<>{t('global.notFound')}</>}
-      onBlur={(): void => (
-        setOpen(false), !landing && (setFocus(false), !landing && setSearching(false))
-      )}
-      placeholder={
-        landing ? (
-          t(size > 768 ? 'landing.searchTitle' : 'global.search')
-        ) : !focus && size > 768 ? (
-          <SearchOutlined className="text-[20px] m-[-2px]" />
-        ) : (
-          t('global.search')
-        )
-      }
+      landing={landing ? 1 : 0}
+      className="translate-y-[35px] xl:mr-[20px] md:translate-y-0"
     >
-      {options?.map((option) => (
-        <Option
-          value={option.name}
-          key={option.id}
-          className={`!text-[16px] w-[${landing ? '250px' : '300px'}] md:w-[${
-            landing ? '550px' : '400px'
-          }]`}
-        >
-          {option.name}
-        </Option>
-      ))}
-    </SSelect>
+      <SSelect
+        showSearch
+        size="large"
+        landing={landing ? 1 : 0}
+        suffixIcon={
+          landing ? <SearchOutlined className="text-[25px] !hidden md:!block" /> : null
+        }
+        onSelect={onSelect}
+        value={null}
+        onFocus={(): void => (setFocus(true), !landing && setSearching(true))}
+        notFoundContent={<>{t('global.notFound')}</>}
+        onBlur={(): void =>
+          !landing && (setFocus(false), !landing && setSearching(false))
+        }
+        placeholder={
+          landing ? (
+            t(size > 768 ? 'landing.searchTitle' : 'global.search')
+          ) : !focus && size > 768 ? (
+            <SearchOutlined className="text-[20px] m-[-2px]" />
+          ) : (
+            t('global.search')
+          )
+        }
+      >
+        {options?.map((option) => (
+          <Option value={option.name} key={option.id}>
+            {option.name}
+          </Option>
+        ))}
+      </SSelect>
+    </SContainer>
   );
 };
 

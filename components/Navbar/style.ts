@@ -5,11 +5,12 @@ import AntButton from 'components/Common/AntButton';
 export const SNav = styled.nav`
   height: 70px;
   width: 100%;
-  position: fixed;
+  // position: -webkit-sticky;
+  position: sticky;
+  top: 0;
   background-color: #fff;
   padding: 0 40px;
   display: flex;
-  justify-content: center;
   align-items: center;
   transition: all 0.5s;
   z-index: 100;
