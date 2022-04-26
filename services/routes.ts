@@ -3,9 +3,11 @@ import { baseURL } from './request';
 export const AllCoursesUrl = (): string => `/api/v1/workshops`;
 export const CourseUrl = (id): string => `/api/v1/workshops/${id}`;
 export const CookieRoute = (): string => `/sanctum/csrf-cookie`;
+export const HomeUrl = (): string => `/api/v1/home`;
 
 export const CheckAuthPhoneUrl = (): string => `/api/v1/checkAuthPhone`;
 export const CheckAuthEmailUrl = (): string => `/api/v1/checkAuthEmail`;
+
 export const MobileVerifyUrl = (): string => `/api/v1/RegisterVerifyCode`;
 export const LoginUrl = (): string => `/api/v1/loginUsingPassword`;
 export const FillFormUrl = (): string => `/api/v1/RequiredFieldsFill`;

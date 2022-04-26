@@ -30,6 +30,7 @@ export const SContainer = styled.div<SelectType>`
   ${({ theme }): string => theme.mediaQueries.lg} {
     width: ${({ focus, landing }): string =>
       landing ? '500px' : focus === 1 ? '350px' : '40px'};
-    border-radius: ${({ focus }): string => (focus === 1 ? '8px' : '50%')};
+    border-radius: ${({ focus, landing }): string =>
+      focus === 1 || landing === 1 ? '8px' : '50%'};
   }
 `;

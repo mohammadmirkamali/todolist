@@ -1,9 +1,9 @@
+import { t } from 'i18next';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { ProfileRoute } from 'services/routes';
 import { CoursesType } from 'types/course.type';
-import Title from './title';
 
 type TeacherType = { courses: CoursesType[] };
 const Teachers: React.FC<TeacherType> = ({ courses }) => {
@@ -11,7 +11,10 @@ const Teachers: React.FC<TeacherType> = ({ courses }) => {
 
   return (
     <div className="center flex-col overflow-hidden">
-      <Title title="landing.teacherTitle" subTitle="landing.teacherSubTitle" />
+      <h2 className="font-bold text-[24px] md:text-[27px] my-[30px]">
+        {t('global.teachers')}
+      </h2>
+
       <div className="grid grid-cols-[repeat(2,170px)] md:grid-cols-[repeat(5,220px)]">
         {teachers.map((teacher) => {
           const item = courses.find((course) => course.teachers[0].nickname === teacher);

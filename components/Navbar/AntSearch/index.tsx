@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Select } from 'antd';
 import { t } from 'i18next';
@@ -20,10 +20,12 @@ const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => 
   const [focus, setFocus] = useState(landing);
   const [size] = useWindowSize();
   const router = useRouter();
+  const ref = useRef(null);
 
   const onSelect = (name: string): void => {
     const selected = options.find((item) => item.name === name);
     setFocus(false);
+    ref.current.blur();
     router.push(CourseRoute(selected.id));
   };
 
@@ -35,6 +37,7 @@ const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => 
     >
       <SSelect
         showSearch
+        ref={ref}
         size="large"
         landing={landing ? 1 : 0}
         suffixIcon={
