@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import { GetServerSideProps } from 'next';
 import { t } from 'i18next';
 import { useDispatch } from 'react-redux';
 import request from 'services/request';
@@ -25,7 +26,7 @@ const Home: React.FC<{ data: CoursesType[] }> = ({ data }) => {
         <meta name="description" content={t('global.description')} />
       </Head>
 
-      <Navbar />
+      <Navbar data={data} />
       <Landing courses={data} />
     </>
   );
@@ -33,8 +34,7 @@ const Home: React.FC<{ data: CoursesType[] }> = ({ data }) => {
 
 export default Home;
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const response = await request.get(AllCoursesUrl());
 
   return {

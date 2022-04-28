@@ -12,14 +12,16 @@ import { Avatar, Drawer, Tooltip } from 'antd';
 import Image from 'next/image';
 import { t } from 'i18next';
 import Link from 'next/link';
+import { parseCookies } from 'nookies';
 
 import { getCoursesAction } from 'store/course/course.action';
-import { logoutAction } from 'store/account/account.action';
+import { getUserAction, logoutAction } from 'store/account/account.action';
 import Login from 'components/Account/login';
 import { SButton, SExit, SNav } from './style';
 import * as url from 'services/routes';
 import AntSearch from './AntSearch';
 import { faNumber } from 'utils/common.util';
+import { CoursesType } from 'types/course.type';
 
 const items = [
   { name: 'home', tab: '/' },
@@ -29,15 +31,20 @@ const items = [
   { name: 'contactUs', tab: url.ContactUsRoute() },
 ];
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<{ data: CoursesType[] }> = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [tab] = useState(router.route);
   const [searching, setSearching] = useState(false);
-  const courses = useSelector((state) => state.course.courses);
+  const courses = useSelector((state) => state.course.courses) || data;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const user = useSelector((state) => state.account.user);
+  const token = parseCookies()?.taalei;
+
+  useEffect(() => {
+    token && !user && dispatch(getUserAction());
+  }, [token]);
 
   useEffect(() => {
     !courses && dispatch(getCoursesAction());

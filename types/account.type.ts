@@ -13,4 +13,6 @@ export type UserType = {
 
 export type AccountType = {
   user: UserType;
+  loginLoading: boolean;
+  login: any; // eslint-disable-line
 };

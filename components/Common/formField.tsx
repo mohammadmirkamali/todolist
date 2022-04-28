@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { useFormikContext } from 'formik';
+import { Field, useFormikContext } from 'formik';
 import React, { ReactElement, useEffect, useRef } from 'react';
 
 const FormField = (props): ReactElement => {
@@ -59,5 +59,18 @@ export const SubmitForm: React.FC<SubmitType> = ({ title, loading, ...rest }) =>
     </Button>
   );
 };
+
+type RadioType = { title: string; name: string; value: string };
+export const RadioForm: React.FC<RadioType> = ({ title, name, value }) => (
+  <label className="text-[16px] cursor-pointer flex items-center ml-[12px]" htmlFor="1">
+    <Field
+      type="radio"
+      name={name}
+      value={value}
+      className="w-[16px] h-[16px] ml-[6px]"
+    />
+    {title}
+  </label>
+);
 
 export default FormField;

@@ -4,19 +4,19 @@ export const AllCoursesUrl = (): string => `/api/v1/workshops`;
 export const CourseUrl = (id): string => `/api/v1/workshops/${id}`;
 export const CookieRoute = (): string => `/sanctum/csrf-cookie`;
 export const HomeUrl = (): string => `/api/v1/home`;
+export const UserUrl = (): string => `/api/user`;
 
 export const CheckAuthPhoneUrl = (): string => `/api/v1/checkAuthPhone`;
 export const CheckAuthEmailUrl = (): string => `/api/v1/checkAuthEmail`;
-
-export const MobileVerifyUrl = (): string => `/api/v1/RegisterVerifyCode`;
-export const LoginUrl = (): string => `/api/v1/loginUsingPassword`;
+export const LoginUrl = (): string => `/api/v1/loginUsingMobilePassword`;
+export const MobileVerifyUrl = (): string => `/api/v1/verifyCode`;
 export const FillFormUrl = (): string => `/api/v1/RequiredFieldsFill`;
+
 export const EmailVerifyUrl = (): string => `/api/v1/AuthVerifyEmail`;
 export const ForgetPasswordUrl = (): string => `/api/v1/ForgetPassword_step0`;
 export const ForgetPasswordCodedUrl = (): string => `/api/v1/ForgetPassword_step1`;
 export const ForgetPasswordNewUrl = (): string => `/api/v1/ForgetPassword_step2`;
 
-export const UserUrl = (): string => `/getInforUser`;
 export const ChangeMobileUrl = (): string => `/auth/changeMobileOrEmail`;
 export const ConfirmMobileUrl = (): string => `/auth/confirmMobileOrEmail`;
 

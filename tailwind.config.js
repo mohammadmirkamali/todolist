@@ -21,6 +21,7 @@ module.exports = {
         '#fafafa',
         '#888', // 12 hover
         '#1a1a1a',
+        '#b4b4b4',
       ],
       blue: [
         '#1890ff',

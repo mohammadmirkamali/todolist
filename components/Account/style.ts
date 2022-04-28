@@ -8,6 +8,7 @@ export const SSubmitForm = styled(SubmitForm)`
   font-size: 18px;
   margin-top: 50px;
   width: 250px;
+  direction: ltr;
 
   ${({ theme }): string => theme.mediaQueries.sm} {
     width: 400px;
