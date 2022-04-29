@@ -31,7 +31,7 @@ const items = [
   { name: 'contactUs', tab: url.ContactUsRoute() },
 ];
 
-const Navbar: React.FC<{ data: CoursesType[] }> = ({ data }) => {
+const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [tab] = useState(router.route);

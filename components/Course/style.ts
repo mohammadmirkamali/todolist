@@ -7,6 +7,10 @@ export const SButton = styled(AntButton)`
   margin: 40px 0;
   border-radius: 8px;
   font-size: 18px;
+  direction: ltr;
+  .ant-btn-loading-icon {
+    margin-right: 12px;
+  }
   ${({ theme }): string => theme.mediaQueries.sm} {
     width: 290px;
   }

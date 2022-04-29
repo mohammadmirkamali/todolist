@@ -6,16 +6,12 @@ import React from 'react';
 import { LessonRoute } from 'services/routes';
 import { UserType } from 'types/account.type';
 import { CourseType } from 'types/course.type';
-import { faNumber } from 'utils/common.util';
+import { calcTime, faNumber } from 'utils/common.util';
 
 type LessonsType = { course: CourseType; user: UserType };
 const Lessons: React.FC<LessonsType> = ({ user, course }) => {
-  const router = useRouter();
-  //   const onLesson = (item): void => {
-  //     item.lesson_free || profile
-  //       ? router.push(LessonRoute(id, item.lesson_id))
-  //       : message.warning(t('course.notAllow'));
-  //   };
+  const hours = Math.floor(course.time / 3600);
+  const minutes = Math.floor((course.time - hours * 3600) / 60);
 
   return (
     <div>
@@ -26,25 +22,25 @@ const Lessons: React.FC<LessonsType> = ({ user, course }) => {
               {key.name}
             </div>
           )}
-          {/* {key?.lessons.map((item) => (
-        <Link key={item.title} href={LessonRoute(id, item.lesson_id)}>
-          <a>
-            <div
-              className={`text-[16px] px-[40px] py-[15px] text-black ${
-                item.files[0].file || user ? 'cursor-pointer' : 'cursor-not-allowed'
-              } hover:bg-gray-4 duration-300`}
-            >
-              <div>
-                {item.title}
-                <div className="text-[13px] pr-[10px] inline-block">
-                  {item.lesson_free ? `(${t('global.free')})` : ''}
+          {key?.lessons.map((item) => (
+            <Link key={item.title} href={LessonRoute(course.id, item.id)}>
+              <a>
+                <div
+                  className={`text-[16px] px-[40px] py-[15px] text-black ${
+                    item.files[0].file ? 'cursor-pointer' : 'cursor-not-allowed'
+                  } hover:bg-gray-4 duration-300`}
+                >
+                  <div>
+                    {item.title}
+                    <div className="text-[13px] pr-[10px] inline-block">
+                      {item.free ? `(${t('global.free')})` : ''}
+                    </div>
+                  </div>
+                  <div>{calcTime(item.time)}</div>
                 </div>
-              </div>
-              <div>{faNumber(item.time)}</div>
-            </div>
-          </a>
-        </Link>
-      ))} */}
+              </a>
+            </Link>
+          ))}
         </div>
       ))}
     </div>

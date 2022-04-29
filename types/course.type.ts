@@ -16,6 +16,7 @@ export type CoursesType = {
 export type LessonType = {
   id: number;
   time: number;
+  free: number;
   description: string;
   title: string;
   files: { file: string }[];
@@ -27,17 +28,36 @@ export type ChapterType = {
   lessons: LessonType[];
 };
 
+export type CommentsType = {
+  answer: { nickname: string; text: string; avatar: string };
+  nickname: string;
+  text: string;
+  avatar: string;
+};
+
+export type AttachesType = {
+  link: string;
+  name: string;
+  size: string;
+};
+
 export type CourseType = {
   create_at: string;
   image: string;
   title: string;
   description: string;
   discount: number;
+  students_count: number;
+  rate: number;
   id: number;
+  lessons_count: number;
   price: number;
   progress_percent: number;
   time: number;
+  registered: boolean;
   chapters: ChapterType[];
+  attaches: AttachesType[];
+  comments: CommentsType[];
   categories: { title: string; image: string }[];
   teachers: { nickname: string; avatar: string }[];
 };

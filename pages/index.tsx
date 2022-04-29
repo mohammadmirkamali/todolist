@@ -34,7 +34,7 @@ const Home: React.FC<{ data: CoursesType[] }> = ({ data }) => {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetServerSideProps = async () => {
   const response = await request.get(AllCoursesUrl());
 
   return {

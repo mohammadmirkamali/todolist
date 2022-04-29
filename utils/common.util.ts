@@ -36,3 +36,40 @@ export const faNumber = (value: string | number): string => {
   const arr = letters.map((item) => (item in toFaDict ? toFaDict[item] : item));
   return arr.join('');
 };
+
+/**
+ * Convert dash-separated string to camelCase
+ * @param {string} : dash-separated-string
+ * @returns {string} : dashSeparatedString
+ */
+export const camelCase = (input: string): string =>
+  input &&
+  (input.slice(0, 1).toLowerCase() + input.slice(1))
+    .replace(/([-_ ]){1,}/g, ' ')
+    .split(/[-_ ]/)
+    .reduce((cur, acc) => cur + acc[0].toUpperCase() + acc.substring(1));
+
+/**
+ * Convert camelCase string to kebab-case
+ * @param {string} : dashSeparatedString
+ * @returns {string} :  dash-separated-string
+ */
+export const kebabCase = (input: string): string =>
+  input &&
+  input
+    .split(/(?=[A-Z])/)
+    .join('-')
+    .toLocaleLowerCase();
+
+export const calcTime = (time: number): string => {
+  const hours = Math.floor(time / 3600);
+  const minutes = Math.floor((time - hours * 3600) / 60);
+  return `${faNumber(hours)}:${faNumber(minutes)}`;
+};
+
+export const fileSize = (size: number | string): string =>
+  Number(size) > 1000000
+    ? `${faNumber((Number(size) / 1000000).toFixed(1))}MB`
+    : Number(size) > 1000
+    ? `${faNumber(Math.floor(Number(size) / 1000))}KB`
+    : `${faNumber(Math.floor(Number(size)))}B`;

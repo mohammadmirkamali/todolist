@@ -1,15 +1,17 @@
 import { ClockCircleOutlined, StarFilled } from '@ant-design/icons';
-import { Rate } from 'antd';
+import { message, Rate } from 'antd';
 import { t } from 'i18next';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import { ChapterDataType, CourseType, TopRateType } from 'types/course.type';
 import { UserType } from 'types/account.type';
-import { faNumber } from 'utils/common.util';
+import { calcTime, faNumber } from 'utils/common.util';
 import { SButton } from './style';
 // import AntTooltip from 'components/Common/AntTooltip';
 import TeacherAvatar from 'components/Common/TeacherAvatar';
+import request from 'services/request';
+import { RegisterUrl } from 'services/routes';
 
 // const RateStudents: React.FC<{ data: TopRateType[] }> = ({ data }) => (
 //   <div className="py-[7px] flex text-[16px] flex-col pr-[15px] overflow-hidden w-[90%]">
@@ -41,57 +43,77 @@ import TeacherAvatar from 'components/Common/TeacherAvatar';
 // );
 
 type InfoType = { course: CourseType; user: UserType };
-const Information: React.FC<InfoType> = ({ course, user }) => (
-  <div className="text-[18px] pr-[30px] text-gray-10">
-    <TeacherAvatar
-      name={course.teachers[0].nickname}
-      title={course.teachers[0].nickname}
-      img={course.teachers[0].avatar}
-    />
+const Information: React.FC<InfoType> = ({ course, user }) => {
+  const [loading, setLoading] = useState(false);
 
-    <div className="py-[7px] flex items-center text-[16px]">
-      <ClockCircleOutlined className="text-[20px] pr-[10px]" />
-      <div className="px-[20px] toRight">{faNumber(course.time / 3600)}</div>
-      <div>{t('global.hour')}</div>
-    </div>
+  const handleRegister = async (): Promise<void> => {
+    if (course.price) {
+      console.log('price');
+    } else {
+      setLoading(true);
+      const res: any = await request.post(RegisterUrl(course.id)); // eslint-disable-line
+      setLoading(false);
+      const text = res.data.message;
+      res.ok ? message.success(text) : message.error(text);
+    }
+  };
 
-    <div className="py-[7px] text-[16px] flex items-center">
-      <i className="fas fa-user-graduate pr-[10px] text-[20px]" />
-      <div className="pr-[20px] pl-[16px]">
-        {faNumber((course.price / 1000).toLocaleString())}
+  return (
+    <div className="text-[18px] pr-[30px] text-gray-10">
+      <TeacherAvatar
+        name={course.teachers[0].nickname}
+        title={t('global.teacher')}
+        img={course.teachers[0].avatar}
+      />
+
+      <div className="py-[7px] flex items-center text-[16px]">
+        <ClockCircleOutlined className="text-[20px] pr-[10px]" />
+        <div className="px-[20px] toRight">{calcTime(course.time)}</div>
+        <div>{t('global.hour')}</div>
       </div>
-      <div>{t('course.students')}</div>
-    </div>
 
-    <div className="py-[7px] text-[16px] flex items-center pr-[6px]">
-      <Image src="/book.webp" width={30} height={30} alt="" />
-      <div className="px-[15px] toRight">{faNumber(10)}</div>
-      <div>{t('global.course')}</div>
-    </div>
-
-    {!user && (
       <div className="py-[7px] text-[16px] flex items-center">
-        <i className="fas fa-money-bill-wave text-[18px] pr-[12px]" />
-        <div className="px-[20px] toLeft">
-          {course.price
-            ? `${faNumber(course.price / 1000)} ${t('global.tooman')}`
-            : t('global.free')}
+        <i className="fas fa-user-graduate pr-[10px] text-[20px]" />
+        <div className="pr-[20px] pl-[16px]">
+          {faNumber(course.students_count.toLocaleString())}
+        </div>
+        <div>{t('course.students')}</div>
+      </div>
+
+      <div className="py-[7px] text-[16px] flex items-center pr-[6px]">
+        <Image src="/book.webp" width={30} height={30} alt="" />
+        <div className="px-[15px] toRight">{faNumber(course.lessons_count)}</div>
+        <div>{t('global.course')}</div>
+      </div>
+
+      {!course.registered && (
+        <div className="py-[7px] text-[16px] flex items-center">
+          <i className="fas fa-money-bill-wave text-[18px] pr-[12px]" />
+          <div className="px-[20px] toLeft">
+            {course.price
+              ? `${faNumber(course.price / 1000)} ${t('global.tooman')}`
+              : t('global.free')}
+          </div>
+        </div>
+      )}
+
+      <div className="py-[7px] text-[16px] flex items-center pr-[15px]">
+        <Rate value={course.rate} allowHalf />
+        <div className="px-[15px] toRight">
+          {`( ${t('global.person')} ${faNumber((2).toLocaleString())} ) `}
         </div>
       </div>
-    )}
 
-    <div className="py-[7px] text-[16px] flex items-center pr-[15px]">
-      <Rate value={2} allowHalf />
-      <div className="px-[15px] toRight">
-        {`( ${t('global.person')} ${faNumber((2).toLocaleString())} ) `}
-      </div>
-    </div>
-
-    {/* {data?.topRate?.length ? <RateStudents data={data.topRate} /> : null}
+      {/* {data?.topRate?.length ? <RateStudents data={data.topRate} /> : null}
     {data?.userRate?.length ? <RateStudents data={data.userRate} /> : null} */}
 
-    {!user && <SButton>{t('global.register')}</SButton>}
-  </div>
-);
+      {!course.registered && (
+        <SButton onClick={handleRegister} loading={loading}>
+          {t('global.register')}
+        </SButton>
+      )}
+    </div>
+  );
+};
 
 export default Information;

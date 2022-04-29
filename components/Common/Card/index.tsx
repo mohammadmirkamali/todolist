@@ -13,7 +13,7 @@ const Card: React.FC<{ course: CoursesType }> = ({ course }) => {
   const time = (course.time / 3600).toFixed(0);
 
   return (
-    <Link href={CourseRoute(course.id)}>
+    <Link href={CourseRoute(course.id, course.title.replaceAll(' ', '-'))}>
       <a>
         <SContainer className="w-[300px] h-[310px] bg-white border border-gray-5 cursor-pointer relative rounded-[6px] m-[10px]">
           {badge && <SBadge text={badge.name} color={badge.color} placement="start" />}

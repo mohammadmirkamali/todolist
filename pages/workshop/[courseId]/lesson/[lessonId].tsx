@@ -3,15 +3,13 @@ import React from 'react';
 import { t } from 'i18next';
 import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 
 const Navbar = dynamic(() => import('components/Navbar'));
 const Lesson = dynamic(() => import('components/Lesson'));
 const Head = dynamic(() => import('next/head'));
 
 const LessonPage: React.FC = () => {
-  const id = useRouter().query.courseId as string;
-  const data = useSelector((state) => state.course.chapters)?.[id]?.data;
+  const data = useSelector((state) => state.course.chapters);
   return (
     <>
       <Head>
@@ -20,7 +18,7 @@ const LessonPage: React.FC = () => {
       </Head>
 
       <Navbar />
-      {data && <Lesson data={data} />}
+      <Lesson />
     </>
   );
 };

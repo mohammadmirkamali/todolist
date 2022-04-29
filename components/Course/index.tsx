@@ -13,8 +13,9 @@ import UserComment from './comment';
 import Lessons from './lessons';
 import Information from './information';
 import Card from 'components/Common/Card';
+import Attaches from './attaches';
 
-const tabs = ['attaches', 'comments', 'lessons'];
+const tabs = ['comments', 'lessons'];
 
 const Course: React.FC<{ course: CourseType }> = ({ course }) => {
   const dispatch = useDispatch();
@@ -25,6 +26,10 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
   // const data = course.chapters?.[id]?.data;
   const user = useSelector((state) => state.account.user);
 
+  useEffect(() => {
+    course.attaches.length && tabs.unshift('attaches');
+  }, []);
+
   const onSlide = (item): void => {
     const index = item.activeIndex;
     const { length } = tabs;
@@ -32,9 +37,8 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
     setSlideId(index === length + 1 ? 0 : !index ? length - 1 : index - 1);
   };
 
-  // console.log(courses);
   return (
-    <div className="bg-gray-0 pt-[110px] duration-300 md:pt-[70px] min-h-screen flex xl:block flex-col center">
+    <div className="bg-gray-0 duration-300 min-h-screen flex xl:block flex-col center">
       {/* title and description */}
       <div className=" w-[300px] md:w-[600px] xl:px-[370px] py-[20px] xl:justify-self-start xl:w-full ">
         <div className="w-full bg-white rounded-[8px]">
@@ -103,12 +107,16 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
             className="h-full"
             onSlideChange={onSlide}
           >
-            <SwiperSlide>پیوست ها</SwiperSlide>
+            {course.attaches.length && (
+              <SwiperSlide>
+                <Attaches data={course.attaches} />
+              </SwiperSlide>
+            )}
             <SwiperSlide className="relative h-full overflow-hidden">
-              <UserComment />
+              <UserComment comments={course.comments} />
             </SwiperSlide>
             <SwiperSlide className="min-h-full overflow-auto">
-              {/* <Lessons user={user} course={course} /> */}
+              <Lessons user={user} course={course} />
             </SwiperSlide>
           </Swiper>
         </div>

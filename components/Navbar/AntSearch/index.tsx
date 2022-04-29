@@ -1,7 +1,7 @@
 import { SearchOutlined } from '@ant-design/icons';
 import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Select } from 'antd';
+import { Select, Spin } from 'antd';
 import { t } from 'i18next';
 
 import { SContainer, SSelect } from './style';
@@ -26,7 +26,7 @@ const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => 
     const selected = options.find((item) => item.name === name);
     setFocus(false);
     ref.current.blur();
-    router.push(CourseRoute(selected.id));
+    router.push(CourseRoute(selected.id, selected.name.replaceAll(' ', '-')));
   };
 
   return (
@@ -46,7 +46,7 @@ const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => 
         onSelect={onSelect}
         value={null}
         onFocus={(): void => (setFocus(true), !landing && setSearching(true))}
-        notFoundContent={<>{t('global.notFound')}</>}
+        notFoundContent={options ? <>{t('global.notFound')}</> : <Spin />}
         onBlur={(): void =>
           !landing && (setFocus(false), !landing && setSearching(false))
         }
