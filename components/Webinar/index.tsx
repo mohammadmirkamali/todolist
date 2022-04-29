@@ -60,7 +60,7 @@ const Webinar: React.FC<{ webinar: WebinarType }> = ({ webinar }) => (
         )}
 
         <AntButton className="w-full mt-[20px]">
-          {false ? (
+          {webinar.link ? (
             <a href={webinar.link} target="_blank" rel="noreferrer">
               {t('webinar.link')}
             </a>

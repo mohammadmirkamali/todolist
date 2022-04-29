@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { DownloadOutlined, FileDoneOutlined } from '@ant-design/icons';
 import { Checkbox, message, Skeleton } from 'antd';
 import { t } from 'i18next';
@@ -20,7 +21,7 @@ import { CourseType, LessonType } from 'types/course.type';
 import { faNumber } from 'utils/common.util';
 import { LeftArrow, MenuItems, RightArrow } from 'components/Common/AnitmateLogo';
 
-const Lesson: React.FC<{ data: CourseType }> = ({ data }) => {
+const Lesson: React.FC<{ data?: CourseType }> = ({ data }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const profile = true; // to do ...

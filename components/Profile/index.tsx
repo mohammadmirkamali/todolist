@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { EditOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';

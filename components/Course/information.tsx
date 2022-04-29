@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ClockCircleOutlined, StarFilled } from '@ant-design/icons';
 import { message, Rate } from 'antd';
 import { t } from 'i18next';
@@ -48,7 +49,7 @@ const Information: React.FC<InfoType> = ({ course, user }) => {
 
   const handleRegister = async (): Promise<void> => {
     if (course.price) {
-      console.log('price');
+      // console.log('price');
     } else {
       setLoading(true);
       const res: any = await request.post(RegisterUrl(course.id)); // eslint-disable-line

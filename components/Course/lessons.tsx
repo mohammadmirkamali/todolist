@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { message, Skeleton } from 'antd';
 import { t } from 'i18next';
 import Link from 'next/link';
