@@ -107,7 +107,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
             className="h-full"
             onSlideChange={onSlide}
           >
-            {course.attaches.length && (
+            {course.attaches && course.attaches.length && (
               <SwiperSlide>
                 <Attaches data={course.attaches} />
               </SwiperSlide>
