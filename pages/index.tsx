@@ -28,7 +28,7 @@ const Home: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
   return (
     <>
       <Head>
-        <title>{t('global.homeHead')}</title>
+        {/* <title>{t('global.homeHead')}</title> */}
         <meta name="description" content={t('global.description')} />
       </Head>
 
