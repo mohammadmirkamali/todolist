@@ -19,11 +19,7 @@ const Teachers: React.FC<TeacherType> = ({ courses }) => {
         {teachers.map((teacher) => {
           const item = courses.find((course) => course.teachers[0].nickname === teacher);
           return (
-            <Link
-              href={ProfileRoute(teacher?.replaceAll(' ', '-'))}
-              key={item.id}
-              passHref
-            >
+            <Link href={ProfileRoute(teacher?.replace(/ /g, '-'))} key={item.id} passHref>
               <a className="center flex-col cursor-pointer my-[10px] md:m-[20px] transition-all duration-500 text-center opacity-70 hover:opacity-100 hover:text-blue-2 grayscale-[1] hover:grayscale-0">
                 <Image
                   src={item.teachers[0].avatar}

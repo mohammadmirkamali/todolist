@@ -24,7 +24,7 @@ type ProfileType = { allCourses: CourseType[]; user: UserType };
 const Profile: React.FC<ProfileType> = ({ allCourses, user }) => {
   const query = useRouter().query.name;
   const isUser = query === 'user';
-  const profileName = isUser ? 'account' : (query as string).replaceAll('-', ' ');
+  const profileName = isUser ? 'account' : (query as string).replace(/-/g, ' ');
   const [isModalVisible, setIsModalVisible] = useState(0);
   const [loadingPassword, setLoadingPassword] = useState(false);
   const [input, setInput] = useState('');

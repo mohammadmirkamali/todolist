@@ -5,7 +5,7 @@ import { ProfileRoute } from 'services/routes';
 
 type TeacherType = { name: string; img: string; title: string; className?: string };
 const TeacherAvatar: React.FC<TeacherType> = ({ name, img, title, className }) => (
-  <Link href={ProfileRoute(name.replaceAll(' ', '-'))}>
+  <Link href={ProfileRoute(name.replace(/ /g, '-'))}>
     <a
       className={`${className} py-[20px] flex items-center cursor-pointer text-gray-10 hover:text-black duration-300`}
     >

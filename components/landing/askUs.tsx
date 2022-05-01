@@ -26,7 +26,7 @@ const AskUs: React.FC = () => {
   return (
     <div className="bg-gray-1 w-full h-[220px] md:h-[100px] center flex-col md:flex-row">
       <a
-        href={`tel:${TelNumber().replace('0', '+98').replaceAll(' ', '')}`}
+        href={`tel:${TelNumber().replace('0', '+98').replace(/ /g, '')}`}
         className="flex justify-start items-center md:border-0 mb-[20px] pb-[20px] md:pb-0 md:mb-0 border-b border-b-gray-6 md:ml-[30%] w-[280px] md:w-[400px]"
       >
         <div className="text-white h-[50px] ml-5 bg-green-1 rounded-[8px] center w-[50px]">

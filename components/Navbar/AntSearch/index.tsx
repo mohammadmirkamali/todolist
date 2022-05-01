@@ -26,7 +26,7 @@ const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => 
     const selected = options.find((item) => item.name === name);
     setFocus(false);
     ref.current.blur();
-    router.push(CourseRoute(selected.id, selected.name.replaceAll(' ', '-')));
+    router.push(CourseRoute(selected.id, selected.name.replace(/ /g, '-')));
   };
 
   return (
