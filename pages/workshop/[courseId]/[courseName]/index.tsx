@@ -17,14 +17,8 @@ const CoursePage: React.FC<PageType> = ({ data }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const id = router.query.courseId as string;
-  // const [info, setInfo] = useState(null);
 
   useEffect(() => {
-    // const getData = async (): Promise<void> => {
-    //   const response = await request.get(CourseUrl(id));
-    //   setInfo(response.data);
-    // };
-    // getData();
     dispatch({
       type: GET_CHAPTER_SUCCESS,
       payload: data,

@@ -14,14 +14,8 @@ const Head = dynamic(() => import('next/head'));
 
 const Home: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
   const dispatch = useDispatch();
-  // const [info, setInfo] = useState(null);
 
   useEffect(() => {
-    // const getData = async (): Promise<void> => {
-    //   const response = await request.get(AllCoursesUrl());
-    //   setInfo(response.data);
-    // };
-    // getData();
     dispatch({ type: GET_COURSE_SUCCESS, payload: data });
   }, []);
 
