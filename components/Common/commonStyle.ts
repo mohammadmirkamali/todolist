@@ -1,4 +1,5 @@
 import styled, { StyledComponent } from '@emotion/styled';
+import { Button } from 'antd';
 import * as ss from 'styled-system';
 
 export type ComposeType = ss.SpaceProps &
@@ -25,7 +26,7 @@ export const Compose = ss.compose(
   ss.typography,
 );
 
-export const CommenStyle = (
+export const CommonStyle = (
   component,
   style = '',
 ): StyledComponent<ComposeType> => styled(component)`
@@ -45,4 +46,5 @@ export const CommenStyle = (
   align-items: ${({ isCenter }): string => isCenter && 'center'};
 `;
 
-export const SDiv = CommenStyle('div');
+export const StyledDiv = CommonStyle('div');
+export const StyledButton = CommonStyle(Button);

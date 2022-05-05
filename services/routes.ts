@@ -6,6 +6,11 @@ export const CookieRoute = (): string => `/sanctum/csrf-cookie`;
 export const HomeUrl = (): string => `/api/v1/home`;
 export const UserUrl = (): string => `/api/user`;
 export const RegisterUrl = (id): string => `/api/v1/workshops/${id}/register`;
+export const discountUrl = (): string => `/api/v1/takhfif-check`;
+export const ratePayUrl = (id): string => `/api/v1/workshops/${id}/buyUsingRate`;
+export const DirectPayUrl = (id): string => `/api/v1/DirectPay/workshop/${id}`;
+export const CommentUrl = (id, page): string =>
+  `/api/v1/workshops/${id}/comments?page=${page}`;
 
 // ///////////////////////////////////////////////////////////////
 
@@ -30,8 +35,10 @@ export const HomatRoute = (): string => `${baseURL}/categories/128/حماة`;
 export const RoatRoute = (): string => `${baseURL}/categories/130/رعاة`;
 
 // //////////////////////////////////////////////////////////////////////////////////
-export const CourseRoute = (id, name): string => `/workshop/${id}/${name}`;
-export const LessonRoute = (courseId, lessonId): string => `/${courseId}/${lessonId}`;
+export const CourseRoute = (id, name): string =>
+  `/workshop/${id}/${name.replace(/ /g, '-')}`;
+export const LessonRoute = (courseId, lessonId, lessonName): string =>
+  `/workshop/${courseId}/lesson/${lessonId}/${lessonName.replace(/ /g, '-')}`;
 
 // /////////////////////////////////////////////////////////////////////
 export const ConditionRoute = (): string => `/conditions`;

@@ -1,30 +1,24 @@
 /* eslint-disable import/no-unresolved */
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { t } from 'i18next';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import 'swiper/css';
-import { getChapterAction } from 'store/course/course.action';
+import Card from 'components/Common/Card';
 import { CourseType } from 'types/course.type';
 import UserComment from './comment';
-import Lessons from './lessons';
-import Information from './information';
-import Card from 'components/Common/Card';
 import Attaches from './attaches';
+import Information from './Information';
+import LessonsList from 'components/Common/LessonsList';
 
 const tabs = ['comments', 'lessons'];
 
 const Course: React.FC<{ course: CourseType }> = ({ course }) => {
-  const dispatch = useDispatch();
   const courses = useSelector((state) => state.course.courses);
-  // const id = useRouter().query.courseId as string;
   const [swiper, setSwiper] = useState({} as any); // eslint-disable-line
   const [slideId, setSlideId] = useState(0);
-  // const data = course.chapters?.[id]?.data;
-  const user = useSelector((state) => state.account.user);
 
   useEffect(() => {
     course.attaches.length && tabs.unshift('attaches');
@@ -77,7 +71,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           {t('course.info')}
         </div>
 
-        <Information course={course} user={user} />
+        <Information course={course} />
       </div>
 
       <div className="w-[300px] h-[620px] md:w-[600px]   xl:fixed right-0 top-[70px] bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
@@ -116,7 +110,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
               <UserComment comments={course.comments} />
             </SwiperSlide>
             <SwiperSlide className="min-h-full overflow-auto">
-              <Lessons user={user} course={course} />
+              <LessonsList course={course} />
             </SwiperSlide>
           </Swiper>
         </div>

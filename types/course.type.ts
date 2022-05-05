@@ -17,6 +17,9 @@ export type LessonType = {
   id: number;
   time: number;
   free: number;
+  can_start_exam: number;
+  previous_lesson: number;
+  next_lesson: number;
   description: string;
   title: string;
   files: { file: string }[];
@@ -82,12 +85,6 @@ export type TopRateType = {
   avatar: string;
 };
 
-export type ChapterDataType = {
-  data: ChapterType[];
-  topRate: TopRateType[];
-  userRate: TopRateType[];
-};
-
 export type WebinarType = {
   id: number;
   price: number;
@@ -111,5 +108,5 @@ export type CourseReducerType = {
   postsError: boolean;
   posts: PostType[];
   webinar: { [id: number]: { loading: boolean; error: boolean; data: WebinarType } };
-  chapters: { [id: number]: { loading: boolean; error: boolean; data: ChapterDataType } };
+  chapters: { [id: number]: { loading: boolean; error: boolean; data: CourseType } };
 };

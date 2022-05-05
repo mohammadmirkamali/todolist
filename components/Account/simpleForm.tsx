@@ -2,10 +2,9 @@ import React from 'react';
 import { t } from 'i18next';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { SSubmitForm } from './style';
 import FormField from 'components/Common/formField';
 import AppForm from 'components/Common/appForm';
-import { postLoginAction } from 'store/account/account.action';
+import { getUserAction, postLoginAction } from 'store/account/account.action';
 import {
   CheckAuthEmailUrl,
   CheckAuthPhoneUrl,
@@ -13,6 +12,7 @@ import {
   LoginUrl,
   MobileVerifyUrl,
 } from 'services/routes';
+import { SSubmitForm } from './style';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type FormType = { loginData: any; setIsVisible: (value) => void };
@@ -82,7 +82,7 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
           const result = await dispatch(
             postLoginAction(step, data[2], body(values.value)),
           );
-          result === null && setIsVisible(false);
+          result === null && (setIsVisible(false), dispatch(getUserAction()));
           result && resetForm();
         }}
       >
