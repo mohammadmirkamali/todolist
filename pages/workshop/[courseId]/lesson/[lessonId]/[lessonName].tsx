@@ -17,7 +17,7 @@ const LessonPage: React.FC = () => {
   const { courseId, lessonId }: any = router.query; // eslint-disable-line
   const course = useSelector((state) => state.course.chapters)?.[courseId]?.data;
   const error = useSelector((state) => state.course.chapters)?.[courseId]?.error;
-  const lesson = course.chapters
+  const lesson = course?.chapters
     ?.map((item) => item.lessons.map((k) => k))
     .flat()
     .find((item) => item.id === Number(lessonId));
