@@ -69,7 +69,7 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
         ...state,
         chapters: {
           ...state.chapters,
-          [action.id]: { loading: true, data: null, error: null },
+          [action.id]: { ...state.chapters?.[action.id], loading: true }, // not show loading when user register a course
         },
       };
     case type.GET_CHAPTER_SUCCESS:

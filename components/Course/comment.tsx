@@ -8,6 +8,7 @@ const UserComment: React.FC<{ comments: CommentsType[] }> = ({ comments }) => {
   const handleSubmit = (): void => {
     // todo:
   };
+
   return (
     <>
       <div className="h-[calc(100%-200px)] overflow-auto">

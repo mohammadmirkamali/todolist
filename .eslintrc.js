@@ -122,7 +122,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/no-named-default': 'off',
     'css-modules/no-unused-class': 'off',
-    'import/order': ['error', { groups: ['builtin', 'external', 'parent'] }],
+    'import/order': ['off', { groups: ['builtin', 'external', 'parent'] }],
     'no-restricted-imports': ['error', { patterns: ['..*'] }],
     'react/forbid-prop-types': 'off',
     'react/destructuring-assignment': 'off',

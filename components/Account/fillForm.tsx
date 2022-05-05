@@ -7,7 +7,7 @@ import { SSubmitForm } from './style';
 import AppForm from 'components/Common/appForm';
 import FormField, { RadioForm } from 'components/Common/formField';
 import { FillFormUrl } from 'services/routes';
-import { postLoginAction } from 'store/account/account.action';
+import { getUserAction, postLoginAction } from 'store/account/account.action';
 
 type FormType = { loginData: any; setIsVisible: (item) => void }; // eslint-disable-line
 const { Option } = Select;
@@ -62,7 +62,7 @@ const FillForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
             body[education] = level;
           }
           const result = dispatch(postLoginAction('requiredFields', FillFormUrl(), body));
-          result && setIsVisible(false);
+          result && (setIsVisible(false), dispatch(getUserAction()));
         }}
       >
         {loginData.name && (
