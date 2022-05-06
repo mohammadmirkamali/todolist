@@ -11,6 +11,7 @@ export const ratePayUrl = (id): string => `/api/v1/workshops/${id}/buyUsingRate`
 export const DirectPayUrl = (id): string => `/api/v1/DirectPay/workshop/${id}`;
 export const CommentUrl = (id, page): string =>
   `/api/v1/workshops/${id}/comments?page=${page}`;
+export const QuestionUrl = (id): string => `/api/v1/workshops/${id}/questions`;
 
 // ///////////////////////////////////////////////////////////////
 
@@ -39,6 +40,7 @@ export const CourseRoute = (id, name): string =>
   `/workshop/${id}/${name.replace(/ /g, '-')}`;
 export const LessonRoute = (courseId, lessonId, lessonName): string =>
   `/workshop/${courseId}/lesson/${lessonId}/${lessonName.replace(/ /g, '-')}`;
+export const ProfileRoute = (name): string => `/profile/${name.replace(/ /g, '-')}`;
 
 // /////////////////////////////////////////////////////////////////////
 export const ConditionRoute = (): string => `/conditions`;
@@ -49,7 +51,6 @@ export const ContactUsRoute = (): string => `/contact-us`;
 export const PostsRoute = (): string => `/posts`;
 export const WebinarRoute = (): string => `/webinar`;
 export const HomeRoute = (): string => `/`;
-export const ProfileRoute = (name): string => `/profile/${name}`;
 
 export const ProfileUrl = (): string => `/api/v2/getProfile`;
 export const PostsUrl = (): string => `/api/v2/getPosts`;

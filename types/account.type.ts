@@ -1,14 +1,8 @@
 export type UserType = {
-  birthYear: string;
   avatar: string;
-  api_token: string;
-  full_name: string;
-  reshte: string;
-  username: string;
-  email: string;
-  mobile: string;
-  workshops_count: number;
-  sex: number;
+  nickname: string;
+  info: { birthYear: string };
+  workshops: { workshop_id: number }[];
 };
 
 export type AccountType = {

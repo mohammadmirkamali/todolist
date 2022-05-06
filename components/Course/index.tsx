@@ -13,16 +13,18 @@ import Attaches from './attaches';
 import Information from './Information';
 import LessonsList from 'components/Common/LessonsList';
 
-const tabs = ['comments', 'lessons'];
-
 const Course: React.FC<{ course: CourseType }> = ({ course }) => {
+  const [tabs, setTabs] = useState([]);
   const courses = useSelector((state) => state.course.courses);
   const [swiper, setSwiper] = useState({} as any); // eslint-disable-line
   const [slideId, setSlideId] = useState(0);
 
   useEffect(() => {
-    course.attaches.length && tabs.unshift('attaches');
-  }, []);
+    course.attaches.length
+      ? setTabs(['attaches', 'questions', 'comments', 'lessons'])
+      : setTabs(['questions', 'comments', 'lessons']);
+    setSlideId(course.attaches.length ? 3 : 2);
+  }, [course]);
 
   const onSlide = (item): void => {
     const index = item.activeIndex;
@@ -75,7 +77,13 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
       </div>
 
       <div className="w-[300px] h-[620px] md:w-[600px]   xl:fixed right-0 top-[70px] bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
-        <div className="h-[55px] center w-full flex flex-row-reverse border-b-gray-1 border-b text-gray-3 text-[18px]">
+        <div
+          className={`h-[55px] center w-full flex text-[${
+            tabs.length > 3 ? 13 : 16
+          }px] md:text-[${
+            tabs.length > 3 ? 16 : 18
+          }px] flex-row-reverse border-b-gray-1 border-b text-gray-3`}
+        >
           {tabs.map((item, index) => (
             <span
               key={item}
@@ -107,7 +115,10 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
               </SwiperSlide>
             )}
             <SwiperSlide className="relative h-full overflow-hidden">
-              <UserComment comments={course.comments} />
+              <UserComment data={course.questions} id={course.id} />
+            </SwiperSlide>
+            <SwiperSlide className="relative h-full overflow-hidden">
+              <UserComment data={course.comments} id={course.id} comment />
             </SwiperSlide>
             <SwiperSlide className="min-h-full overflow-auto">
               <LessonsList course={course} />

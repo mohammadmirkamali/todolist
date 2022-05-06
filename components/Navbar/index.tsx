@@ -20,7 +20,7 @@ import Login from 'components/Account/login';
 import { SButton, SExit, SNav } from './style';
 import * as url from 'services/routes';
 import AntSearch from './AntSearch';
-import { faNumber } from 'utils/common.util';
+import { faNumber, generateOptions } from 'utils/common.util';
 import { CoursesType } from 'types/course.type';
 
 const items = [
@@ -48,7 +48,7 @@ const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
 
   useEffect(() => {
     !courses && dispatch(getCoursesAction());
-  }, []);
+  }, [courses]);
 
   const tabs = (style): ReactElement[] =>
     items.map((item) => (
@@ -123,10 +123,7 @@ const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
           )}
         </div>
 
-        <AntSearch
-          setSearching={setSearching}
-          options={courses?.map((item) => ({ name: item.title, id: item.id }))}
-        />
+        <AntSearch setSearching={setSearching} options={generateOptions(courses)} />
       </div>
 
       {!searching && (

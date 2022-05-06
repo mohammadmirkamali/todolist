@@ -38,6 +38,13 @@ export type CommentsType = {
   avatar: string;
 };
 
+export type QuestionsType = {
+  description: string;
+  title: string;
+  type: string;
+  answer: { description: string; title: string; type: string };
+};
+
 export type AttachesType = {
   link: string;
   name: string;
@@ -61,6 +68,7 @@ export type CourseType = {
   chapters: ChapterType[];
   attaches: AttachesType[];
   comments: CommentsType[];
+  questions: QuestionsType[];
   categories: { title: string; image: string }[];
   teachers: { nickname: string; avatar: string }[];
 };

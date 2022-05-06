@@ -1,3 +1,5 @@
+import { CoursesType } from 'types/course.type';
+
 export const BadgeCategory = (type): { name: string; color: string } | undefined => {
   // see antd badge color : https://ant.design/components/badge/
   const types = [
@@ -73,3 +75,35 @@ export const fileSize = (size: number | string): string =>
     : Number(size) > 1000
     ? `${faNumber(Math.floor(Number(size) / 1000))}KB`
     : `${faNumber(Math.floor(Number(size)))}B`;
+
+export const generateOptions = (
+  courses: CoursesType[],
+): { name: string; id: number; avatar?: string; category?: string }[] => {
+  if (!courses) return null;
+  const data: CoursesType[] = JSON.parse(JSON.stringify(courses));
+  const teachers = [
+    ...new Set(
+      data
+        ?.map((item) => item.teachers.map((k) => k.nickname))
+        .flat()
+        .filter((k) => k !== null),
+    ),
+  ];
+
+  const teacherOptions = teachers.map((name) => ({
+    name,
+    id: null,
+    category: null,
+    avatar: data
+      .find((item) => item.teachers.every((teacher) => teacher.nickname === teachers[0]))
+      .teachers.find((teacher) => teacher.nickname === teachers[0]).avatar,
+  }));
+
+  const coursesOptions = data?.map((item) => ({
+    name: item.title,
+    id: item.id,
+    category: item.categories[0]?.title,
+  }));
+
+  return [...coursesOptions, ...teacherOptions];
+};
