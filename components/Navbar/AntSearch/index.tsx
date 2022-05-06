@@ -6,10 +6,11 @@ import { t } from 'i18next';
 
 import { SContainer, SSelect } from './style';
 import useWindowSize from 'hooks/useWidowsSize';
-import { CourseRoute } from 'services/routes';
+import { CourseRoute, ProfileRoute } from 'services/routes';
+import Image from 'next/image';
 
 type SearchType = {
-  options: { name: string; id: number }[];
+  options: { name: string; id?: number; avatar?: string; category?: string }[];
   landing?: boolean;
   setSearching?: (e) => void;
 };
@@ -26,7 +27,9 @@ const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => 
     const selected = options.find((item) => item.name === name);
     setFocus(false);
     ref.current.blur();
-    router.push(CourseRoute(selected.id, selected.name));
+    router.push(
+      selected.id ? CourseRoute(selected.id, selected.name) : ProfileRoute(selected.name),
+    );
   };
 
   return (
@@ -61,8 +64,15 @@ const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => 
         }
       >
         {options?.map((option) => (
-          <Option value={option.name} key={option.id}>
-            {option.name}
+          <Option value={option.name} key={option.name}>
+            <div className="option flex items-center">
+              <span className="h-[25px] ml-[8px]">
+                {option.avatar && (
+                  <Image src={option.avatar} width={25} height={25} alt="" />
+                )}
+              </span>
+              {option.name} {option.category && `(${option.category})`}
+            </div>
           </Option>
         ))}
       </SSelect>

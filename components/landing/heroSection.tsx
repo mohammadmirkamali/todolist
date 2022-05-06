@@ -2,6 +2,7 @@ import { t } from 'i18next';
 import React from 'react';
 import AntSearch from 'components/Navbar/AntSearch';
 import { CoursesType } from 'types/course.type';
+import { generateOptions } from 'utils/common.util';
 
 const HeroSection: React.FC<{ courses: CoursesType[] }> = ({ courses }) => (
   <div className="w-screen md:w-[650px] h-[230px] flex flex-col items-center xl:text-right xl:items-start text-center xl:pr-[40px] xl:w-[1260px] xl:h-[270px] bg-blue-8 bg-cover md:rounded-[8px] mt-[40px] text-[20px] xl:bg-[url('/search-image.webp')] ">
@@ -12,10 +13,7 @@ const HeroSection: React.FC<{ courses: CoursesType[] }> = ({ courses }) => (
       {t('landing.subTitle')}
     </h2>
     <div className="mt-[-20px] md:mt-[10px]">
-      <AntSearch
-        options={courses?.map((item) => ({ name: item.title, id: item.id }))}
-        landing
-      />
+      <AntSearch options={generateOptions(courses)} landing />
     </div>
   </div>
 );

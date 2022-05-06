@@ -11,6 +11,7 @@ const Head = dynamic(() => import('next/head'));
 
 const ProfilePage: React.FC = () => {
   const courses = useSelector((state) => state.course.courses);
+  const error = useSelector((state) => state.course.coursesError);
   const user = useSelector((state) => state.account.user);
   return (
     <>
@@ -20,31 +21,15 @@ const ProfilePage: React.FC = () => {
       </Head>
 
       <Navbar />
-      {/* {courses ? <Profile allCourses={courses} user={user} /> : <PageLoading />} */}
+      {courses ? (
+        <Profile courses={courses} user={user} />
+      ) : error ? (
+        <div>error</div>
+      ) : (
+        <PageLoading />
+      )}
     </>
   );
 };
 
 export default ProfilePage;
-
-export const getStaticPaths = () => {
-  const profiles = [
-    'user',
-    'مصطفی-امینی-خواه',
-    'مهدی-سالاری',
-    'استاد-فیاض-بخش',
-    'علی-امینی-نژاد',
-    'اصغر-طاهرزاده',
-    'مصطفی-امینی-خواه',
-    'مصطفی-امینی-خواه',
-  ];
-
-  const paths = profiles.map((id) => ({ params: { name: id } }));
-  // const paths = [{ params: { name: 'user' } }];
-  return { paths, fallback: false };
-};
-
-export const getStaticProps = () => {
-  const postData = {};
-  return { props: { postData } };
-};

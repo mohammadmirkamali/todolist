@@ -2,6 +2,7 @@
 import React, { useRef, useState } from 'react';
 import { CameraFilled } from '@ant-design/icons';
 import Image from 'next/image';
+import user from 'public/user.svg';
 
 const ProfileImg: React.FC<{ image: string; isUser: boolean }> = ({ image, isUser }) => {
   const inputRef: React.MutableRefObject<any> = useRef();
@@ -32,7 +33,7 @@ const ProfileImg: React.FC<{ image: string; isUser: boolean }> = ({ image, isUse
       className="bg-white rounded-full w-[150px] h-[150px] relative overflow-hidden"
     >
       <Image
-        src={img}
+        src={img || user}
         width={150}
         height={150}
         alt="profile"

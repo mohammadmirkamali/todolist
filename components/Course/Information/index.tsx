@@ -54,7 +54,6 @@ const Information: React.FC<InfoType> = ({ course }) => {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [tryRegister, setTryRegister] = useState(false);
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
-  const [register, setRegister] = useState(course.registered);
 
   const registerCourse = async (): Promise<void> => {
     if (course.price) {
@@ -64,7 +63,6 @@ const Information: React.FC<InfoType> = ({ course }) => {
       const res: any = await request.post(RegisterUrl(course.id)); // eslint-disable-line
       setLoading(false);
       const text = res.data.message;
-      res.ok && setRegister(true);
       res.ok ? message.success(text) : message.error(text);
       res.ok && dispatch(getChapterAction(course.id));
     }
@@ -118,7 +116,7 @@ const Information: React.FC<InfoType> = ({ course }) => {
       {/* {data?.topRate?.length ? <RateStudents data={data.topRate} /> : null}
     {data?.userRate?.length ? <RateStudents data={data.userRate} /> : null} */}
 
-      {!register && (
+      {!course.registered && (
         <SButton onClick={handleRegister} loading={loading} className="toLeft">
           {t('global.register')}
           <span className="text-[16px] mr-[10px]">
