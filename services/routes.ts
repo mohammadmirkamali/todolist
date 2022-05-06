@@ -40,7 +40,7 @@ export const CourseRoute = (id, name): string =>
   `/workshop/${id}/${name.replace(/ /g, '-')}`;
 export const LessonRoute = (courseId, lessonId, lessonName): string =>
   `/workshop/${courseId}/lesson/${lessonId}/${lessonName.replace(/ /g, '-')}`;
-export const ProfileRoute = (name): string => `/profile/${name.replace(/ /g, '-')}`;
+export const ProfileRoute = (name): string => `/profile/${name?.replace(/ /g, '-')}`;
 
 // /////////////////////////////////////////////////////////////////////
 export const ConditionRoute = (): string => `/conditions`;
