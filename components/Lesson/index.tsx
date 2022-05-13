@@ -1,31 +1,52 @@
-import { DownloadOutlined, FileDoneOutlined } from '@ant-design/icons';
+import { FileDoneOutlined } from '@ant-design/icons';
 import { Checkbox, message } from 'antd';
 import { t } from 'i18next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
-import {
-  Player,
-  ControlBar,
-  ReplayControl,
-  ForwardControl,
-  CurrentTimeDisplay,
-  TimeDivider,
-  PlaybackRateMenuButton,
-} from 'video-react';
-import { CourseRoute, LessonRoute } from 'services/routes';
+import React, { useEffect, useRef, useState } from 'react';
+import { CourseRoute, ExamInfoRoute, LessonRoute, LessonUrl } from 'services/routes';
 import { CourseType, LessonType } from 'types/course.type';
 import { LeftArrow, MenuItems, RightArrow } from 'components/Common/AnitmateLogo';
 import LessonsList from 'components/Common/LessonsList';
+import LoginLink from 'components/Common/LoginLink';
+import Plyr from 'plyr-react';
+import 'plyr-react/dist/plyr.css';
+import Image from 'next/image';
+import LessonTabs from './lessonTabs';
+import request from 'services/request';
+
+const controls = [
+  'play',
+  'progress',
+  'current-time',
+  'mute',
+  'volume',
+  'settings',
+  'download',
+  'fullscreen',
+];
 
 type LessonPageType = { course: CourseType; lesson: LessonType };
 const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
   const router = useRouter();
+  const ref = useRef(null);
+  const { courseId, lessonId } = router.query;
   const { file } = lesson.files[0];
+  const type = file.includes('mp4') ? 'video' : 'audio';
+  const [error, setError] = useState(false);
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    const getData = async (): Promise<void> => {
+      const res = await request.get(LessonUrl(courseId, lessonId));
+      res.ok ? setData(res.data) : setError(true);
+    };
+    courseId && getData();
+  }, [courseId]);
 
   // const mp3 = lesson?.attaches?.find((item) => item.attach_type === 'mp3');
   // const pdf = lesson?.attaches?.find((item) => item.attach_type === 'pdf');
 
+  // console.log(lesson, file, course);
   const onLesson = (id): void => {
     const target = course.chapters
       ?.map((item) => item.lessons.map((k) => k))
@@ -38,7 +59,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
   };
 
   return (
-    <div className="duration-300 bg-gray-0 min-h-screen flex-col flex items-center justify-items-start">
+    <div className="duration-300 bg-gray-0 min-h-[calc(100vh-70px)] flex-col flex items-center justify-items-start">
       <div className="xl:pr-[370px] w-[300px] md:w-[600px] py-[20px] xl:pl-[20px]  xl:justify-self-start xl:w-full">
         <div className="w-full bg-white rounded-[8px]">
           <div className="py-[15px] text-center px-[25px]">
@@ -46,21 +67,24 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
             <h3 className="text-[16px] m-0">{lesson.title}</h3>
           </div>
 
-          <React.Fragment key={file}>
-            <Player className="toRight">
-              <source src={file} />
-              <ControlBar>
-                <ReplayControl seconds={10} order={1.1} />
-                <ForwardControl seconds={30} order={1.2} />
-                <CurrentTimeDisplay order={4.1} />
-                <TimeDivider order={4.2} />
-                <PlaybackRateMenuButton
-                  rates={[5, 2, 1.5, 1.25, 1, 0.7, 0.5]}
-                  order={7.1}
-                />
-              </ControlBar>
-            </Player>
-          </React.Fragment>
+          {type === 'audio' && (
+            <Image
+              src={course.image}
+              layout="responsive"
+              width={530}
+              height={300}
+              alt=""
+            />
+          )}
+          <div>
+            <Plyr
+              // ref={(player) => (ref.current = player)} // eslint-disable-line
+              source={{ type, sources: [{ src: file }] }}
+              options={{ controls }}
+            />
+          </div>
+
+          <LessonTabs data={data} error={error} player={ref} />
         </div>
       </div>
 
@@ -92,12 +116,6 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
         </div>
 
         <div className="absolute p-[20px] flex-col flex-wrap flex text-[15px] bg-white bottom-[490px] rounded-[8px]  w-full xl:bottom-0 h-[150px]">
-          <Link href={file}>
-            <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
-              <DownloadOutlined className="ml-[8px] text-[20px]" />
-              {t('global.download')}
-            </a>
-          </Link>
           {/* {mp3 && (
               <Link href={mp3.attach_link} passHref>
                 <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
@@ -115,9 +133,11 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
               </Link>
             )} */}
           {lesson.can_start_exam === 1 && (
-            <div className="mb-5 rounded-[4px] items-center flex cursor-pointer text-gray-3 hover:text-black duration-300">
-              <FileDoneOutlined className="ml-[8px] text-[25px]" /> {t('course.exam')}
-            </div>
+            <LoginLink href={ExamInfoRoute(course.id, lesson.id)}>
+              <div className="mb-5 rounded-[4px] items-center flex cursor-pointer text-gray-3 hover:text-black duration-300">
+                <FileDoneOutlined className="ml-[8px] text-[25px]" /> {t('course.exam')}
+              </div>
+            </LoginLink>
           )}
           <Checkbox className="text-gray-3 hover:text-black duration-300">
             <div className="mb-5 text-gray-3 hover:text-black">{t('course.isSeen')}</div>

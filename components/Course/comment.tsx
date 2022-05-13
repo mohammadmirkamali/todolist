@@ -15,7 +15,7 @@ type CommentType = {
 };
 const UserComment: React.FC<CommentType> = ({ data, comment, id }) => {
   const [loading, setLoading] = useState(false);
-  const [allDate, setAllDate] = useState(data);
+  const [allData, setAllData] = useState(data);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const handleSubmit = (): void => {
     // todo:
@@ -25,7 +25,7 @@ const UserComment: React.FC<CommentType> = ({ data, comment, id }) => {
     setLoading(true);
     const res: any = await request.get(url); // eslint-disable-line
     setLoading(false);
-    res.ok && (setAllDate(res.data.data), setAllDataLoaded(true));
+    res.ok && (setAllData(res.data.data), setAllDataLoaded(true));
   };
   const text = comment ? 'text' : 'description';
   const name = comment ? 'nickname' : 'title';
@@ -34,13 +34,13 @@ const UserComment: React.FC<CommentType> = ({ data, comment, id }) => {
   return (
     <>
       <div className="h-[calc(100%-200px)] overflow-auto">
-        {allDate.map((item) => (
+        {allData.map((item) => (
           <AntComment
             text={item[text]}
             avatar={item.avatar}
             name={item[name]}
             date={item[date]}
-            key={text}
+            key={item[text]}
           >
             {item.answer && (
               <AntComment

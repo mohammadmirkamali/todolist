@@ -2,6 +2,8 @@ import { baseURL } from './request';
 
 export const AllCoursesUrl = (): string => `/api/v1/workshops`;
 export const CourseUrl = (id): string => `/api/v1/workshops/${id}`;
+export const LessonUrl = (courseId, lessonId): string =>
+  `/api/v1/workshops/${courseId}/lessons/${lessonId}`;
 export const CookieRoute = (): string => `/sanctum/csrf-cookie`;
 export const HomeUrl = (): string => `/api/v1/home`;
 export const UserUrl = (): string => `/api/user`;
@@ -12,6 +14,12 @@ export const DirectPayUrl = (id): string => `/api/v1/DirectPay/workshop/${id}`;
 export const CommentUrl = (id, page): string =>
   `/api/v1/workshops/${id}/comments?page=${page}`;
 export const QuestionUrl = (id): string => `/api/v1/workshops/${id}/questions`;
+export const ExamInfoUrl = (courseId, lessonId): string =>
+  `/api/v1/workshops/${courseId}/lessons/${lessonId}/exam-review`;
+export const ExamUrl = (courseId, lessonId): string =>
+  `/api/v1/workshops/${courseId}/lessons/${lessonId}/exam-questions`;
+export const ExamResultUrl = (courseId, lessonId): string =>
+  `/api/v1/workshops/${courseId}/lessons/${lessonId}/submit-exam-answers`;
 
 // ///////////////////////////////////////////////////////////////
 
@@ -41,6 +49,10 @@ export const CourseRoute = (id, name): string =>
 export const LessonRoute = (courseId, lessonId, lessonName): string =>
   `/workshop/${courseId}/lesson/${lessonId}/${lessonName.replace(/ /g, '-')}`;
 export const ProfileRoute = (name): string => `/profile/${name?.replace(/ /g, '-')}`;
+export const ExamInfoRoute = (courseId, lessonId): string =>
+  `/exam/${courseId}/${lessonId}/info`;
+export const ExamRoute = (courseId, lessonId): string =>
+  `/exam/${courseId}/${lessonId}/question`;
 
 // /////////////////////////////////////////////////////////////////////
 export const ConditionRoute = (): string => `/conditions`;
