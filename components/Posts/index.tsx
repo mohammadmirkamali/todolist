@@ -5,15 +5,6 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  Player,
-  ControlBar,
-  ReplayControl,
-  ForwardControl,
-  CurrentTimeDisplay,
-  TimeDivider,
-  PlaybackRateMenuButton,
-} from 'video-react';
 import { getPostsAction } from 'store/course/course.action';
 import { PostsRoute } from 'services/routes';
 import Card from './card';
@@ -52,7 +43,7 @@ const Posts: React.FC = () => {
           {selectedPost?.post_title}
         </h2>
 
-        <div className="relative w-full">
+        {/* <div className="relative w-full">
           {selectedPost?.post_type && (
             <React.Fragment key={selectedPost.post_film}>
               <Player className="toRight" poster={selectedPost.post_img}>
@@ -70,7 +61,7 @@ const Posts: React.FC = () => {
               </Player>
             </React.Fragment>
           )}
-        </div>
+        </div> */}
 
         {selectedPost && !selectedPost?.post_type && (
           <div className="relative w-full h-[300px] md:h-[500px]">
