@@ -78,7 +78,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
           )}
           <div>
             <Plyr
-              // ref={(player) => (ref.current = player)} // eslint-disable-line
+              ref={(player) => (ref.current = player)} // eslint-disable-line
               source={{ type, sources: [{ src: file }] }}
               options={{ controls }}
             />
