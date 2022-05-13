@@ -134,3 +134,16 @@ export type ExamType = {
   question: string;
   options: { id: number; option: string }[];
 };
+
+export type LessonNotesType = {
+  notes: { text: string; time: number }[];
+  my_notes: { text: string; time: number }[];
+  attaches: { link: string; size?: string }[];
+  questions: { title: string; description: string; visit: number }[];
+  trainings: {
+    attachment: string;
+    description: string;
+    title: string;
+    user: { avatar: string; nickname: string };
+  }[];
+};

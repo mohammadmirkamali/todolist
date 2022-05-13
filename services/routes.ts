@@ -2,6 +2,8 @@ import { baseURL } from './request';
 
 export const AllCoursesUrl = (): string => `/api/v1/workshops`;
 export const CourseUrl = (id): string => `/api/v1/workshops/${id}`;
+export const LessonUrl = (courseId, lessonId): string =>
+  `/api/v1/workshops/${courseId}/lessons/${lessonId}`;
 export const CookieRoute = (): string => `/sanctum/csrf-cookie`;
 export const HomeUrl = (): string => `/api/v1/home`;
 export const UserUrl = (): string => `/api/user`;

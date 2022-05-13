@@ -66,7 +66,10 @@ export const kebabCase = (input: string): string =>
 export const calcTime = (time: number): string => {
   const hours = Math.floor(time / 3600);
   const minutes = Math.floor((time - hours * 3600) / 60);
-  return `${faNumber(hours)}:${faNumber(minutes)}`;
+  const secondes = time - hours * 3600 - minutes * 60;
+  return hours
+    ? `${faNumber(secondes)} : ${faNumber(minutes)} : ${faNumber(hours)}`
+    : `${faNumber(secondes)} : ${faNumber(minutes)}`;
 };
 
 export const fileSize = (size: number | string): string =>

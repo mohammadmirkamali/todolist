@@ -35,6 +35,7 @@
     "name": "نام",
     "online": "آنلاین",
     "status": "وضعیت",
+    "noData": "اطلاعاتی برای نمایش وجود ندارد.",
     "family": "نام خانوادگی",
     "sex": "جنسیت",
     "man": "مرد",
@@ -135,6 +136,11 @@
     "rateRegister": "با امتیاز",
     "choosePayMethod": "روش پرداخت را انتخاب کنید:",
     "walletRegister": "با اعتبار کیف پول",
+    "myComments": "یادداشت های من",
+    "publicComments": "یادداشت های عمومی",
+    "papers": "جزوات ارسالی",
+    "addComment": "ثبت یادداشت",
+    "showPublic": "انتشار عمومی یادداشت",
     "info": "اطلاعات"
   },
   "landing": {

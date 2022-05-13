@@ -1,13 +1,13 @@
 /* eslint-disable arrow-body-style */
 import request from 'services/request';
-import { AllCoursesUrl, CourseUrl, PostsUrl, WebinarUrl } from 'services/routes';
+import * as api from 'services/routes';
 import { ResType } from 'types/commen.type';
 import * as type from './course.constants';
 
 export const getCoursesAction = () => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_COURSE_REQUEST });
-    const response: ResType = await request.get(AllCoursesUrl());
+    const response: ResType = await request.get(api.AllCoursesUrl());
     if (response.ok) {
       dispatch({ type: type.GET_COURSE_SUCCESS, payload: response.data });
       return response.data;
@@ -21,7 +21,7 @@ export const getCoursesAction = () => {
 export const getChapterAction = (id) => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_CHAPTER_REQUEST, id });
-    const response: ResType = await request.get(CourseUrl(id));
+    const response: ResType = await request.get(api.CourseUrl(id));
     if (response.ok) {
       dispatch({
         type: type.GET_CHAPTER_SUCCESS,
@@ -39,7 +39,7 @@ export const getChapterAction = (id) => {
 export const getPostsAction = () => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_POSTS_REQUEST });
-    const response: ResType = await request.get(PostsUrl());
+    const response: ResType = await request.get(api.PostsUrl());
     if (response.ok) {
       dispatch({ type: type.GET_POSTS_SUCCESS, payload: response.data.data });
       return response.data;
@@ -53,7 +53,7 @@ export const getPostsAction = () => {
 export const getWebinarAction = (id) => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_WEBINAR_REQUEST, id });
-    const response: ResType = await request.get(WebinarUrl(id));
+    const response: ResType = await request.get(api.WebinarUrl(id));
 
     if (response.ok) {
       dispatch({ type: type.GET_WEBINAR_SUCCESS, payload: response.data.webinar[0], id });
