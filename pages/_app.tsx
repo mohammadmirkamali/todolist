@@ -4,7 +4,6 @@ import type { AppProps } from 'next/app';
 import { ConfigProvider } from 'antd';
 import ReduxLayout from 'store/with-redux-store';
 import theme from 'services/theme';
-import 'video-react/dist/video-react.css';
 import 'public/css/fontiran.css';
 import 'public/css/antd-rtl.css';
 import 'public/css/public.css';
