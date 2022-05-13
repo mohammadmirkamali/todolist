@@ -44,7 +44,12 @@ module.exports = {
       search: "url('public/logo.webp)",
     },
     border: ['1px solid #6c757d !important', '1px solid #000'],
-    shadows: [],
+    extend: {
+      boxShadows: {
+        card: '0px 20px 40px rgba(15, 24, 66, 0.1)',
+        card2: '0px 3px 6px rgb(0 0 0 / 50%)',
+      },
+    },
   },
   plugins: [],
 };

@@ -118,3 +118,19 @@ export type CourseReducerType = {
   webinar: { [id: number]: { loading: boolean; error: boolean; data: WebinarType } };
   chapters: { [id: number]: { loading: boolean; error: boolean; data: CourseType } };
 };
+
+export type ExamInfoType = {
+  acceptance_percent: number;
+  qtype: number;
+  duration: number;
+  payAmount: number;
+  retry_exam: number;
+  number_of_questions: number;
+  title: string;
+  needPay: boolean;
+};
+
+export type ExamType = {
+  question: string;
+  options: { id: number; option: string }[];
+};

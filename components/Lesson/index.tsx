@@ -13,10 +13,11 @@ import {
   TimeDivider,
   PlaybackRateMenuButton,
 } from 'video-react';
-import { CourseRoute, LessonRoute } from 'services/routes';
+import { CourseRoute, ExamInfoRoute, LessonRoute } from 'services/routes';
 import { CourseType, LessonType } from 'types/course.type';
 import { LeftArrow, MenuItems, RightArrow } from 'components/Common/AnitmateLogo';
 import LessonsList from 'components/Common/LessonsList';
+import LoginLink from 'components/Common/LoginLink';
 
 type LessonPageType = { course: CourseType; lesson: LessonType };
 const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
@@ -115,9 +116,11 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
               </Link>
             )} */}
           {lesson.can_start_exam === 1 && (
-            <div className="mb-5 rounded-[4px] items-center flex cursor-pointer text-gray-3 hover:text-black duration-300">
-              <FileDoneOutlined className="ml-[8px] text-[25px]" /> {t('course.exam')}
-            </div>
+            <LoginLink href={ExamInfoRoute(course.id, lesson.id)}>
+              <div className="mb-5 rounded-[4px] items-center flex cursor-pointer text-gray-3 hover:text-black duration-300">
+                <FileDoneOutlined className="ml-[8px] text-[25px]" /> {t('course.exam')}
+              </div>
+            </LoginLink>
           )}
           <Checkbox className="text-gray-3 hover:text-black duration-300">
             <div className="mb-5 text-gray-3 hover:text-black">{t('course.isSeen')}</div>
