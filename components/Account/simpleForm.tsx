@@ -79,22 +79,15 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
       <div className="text-[26px] font-bold">{t(`account.${data[0]}`)}</div>
       {data[1] && <div className="text-[18px] mt-[15px]">{t(`account.${data[1]}`)}</div>}
 
-      {step === 'VerifyEmail' ? (
+      {(step === 'VerifyEmail' || step === 'verifyCode') && (
         <div className="absolute right-[24px] top-[16px] text-gray-14">
           <ArrowLeftOutlined
             className="text-[25px] cursor-pointer"
-            onClick={(): void => setStep(`enterEmail`)}
+            onClick={(): void =>
+              setStep(step === 'VerifyEmail' ? 'enterEmail' : 'enterNumber')
+            }
           />
         </div>
-      ) : (
-        step === 'verifyCode' && (
-          <div className="absolute right-[24px] top-[16px] text-gray-14">
-            <ArrowLeftOutlined
-              className="text-[25px] cursor-pointer"
-              onClick={(): void => setStep(`enterNumber`)}
-            />
-          </div>
-        )
       )}
 
       <AppForm
@@ -119,27 +112,18 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
         <SSubmitForm loading={loading} title={t('account.approved')} />
       </AppForm>
 
-      {step === 'enterNumber' ? (
-        <div
-          aria-hidden="true"
-          className="text-[16px] mt-[10px] link"
-          onClick={(): void => {
-            dispatch(postLoginAction(step, null, rawData));
-          }}
-        >
-          {t('account.loginEmail')}
-        </div>
-      ) : (
-        <div
-          aria-hidden="true"
-          className="text-[16px] mt-[10px] link"
-          onClick={(): void => {
-            dispatch(postLoginAction(step, null, rawData));
-          }}
-        >
-          {t('account.loginMobile')}
-        </div>
-      )}
+      {!step.toLowerCase().includes('verify') &&
+        (step === 'enterNumber' || step === 'enterEmail') && (
+          <div
+            aria-hidden="true"
+            className="text-[16px] mt-[10px] link"
+            onClick={(): void => {
+              dispatch(postLoginAction(step, null, rawData));
+            }}
+          >
+            {step === 'enterNumber' ? t('account.loginEmail') : t('account.loginMobile')}
+          </div>
+        )}
     </div>
   );
 };
