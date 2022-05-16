@@ -104,10 +104,13 @@ const FillForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
           {loginData.sex && (
             <div className="flex-1">
               <p className="m-0 w-full mr-[5px]">{t('global.sex')}</p>
-              <div role="group" className="flex">
-                <RadioForm title={t('global.man')} name="sex" value="1" />
-                <RadioForm title={t('global.woman')} name="sex" value="2" />
-              </div>
+              <RadioForm
+                items={[
+                  { title: t('global.man'), value: '1' },
+                  { title: t('global.woman'), value: '2' },
+                ]}
+                name="sex"
+              />
             </div>
           )}
           {loginData.daneshAmooz && loginData.daneshjoo && loginData.talabe && (
