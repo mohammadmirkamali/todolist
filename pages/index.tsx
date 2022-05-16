@@ -23,7 +23,7 @@ const Home: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
     <>
       <Head>
         <title>{t('global.homeHead')}</title>
-        <meta name="description" content={t('global.description')} />
+        <meta name="description" content={t('global.ceoDescription')} />
       </Head>
 
       <Navbar data={data} />

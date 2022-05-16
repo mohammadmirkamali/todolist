@@ -1,14 +1,16 @@
 /* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
-import { SwiperSlide, Swiper } from 'swiper/react';
-import 'swiper/css';
 import { t } from 'i18next';
 import { LessonNotesType } from 'types/course.type';
 import { calcTime } from 'utils/common.util';
-import { Checkbox, Skeleton } from 'antd';
-import AntComment from 'components/Common/AntComment';
+import { Checkbox, message, Skeleton } from 'antd';
 import AntButton from 'components/Common/AntButton';
 import styled from '@emotion/styled';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import request from 'services/request';
+import { SendNoteUrl } from 'services/routes';
+import Papers from './papers';
 
 const SCheckbox = styled(Checkbox)`
   font-size: 18px;
@@ -16,39 +18,49 @@ const SCheckbox = styled(Checkbox)`
 
 type LessonTabsType = { data: LessonNotesType; error: boolean; player: any }; // eslint-disable-line
 const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player }) => {
-  const [swiper, setSwiper] = useState({} as any); // eslint-disable-line
-  const [tabs, setTabs] = useState(['myComments', 'publicComments', 'papers']);
-  const [slideId, setSlideId] = useState(0);
-  const [showPublic, setShowPublic] = useState(true);
+  const router = useRouter();
+  const { courseId, lessonId } = router.query;
+  const [tabs, setTabs] = useState([]);
+  const [slide, setSlide] = useState('');
+  const [showPublic, setShowPublic] = useState(1);
   const [myNotes, setMyNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
+  const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.account.user);
 
   useEffect(() => {
     if (data) {
-      const tab = ['myComments', 'publicComments', 'papers'];
-      data.notes.length && tab.filter((k) => k !== 'publicComments');
-      data.trainings.length && tab.filter((k) => k !== 'papers');
+      const tab = [];
+      user && tab.push('myComments');
+      !!data.notes.length && tab.push('publicComments');
+      !!data.trainings.length && tab.push('papers');
       setTabs(tab);
+      setSlide(tab[0] || null);
     }
   }, [data]);
 
-  const onSlide = (item): void => {
-    const index = item.activeIndex;
-    const { length } = tabs;
-    // handle changing last and first slide. it a swiper bug
-    setSlideId(index === length + 1 ? 0 : !index ? length - 1 : index - 1);
+  const sendNote = async (): Promise<void> => {
+    const time = Math.floor(player.current?.plyr.currentTime);
+    const body = { public: showPublic, text: newNote, time };
+    setLoading(true);
+    const res: any = await request.post(SendNoteUrl(courseId, lessonId), body); // eslint-disable-line
+    setLoading(false);
+    if (res.ok) {
+      message.success(res.data.message);
+      setMyNotes([{ showPublic, text: newNote, time }, ...myNotes]);
+      setNewNote('');
+    } else {
+      message.error(res.data.message);
+    }
   };
+
   return (
     <div>
       <div className="text-[14px] md:text-[18px] m-[30px] mb-[10px]">
         {tabs.map((item, index) => (
-          <span
-            key={item}
-            aria-hidden="true"
-            onClick={(): void => (setSlideId(index), swiper.slideTo(index + 1))}
-          >
+          <span key={item} aria-hidden="true" onClick={(): void => setSlide(item)}>
             <span
-              className={`mx-[10px] link ${slideId === index && 'font-bold text-black'}`}
+              className={`mx-[10px] link ${slide === item && 'font-bold text-black'}`}
             >
               {t(`course.${item}`)}
             </span>
@@ -58,16 +70,9 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player }) => {
       </div>
 
       {data ? (
-        <Swiper
-          loop={tabs.length > 1}
-          autoHeight
-          initialSlide={0}
-          onInit={(item): void => setSwiper(item)}
-          className="h-full"
-          onSlideChange={onSlide}
-        >
-          <SwiperSlide className="">
-            <div className="px-[30px] min-h-[400px] mb-[40px] overflow-auto">
+        <div>
+          {slide === 'myComments' && (
+            <div className="p-[30px] pt-[10px] min-h-[300px]">
               <textarea
                 value={newNote}
                 onChange={(e): void => setNewNote(e.target.value)}
@@ -75,8 +80,8 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player }) => {
               />
               <div className="flex justify-between text-[18px] items-center">
                 <SCheckbox
-                  checked={showPublic}
-                  onChange={(e): void => setShowPublic(e.target.checked)}
+                  checked={showPublic === 1}
+                  onChange={(e): void => setShowPublic(e.target.checked ? 1 : 0)}
                 >
                   {t('course.showPublic')}
                 </SCheckbox>
@@ -85,17 +90,8 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player }) => {
                   width={250}
                   height={40}
                   disabled={!newNote}
-                  onClick={(): void => {
-                    setMyNotes([
-                      {
-                        showPublic,
-                        text: newNote,
-                        time: Math.floor(player.current?.plyr.currentTime),
-                      },
-                      ...myNotes,
-                    ]);
-                    setNewNote('');
-                  }}
+                  onClick={sendNote}
+                  loading={loading}
                 >
                   {t('course.addComment')}
                 </AntButton>
@@ -113,47 +109,22 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player }) => {
                 ))}
               </div>
             </div>
-          </SwiperSlide>
-          {tabs.includes('publicComments') && (
-            <SwiperSlide>
-              <div className="px-[30px] text-[16px] h-fit">
-                {data.notes.map((note) => (
-                  <div
-                    className="m-[16px] bg-blue-11 p-[16px] rounded-[6px]"
-                    key={note.text}
-                  >
-                    {note.text}
-                    <div className="mt-[8px]">{calcTime(note.time)}</div>
-                  </div>
-                ))}
-              </div>
-            </SwiperSlide>
           )}
-          {tabs.includes('papers') && (
-            <SwiperSlide>
-              <div className="px-[30px] text-[16px] ">
-                {data.trainings.map((train) => (
-                  <div
-                    className="m-[16px] bg-blue-11 p-[16px] rounded-[6px]"
-                    key={train.description}
-                  >
-                    <AntComment
-                      text={train.description}
-                      avatar={train.user.avatar}
-                      name={train.user.nickname}
-                      title={train.title}
-                    />
-                    {train.attachment?.includes('pdf') && (
-                      <a className="mr-[30px]" href={train.attachment}>
-                        {t('global.download')}
-                      </a>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </SwiperSlide>
+          {slide === 'publicComments' && (
+            <div className="p-[30px] pt-[10px] text-[16px]">
+              {data.notes.map((note) => (
+                <div
+                  className="m-[16px] bg-blue-11 p-[16px] rounded-[6px]"
+                  key={note.text}
+                >
+                  {note.text}
+                  <div className="mt-[8px]">{calcTime(note.time)}</div>
+                </div>
+              ))}
+            </div>
           )}
-        </Swiper>
+          {slide === 'papers' && <Papers data={data} />}
+        </div>
       ) : error ? (
         <div>error</div>
       ) : (

@@ -45,7 +45,7 @@ export const getUserAction = () => {
 export const logoutAction = () => {
   return async (dispatch): Promise<unknown> => {
     request.setHeader('authorization', '');
-    destroyCookie(null, 'taalei');
+    destroyCookie(null, 'taalei', { path: '/' });
     dispatch({ type: type.GET_USER_SUCCESS, payload: '' });
 
     return false;

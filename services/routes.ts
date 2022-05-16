@@ -10,6 +10,7 @@ export const UserUrl = (): string => `/api/user`;
 export const RegisterUrl = (id): string => `/api/v1/workshops/${id}/register`;
 export const discountUrl = (): string => `/api/v1/takhfif-check`;
 export const ratePayUrl = (id): string => `/api/v1/workshops/${id}/buyUsingRate`;
+export const walletPayUrl = (id): string => `/api/v1/buyUsingWallet/workshops/${id}`;
 export const DirectPayUrl = (id): string => `/api/v1/DirectPay/workshop/${id}`;
 export const CommentUrl = (id, page): string =>
   `/api/v1/workshops/${id}/comments?page=${page}`;
@@ -20,6 +21,10 @@ export const ExamUrl = (courseId, lessonId): string =>
   `/api/v1/workshops/${courseId}/lessons/${lessonId}/exam-questions`;
 export const ExamResultUrl = (courseId, lessonId): string =>
   `/api/v1/workshops/${courseId}/lessons/${lessonId}/submit-exam-answers`;
+export const SendNoteUrl = (courseId, lessonId): string =>
+  `/api/v1/workshops/${courseId}/lessons/${lessonId}/notes`;
+export const SendTrainUrl = (courseId, lessonId): string =>
+  `/api/v1/workshops/${courseId}/lessons/${lessonId}/trainings`;
 
 // ///////////////////////////////////////////////////////////////
 
