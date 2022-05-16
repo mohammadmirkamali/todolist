@@ -1,6 +1,7 @@
-import { Button } from 'antd';
+import styled from '@emotion/styled';
 import { Field, useFormikContext } from 'formik';
 import React, { ReactElement, useEffect, useRef } from 'react';
+import AntButton from './AntButton';
 
 const FormField = (props): ReactElement => {
   const ref = useRef(null);
@@ -44,33 +45,54 @@ const FormField = (props): ReactElement => {
   );
 };
 
-type SubmitType = { title: string; loading?: boolean };
-export const SubmitForm: React.FC<SubmitType> = ({ title, loading, ...rest }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const SubmitForm: React.FC<any> = ({ title, loading, ...rest }) => {
   const { handleSubmit, dirty } = useFormikContext();
+
   return (
-    <Button
-      type="primary"
+    <AntButton
       onClick={(): void => handleSubmit()}
       loading={loading}
       disabled={!dirty}
       {...rest}
     >
       {title}
-    </Button>
+    </AntButton>
   );
 };
 
-type RadioType = { title: string; name: string; value: string };
-export const RadioForm: React.FC<RadioType> = ({ title, name, value }) => (
-  <label className="text-[16px] cursor-pointer flex items-center ml-[12px]" htmlFor="1">
-    <Field
-      type="radio"
-      name={name}
-      value={value}
-      className="w-[16px] h-[16px] ml-[6px]"
-    />
-    {title}
-  </label>
-);
+const SField = styled(Field)`
+  color: ${({ theme }): string => theme.colors.red[0]};
+`;
+
+type RadioType = { items: { title: string; value: string }[]; name: string };
+export const RadioForm: React.FC<RadioType> = ({ items, name }) => {
+  const { errors, touched } = useFormikContext();
+  const hasError = touched[name] && errors[name];
+  return (
+    <div>
+      <div role="group" className="flex">
+        {items.map((item) => (
+          // eslint-disable-next-line jsx-a11y/label-has-associated-control
+          <label
+            className="text-[16px] cursor-pointer flex items-center ml-[12px]"
+            key={item.title}
+          >
+            <SField
+              type="radio"
+              name={name}
+              value={item.value}
+              className="w-[16px] h-[16px] ml-[6px]"
+            />
+            {item.title}
+          </label>
+        ))}
+      </div>
+      {hasError && (
+        <div className="text-red-0 text-[12px] text-right">{errors[name]}</div>
+      )}
+    </div>
+  );
+};
 
 export default FormField;

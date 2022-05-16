@@ -29,7 +29,7 @@ const LessonPage: React.FC = () => {
     <>
       <Head>
         <title>{t('global.title', { title: course?.title })}</title>
-        <meta name="description" content={t('global.description')} />
+        <meta name="description" content={t('global.ceoDescription')} />
       </Head>
 
       <Navbar />
