@@ -1,32 +1,39 @@
+import { LockFilled, PlayCircleFilled } from '@ant-design/icons';
 import { t } from 'i18next';
-import Link from 'next/link';
 import React from 'react';
 import { LessonRoute } from 'services/routes';
 import { CourseType } from 'types/course.type';
 import { calcTime } from 'utils/common.util';
+import LoginLayout from 'components/Common/LoginLayout';
 
 type LessonsType = { course: CourseType; activeId?: number };
-const LessonsList: React.FC<LessonsType> = ({ course, activeId }) => {
-  const hours = Math.floor(course.time / 3600);
-  const minutes = Math.floor((course.time - hours * 3600) / 60);
-
-  return (
-    <div>
-      {course.chapters.map((key) => (
-        <div key={key.name} className="toLeft">
-          {course.chapters.length > 1 && (
-            <div className="font-bold px-[40px] border-b border-b-gray-1 py-[7px] text-[16px]">
-              {key.name}
-            </div>
-          )}
-          {key?.lessons.map((item) => (
-            <Link key={item.title} href={LessonRoute(course.id, item.id, item.title)}>
-              <a>
-                <div
-                  className={`text-[16px] px-[40px] py-[15px] text-black ${
-                    item.files[0].file ? 'cursor-pointer' : 'cursor-not-allowed'
-                  } hover:bg-gray-4 ${item.id === activeId && 'bg-gray-4'} duration-300`}
-                >
+const LessonsList: React.FC<LessonsType> = ({ course, activeId }) => (
+  <div>
+    {course.chapters.map((key) => (
+      <div key={key.name} className="toLeft">
+        {course.chapters.length > 1 && (
+          <div className="font-bold px-[40px] border-b border-b-gray-1 py-[7px] text-[16px]">
+            {key.name}
+          </div>
+        )}
+        {key?.lessons
+          .sort((a, b) => a.order - b.order)
+          .map((item) => (
+            <LoginLayout
+              course={course}
+              key={item.title}
+              condition={!!item.files[0].file}
+              url={LessonRoute(course.id, item.id, item.title)}
+            >
+              <div
+                className={`text-[16px] px-[30px] items-center py-[15px] cursor-pointer flex text-black hover:bg-gray-4 ${
+                  item.id === activeId && 'bg-gray-4'
+                } duration-300`}
+              >
+                <div className="ml-[16px] text-gray-3">
+                  {item.files[0].file ? <PlayCircleFilled /> : <LockFilled />}
+                </div>
+                <div>
                   <div>
                     {item.title}
                     <div className="text-[13px] pr-[10px] inline-block">
@@ -35,13 +42,12 @@ const LessonsList: React.FC<LessonsType> = ({ course, activeId }) => {
                   </div>
                   <div>{calcTime(item.time)}</div>
                 </div>
-              </a>
-            </Link>
+              </div>
+            </LoginLayout>
           ))}
-        </div>
-      ))}
-    </div>
-  );
-};
+      </div>
+    ))}
+  </div>
+);
 
 export default LessonsList;

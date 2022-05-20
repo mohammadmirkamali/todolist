@@ -11,10 +11,12 @@ export const MobileVerifyUrl = (): string => `/api/v1/verifyCode`;
 export const RegisterUrl = (id): string => `/api/v1/workshops/${id}/register`;
 export const discountUrl = (): string => `/api/v1/takhfif-check`;
 export const ratePayUrl = (id): string => `/api/v1/workshops/${id}/buyUsingRate`;
-export const walletPayUrl = (id): string => `/api/v1/buyUsingWallet/workshops/${id}`;
+export const walletPayUrl = (id): string => `/api/v1/buyUsingWallet/workshop/${id}`;
 export const DirectPayUrl = (id): string => `/api/v1/DirectPay/workshop/${id}`;
 export const CommentUrl = (id, page): string =>
   `/api/v1/workshops/${id}/comments?page=${page}`;
+export const SendCommentUrl = (id): string => `/api/v1/workshops/${id}/comments`;
+export const SendQuestionUrl = (id): string => `/api/v1/workshops/${id}/questions`;
 export const QuestionUrl = (id): string => `/api/v1/workshops/${id}/questions`;
 export const ExamInfoUrl = (courseId, lessonId): string =>
   `/api/v1/workshops/${courseId}/lessons/${lessonId}/exam-review`;

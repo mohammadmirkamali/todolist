@@ -15,12 +15,17 @@ import {
 import { SSubmitForm } from './style';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { faNumber } from 'utils/common.util';
+import { getChapterAction } from 'store/course/course.action';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type FormType = { loginData: any; setIsVisible: (value) => void };
-const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
+type FormType = {
+  loginData: any; // eslint-disable-line
+  nextAction: { type: string; id: number[] };
+  setIsVisible: (value) => void;
+};
+const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible, nextAction }) => {
   const step = loginData?.next || 'enterNumber';
   const loading = useSelector((state) => state.account.loginLoading);
+  const userLoading = useSelector((state) => state.account.userLoading);
   const dispatch = useDispatch();
   const enterWithEmail = { next: step === 'enterEmail' ? 'enterNumber' : 'enterEmail' };
   const prevStep = { next: step === 'verifyCode' ? 'enterNumber' : 'enterEmail' };
@@ -95,7 +100,12 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
         validationSchema={validationSchema}
         onSubmit={async (values, { resetForm }): Promise<void> => {
           const result = await dispatch(postLoginAction(data[2], body(values.value)));
-          result === null && (setIsVisible(false), dispatch(getUserAction()));
+          if (result === null) {
+            dispatch(getUserAction());
+            nextAction?.type === 'chapter' &&
+              dispatch(getChapterAction(nextAction.id[0]));
+            setIsVisible(false);
+          }
           result && resetForm();
         }}
       >
@@ -107,7 +117,7 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
           className="w-[250px] md:w-[400px] toRight h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px] mt-[50px]"
         />
 
-        <SSubmitForm loading={loading} title={t('account.approved')} />
+        <SSubmitForm loading={loading || userLoading} title={t('account.approved')} />
       </AppForm>
 
       {(step === 'loginUsingPassword' || step === 'loginUsingEmail') && (

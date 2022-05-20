@@ -37,7 +37,7 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player }) => {
       setTabs(tab);
       setSlide(tab[0] || null);
     }
-  }, [data]);
+  }, [data, user]);
 
   const sendNote = async (): Promise<void> => {
     const time = Math.floor(player.current?.plyr.currentTime);

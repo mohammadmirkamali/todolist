@@ -17,6 +17,7 @@ export type LessonType = {
   id: number;
   time: number;
   free: number;
+  order: number;
   can_start_exam: number;
   previous_lesson: number;
   next_lesson: number;
@@ -51,6 +52,13 @@ export type AttachesType = {
   size: string;
 };
 
+export type TopRateType = {
+  id: number;
+  total_rate: number;
+  nickname: string;
+  avatar: string;
+};
+
 export type CourseType = {
   create_at: string;
   image: string;
@@ -69,6 +77,8 @@ export type CourseType = {
   attaches: AttachesType[];
   comments: CommentsType[];
   questions: QuestionsType[];
+  top_users: TopRateType[];
+  user_rate: TopRateType[];
   categories: { title: string; image: string }[];
   teachers: { nickname: string; avatar: string }[];
 };
@@ -84,13 +94,6 @@ export type PostType = {
   post_film: string;
   post_type: string;
   post_id: number;
-};
-
-export type TopRateType = {
-  id: number;
-  total_rate: number;
-  nickname: string;
-  avatar: string;
 };
 
 export type WebinarType = {

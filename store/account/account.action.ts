@@ -13,7 +13,8 @@ export const postLoginAction = (url, body) => {
 
     if (response.ok) {
       const { data } = response;
-      data.token && setCookie(null, 'taalei', data.token.replace('Bearer ', ''));
+      data.token &&
+        setCookie(null, 'taalei', data.token.replace('Bearer ', ''), { path: '/' });
       dispatch({ type: type.POST_LOGIN_SUCCESS, payload: data });
       return data.token && !data.next ? null : true;
     }
@@ -26,6 +27,7 @@ export const postLoginAction = (url, body) => {
 
 export const getUserAction = () => {
   return async (dispatch): Promise<unknown> => {
+    dispatch({ type: type.GET_USER_REQUEST });
     const response = await request.get(UserUrl());
     if (response.ok) {
       dispatch({ type: type.GET_USER_SUCCESS, payload: response.data });

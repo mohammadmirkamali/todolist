@@ -5,8 +5,12 @@ import SimpleForm from './simpleForm';
 import FillForm from './fillForm';
 import { SModal } from './style';
 
-type ModalType = { isVisible: boolean; setIsVisible: (value) => void };
-const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
+type ModalType = {
+  isVisible: boolean;
+  setIsVisible: (value) => void;
+  nextAction?: { type: string; id: number[] };
+};
+const Login: React.FC<ModalType> = ({ isVisible, setIsVisible, nextAction }) => {
   const loginData = useSelector((state) => state.account.login);
 
   return (
@@ -22,7 +26,11 @@ const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
       {loginData?.next === 'requiredFields' ? (
         <FillForm loginData={loginData} setIsVisible={setIsVisible} />
       ) : (
-        <SimpleForm loginData={loginData} setIsVisible={setIsVisible} />
+        <SimpleForm
+          loginData={loginData}
+          nextAction={nextAction}
+          setIsVisible={setIsVisible}
+        />
       )}
     </SModal>
   );
