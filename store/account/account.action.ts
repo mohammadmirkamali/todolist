@@ -6,7 +6,7 @@ import request from 'services/request';
 import { UserUrl } from 'services/routes';
 import * as type from './account.constants';
 
-export const postLoginAction = (step, url, body) => {
+export const postLoginAction = (url, body) => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.POST_LOGIN_REQUEST });
     const response: any = url ? await request.post(url, body) : body; // eslint-disable-line
@@ -14,14 +14,7 @@ export const postLoginAction = (step, url, body) => {
     if (response.ok) {
       const { data } = response;
       data.token && setCookie(null, 'taalei', data.token.replace('Bearer ', ''));
-      data.next === 'verifyCode' && message.success(t('account.messageCode'));
-      data.next === 'VerifyEmail' && message.success(t('account.emailCode'));
-
-      dispatch({
-        type: type.POST_LOGIN_SUCCESS,
-        payload: data,
-        step,
-      });
+      dispatch({ type: type.POST_LOGIN_SUCCESS, payload: data });
       return data.token && !data.next ? null : true;
     }
 

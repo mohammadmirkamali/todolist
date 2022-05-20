@@ -61,7 +61,7 @@ const FillForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
           if (education) {
             body[education] = level;
           }
-          const result = dispatch(postLoginAction('requiredFields', FillFormUrl(), body));
+          const result = dispatch(postLoginAction(FillFormUrl(), body));
           result && (setIsVisible(false), dispatch(getUserAction()));
         }}
       >

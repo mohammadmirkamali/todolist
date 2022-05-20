@@ -16,11 +16,7 @@ const accountReducer = (state = initialState, action): AccountType => {
     case type.POST_LOGIN_REQUEST:
       return { ...state, loginLoading: true };
     case type.POST_LOGIN_SUCCESS:
-      return {
-        ...state,
-        loginLoading: false,
-        login: { data: action.payload, prevStep: action.step },
-      };
+      return { ...state, loginLoading: false, login: action.payload };
     case type.POST_LOGIN_ERROR:
       return { ...state, loginLoading: false };
 

@@ -7,7 +7,7 @@ import { SModal } from './style';
 
 type ModalType = { isVisible: boolean; setIsVisible: (value) => void };
 const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
-  const loginData = useSelector((state) => state.account.login.data);
+  const loginData = useSelector((state) => state.account.login);
 
   return (
     <SModal
