@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { t } from 'i18next';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,17 +13,27 @@ import {
   MobileVerifyUrl,
 } from 'services/routes';
 import { SSubmitForm } from './style';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type FormType = { loginData: any; setIsVisible: (value) => void };
 const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
-  const step = loginData?.next || 'enterNumber';
+  const [step, setStep] = useState(loginData?.next || 'enterNumber');
   const loading = useSelector((state) => state.account.loginLoading);
   const dispatch = useDispatch();
-  const rawData = { data: { next: 'enterEmail' }, ok: true };
+  const rawData = {
+    data: {
+      next: step === 'enterEmail' ? 'enterNumber' : 'enterEmail',
+    },
+    ok: true,
+  };
   let data = []; // [title,subtitle,url,input type, placeholder]
   let body = (value): object => ({ value });
   let yup = null;
+
+  useEffect(() => {
+    loginData && setStep(loginData?.next);
+  }, [loginData]);
 
   switch (step) {
     case 'enterNumber':
@@ -69,11 +79,16 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
       <div className="text-[26px] font-bold">{t(`account.${data[0]}`)}</div>
       {data[1] && <div className="text-[18px] mt-[15px]">{t(`account.${data[1]}`)}</div>}
 
-      {/* {prevStep && ( todo:
+      {(step === 'VerifyEmail' || step === 'verifyCode') && (
         <div className="absolute right-[24px] top-[16px] text-gray-14">
-          <ArrowRightOutlined className="text-[25px] cursor-pointer" />
+          <ArrowLeftOutlined
+            className="text-[25px] cursor-pointer"
+            onClick={(): void =>
+              setStep(step === 'VerifyEmail' ? 'enterEmail' : 'enterNumber')
+            }
+          />
         </div>
-      )} */}
+      )}
 
       <AppForm
         initialValues={{ value: '' }}
@@ -97,17 +112,18 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
         <SSubmitForm loading={loading} title={t('account.approved')} />
       </AppForm>
 
-      {step === 'enterNumber' && (
-        <div
-          aria-hidden="true"
-          className="text-[16px] mt-[10px] link"
-          onClick={(): void => {
-            dispatch(postLoginAction(step, null, rawData));
-          }}
-        >
-          {t('account.loginEmail')}
-        </div>
-      )}
+      {!step.toLowerCase().includes('verify') &&
+        (step === 'enterNumber' || step === 'enterEmail') && (
+          <div
+            aria-hidden="true"
+            className="text-[16px] mt-[10px] link"
+            onClick={(): void => {
+              dispatch(postLoginAction(step, null, rawData));
+            }}
+          >
+            {step === 'enterNumber' ? t('account.loginEmail') : t('account.loginMobile')}
+          </div>
+        )}
     </div>
   );
 };
