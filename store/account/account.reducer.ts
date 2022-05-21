@@ -3,6 +3,7 @@ import * as type from './account.constants';
 
 const initialState: AccountType = {
   user: null,
+  userLoading: false,
   login: { data: null, prevStep: null },
   loginLoading: false,
 };
@@ -10,17 +11,15 @@ const initialState: AccountType = {
 // eslint-disable-next-line default-param-last
 const accountReducer = (state = initialState, action): AccountType => {
   switch (action.type) {
+    case type.GET_USER_REQUEST:
+      return { ...state, userLoading: true };
     case type.GET_USER_SUCCESS:
-      return { ...state, user: action.payload };
+      return { ...state, user: action.payload, userLoading: false };
 
     case type.POST_LOGIN_REQUEST:
       return { ...state, loginLoading: true };
     case type.POST_LOGIN_SUCCESS:
-      return {
-        ...state,
-        loginLoading: false,
-        login: { data: action.payload, prevStep: action.step },
-      };
+      return { ...state, loginLoading: false, login: action.payload };
     case type.POST_LOGIN_ERROR:
       return { ...state, loginLoading: false };
 

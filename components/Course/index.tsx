@@ -12,12 +12,20 @@ import UserComment from './comment';
 import Attaches from './attaches';
 import Information from './Information';
 import LessonsList from 'components/Common/LessonsList';
+import { Skeleton } from 'antd';
 
 const Course: React.FC<{ course: CourseType }> = ({ course }) => {
   const [tabs, setTabs] = useState([]);
   const courses = useSelector((state) => state.course.courses);
   const [swiper, setSwiper] = useState({} as any); // eslint-disable-line
   const [slideId, setSlideId] = useState(0);
+  const categories = course.categories.map((k) => k.title);
+  const similarCourses =
+    courses &&
+    [...courses]
+      .filter((item) => categories.includes(item.categories[0]?.title))
+      .filter((item) => item.id !== course.id)
+      .slice(0, 5);
 
   useEffect(() => {
     course.attaches.length
@@ -55,14 +63,16 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           <h3 className="h-[70px] center w-full font-bold text-[22px] m-[0px]">
             {t('course.relatedCourses')}
           </h3>
-          {courses && (
+          {courses ? (
             <ScrollContainer className="flex overflow-auto">
-              {[...courses].slice(0, 5).map((item) => (
+              {similarCourses.map((item) => (
                 <div className="scale-[.8] m-[-27px]" key={item.id}>
                   <Card course={item} />
                 </div>
               ))}
             </ScrollContainer>
+          ) : (
+            <Skeleton className="m-[30px]" />
           )}
         </div>
       </div>

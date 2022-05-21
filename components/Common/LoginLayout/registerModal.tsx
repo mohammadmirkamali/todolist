@@ -5,15 +5,22 @@ import { t } from 'i18next';
 import AntButton from 'components/Common/AntButton';
 import { faNumber } from 'utils/common.util';
 import request from 'services/request';
-import { DirectPayUrl, discountUrl, ratePayUrl } from 'services/routes';
+import { DirectPayUrl, discountUrl, ratePayUrl, walletPayUrl } from 'services/routes';
 import { StyledButton } from 'components/Common/commonStyle';
+import { getChapterAction } from 'store/course/course.action';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 
 type ModalType = {
   isVisible: boolean;
   setIsVisible: (status) => void;
   course: CourseType;
+  url?: string;
 };
-const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, course }) => {
+const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, course, url }) => {
+  const { id } = course;
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [discount, setDiscount] = useState(null);
@@ -22,22 +29,28 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, course })
   const discountAmount = course.price - discountPrice;
 
   const handleDiscount = async (): Promise<void> => {
-    const body = { code, for: 'workshop', id_for: course.id };
+    const body = { code, for: 'workshop', id_for: id };
     setDiscount(code);
     setLoading(true);
     const res: any = await request.post(discountUrl(), body); // eslint-disable-line
     setLoading(false);
     res.data.code ? message.success(res.data.msg) : message.warn(res.data.msg);
     res.data.code && setDiscountPrice(res.data.price);
+    res.data.code && url && router.push(url);
   };
 
   const handlePay = async (method): Promise<void> => {
-    const url = method === 'rate' ? ratePayUrl(course.id) : DirectPayUrl(course.id);
+    const href =
+      method === 'rate'
+        ? ratePayUrl(id)
+        : method === 'wallet'
+        ? walletPayUrl(id)
+        : DirectPayUrl(id);
     const body = { code: discount };
     const res: any = // eslint-disable-line
-      method === 'rate' ? await request.post(url, body) : await request.get(url);
+      method === 'rate' ? await request.post(href, body) : await request.get(href);
     res.data.code ? message.success(res.data.message) : message.warn(res.data.message);
-    // console.log(method, res);
+    res.data.code && (dispatch(getChapterAction(course.id)), setIsVisible(false));
   };
   return (
     <Modal

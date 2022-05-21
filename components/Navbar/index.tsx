@@ -1,27 +1,22 @@
-import {
-  LogoutOutlined,
-  MenuOutlined,
-  CloseOutlined,
-  UserOutlined,
-  StarFilled,
-} from '@ant-design/icons';
+import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { Avatar, Drawer, Tooltip } from 'antd';
+import { Drawer } from 'antd';
 import Image from 'next/image';
 import { t } from 'i18next';
 import Link from 'next/link';
 import { parseCookies } from 'nookies';
 
 import { getCoursesAction } from 'store/course/course.action';
-import { getUserAction, logoutAction } from 'store/account/account.action';
+import { getUserAction } from 'store/account/account.action';
 import Login from 'components/Account/login';
-import { SButton, SExit, SNav } from './style';
+import { SNav } from './style';
 import * as url from 'services/routes';
 import AntSearch from './AntSearch';
-import { faNumber, generateOptions } from 'utils/common.util';
+import { generateOptions } from 'utils/common.util';
 import { CoursesType } from 'types/course.type';
+import Profile from './profile';
 
 const items = [
   { name: 'home', tab: '/' },
@@ -83,6 +78,9 @@ const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
       >
         <div className="flex flex-col">
           {tabs('p-5 border-t border-t-gray-4 w-[190px] first:border-none text-[18px]')}
+          <div className="mt-[16px]">
+            <Profile setIsModalVisible={setIsModalVisible} />
+          </div>
         </div>
       </Drawer>
 
@@ -91,36 +89,8 @@ const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
           <MenuOutlined onClick={(): void => setIsDrawerVisible(true)} />
         </div>
 
-        <div className="md:border-l-2 border-l-gray-1 text-gray-3 items-center hidden xl:flex pl-[20px]">
-          {!user ? (
-            <SButton onClick={(): void => setIsModalVisible(true)}>
-              <p>{t(`account.signIn`)}</p>
-            </SButton>
-          ) : (
-            <>
-              <Link href={url.ProfileRoute('user')}>
-                <a>
-                  <Tooltip title={t('global.seeProfile')}>
-                    <Avatar icon={<UserOutlined />} size={40} />
-                  </Tooltip>
-                </a>
-              </Link>
-              <Tooltip title={t('global.star')}>
-                <div className="text-[20px] center mr-[12px]">
-                  <StarFilled />
-                  <span className="text-[18px] mr-[6px] mt-[4px]">{faNumber(223)}</span>
-                </div>
-              </Tooltip>
-              <SExit title={t('global.exit')} placement="left">
-                <LogoutOutlined
-                  onClick={(): void => {
-                    dispatch(logoutAction());
-                  }}
-                  className="text-[20px] pr-[20px] cursor-pointer "
-                />
-              </SExit>
-            </>
-          )}
+        <div className="md:border-l-2 border-l-gray-1 items-center hidden xl:flex pl-[20px]">
+          <Profile setIsModalVisible={setIsModalVisible} />
         </div>
 
         <AntSearch setSearching={setSearching} options={generateOptions(courses)} />
