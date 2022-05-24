@@ -14,7 +14,7 @@ const Posts: React.FC = () => {
   const dispatch = useDispatch();
   const id = useRouter().query?.id;
   const { posts } = useSelector((state) => state.course);
-  const selectedPost = posts?.find((post) => post.post_id === Number(id));
+  const selectedPost = posts?.find((post) => post.id === Number(id));
 
   useEffect(() => {
     !posts && dispatch(getPostsAction());
@@ -25,7 +25,7 @@ const Posts: React.FC = () => {
   }
 
   return (
-    <div className="pt-[110px] md:pt-[70px] min-h-screen flex flex-col xl:flex-row bg-gray-0">
+    <div className="py-[110px] md:pt-[70px] min-h-screen flex flex-col xl:flex-row bg-gray-0">
       <div
         className={`bg-white ${
           id
@@ -40,7 +40,7 @@ const Posts: React.FC = () => {
         </Link>
 
         <h2 className="font-bold text-[18px] border-b border-b-gray-5 m-0 lg:text-[25px] center py-[15px] text-center px-[55px]">
-          {selectedPost?.post_title}
+          {selectedPost?.title}
         </h2>
 
         {/* <div className="relative w-full">
@@ -63,20 +63,15 @@ const Posts: React.FC = () => {
           )}
         </div> */}
 
-        {selectedPost && !selectedPost?.post_type && (
+        {selectedPost && !selectedPost?.description && (
           <div className="relative w-full h-[300px] md:h-[500px]">
-            <Image
-              src={selectedPost?.post_img}
-              layout="fill"
-              objectFit="contain"
-              alt=""
-            />
+            <Image src={selectedPost?.image} layout="fill" objectFit="contain" alt="" />
           </div>
         )}
 
         <div
-          className="p-[40px] text-[16px] toLeft"
-          dangerouslySetInnerHTML={{ __html: selectedPost?.post_text }}
+          className="p-[40px] text-[16px] mb-24 toLeft"
+          dangerouslySetInnerHTML={{ __html: selectedPost?.description }}
         />
       </div>
 
@@ -86,7 +81,7 @@ const Posts: React.FC = () => {
         } duration-300 justify-center mt-[30px]`}
       >
         {posts.map((post) => (
-          <Card post={post} key={post.post_id} />
+          <Card post={post} key={post.id} />
         ))}
       </div>
     </div>

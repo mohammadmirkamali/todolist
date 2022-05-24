@@ -28,6 +28,7 @@ export const SendNoteUrl = (courseId, lessonId): string =>
   `/api/v1/workshops/${courseId}/lessons/${lessonId}/notes`;
 export const SendTrainUrl = (courseId, lessonId): string =>
   `/api/v1/workshops/${courseId}/lessons/${lessonId}/trainings`;
+export const PostsUrl = (): string => `/api/v1/posts`;
 
 // ///////////////////////////////////////////////////////////////
 
@@ -72,6 +73,6 @@ export const WebinarRoute = (): string => `/webinar`;
 export const HomeRoute = (): string => `/`;
 
 export const ProfileUrl = (): string => `/api/v2/getProfile`;
-export const PostsUrl = (): string => `/api/v2/getPosts`;
+// export const PostsUrl = (): string => `/api/v2/getPosts`;
 export const WebinarUrl = (id): string => `/api/v2/webinar/${id}`;
 export const WorkshopUrl = (id): string => `/api/v2/workshop/${id}`;
