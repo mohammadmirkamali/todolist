@@ -102,7 +102,7 @@ export type WebinarType = {
   id: number;
   price: number;
   capacity: number;
-  comments: { data: string[]; next_page_usr: string };
+  comments: { data: CommentsType[]; next_page_usr: string };
   description: string;
   image: string;
   registered: boolean;

@@ -128,7 +128,12 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
               <UserComment data={course.questions} id={course.id} />
             </SwiperSlide>
             <SwiperSlide className="relative h-full overflow-hidden">
-              <UserComment data={course.comments} id={course.id} comment />
+              <UserComment
+                data={course.comments}
+                type="workshops"
+                id={course.id}
+                comment
+              />
             </SwiperSlide>
             <SwiperSlide className="min-h-full overflow-auto">
               <LessonsList course={course} />

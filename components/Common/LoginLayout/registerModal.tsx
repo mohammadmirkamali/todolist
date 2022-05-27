@@ -23,6 +23,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
   const dispatch = useDispatch();
   const { eventId } = router.query;
   const [code, setCode] = useState('');
+  const type = eventId ? 'event' : 'workshop';
   const [loading, setLoading] = useState(false);
   const [discount, setDiscount] = useState(null);
   const [discountPrice, setDiscountPrice] = useState(null);
@@ -30,7 +31,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
   const discountAmount = Number(data.price) - discountPrice;
 
   const handleDiscount = async (): Promise<void> => {
-    const body = { code, for: eventId ? 'event' : 'workshop', id_for: id };
+    const body = { code, for: type, id_for: id };
     setDiscount(code);
     setLoading(true);
     const res: any = await request.post(discountUrl(), body); // eslint-disable-line
@@ -43,10 +44,10 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
   const handlePay = async (method): Promise<void> => {
     const href =
       method === 'rate'
-        ? ratePayUrl(id)
+        ? ratePayUrl(id, type)
         : method === 'wallet'
-        ? walletPayUrl(id)
-        : DirectPayUrl(id);
+        ? walletPayUrl(id, type)
+        : DirectPayUrl(id, type);
     const body = { code: discount };
     const res: any = // eslint-disable-line
       method === 'rate' ? await request.post(href, body) : await request.get(href);

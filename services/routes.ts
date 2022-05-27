@@ -8,16 +8,16 @@ export const CookieRoute = (): string => `/sanctum/csrf-cookie`;
 export const HomeUrl = (): string => `/api/v1/home`;
 export const UserUrl = (): string => `/api/user`;
 export const MobileVerifyUrl = (): string => `/api/v1/verifyCode`;
-export const RegisterUrl = (id): string => `/api/v1/workshops/${id}/register`;
+export const RegisterUrl = (id, type): string => `/api/v1/${type}/${id}/register`;
 export const discountUrl = (): string => `/api/v1/takhfif-check`;
-export const ratePayUrl = (id): string => `/api/v1/workshops/${id}/buyUsingRate`;
-export const walletPayUrl = (id): string => `/api/v1/buyUsingWallet/workshop/${id}`;
-export const DirectPayUrl = (id): string => `/api/v1/DirectPay/workshop/${id}`;
+export const ratePayUrl = (id, type): string => `/api/v1/buyUsingRate/${type}/${id}`;
+export const walletPayUrl = (id, type): string => `/api/v1/buyUsingWallet/${type}/${id}`;
+export const DirectPayUrl = (id, type): string => `/api/v1/DirectPay/${type}/${id}`;
 export const AllWebinarUrl = (): string => `/api/v1/events`;
 export const EventUrl = (id): string => `/api/v1/events/${id}`;
 export const CommentUrl = (id, page): string =>
   `/api/v1/workshops/${id}/comments?page=${page}`;
-export const SendCommentUrl = (id): string => `/api/v1/workshops/${id}/comments`;
+export const SendCommentUrl = (id, type): string => `/api/v1/${type}/${id}/comments`;
 export const SendQuestionUrl = (id): string => `/api/v1/workshops/${id}/questions`;
 export const QuestionUrl = (id): string => `/api/v1/workshops/${id}/questions`;
 export const ExamInfoUrl = (courseId, lessonId): string =>

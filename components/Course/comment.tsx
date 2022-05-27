@@ -17,8 +17,9 @@ type CommentType = {
   data: CommentsType[] | QuestionsType[];
   comment?: boolean;
   id: number;
+  type?: 'workshops' | 'events';
 };
-const UserComment: React.FC<CommentType> = ({ data, comment, id }) => {
+const UserComment: React.FC<CommentType> = ({ data, comment, id, type }) => {
   const [loading, setLoading] = useState(false);
   const [allData, setAllData] = useState(data);
   const [description, setDescription] = useState('');
@@ -30,7 +31,7 @@ const UserComment: React.FC<CommentType> = ({ data, comment, id }) => {
     setSendLoading(true);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = await request.post(
-      comment ? SendCommentUrl(id) : SendQuestionUrl(id),
+      comment ? SendCommentUrl(id, type) : SendQuestionUrl(id),
       body,
     );
     setSendLoading(false);
