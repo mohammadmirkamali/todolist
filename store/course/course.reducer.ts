@@ -8,7 +8,7 @@ const initialState: CourseReducerType = {
   postsLoading: false,
   posts: null,
   postsError: false,
-  webinar: null,
+  event: null,
   chapters: null,
 };
 
@@ -27,6 +27,35 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
     case type.GET_POSTS_ERROR:
       return { ...state, postsLoading: false, posts: null, postsError: true };
 
+    case type.GET_EVENT_REQUEST:
+      return {
+        ...state,
+        event: {
+          ...state.event,
+          [action.id]: { ...state.event?.[action.id], loading: true },
+        },
+      };
+    case type.GET_EVENT_SUCCESS:
+      return {
+        ...state,
+        event: {
+          ...state.event,
+          [action.id]: {
+            loading: false,
+            data: action.payload,
+            error: null,
+          },
+        },
+      };
+    case type.GET_EVENT_ERROR:
+      return {
+        ...state,
+        event: {
+          ...state.event,
+          [action.id]: { loading: true, data: null, error: true },
+        },
+      };
+
     case type.GET_COURSE_REQUEST:
       return { ...state, coursesLoading: true, courses: null, coursesError: false };
     case type.GET_COURSE_SUCCESS:
@@ -38,31 +67,6 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
       };
     case type.GET_COURSE_ERROR:
       return { ...state, coursesLoading: false, courses: null, coursesError: true };
-
-    case type.GET_WEBINAR_REQUEST:
-      return {
-        ...state,
-        webinar: {
-          ...state.webinar,
-          [action.id]: { loading: true, data: null, error: null },
-        },
-      };
-    case type.GET_WEBINAR_SUCCESS:
-      return {
-        ...state,
-        webinar: {
-          ...state.webinar,
-          [action.id]: { loading: false, data: action.payload, error: null },
-        },
-      };
-    case type.GET_WEBINAR_ERROR:
-      return {
-        ...state,
-        webinar: {
-          ...state.webinar,
-          [action.id]: { loading: true, data: null, error: true },
-        },
-      };
 
     case type.GET_CHAPTER_REQUEST:
       return {

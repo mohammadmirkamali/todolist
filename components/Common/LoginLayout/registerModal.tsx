@@ -1,6 +1,6 @@
 import { message, Modal } from 'antd';
 import React, { useState } from 'react';
-import { CourseType } from 'types/course.type';
+import { CourseType, WebinarType } from 'types/course.type';
 import { t } from 'i18next';
 import AntButton from 'components/Common/AntButton';
 import { faNumber } from 'utils/common.util';
@@ -14,43 +14,45 @@ import { useRouter } from 'next/router';
 type ModalType = {
   isVisible: boolean;
   setIsVisible: (status) => void;
-  course: CourseType;
+  data: CourseType | WebinarType;
   url?: string;
 };
-const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, course, url }) => {
-  const { id } = course;
-  const dispatch = useDispatch();
+const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url }) => {
+  const { id } = data;
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { eventId } = router.query;
   const [code, setCode] = useState('');
+  const type = eventId ? 'event' : 'workshop';
   const [loading, setLoading] = useState(false);
   const [discount, setDiscount] = useState(null);
   const [discountPrice, setDiscountPrice] = useState(null);
-  const price = discountPrice || course.price;
-  const discountAmount = course.price - discountPrice;
+  const price = discountPrice || Number(data.price);
+  const discountAmount = Number(data.price) - discountPrice;
 
   const handleDiscount = async (): Promise<void> => {
-    const body = { code, for: 'workshop', id_for: id };
+    const body = { code, for: type, id_for: id };
     setDiscount(code);
     setLoading(true);
     const res: any = await request.post(discountUrl(), body); // eslint-disable-line
     setLoading(false);
     res.data.code ? message.success(res.data.msg) : message.warn(res.data.msg);
-    res.data.code && setDiscountPrice(res.data.price);
+    res.data.code && setDiscountPrice(Number(res.data.price));
     res.data.code && url && router.push(url);
   };
 
   const handlePay = async (method): Promise<void> => {
     const href =
       method === 'rate'
-        ? ratePayUrl(id)
+        ? ratePayUrl(id, type)
         : method === 'wallet'
-        ? walletPayUrl(id)
-        : DirectPayUrl(id);
+        ? walletPayUrl(id, type)
+        : DirectPayUrl(id, type);
     const body = { code: discount };
     const res: any = // eslint-disable-line
       method === 'rate' ? await request.post(href, body) : await request.get(href);
     res.data.code ? message.success(res.data.message) : message.warn(res.data.message);
-    res.data.code && (dispatch(getChapterAction(course.id)), setIsVisible(false));
+    res.data.code && (dispatch(getChapterAction(data.id)), setIsVisible(false));
   };
   return (
     <Modal
@@ -63,7 +65,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, course, u
     >
       <div className="center flex-col ">
         <div className="font-bold text-[24px] border-b border-b-gray-1 w-full text-center pb-[15px]">
-          {course.title}
+          {data.title}
         </div>
 
         <div className="my-[20px] flex w-full">

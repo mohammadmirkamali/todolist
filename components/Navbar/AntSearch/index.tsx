@@ -6,11 +6,12 @@ import { t } from 'i18next';
 
 import { SContainer, SSelect } from './style';
 import useWindowSize from 'hooks/useWidowsSize';
-import { CourseRoute, ProfileRoute } from 'services/routes';
+import { CourseRoute, ProfileRoute, WebinarRoute } from 'services/routes';
 import Image from 'next/image';
+import { SearchOptionType } from 'types/course.type';
 
 type SearchType = {
-  options: { name: string; id?: number; avatar?: string; category?: string }[];
+  options: SearchOptionType[];
   landing?: boolean;
   setSearching?: (e) => void;
 };
@@ -28,7 +29,11 @@ const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => 
     setFocus(false);
     ref.current.blur();
     router.push(
-      selected.id ? CourseRoute(selected.id, selected.name) : ProfileRoute(selected.name),
+      selected.webinar
+        ? WebinarRoute(selected.id, selected.name)
+        : selected.id
+        ? CourseRoute(selected.id, selected.name)
+        : ProfileRoute(selected.name),
     );
   };
 

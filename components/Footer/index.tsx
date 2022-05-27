@@ -17,9 +17,9 @@ const SButton = styled(Button)`
 `;
 
 const categories = [
-  { name: 'homat', route: url.HomatRoute() },
-  { name: 'doat', route: url.DoatRoute() },
-  { name: 'roat', route: url.RoatRoute() },
+  { name: 'homat', route: url.HomeRoute() },
+  { name: 'doat', route: url.HomeRoute() },
+  { name: 'roat', route: url.HomeRoute() },
 ];
 const access = [
   { name: 'conditions', route: url.ConditionRoute() },

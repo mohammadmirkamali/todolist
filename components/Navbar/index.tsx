@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { parseCookies } from 'nookies';
 
 import { getCoursesAction } from 'store/course/course.action';
-import { getUserAction } from 'store/account/account.action';
+import { getAllWebinarAction, getUserAction } from 'store/account/account.action';
 import Login from 'components/Account/login';
 import { SNav } from './style';
 import * as url from 'services/routes';
@@ -21,7 +21,6 @@ import Profile from './profile';
 const items = [
   { name: 'home', tab: '/' },
   { name: 'posts', tab: url.PostsRoute() },
-  { name: 'webinar', tab: url.WebinarRoute() },
   { name: 'conditions', tab: url.ConditionRoute() },
   { name: 'contactUs', tab: url.ContactUsRoute() },
 ];
@@ -32,6 +31,7 @@ const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
   const [tab] = useState(router.route);
   const [searching, setSearching] = useState(false);
   const courses = useSelector((state) => state.course.courses) || data;
+  const webinars = useSelector((state) => state.account.webinars);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const user = useSelector((state) => state.account.user);
@@ -43,7 +43,8 @@ const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
 
   useEffect(() => {
     !courses && dispatch(getCoursesAction());
-  }, [courses]);
+    !webinars && dispatch(getAllWebinarAction());
+  }, [courses, webinars]);
 
   const tabs = (style): ReactElement[] =>
     items.map((item) => (
@@ -93,7 +94,10 @@ const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
           <Profile setIsModalVisible={setIsModalVisible} />
         </div>
 
-        <AntSearch setSearching={setSearching} options={generateOptions(courses)} />
+        <AntSearch
+          setSearching={setSearching}
+          options={generateOptions(courses, webinars)}
+        />
       </div>
 
       {!searching && (

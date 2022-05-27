@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { message, Select } from 'antd';
 import { t } from 'i18next';
 import AntTooltip from 'components/Common/AntTooltip';
-import { CoursesType, CourseType } from 'types/course.type';
+import { CoursesType, CourseType, WebinarsType } from 'types/course.type';
 import { faNumber } from 'utils/common.util';
 import Card from 'components/Common/Card';
 import ProfileImg from './profileImg';
@@ -18,22 +18,22 @@ import { ChangeMobileUrl } from 'services/routes';
 const { Option } = Select;
 const time = (date): number => new Date(date).getTime();
 const EditProfile = dynamic(() => import('./editProfile'));
-const EditPassword = dynamic(() => import('./editPassword'));
+const EditPassword = dynamic(() => import('../Account/editPassword'));
 
-type ProfileType = { courses: CoursesType[]; user: UserType };
-const Profile: React.FC<ProfileType> = ({ courses, user }) => {
+type ProfileType = { courses: CoursesType[]; user: UserType; webinars: WebinarsType[] };
+const Profile: React.FC<ProfileType> = ({ courses, user, webinars }) => {
   const query = useRouter().query.name;
   const isUser = query === 'user';
   const profile = isUser
     ? user
-    : courses
+    : [...courses, ...webinars]
         .map((item) => item.teachers.map((k) => k))
         .flat()
         .find((item) => item?.nickname?.replace(/ /g, '-') === query);
 
   const profileCourses = isUser
     ? courses
-    : courses.filter((item) =>
+    : [...courses, ...webinars].filter((item) =>
         item.teachers.every((teacher) => teacher.nickname?.replace(/ /g, '-') === query),
       );
 
@@ -42,12 +42,16 @@ const Profile: React.FC<ProfileType> = ({ courses, user }) => {
   const [input, setInput] = useState('');
   const [editType, setEditType] = useState('');
   const [filterCourses, setFilterCourses] = useState(
-    [...profileCourses].sort((a, b) => time(b.created_at) - time(a.created_at)),
+    [...profileCourses].sort(
+      (a, b) => time(b.created_at || '0') - time(a.created_at || '0'),
+    ),
   );
 
   useEffect(() => {
     setFilterCourses(
-      [...profileCourses].sort((a, b) => time(b.created_at) - time(a.created_at)),
+      [...profileCourses].sort(
+        (a, b) => time(b.created_at || '0') - time(a.created_at || '0'),
+      ),
     );
   }, [query]);
 
@@ -72,7 +76,7 @@ const Profile: React.FC<ProfileType> = ({ courses, user }) => {
     setFilterCourses(
       item === 'newest'
         ? [...profileCourses].sort((a, b) => time(b.created_at) - time(a.created_at))
-        : [...profileCourses].sort((a, b) => b.price - a.price),
+        : [...profileCourses].sort((a, b) => Number(b.price) - Number(a.price)),
     );
   };
 
@@ -171,7 +175,7 @@ const Profile: React.FC<ProfileType> = ({ courses, user }) => {
           <div className="justify-center xl:justify-start flex flex-wrap">
             {filterCourses.map((item) => (
               <div key={item.id} className="scale-[.9] m-[-15px]">
-                <Card course={item} />
+                <Card data={item} webinar={(item as WebinarsType).isWebinar} />
               </div>
             ))}
           </div>

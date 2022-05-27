@@ -3,7 +3,8 @@ import { message } from 'antd';
 import { t } from 'i18next';
 import { destroyCookie, setCookie } from 'nookies';
 import request from 'services/request';
-import { UserUrl } from 'services/routes';
+import { AllWebinarUrl, UserUrl } from 'services/routes';
+import { ResType } from 'types/common.type';
 import * as type from './account.constants';
 
 export const postLoginAction = (url, body) => {
@@ -16,7 +17,7 @@ export const postLoginAction = (url, body) => {
       data.token &&
         setCookie(null, 'taalei', data.token.replace('Bearer ', ''), { path: '/' });
       dispatch({ type: type.POST_LOGIN_SUCCESS, payload: data });
-      return data.token && !data.next ? null : true;
+      return data.token && !data.next ? null : response;
     }
 
     message.error(response.data.message || t('global.apiError'));
@@ -33,6 +34,25 @@ export const getUserAction = () => {
       dispatch({ type: type.GET_USER_SUCCESS, payload: response.data });
       return true;
     }
+    return false;
+  };
+};
+
+export const getAllWebinarAction = () => {
+  return async (dispatch): Promise<unknown> => {
+    dispatch({ type: type.GET_ALL_WEBINAR_REQUEST });
+    const response: ResType = await request.get(AllWebinarUrl());
+
+    if (response.ok) {
+      const webinars = response.data.map((item) => ({ ...item, isWebinar: true }));
+      dispatch({
+        type: type.GET_ALL_WEBINAR_SUCCESS,
+        payload: webinars,
+      });
+      return webinars;
+    }
+
+    dispatch({ type: type.GET_ALL_WEBINAR_ERROR });
     return false;
   };
 };

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import { ProfileRoute } from 'services/routes';
 
-type TeacherType = { name: string; img: string; title: string; className?: string };
+type TeacherType = { name: string; img: string; title?: string; className?: string };
 const TeacherAvatar: React.FC<TeacherType> = ({ name, img, title, className }) => (
   <Link href={ProfileRoute(name)}>
     <a
@@ -19,7 +19,7 @@ const TeacherAvatar: React.FC<TeacherType> = ({ name, img, title, className }) =
       />
       <div className="mr-[10px] ">
         <div className="font-bold text-[18px]">{name}</div>
-        <div className="text-[14px]">{title}</div>
+        {title && <div className="text-[14px]">{title}</div>}
       </div>
     </a>
   </Link>
