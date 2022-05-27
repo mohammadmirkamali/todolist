@@ -1,6 +1,5 @@
 /* eslint-disable arrow-body-style */
 import { message } from 'antd';
-import Item from 'antd/lib/list/Item';
 import { t } from 'i18next';
 import { destroyCookie, setCookie } from 'nookies';
 import request from 'services/request';
@@ -18,7 +17,7 @@ export const postLoginAction = (url, body) => {
       data.token &&
         setCookie(null, 'taalei', data.token.replace('Bearer ', ''), { path: '/' });
       dispatch({ type: type.POST_LOGIN_SUCCESS, payload: data });
-      return data.token && !data.next ? null : true;
+      return data.token && !data.next ? null : response;
     }
 
     message.error(response.data.message || t('global.apiError'));

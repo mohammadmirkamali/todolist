@@ -1,18 +1,16 @@
 /* eslint-disable import/no-unresolved */
 import { Skeleton } from 'antd';
 import { t } from 'i18next';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
 import Card from 'components/Common/Card';
-import { getAllWebinarAction } from 'store/account/account.action';
 
 const Webinars: React.FC = () => {
-  const dispatch = useDispatch();
   const webinars = useSelector((state) => state.account.webinars);
   const error = useSelector((state) => state.account.webinarsError);
 

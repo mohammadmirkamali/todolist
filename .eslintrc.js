@@ -127,8 +127,8 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'react/destructuring-assignment': 'off',
     'react/no-access-state-in-setstate': 'off',
-    'jsx-a11y/no-noninteractive-element-interactions': 1,
-    'jsx-a11y/click-events-have-key-events': 1,
+    'jsx-a11y/no-static-element-interactions': 0,
+    'jsx-a11y/click-events-have-key-events': 0,
     camelcase: 'off',
 
     // ESLint plugin for prettier formatting

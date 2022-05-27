@@ -18,7 +18,7 @@ import { ChangeMobileUrl } from 'services/routes';
 const { Option } = Select;
 const time = (date): number => new Date(date).getTime();
 const EditProfile = dynamic(() => import('./editProfile'));
-const EditPassword = dynamic(() => import('./editPassword'));
+const EditPassword = dynamic(() => import('../Account/editPassword'));
 
 type ProfileType = { courses: CoursesType[]; user: UserType; webinars: WebinarsType[] };
 const Profile: React.FC<ProfileType> = ({ courses, user, webinars }) => {

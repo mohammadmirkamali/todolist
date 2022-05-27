@@ -1,5 +1,3 @@
-import { baseURL } from './request';
-
 export const AllCoursesUrl = (): string => `/api/v1/workshops`;
 export const CourseUrl = (id): string => `/api/v1/workshops/${id}`;
 export const LessonUrl = (courseId, lessonId): string =>
@@ -37,22 +35,18 @@ export const CheckAuthPhoneUrl = (): string => `/api/v1/checkAuthPhone`;
 export const CheckAuthEmailUrl = (): string => `/api/v1/checkAuthEmail`;
 export const LoginUrl = (): string => `/api/v1/loginUsingMobilePassword`;
 export const FillFormUrl = (): string => `/api/v1/RequiredFieldsFill`;
-
-// //////////////////////////////////////////////////////
-
-export const EmailVerifyUrl = (): string => `/api/v1/AuthVerifyEmail`;
 export const ForgetPasswordUrl = (): string => `/api/v1/ForgetPassword_step0`;
 export const ForgetPasswordCodedUrl = (): string => `/api/v1/ForgetPassword_step1`;
 export const ForgetPasswordNewUrl = (): string => `/api/v1/ForgetPassword_step2`;
 
+// //////////////////////////////////////////////////////
+
+export const EmailVerifyUrl = (): string => `/api/v1/AuthVerifyEmail`;
 export const ChangeMobileUrl = (): string => `/auth/changeMobileOrEmail`;
 export const ConfirmMobileUrl = (): string => `/auth/confirmMobileOrEmail`;
 
-export const DoatRoute = (): string => `${baseURL}/categories/129/دعاة`;
-export const HomatRoute = (): string => `${baseURL}/categories/128/حماة`;
-export const RoatRoute = (): string => `${baseURL}/categories/130/رعاة`;
-
 // //////////////////////////////////////////////////////////////////////////////////
+export const HomeRoute = (): string => `/`;
 export const CourseRoute = (id, name): string =>
   `/workshop/${id}/${name?.replace(/ /g, '-')}`;
 export const WebinarRoute = (id, name): string =>
@@ -65,15 +59,12 @@ export const ExamInfoRoute = (courseId, lessonId): string =>
 export const ExamRoute = (courseId, lessonId): string =>
   `/exam/${courseId}/${lessonId}/question`;
 
-// /////////////////////////////////////////////////////////////////////
 export const ConditionRoute = (): string => `/conditions`;
 export const FinanceRoute = (): string => `https://idpay.ir/taaleei`;
 export const DownloadRoute = (): string => `https://dl.taalei-edu.ir/taalei.apk`;
 export const TelNumber = (): string => `0915 424 1197`;
 export const ContactUsRoute = (): string => `/contact-us`;
 export const PostsRoute = (): string => `/posts`;
-export const HomeRoute = (): string => `/`;
+// /////////////////////////////////////////////////////////////////////
 
-export const ProfileUrl = (): string => `/api/v2/getProfile`;
 export const PostsUrl = (): string => `/api/v2/getPosts`;
-export const WorkshopUrl = (id): string => `/api/v2/workshop/${id}`;
