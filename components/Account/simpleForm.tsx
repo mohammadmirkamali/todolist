@@ -15,7 +15,7 @@ import {
 import { SSubmitForm } from './style';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { faNumber } from 'utils/common.util';
-import { getChapterAction } from 'store/course/course.action';
+import { getChapterAction, getEventAction } from 'store/course/course.action';
 
 type FormType = {
   loginData: any; // eslint-disable-line
@@ -102,8 +102,9 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible, nextAction })
           const result = await dispatch(postLoginAction(data[2], body(values.value)));
           if (result === null) {
             dispatch(getUserAction());
-            nextAction?.type === 'chapter' &&
-              dispatch(getChapterAction(nextAction.id[0]));
+            nextAction?.type === 'chapter'
+              ? dispatch(getChapterAction(nextAction.id[0]))
+              : dispatch(getEventAction(nextAction.id[0]));
             setIsVisible(false);
           }
           result && resetForm();

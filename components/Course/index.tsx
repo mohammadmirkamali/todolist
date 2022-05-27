@@ -67,7 +67,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
             <ScrollContainer className="flex overflow-auto">
               {similarCourses.map((item) => (
                 <div className="scale-[.8] m-[-27px]" key={item.id}>
-                  <Card course={item} />
+                  <Card data={item} />
                 </div>
               ))}
             </ScrollContainer>

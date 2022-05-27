@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 import request from 'services/request';
 import * as api from 'services/routes';
-import { ResType } from 'types/commen.type';
+import { ResType } from 'types/common.type';
 import * as type from './course.constants';
 
 export const getCoursesAction = () => {
@@ -50,17 +50,16 @@ export const getPostsAction = () => {
   };
 };
 
-export const getWebinarAction = (id) => {
+export const getEventAction = (id) => {
   return async (dispatch): Promise<unknown> => {
-    dispatch({ type: type.GET_WEBINAR_REQUEST, id });
-    const response: ResType = await request.get(api.WebinarUrl(id));
-
+    dispatch({ type: type.GET_EVENT_REQUEST, id });
+    const response: ResType = await request.get(api.EventUrl(id));
     if (response.ok) {
-      dispatch({ type: type.GET_WEBINAR_SUCCESS, payload: response.data.webinar[0], id });
+      dispatch({ type: type.GET_EVENT_SUCCESS, payload: response.data, id });
       return response.data;
     }
 
-    dispatch({ type: type.GET_WEBINAR_ERROR, id });
+    dispatch({ type: type.GET_EVENT_ERROR, id });
     return false;
   };
 };

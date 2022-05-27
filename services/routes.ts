@@ -13,6 +13,8 @@ export const discountUrl = (): string => `/api/v1/takhfif-check`;
 export const ratePayUrl = (id): string => `/api/v1/workshops/${id}/buyUsingRate`;
 export const walletPayUrl = (id): string => `/api/v1/buyUsingWallet/workshop/${id}`;
 export const DirectPayUrl = (id): string => `/api/v1/DirectPay/workshop/${id}`;
+export const AllWebinarUrl = (): string => `/api/v1/events`;
+export const EventUrl = (id): string => `/api/v1/events/${id}`;
 export const CommentUrl = (id, page): string =>
   `/api/v1/workshops/${id}/comments?page=${page}`;
 export const SendCommentUrl = (id): string => `/api/v1/workshops/${id}/comments`;
@@ -52,7 +54,9 @@ export const RoatRoute = (): string => `${baseURL}/categories/130/رعاة`;
 
 // //////////////////////////////////////////////////////////////////////////////////
 export const CourseRoute = (id, name): string =>
-  `/workshop/${id}/${name.replace(/ /g, '-')}`;
+  `/workshop/${id}/${name?.replace(/ /g, '-')}`;
+export const WebinarRoute = (id, name): string =>
+  `/event/${id}/${name?.replace(/ /g, '-')}`;
 export const LessonRoute = (courseId, lessonId, lessonName): string =>
   `/workshop/${courseId}/lesson/${lessonId}/${lessonName.replace(/ /g, '-')}`;
 export const ProfileRoute = (name): string => `/profile/${name?.replace(/ /g, '-')}`;
@@ -68,10 +72,8 @@ export const DownloadRoute = (): string => `https://dl.taalei-edu.ir/taalei.apk`
 export const TelNumber = (): string => `0915 424 1197`;
 export const ContactUsRoute = (): string => `/contact-us`;
 export const PostsRoute = (): string => `/posts`;
-export const WebinarRoute = (): string => `/webinar`;
 export const HomeRoute = (): string => `/`;
 
 export const ProfileUrl = (): string => `/api/v2/getProfile`;
 export const PostsUrl = (): string => `/api/v2/getPosts`;
-export const WebinarUrl = (id): string => `/api/v2/webinar/${id}`;
 export const WorkshopUrl = (id): string => `/api/v2/workshop/${id}`;

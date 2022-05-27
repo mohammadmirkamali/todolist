@@ -1,14 +1,14 @@
-import { CoursesType } from 'types/course.type';
+import { t } from 'i18next';
+import { CoursesType, SearchOptionType, WebinarsType } from 'types/course.type';
 
 export const BadgeCategory = (type): { name: string; color: string } | undefined => {
   // see antd badge color : https://ant.design/components/badge/
   const types = [
-    { name: 'حماة', color: 'cyan' },
-    { name: 'دعاة', color: 'green' },
-    { name: 'رعاة', color: 'magenta' },
-    { name: 'معارف توحیدی', color: 'purple' },
-    { name: 'اخلاق توحیدی', color: 'geekblue' },
-    { name: 'قرآن', color: 'gold' },
+    { name: t('global.homat'), color: 'cyan' },
+    { name: t('global.doat'), color: 'green' },
+    { name: t('global.roat'), color: 'magenta' },
+    { name: t('global.event'), color: 'geekblue' },
+    { name: t('global.qoran'), color: 'gold' },
   ];
 
   return types.find((item) => item.name === type);
@@ -81,9 +81,13 @@ export const fileSize = (size: number | string): string =>
 
 export const generateOptions = (
   courses: CoursesType[],
-): { name: string; id: number; avatar?: string; category?: string }[] => {
+  webinars: WebinarsType[],
+): SearchOptionType[] => {
   if (!courses) return null;
-  const data: CoursesType[] = JSON.parse(JSON.stringify(courses));
+
+  const course: CoursesType[] = JSON.parse(JSON.stringify(courses));
+  const webinar: WebinarsType[] = JSON.parse(JSON.stringify(webinars));
+  const data = webinar ? [...course, ...webinar] : [...course];
   const teachers = [
     ...new Set(
       data
@@ -102,11 +106,19 @@ export const generateOptions = (
       .teachers.find((teacher) => teacher.nickname === teachers[0]).avatar,
   }));
 
-  const coursesOptions = data?.map((item) => ({
+  const coursesOptions = course?.map((item) => ({
     name: item.title,
     id: item.id,
     category: item.categories[0]?.title,
   }));
 
-  return [...coursesOptions, ...teacherOptions];
+  const webinarOptions =
+    webinar?.map((item) => ({
+      name: item.title,
+      id: item.id,
+      category: t('global.event'),
+      webinar: true,
+    })) || [];
+
+  return [...coursesOptions, ...teacherOptions, ...webinarOptions];
 };

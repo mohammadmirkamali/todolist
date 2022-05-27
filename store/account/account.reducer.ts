@@ -6,6 +6,9 @@ const initialState: AccountType = {
   userLoading: false,
   login: { data: null, prevStep: null },
   loginLoading: false,
+  webinarsLoading: false,
+  webinars: null,
+  webinarsError: false,
 };
 
 // eslint-disable-next-line default-param-last
@@ -22,6 +25,18 @@ const accountReducer = (state = initialState, action): AccountType => {
       return { ...state, loginLoading: false, login: action.payload };
     case type.POST_LOGIN_ERROR:
       return { ...state, loginLoading: false };
+
+    case type.GET_ALL_WEBINAR_REQUEST:
+      return { ...state, webinarsLoading: true, webinars: null, webinarsError: false };
+    case type.GET_ALL_WEBINAR_SUCCESS:
+      return {
+        ...state,
+        webinarsLoading: false,
+        webinars: action.payload,
+        webinarsError: false,
+      };
+    case type.GET_ALL_WEBINAR_ERROR:
+      return { ...state, webinarsLoading: false, webinars: null, webinarsError: true };
 
     default:
       return state;
