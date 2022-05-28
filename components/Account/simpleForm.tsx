@@ -32,13 +32,14 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible, nextAction })
   const [forgotPasswordLoading, setForgotPasswordLoading] = useState(false);
   const dispatch = useDispatch();
   const enterWithEmail = { next: step === 'enterEmail' ? 'enterNumber' : 'enterEmail' };
+
   const prevStep = {
     next:
       step === 'verifyCode' || step === 'loginUsingPassword'
         ? 'enterNumber'
         : 'enterEmail',
   };
-  let data = []; // [title,subtitle,url,input type, placeholder]
+  let data = []; // [title ,subtitle,url,input type, placeholder]
   let body = (value): object => ({ value });
   let yup = null;
 
