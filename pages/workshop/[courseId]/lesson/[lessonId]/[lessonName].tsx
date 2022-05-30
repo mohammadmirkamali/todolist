@@ -17,6 +17,7 @@ const LessonPage: React.FC = () => {
   const { courseId, lessonId }: any = router.query; // eslint-disable-line
   const course = useSelector((state) => state.course.chapters)?.[courseId]?.data;
   const error = useSelector((state) => state.course.chapters)?.[courseId]?.error;
+  const user = useSelector((state) => state.account.user);
   const lesson = course?.chapters
     ?.map((item) => item.lessons.map((k) => k))
     .flat()
@@ -25,6 +26,11 @@ const LessonPage: React.FC = () => {
   useEffect(() => {
     courseId && !course && dispatch(getChapterAction(courseId));
   }, [courseId]);
+
+  // re-get data on user login and logout
+  useEffect(() => {
+    course && dispatch(getChapterAction(courseId));
+  }, [user]);
   return (
     <>
       <Head>

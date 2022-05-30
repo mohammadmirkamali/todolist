@@ -15,6 +15,25 @@ export type CoursesType = {
   teachers: TeacherType[];
 };
 
+export type WebinarsType = {
+  capacity: number;
+  contacts: string;
+  description: string;
+  headline: string;
+  created_at: string;
+  id: number;
+  image: string;
+  price: string;
+  isWebinar: boolean;
+  teachers: TeacherType[];
+  title: string;
+};
+
+export type SearchDataType = {
+  workshops: CoursesType[];
+  events: WebinarsType[];
+};
+
 export type LessonType = {
   id: number;
   time: number;
@@ -113,24 +132,10 @@ export type WebinarType = {
   headline: string;
 };
 
-export type WebinarsType = {
-  capacity: number;
-  contacts: string;
-  description: string;
-  headline: string;
-  created_at: string;
-  id: number;
-  image: string;
-  price: string;
-  isWebinar: boolean;
-  teachers: TeacherType[];
-  title: string;
-};
-
 export type CourseReducerType = {
-  coursesLoading: boolean;
-  coursesError: boolean;
-  courses: CoursesType[];
+  searchDataLoading: boolean;
+  searchDataError: boolean;
+  searchData: SearchDataType;
   postsLoading: boolean;
   postsError: boolean;
   posts: PostType[];

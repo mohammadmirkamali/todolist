@@ -2,9 +2,9 @@ import { CourseReducerType } from 'types/course.type';
 import * as type from './course.constants';
 
 const initialState: CourseReducerType = {
-  coursesLoading: false,
-  courses: null,
-  coursesError: false,
+  searchDataLoading: false,
+  searchData: null,
+  searchDataError: false,
   postsLoading: false,
   posts: null,
   postsError: false,
@@ -56,17 +56,27 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
         },
       };
 
-    case type.GET_COURSE_REQUEST:
-      return { ...state, coursesLoading: true, courses: null, coursesError: false };
-    case type.GET_COURSE_SUCCESS:
+    case type.GET_SEARCH_DATA_REQUEST:
       return {
         ...state,
-        coursesLoading: false,
-        courses: action.payload,
-        coursesError: false,
+        searchDataLoading: true,
+        searchData: null,
+        searchDataError: false,
       };
-    case type.GET_COURSE_ERROR:
-      return { ...state, coursesLoading: false, courses: null, coursesError: true };
+    case type.GET_SEARCH_DATA_SUCCESS:
+      return {
+        ...state,
+        searchDataLoading: false,
+        searchData: action.payload,
+        searchDataError: false,
+      };
+    case type.GET_SEARCH_DATA_ERROR:
+      return {
+        ...state,
+        searchDataLoading: false,
+        searchData: null,
+        searchDataError: true,
+      };
 
     case type.GET_CHAPTER_REQUEST:
       return {

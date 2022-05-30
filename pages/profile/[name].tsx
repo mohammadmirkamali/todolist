@@ -10,9 +10,8 @@ const Profile = dynamic(() => import('components/Profile'));
 const Head = dynamic(() => import('next/head'));
 
 const ProfilePage: React.FC = () => {
-  const courses = useSelector((state) => state.course.courses);
-  const webinars = useSelector((state) => state.account.webinars);
-  const error = useSelector((state) => state.course.coursesError);
+  const searchData = useSelector((state) => state.course.searchData);
+  const error = useSelector((state) => state.course.searchDataError);
   const user = useSelector((state) => state.account.user);
   return (
     <>
@@ -22,8 +21,8 @@ const ProfilePage: React.FC = () => {
       </Head>
 
       <Navbar />
-      {courses && webinars ? (
-        <Profile courses={courses} webinars={webinars} user={user} />
+      {searchData ? (
+        <Profile searchData={searchData} user={user} />
       ) : error ? (
         <div>error</div>
       ) : (

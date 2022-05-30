@@ -17,7 +17,7 @@ const Landing: React.FC<{ courses: CoursesType[] }> = ({ courses }) => {
 
   return (
     <div className="bg-gray-11 relative flex-col min-h-full center">
-      <HeroSection courses={courses} />
+      <HeroSection />
       <Slider courses={newest} title="newCourses" />
       <Info />
       <Slider courses={mostPopular} title="popularCourses" />
