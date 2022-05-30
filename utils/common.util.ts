@@ -1,5 +1,5 @@
 import { t } from 'i18next';
-import { CoursesType, SearchOptionType, WebinarsType } from 'types/course.type';
+import { SearchDataType, SearchOptionType } from 'types/course.type';
 
 export const BadgeCategory = (type): { name: string; color: string } | undefined => {
   // see antd badge color : https://ant.design/components/badge/
@@ -79,15 +79,13 @@ export const fileSize = (size: number | string): string =>
     ? `${faNumber(Math.floor(Number(size) / 1000))}KB`
     : `${faNumber(Math.floor(Number(size)))}B`;
 
-export const generateOptions = (
-  courses: CoursesType[],
-  webinars: WebinarsType[],
-): SearchOptionType[] => {
-  if (!courses) return null;
+export const generateOptions = (searchData: SearchDataType): SearchOptionType[] => {
+  if (!searchData) return null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data = (searchData.workshops as any)?.concat(
+    searchData.events.map((item) => ({ ...item, webinar: true })),
+  );
 
-  const course: CoursesType[] = JSON.parse(JSON.stringify(courses));
-  const webinar: WebinarsType[] = JSON.parse(JSON.stringify(webinars));
-  const data = webinar ? [...course, ...webinar] : [...course];
   const teachers = [
     ...new Set(
       data
@@ -106,19 +104,13 @@ export const generateOptions = (
       .teachers.find((teacher) => teacher.nickname === teachers[0]).avatar,
   }));
 
-  const coursesOptions = course?.map((item) => ({
-    name: item.title,
-    id: item.id,
-    category: item.categories[0]?.title,
-  }));
-
-  const webinarOptions =
-    webinar?.map((item) => ({
+  const coursesOptions =
+    data?.map((item) => ({
       name: item.title,
       id: item.id,
-      category: t('global.event'),
-      webinar: true,
+      category: item.webinar ? t('global.event') : item.categories[0]?.title,
+      webinar: item.webinar,
     })) || [];
 
-  return [...coursesOptions, ...teacherOptions, ...webinarOptions];
+  return [...coursesOptions, ...teacherOptions];
 };

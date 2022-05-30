@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { message, Select } from 'antd';
 import { t } from 'i18next';
 import AntTooltip from 'components/Common/AntTooltip';
-import { CoursesType, CourseType, WebinarsType } from 'types/course.type';
+import { CoursesType, CourseType, SearchDataType, WebinarsType } from 'types/course.type';
 import { faNumber } from 'utils/common.util';
 import Card from 'components/Common/Card';
 import ProfileImg from './profileImg';
@@ -20,20 +20,24 @@ const time = (date): number => new Date(date).getTime();
 const EditProfile = dynamic(() => import('./editProfile'));
 const EditPassword = dynamic(() => import('../Account/editPassword'));
 
-type ProfileType = { courses: CoursesType[]; user: UserType; webinars: WebinarsType[] };
-const Profile: React.FC<ProfileType> = ({ courses, user, webinars }) => {
+type ProfileType = { searchData: SearchDataType; user: UserType };
+const Profile: React.FC<ProfileType> = ({ searchData, user }) => {
+  const data = [
+    ...searchData.workshops,
+    ...searchData.events.map((item) => ({ ...item, isWebinar: true })),
+  ];
   const query = useRouter().query.name;
   const isUser = query === 'user';
   const profile = isUser
     ? user
-    : [...courses, ...webinars]
+    : data
         .map((item) => item.teachers.map((k) => k))
         .flat()
         .find((item) => item?.nickname?.replace(/ /g, '-') === query);
 
   const profileCourses = isUser
-    ? courses
-    : [...courses, ...webinars].filter((item) =>
+    ? data
+    : data.filter((item) =>
         item.teachers.every((teacher) => teacher.nickname?.replace(/ /g, '-') === query),
       );
 

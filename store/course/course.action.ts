@@ -6,14 +6,14 @@ import * as type from './course.constants';
 
 export const getCoursesAction = () => {
   return async (dispatch): Promise<unknown> => {
-    dispatch({ type: type.GET_COURSE_REQUEST });
-    const response: ResType = await request.get(api.AllCoursesUrl());
+    dispatch({ type: type.GET_SEARCH_DATA_REQUEST });
+    const response: ResType = await request.get(api.SearchUrl());
     if (response.ok) {
-      dispatch({ type: type.GET_COURSE_SUCCESS, payload: response.data });
+      dispatch({ type: type.GET_SEARCH_DATA_SUCCESS, payload: response.data });
       return response.data;
     }
 
-    dispatch({ type: type.GET_COURSE_ERROR });
+    dispatch({ type: type.GET_SEARCH_DATA_ERROR });
     return false;
   };
 };

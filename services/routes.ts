@@ -1,17 +1,17 @@
-export const AllCoursesUrl = (): string => `/api/v1/workshops`;
+export const SearchUrl = (): string => `/api/v1/initial`;
 export const CourseUrl = (id): string => `/api/v1/workshops/${id}`;
 export const LessonUrl = (courseId, lessonId): string =>
   `/api/v1/workshops/${courseId}/lessons/${lessonId}`;
 export const CookieRoute = (): string => `/sanctum/csrf-cookie`;
 export const HomeUrl = (): string => `/api/v1/home`;
 export const UserUrl = (): string => `/api/user`;
-export const MobileVerifyUrl = (): string => `/api/v1/verifyCode`;
+export const MobileVerifyUrl = (): string => `/api/v1/verifyMobile`;
+export const EmailVerifyUrl = (): string => `/api/v1/verifyEmail`;
 export const RegisterUrl = (id, type): string => `/api/v1/${type}/${id}/register`;
 export const discountUrl = (): string => `/api/v1/takhfif-check`;
 export const ratePayUrl = (id, type): string => `/api/v1/buyUsingRate/${type}/${id}`;
 export const walletPayUrl = (id, type): string => `/api/v1/buyUsingWallet/${type}/${id}`;
 export const DirectPayUrl = (id, type): string => `/api/v1/DirectPay/${type}/${id}`;
-export const AllWebinarUrl = (): string => `/api/v1/events`;
 export const EventUrl = (id): string => `/api/v1/events/${id}`;
 export const CommentUrl = (id, page): string =>
   `/api/v1/workshops/${id}/comments?page=${page}`;
@@ -35,13 +35,12 @@ export const CheckAuthPhoneUrl = (): string => `/api/v1/checkAuthPhone`;
 export const CheckAuthEmailUrl = (): string => `/api/v1/checkAuthEmail`;
 export const LoginUrl = (): string => `/api/v1/loginUsingMobilePassword`;
 export const FillFormUrl = (): string => `/api/v1/RequiredFieldsFill`;
-export const ForgetPasswordUrl = (): string => `/api/v1/ForgetPassword_step0`;
-export const ForgetPasswordCodedUrl = (): string => `/api/v1/ForgetPassword_step1`;
-export const ForgetPasswordNewUrl = (): string => `/api/v1/ForgetPassword_step2`;
+export const ForgetPasswordUrl = (): string => `/api/v1/forget_password_step0`;
+export const ForgetPasswordCodedUrl = (): string => `/api/v1/forget_password_step1`;
+export const ForgetPasswordNewUrl = (): string => `/api/v1/forget_password_step2`;
 
 // //////////////////////////////////////////////////////
 
-export const EmailVerifyUrl = (): string => `/api/v1/AuthVerifyEmail`;
 export const ChangeMobileUrl = (): string => `/auth/changeMobileOrEmail`;
 export const ConfirmMobileUrl = (): string => `/auth/confirmMobileOrEmail`;
 

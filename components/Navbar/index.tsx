@@ -9,13 +9,12 @@ import Link from 'next/link';
 import { parseCookies } from 'nookies';
 
 import { getCoursesAction } from 'store/course/course.action';
-import { getAllWebinarAction, getUserAction } from 'store/account/account.action';
+import { getUserAction } from 'store/account/account.action';
 import Login from 'components/Account/login';
 import { SNav } from './style';
 import * as url from 'services/routes';
 import AntSearch from './AntSearch';
 import { generateOptions } from 'utils/common.util';
-import { CoursesType } from 'types/course.type';
 import Profile from './profile';
 
 const items = [
@@ -25,13 +24,12 @@ const items = [
   { name: 'contactUs', tab: url.ContactUsRoute() },
 ];
 
-const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
+const Navbar: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [tab] = useState(router.route);
   const [searching, setSearching] = useState(false);
-  const courses = useSelector((state) => state.course.courses) || data;
-  const webinars = useSelector((state) => state.account.webinars);
+  const searchData = useSelector((state) => state.course.searchData);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const user = useSelector((state) => state.account.user);
@@ -42,9 +40,8 @@ const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
   }, [token]);
 
   useEffect(() => {
-    !courses && dispatch(getCoursesAction());
-    !webinars && dispatch(getAllWebinarAction());
-  }, [courses, webinars]);
+    !searchData && dispatch(getCoursesAction());
+  }, [searchData]);
 
   const tabs = (style): ReactElement[] =>
     items.map((item) => (
@@ -94,10 +91,7 @@ const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
           <Profile setIsModalVisible={setIsModalVisible} />
         </div>
 
-        <AntSearch
-          setSearching={setSearching}
-          options={generateOptions(courses, webinars)}
-        />
+        <AntSearch setSearching={setSearching} options={generateOptions(searchData)} />
       </div>
 
       {!searching && (

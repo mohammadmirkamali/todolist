@@ -16,13 +16,13 @@ import { Skeleton } from 'antd';
 
 const Course: React.FC<{ course: CourseType }> = ({ course }) => {
   const [tabs, setTabs] = useState([]);
-  const courses = useSelector((state) => state.course.courses);
+  const searchData = useSelector((state) => state.course.searchData);
   const [swiper, setSwiper] = useState({} as any); // eslint-disable-line
   const [slideId, setSlideId] = useState(0);
   const categories = course.categories.map((k) => k.title);
   const similarCourses =
-    courses &&
-    [...courses]
+    searchData &&
+    [...searchData.workshops]
       .filter((item) => categories.includes(item.categories[0]?.title))
       .filter((item) => item.id !== course.id)
       .slice(0, 5);
@@ -59,22 +59,24 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           />
           <p className="mx-[40px] py-[50px] text-[18px]">{course.description}</p>
         </div>
-        <div className="w-full bg-white rounded-[8px] overflow-hidden">
-          <h3 className="h-[70px] center w-full font-bold text-[22px] m-[0px]">
-            {t('course.relatedCourses')}
-          </h3>
-          {courses ? (
-            <ScrollContainer className="flex overflow-auto">
-              {similarCourses.map((item) => (
-                <div className="scale-[.8] m-[-27px]" key={item.id}>
-                  <Card data={item} />
-                </div>
-              ))}
-            </ScrollContainer>
-          ) : (
-            <Skeleton className="m-[30px]" />
-          )}
-        </div>
+        {!!categories.length && (
+          <div className="w-full bg-white rounded-[8px] overflow-hidden">
+            <h3 className="h-[70px] center w-full font-bold text-[22px] m-[0px]">
+              {t('course.relatedCourses')}
+            </h3>
+            {searchData ? (
+              <ScrollContainer className="flex overflow-auto">
+                {similarCourses.map((item) => (
+                  <div className="scale-[.8] m-[-27px]" key={item.id}>
+                    <Card data={item} />
+                  </div>
+                ))}
+              </ScrollContainer>
+            ) : (
+              <Skeleton className="m-[30px]" />
+            )}
+          </div>
+        )}
       </div>
 
       {/* information */}

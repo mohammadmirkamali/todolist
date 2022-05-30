@@ -11,12 +11,12 @@ import 'swiper/css';
 import Card from 'components/Common/Card';
 
 const Webinars: React.FC = () => {
-  const webinars = useSelector((state) => state.account.webinars);
-  const error = useSelector((state) => state.account.webinarsError);
+  const searchData = useSelector((state) => state.course.searchData);
+  const error = useSelector((state) => state.course.searchDataError);
 
   return (
     <div className="w-full min-h-[300px] text-center px-[40px] mb-[40px]">
-      {webinars ? (
+      {searchData ? (
         <div>
           <h2 className="font-bold text-[27px]">{t('webinar.webinars')}</h2>
           <Swiper
@@ -31,7 +31,7 @@ const Webinars: React.FC = () => {
               '1250': { slidesPerView: 4 },
             }}
           >
-            {webinars.map((item) => (
+            {searchData.events.map((item) => (
               <SwiperSlide key={item.id}>
                 <Card data={item} webinar />
               </SwiperSlide>
