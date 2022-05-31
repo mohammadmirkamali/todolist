@@ -17,7 +17,6 @@ import {
 import { SSubmitForm } from './style';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { faNumber } from 'utils/common.util';
-import { getChapterAction, getEventAction } from 'store/course/course.action';
 import { Spin } from 'antd';
 
 type FormType = {
@@ -132,13 +131,17 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible, nextAction })
         initialValues={{ value: '' }}
         validationSchema={validationSchema}
         onSubmit={async (values, { resetForm }): Promise<void> => {
-          const result = await dispatch(postLoginAction(data[2], body(values.value)));
-          if (result === null) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const result: any = await dispatch(
+            postLoginAction(data[2], body(values.value)),
+          );
+          if (result.data.next === 'login') {
             dispatch(getUserAction());
-            nextAction?.type === 'chapter' &&
-              dispatch(getChapterAction(nextAction.id[0]));
-            nextAction?.type === 'event' && dispatch(getEventAction(nextAction.id[0]));
+            // nextAction?.type === 'chapter' &&
+            //   dispatch(getChapterAction(nextAction.id[0]));
+            // nextAction?.type === 'event' && dispatch(getEventAction(nextAction.id[0]));
             setIsVisible(false);
+            dispatch(postLoginAction(null, { data: { next: 'enterNumber' }, ok: true }));
           }
           result && resetForm();
         }}

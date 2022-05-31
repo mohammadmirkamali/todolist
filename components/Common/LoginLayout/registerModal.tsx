@@ -7,7 +7,7 @@ import { faNumber } from 'utils/common.util';
 import request from 'services/request';
 import { DirectPayUrl, discountUrl, ratePayUrl, walletPayUrl } from 'services/routes';
 import { StyledButton } from 'components/Common/commonStyle';
-import { getChapterAction } from 'store/course/course.action';
+import { getChapterAction, getEventAction } from 'store/course/course.action';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 
@@ -50,9 +50,11 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
         : DirectPayUrl(id, type);
     const body = { code: discount };
     const res: any = // eslint-disable-line
-      method === 'rate' ? await request.post(href, body) : await request.get(href);
-    res.data.code ? message.success(res.data.message) : message.warn(res.data.message);
-    res.data.code && (dispatch(getChapterAction(data.id)), setIsVisible(false));
+      method !== 'rate' ? await request.post(href, body) : await request.get(href);
+    res.ok ? message.success(res.data.message) : message.warn(res.data.message);
+    res.ok &&
+      (dispatch(eventId ? getEventAction(eventId) : getChapterAction(data.id)),
+      setIsVisible(false));
   };
   return (
     <Modal

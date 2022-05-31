@@ -13,7 +13,6 @@ import Card from 'components/Common/Card';
 const Webinars: React.FC = () => {
   const searchData = useSelector((state) => state.course.searchData);
   const error = useSelector((state) => state.course.searchDataError);
-
   return (
     <div className="w-full min-h-[300px] text-center px-[40px] mb-[40px]">
       {searchData ? (

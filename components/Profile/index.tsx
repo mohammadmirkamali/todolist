@@ -112,9 +112,9 @@ const Profile: React.FC<ProfileType> = ({ searchData, user }) => {
     <div className="duration-300 bg-gray-0 min-h-screen flex-col flex items-center justify-items-start">
       <div className="w-full py-[30px] rounded-[8px] xl:rounded mt-[10px] xl:mt-0 xl:mb-0 md:w-[560px] xl:pb-[23rem] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
         <div className=" items-center flex-col flex">
-          <ProfileImg image={profile.avatar} isUser={isUser} />
+          <ProfileImg image={profile?.avatar} isUser={isUser} />
           <h2 className="font-bold text-[20px] pt-[10px] w-[250px] mt-[10px] flex items-center text-center justify-center">
-            {profile.nickname}
+            {profile?.nickname}
             {isUser && <Edit type="name" text={profile.nickname} />}
           </h2>
           {isUser ? (
