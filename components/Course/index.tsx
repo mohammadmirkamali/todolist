@@ -1,11 +1,8 @@
-/* eslint-disable import/no-unresolved */
 import { useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { t } from 'i18next';
 import ScrollContainer from 'react-indiana-drag-scroll';
-import { SwiperSlide, Swiper } from 'swiper/react';
-import 'swiper/css';
 import Card from 'components/Common/Card';
 import { CourseType } from 'types/course.type';
 import UserComment from './comment';
@@ -17,8 +14,7 @@ import { Skeleton } from 'antd';
 const Course: React.FC<{ course: CourseType }> = ({ course }) => {
   const [tabs, setTabs] = useState([]);
   const searchData = useSelector((state) => state.course.searchData);
-  const [swiper, setSwiper] = useState({} as any); // eslint-disable-line
-  const [slideId, setSlideId] = useState(0);
+  const [slideId, setSlideId] = useState('lessons');
   const categories = course.categories.map((k) => k.title);
   const similarCourses =
     searchData &&
@@ -31,15 +27,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
     course.attaches.length
       ? setTabs(['attaches', 'questions', 'comments', 'lessons'])
       : setTabs(['questions', 'comments', 'lessons']);
-    setSlideId(course.attaches.length ? 3 : 2);
   }, [course]);
-
-  const onSlide = (item): void => {
-    const index = item.activeIndex;
-    const { length } = tabs;
-    // handle changing last and first slide. it a swiper bug
-    setSlideId(index === length + 1 ? 0 : !index ? length - 1 : index - 1);
-  };
 
   return (
     <div className="bg-gray-0 duration-300 min-h-screen flex xl:block flex-col center">
@@ -97,15 +85,9 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           }px] flex-row-reverse border-b-gray-1 border-b text-gray-3`}
         >
           {tabs.map((item, index) => (
-            <span
-              key={item}
-              aria-hidden="true"
-              onClick={(): void => (setSlideId(index), swiper.slideTo(index + 1))}
-            >
+            <span key={item} aria-hidden="true" onClick={(): void => setSlideId(item)}>
               <span
-                className={`mx-[10px] link ${
-                  slideId === index && 'font-bold text-black'
-                }`}
+                className={`mx-[10px] link ${slideId === item && 'font-bold text-black'}`}
               >
                 {t(`course.${item}`)}
               </span>
@@ -114,33 +96,14 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           ))}
         </div>
         <div className="overflow-auto h-[550px] xl:h-[90%] toRight">
-          <Swiper
-            loop
-            initialSlide={tabs.length - 1}
-            onInit={(item): void => setSwiper(item)}
-            className="h-full"
-            onSlideChange={onSlide}
-          >
-            {course.attaches && course.attaches.length && (
-              <SwiperSlide>
-                <Attaches data={course.attaches} />
-              </SwiperSlide>
-            )}
-            <SwiperSlide className="relative h-full overflow-hidden">
-              <UserComment data={course.questions} id={course.id} />
-            </SwiperSlide>
-            <SwiperSlide className="relative h-full overflow-hidden">
-              <UserComment
-                data={course.comments}
-                type="workshops"
-                id={course.id}
-                comment
-              />
-            </SwiperSlide>
-            <SwiperSlide className="min-h-full overflow-auto">
-              <LessonsList course={course} />
-            </SwiperSlide>
-          </Swiper>
+          {slideId === 'lessons' && <LessonsList course={course} />}
+          {slideId === 'attaches' && <Attaches data={course.attaches} />}
+          {slideId === 'questions' && (
+            <UserComment data={course.questions} id={course.id} />
+          )}
+          {slideId === 'comments' && (
+            <UserComment data={course.comments} type="workshops" id={course.id} comment />
+          )}
         </div>
       </div>
     </div>

@@ -44,14 +44,33 @@ const Card: React.FC<CardType> = ({ data, webinar }) => {
             <h2 className="mx-[30px] text-[18px] text-right font-bold">{data.title}</h2>
 
             <div className="flex items-center mr-[30px] mt-[6px] text-[16px]">
-              <Image
-                src={data.teachers[0].avatar}
-                width={27}
-                height={27}
-                alt={data.teachers[0].nickname}
-                className="rounded-full"
-              />
-              <div className="mr-[8px] text-gray-3">{data.teachers[0].nickname}</div>
+              {data.teachers.length > 1 ? (
+                data.teachers.map((teacher, index) => (
+                  <div
+                    key={teacher.avatar}
+                    className={`h-[30px] translate-x-[${index * 5}px]`}
+                  >
+                    <Image
+                      src={teacher.avatar}
+                      width={30}
+                      height={30}
+                      alt={teacher.nickname}
+                      className="rounded-full"
+                    />
+                  </div>
+                ))
+              ) : (
+                <>
+                  <Image
+                    src={data.teachers[0].avatar}
+                    width={30}
+                    height={30}
+                    alt={data.teachers[0].nickname}
+                    className="rounded-full"
+                  />
+                  <div className="mr-[8px] text-gray-3">{data.teachers[0].nickname}</div>
+                </>
+              )}
             </div>
           </div>
 

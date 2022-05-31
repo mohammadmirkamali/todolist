@@ -1,4 +1,4 @@
-export type TeacherType = { nickname: string; avatar: string };
+export type TeacherType = { nickname: string; avatar: string; family: string };
 
 export type CoursesType = {
   id: number;

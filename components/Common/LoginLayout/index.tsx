@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import request from 'services/request';
 import { RegisterUrl } from 'services/routes';
-import { getChapterAction } from 'store/course/course.action';
+import { getChapterAction, getEventAction } from 'store/course/course.action';
 import { CourseType, WebinarType } from 'types/course.type';
 
 type LayoutType = {
@@ -39,7 +39,7 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
       setLoading && setLoading(false);
       const text = res.data.message;
       res.ok ? message.success(text) : message.error(text);
-      res.ok && dispatch(getChapterAction(data.id));
+      res.ok && dispatch(eventId ? getEventAction(eventId) : getChapterAction(data.id));
       res.ok && url && router.push(url);
       res.ok && handleNext && handleNext();
     }
