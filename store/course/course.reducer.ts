@@ -2,13 +2,13 @@ import { CourseReducerType } from 'types/course.type';
 import * as type from './course.constants';
 
 const initialState: CourseReducerType = {
-  coursesLoading: false,
-  courses: null,
-  coursesError: false,
+  searchDataLoading: false,
+  searchData: null,
+  searchDataError: false,
   postsLoading: false,
   posts: null,
   postsError: false,
-  webinar: null,
+  event: null,
   chapters: null,
 };
 
@@ -27,41 +27,55 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
     case type.GET_POSTS_ERROR:
       return { ...state, postsLoading: false, posts: null, postsError: true };
 
-    case type.GET_COURSE_REQUEST:
-      return { ...state, coursesLoading: true, courses: null, coursesError: false };
-    case type.GET_COURSE_SUCCESS:
+    case type.GET_EVENT_REQUEST:
       return {
         ...state,
-        coursesLoading: false,
-        courses: action.payload,
-        coursesError: false,
-      };
-    case type.GET_COURSE_ERROR:
-      return { ...state, coursesLoading: false, courses: null, coursesError: true };
-
-    case type.GET_WEBINAR_REQUEST:
-      return {
-        ...state,
-        webinar: {
-          ...state.webinar,
-          [action.id]: { loading: true, data: null, error: null },
+        event: {
+          ...state.event,
+          [action.id]: { ...state.event?.[action.id], loading: true },
         },
       };
-    case type.GET_WEBINAR_SUCCESS:
+    case type.GET_EVENT_SUCCESS:
       return {
         ...state,
-        webinar: {
-          ...state.webinar,
-          [action.id]: { loading: false, data: action.payload, error: null },
+        event: {
+          ...state.event,
+          [action.id]: {
+            loading: false,
+            data: action.payload,
+            error: null,
+          },
         },
       };
-    case type.GET_WEBINAR_ERROR:
+    case type.GET_EVENT_ERROR:
       return {
         ...state,
-        webinar: {
-          ...state.webinar,
+        event: {
+          ...state.event,
           [action.id]: { loading: true, data: null, error: true },
         },
+      };
+
+    case type.GET_SEARCH_DATA_REQUEST:
+      return {
+        ...state,
+        searchDataLoading: true,
+        searchData: null,
+        searchDataError: false,
+      };
+    case type.GET_SEARCH_DATA_SUCCESS:
+      return {
+        ...state,
+        searchDataLoading: false,
+        searchData: action.payload,
+        searchDataError: false,
+      };
+    case type.GET_SEARCH_DATA_ERROR:
+      return {
+        ...state,
+        searchDataLoading: false,
+        searchData: null,
+        searchDataError: true,
       };
 
     case type.GET_CHAPTER_REQUEST:

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import SimpleForm from './simpleForm';
 import FillForm from './fillForm';
 import { SModal } from './style';
+import EditPassword from './editPassword';
 
 type ModalType = {
   isVisible: boolean;
@@ -25,6 +26,8 @@ const Login: React.FC<ModalType> = ({ isVisible, setIsVisible, nextAction }) => 
     >
       {loginData?.next === 'requiredFields' ? (
         <FillForm loginData={loginData} setIsVisible={setIsVisible} />
+      ) : loginData?.next === 'ForgetPassword_step2' ? (
+        <EditPassword setIsVisible={setIsVisible} />
       ) : (
         <SimpleForm
           loginData={loginData}

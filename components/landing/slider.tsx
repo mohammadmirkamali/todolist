@@ -20,7 +20,7 @@ const Slider: React.FC<SliderType> = ({ courses, title }) => {
       <div className="flex-wrap center w-[320px] md:w-[900px] xl:w-[1300px] ">
         {data.map((item) => (
           <div key={item.id} className="md:scale-[.85] md:m-[-24px] xl:scale-100 xl:m-0">
-            <Card course={item} />
+            <Card data={item} />
           </div>
         ))}
       </div>

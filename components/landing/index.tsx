@@ -5,6 +5,7 @@ import Slider from './slider';
 import { CoursesType } from 'types/course.type';
 
 const Info = dynamic(() => import('./Info'));
+const Webinars = dynamic(() => import('./webinars'));
 const Teachers = dynamic(() => import('./teachers'));
 const Footer = dynamic(() => import('components/Footer'));
 const AskUs = dynamic(() => import('./askUs'));
@@ -16,10 +17,11 @@ const Landing: React.FC<{ courses: CoursesType[] }> = ({ courses }) => {
 
   return (
     <div className="bg-gray-11 relative flex-col min-h-full center">
-      <HeroSection courses={courses} />
+      <HeroSection />
       <Slider courses={newest} title="newCourses" />
       <Info />
       <Slider courses={mostPopular} title="popularCourses" />
+      <Webinars />
       <Teachers courses={courses} />
       <AskUs />
       <Footer />

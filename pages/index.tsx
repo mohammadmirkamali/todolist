@@ -4,19 +4,19 @@ import { GetServerSideProps } from 'next';
 import { t } from 'i18next';
 import { useDispatch } from 'react-redux';
 import request from 'services/request';
-import { AllCoursesUrl } from 'services/routes';
-import { CoursesType } from 'types/course.type';
-import { GET_COURSE_SUCCESS } from 'store/course/course.constants';
+import { SearchUrl } from 'services/routes';
+import { SearchDataType } from 'types/course.type';
+import { GET_SEARCH_DATA_SUCCESS } from 'store/course/course.constants';
 
 const Navbar = dynamic(() => import('components/Navbar'));
 const Landing = dynamic(() => import('components/landing'));
 const Head = dynamic(() => import('next/head'));
 
-const Home: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
+const Home: React.FC<{ data?: SearchDataType }> = ({ data }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: GET_COURSE_SUCCESS, payload: data });
+    dispatch({ type: GET_SEARCH_DATA_SUCCESS, payload: data });
   }, []);
 
   return (
@@ -26,8 +26,8 @@ const Home: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
         <meta name="description" content={t('global.ceoDescription')} />
       </Head>
 
-      <Navbar data={data} />
-      <Landing courses={data} />
+      <Navbar />
+      <Landing courses={data.workshops} />
     </>
   );
 };
@@ -35,7 +35,7 @@ const Home: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const response = await request.get(AllCoursesUrl());
+  const response = await request.get(SearchUrl());
 
   return {
     props: { data: response.data },

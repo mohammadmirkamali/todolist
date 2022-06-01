@@ -16,7 +16,7 @@ export const postLoginAction = (url, body) => {
       data.token &&
         setCookie(null, 'taalei', data.token.replace('Bearer ', ''), { path: '/' });
       dispatch({ type: type.POST_LOGIN_SUCCESS, payload: data });
-      return data.token && !data.next ? null : true;
+      return data.token && !data.next ? null : response;
     }
 
     message.error(response.data.message || t('global.apiError'));

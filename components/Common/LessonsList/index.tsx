@@ -20,7 +20,7 @@ const LessonsList: React.FC<LessonsType> = ({ course, activeId }) => (
           .sort((a, b) => a.order - b.order)
           .map((item) => (
             <LoginLayout
-              course={course}
+              data={course}
               key={item.title}
               condition={!!item.files[0].file}
               url={LessonRoute(course.id, item.id, item.title)}

@@ -1,3 +1,5 @@
+export type TeacherType = { nickname: string; avatar: string; family: string };
+
 export type CoursesType = {
   id: number;
   price: number;
@@ -10,7 +12,26 @@ export type CoursesType = {
   updated_at: string;
   lessons: number[];
   categories: { title: string; image: string }[];
-  teachers: { nickname: string; avatar: string }[];
+  teachers: TeacherType[];
+};
+
+export type WebinarsType = {
+  capacity: number;
+  contacts: string;
+  description: string;
+  headline: string;
+  created_at: string;
+  id: number;
+  image: string;
+  price: string;
+  isWebinar: boolean;
+  teachers: TeacherType[];
+  title: string;
+};
+
+export type SearchDataType = {
+  workshops: CoursesType[];
+  events: WebinarsType[];
 };
 
 export type LessonType = {
@@ -80,7 +101,7 @@ export type CourseType = {
   top_users: TopRateType[];
   user_rate: TopRateType[];
   categories: { title: string; image: string }[];
-  teachers: { nickname: string; avatar: string }[];
+  teachers: TeacherType[];
 };
 
 export type PostType = {
@@ -96,26 +117,26 @@ export type PostType = {
 export type WebinarType = {
   id: number;
   price: number;
-  title: string;
-  link: string;
-  teacher_avatar: string;
-  teacher_name: string;
-  teacher_title: string;
+  capacity: number;
+  comments: { data: CommentsType[]; next_page_usr: string };
   description: string;
   image: string;
+  registered: boolean;
+  link: string;
+  teachers: TeacherType[];
+  times: { date: string; start: string; end: string; description: string }[];
+  title: string;
   headline: string;
-  for_student: string;
-  webinar_times: { date: string; start: string; end: string; description: string }[];
 };
 
 export type CourseReducerType = {
-  coursesLoading: boolean;
-  coursesError: boolean;
-  courses: CoursesType[];
+  searchDataLoading: boolean;
+  searchDataError: boolean;
+  searchData: SearchDataType;
   postsLoading: boolean;
   postsError: boolean;
   posts: PostType[];
-  webinar: { [id: number]: { loading: boolean; error: boolean; data: WebinarType } };
+  event: { [id: number]: { loading: boolean; error: boolean; data: WebinarType } };
   chapters: { [id: number]: { loading: boolean; error: boolean; data: CourseType } };
 };
 
@@ -146,4 +167,12 @@ export type LessonNotesType = {
     title: string;
     user: { avatar: string; nickname: string };
   }[];
+};
+
+export type SearchOptionType = {
+  name: string;
+  id: number;
+  avatar?: string;
+  category?: string;
+  webinar?: boolean;
 };

@@ -26,11 +26,14 @@ const Information: React.FC<InfoType> = ({ course }) => {
 
   return (
     <div className="text-[18px] pr-[30px] text-gray-10">
-      <TeacherAvatar
-        name={course.teachers[0].nickname}
-        title={t('global.teacher')}
-        img={course.teachers[0].avatar}
-      />
+      {course.teachers.map((teacher) => (
+        <TeacherAvatar
+          key={teacher.nickname}
+          name={teacher.nickname}
+          title={t('global.teacher')}
+          img={teacher.avatar}
+        />
+      ))}
 
       <div className="py-[7px] flex items-center text-[16px]">
         <ClockCircleOutlined className="text-[20px] pr-[10px]" />
@@ -52,7 +55,7 @@ const Information: React.FC<InfoType> = ({ course }) => {
         <div>{t('global.course')}</div>
       </div>
 
-      <LoginLayout course={course}>
+      <LoginLayout data={course}>
         <div className="py-[7px] text-[16px] flex items-center pr-[15px]">
           <Rate
             value={course.rate}
@@ -82,7 +85,7 @@ const Information: React.FC<InfoType> = ({ course }) => {
       ) : null}
 
       {(!course.registered || !user) && (
-        <LoginLayout course={course} setLoading={setLoading}>
+        <LoginLayout data={course} setLoading={setLoading}>
           <SButton loading={loading} className="toLeft">
             {t('global.register')}
             <span className="text-[16px] mr-[10px]">

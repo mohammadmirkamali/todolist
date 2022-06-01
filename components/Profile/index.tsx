@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { message, Select } from 'antd';
 import { t } from 'i18next';
 import AntTooltip from 'components/Common/AntTooltip';
-import { CoursesType, CourseType } from 'types/course.type';
+import { CoursesType, CourseType, SearchDataType, WebinarsType } from 'types/course.type';
 import { faNumber } from 'utils/common.util';
 import Card from 'components/Common/Card';
 import ProfileImg from './profileImg';
@@ -18,22 +18,26 @@ import { ChangeMobileUrl } from 'services/routes';
 const { Option } = Select;
 const time = (date): number => new Date(date).getTime();
 const EditProfile = dynamic(() => import('./editProfile'));
-const EditPassword = dynamic(() => import('./editPassword'));
+const EditPassword = dynamic(() => import('../Account/editPassword'));
 
-type ProfileType = { courses: CoursesType[]; user: UserType };
-const Profile: React.FC<ProfileType> = ({ courses, user }) => {
+type ProfileType = { searchData: SearchDataType; user: UserType };
+const Profile: React.FC<ProfileType> = ({ searchData, user }) => {
+  const data = [
+    ...searchData.workshops,
+    ...searchData.events.map((item) => ({ ...item, isWebinar: true })),
+  ];
   const query = useRouter().query.name;
   const isUser = query === 'user';
   const profile = isUser
     ? user
-    : courses
+    : data
         .map((item) => item.teachers.map((k) => k))
         .flat()
         .find((item) => item?.nickname?.replace(/ /g, '-') === query);
 
   const profileCourses = isUser
-    ? courses
-    : courses.filter((item) =>
+    ? data
+    : data.filter((item) =>
         item.teachers.every((teacher) => teacher.nickname?.replace(/ /g, '-') === query),
       );
 
@@ -42,12 +46,16 @@ const Profile: React.FC<ProfileType> = ({ courses, user }) => {
   const [input, setInput] = useState('');
   const [editType, setEditType] = useState('');
   const [filterCourses, setFilterCourses] = useState(
-    [...profileCourses].sort((a, b) => time(b.created_at) - time(a.created_at)),
+    [...profileCourses].sort(
+      (a, b) => time(b.created_at || '0') - time(a.created_at || '0'),
+    ),
   );
 
   useEffect(() => {
     setFilterCourses(
-      [...profileCourses].sort((a, b) => time(b.created_at) - time(a.created_at)),
+      [...profileCourses].sort(
+        (a, b) => time(b.created_at || '0') - time(a.created_at || '0'),
+      ),
     );
   }, [query]);
 
@@ -72,7 +80,7 @@ const Profile: React.FC<ProfileType> = ({ courses, user }) => {
     setFilterCourses(
       item === 'newest'
         ? [...profileCourses].sort((a, b) => time(b.created_at) - time(a.created_at))
-        : [...profileCourses].sort((a, b) => b.price - a.price),
+        : [...profileCourses].sort((a, b) => Number(b.price) - Number(a.price)),
     );
   };
 
@@ -104,9 +112,9 @@ const Profile: React.FC<ProfileType> = ({ courses, user }) => {
     <div className="duration-300 bg-gray-0 min-h-screen flex-col flex items-center justify-items-start">
       <div className="w-full py-[30px] rounded-[8px] xl:rounded mt-[10px] xl:mt-0 xl:mb-0 md:w-[560px] xl:pb-[23rem] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
         <div className=" items-center flex-col flex">
-          <ProfileImg image={profile.avatar} isUser={isUser} />
+          <ProfileImg image={profile?.avatar} isUser={isUser} />
           <h2 className="font-bold text-[20px] pt-[10px] w-[250px] mt-[10px] flex items-center text-center justify-center">
-            {profile.nickname}
+            {profile?.nickname}
             {isUser && <Edit type="name" text={profile.nickname} />}
           </h2>
           {isUser ? (
@@ -171,7 +179,7 @@ const Profile: React.FC<ProfileType> = ({ courses, user }) => {
           <div className="justify-center xl:justify-start flex flex-wrap">
             {filterCourses.map((item) => (
               <div key={item.id} className="scale-[.9] m-[-15px]">
-                <Card course={item} />
+                <Card data={item} webinar={(item as WebinarsType).isWebinar} />
               </div>
             ))}
           </div>

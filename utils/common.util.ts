@@ -1,14 +1,14 @@
-import { CoursesType } from 'types/course.type';
+import { t } from 'i18next';
+import { SearchDataType, SearchOptionType } from 'types/course.type';
 
 export const BadgeCategory = (type): { name: string; color: string } | undefined => {
   // see antd badge color : https://ant.design/components/badge/
   const types = [
-    { name: 'حماة', color: 'cyan' },
-    { name: 'دعاة', color: 'green' },
-    { name: 'رعاة', color: 'magenta' },
-    { name: 'معارف توحیدی', color: 'purple' },
-    { name: 'اخلاق توحیدی', color: 'geekblue' },
-    { name: 'قرآن', color: 'gold' },
+    { name: t('global.homat'), color: 'cyan' },
+    { name: t('global.doat'), color: 'green' },
+    { name: t('global.roat'), color: 'magenta' },
+    { name: t('global.event'), color: 'geekblue' },
+    { name: t('global.qoran'), color: 'gold' },
   ];
 
   return types.find((item) => item.name === type);
@@ -79,11 +79,13 @@ export const fileSize = (size: number | string): string =>
     ? `${faNumber(Math.floor(Number(size) / 1000))}KB`
     : `${faNumber(Math.floor(Number(size)))}B`;
 
-export const generateOptions = (
-  courses: CoursesType[],
-): { name: string; id: number; avatar?: string; category?: string }[] => {
-  if (!courses) return null;
-  const data: CoursesType[] = JSON.parse(JSON.stringify(courses));
+export const generateOptions = (searchData: SearchDataType): SearchOptionType[] => {
+  if (!searchData) return null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data = (searchData.workshops as any)?.concat(
+    searchData.events.map((item) => ({ ...item, webinar: true })),
+  );
+
   const teachers = [
     ...new Set(
       data
@@ -102,11 +104,13 @@ export const generateOptions = (
       .teachers.find((teacher) => teacher.nickname === teachers[0]).avatar,
   }));
 
-  const coursesOptions = data?.map((item) => ({
-    name: item.title,
-    id: item.id,
-    category: item.categories[0]?.title,
-  }));
+  const coursesOptions =
+    data?.map((item) => ({
+      name: item.title,
+      id: item.id,
+      category: item.webinar ? t('global.event') : item.categories[0]?.title,
+      webinar: item.webinar,
+    })) || [];
 
   return [...coursesOptions, ...teacherOptions];
 };

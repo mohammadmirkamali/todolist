@@ -12,25 +12,28 @@ import {
 } from 'services/routes';
 import request from 'services/request';
 import { message, Skeleton } from 'antd';
+import { faNumber } from 'utils/common.util';
 
 type CommentType = {
   data: CommentsType[] | QuestionsType[];
   comment?: boolean;
   id: number;
+  type?: 'workshops' | 'events';
 };
-const UserComment: React.FC<CommentType> = ({ data, comment, id }) => {
+const UserComment: React.FC<CommentType> = ({ data, comment, id, type }) => {
   const [loading, setLoading] = useState(false);
   const [allData, setAllData] = useState(data);
   const [description, setDescription] = useState('');
   const [title, setTitle] = useState('');
+  const [page, setPage] = useState(1);
   const [sendLoading, setSendLoading] = useState(false);
-  const [allDataLoaded, setAllDataLoaded] = useState(false);
+
   const handleSubmit = async (): Promise<void> => {
     const body = comment ? { text: description } : { title, description };
     setSendLoading(true);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = await request.post(
-      comment ? SendCommentUrl(id) : SendQuestionUrl(id),
+      comment ? SendCommentUrl(id, type) : SendQuestionUrl(id),
       body,
     );
     setSendLoading(false);
@@ -44,25 +47,23 @@ const UserComment: React.FC<CommentType> = ({ data, comment, id }) => {
   };
 
   const handleLoadMore = async (): Promise<void> => {
-    const url = comment ? CommentUrl(id, 1) : QuestionUrl(id);
+    const url = comment ? CommentUrl(id, page) : QuestionUrl(id);
     setLoading(true);
     const res: any = await request.get(url); // eslint-disable-line
     setLoading(false);
-    res.ok && (setAllData(res.data.data), setAllDataLoaded(true));
+    res.ok && (setAllData([...allData, ...res.data.data]), setPage(page + 1));
   };
   const text = comment ? 'text' : 'description';
   const name = comment ? 'nickname' : 'title';
-  const date = comment ? '1/1/1402' : null;
-
   return (
-    <>
-      <div className={`h-[calc(100%-${comment ? 200 : 240}px)] overflow-auto`}>
+    <div className="h-full overflow-hidden relative">
+      <div className="h-[calc(100%-240px)] overflow-auto">
         {allData.map((item) => (
           <AntComment
             text={item[text]}
             avatar={item.avatar}
             name={item[name]}
-            date={item[date]}
+            date={faNumber(item?.date?.split(' ')[0])}
             key={item[text]}
           >
             {item.answer && (
@@ -70,14 +71,14 @@ const UserComment: React.FC<CommentType> = ({ data, comment, id }) => {
                 text={item.answer[text]}
                 avatar={item.answer.avatar}
                 name={item.answer[name]}
-                date={item.answer[date]}
+                date={faNumber(item?.date?.split(' ')[0])}
               />
             )}
           </AntComment>
         ))}
-        {data.length > 10 && (
-          <div className="w-full px-[30px] text-center mb-[40px]">
-            {allDataLoaded ? null : loading ? (
+        {allData.length === 20 * page && (
+          <div className="w-full px-[30px] text-center mb-[30px]">
+            {loading ? (
               <Skeleton active />
             ) : (
               <AntButton width="200px" onClick={handleLoadMore}>
@@ -115,7 +116,7 @@ const UserComment: React.FC<CommentType> = ({ data, comment, id }) => {
           {t(`course.${comment ? 'sendComment' : 'sendQuestion'}`)}
         </SComment>
       </div>
-    </>
+    </div>
   );
 };
 

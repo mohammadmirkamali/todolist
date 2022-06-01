@@ -18,10 +18,16 @@ const CoursePage: React.FC<PageType> = () => {
   const id = router.query.courseId as string;
   const course = useSelector((state) => state.course.chapters)?.[id]?.data;
   const error = useSelector((state) => state.course.chapters)?.[id]?.error;
+  const user = useSelector((state) => state.account.user);
 
   useEffect(() => {
     id && !course && dispatch(getChapterAction(id));
   }, [id]);
+
+  // re-get data on user login and logout
+  useEffect(() => {
+    course && dispatch(getChapterAction(id));
+  }, [user]);
 
   return (
     <>

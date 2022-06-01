@@ -15,23 +15,21 @@ import { SNav } from './style';
 import * as url from 'services/routes';
 import AntSearch from './AntSearch';
 import { generateOptions } from 'utils/common.util';
-import { CoursesType } from 'types/course.type';
 import Profile from './profile';
 
 const items = [
   { name: 'home', tab: '/' },
   { name: 'posts', tab: url.PostsRoute() },
-  { name: 'webinar', tab: url.WebinarRoute() },
   { name: 'conditions', tab: url.ConditionRoute() },
   { name: 'contactUs', tab: url.ContactUsRoute() },
 ];
 
-const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
+const Navbar: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [tab] = useState(router.route);
   const [searching, setSearching] = useState(false);
-  const courses = useSelector((state) => state.course.courses) || data;
+  const searchData = useSelector((state) => state.course.searchData);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const user = useSelector((state) => state.account.user);
@@ -42,8 +40,8 @@ const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
   }, [token]);
 
   useEffect(() => {
-    !courses && dispatch(getCoursesAction());
-  }, [courses]);
+    !searchData && dispatch(getCoursesAction());
+  }, [searchData]);
 
   const tabs = (style): ReactElement[] =>
     items.map((item) => (
@@ -93,7 +91,7 @@ const Navbar: React.FC<{ data?: CoursesType[] }> = ({ data }) => {
           <Profile setIsModalVisible={setIsModalVisible} />
         </div>
 
-        <AntSearch setSearching={setSearching} options={generateOptions(courses)} />
+        <AntSearch setSearching={setSearching} options={generateOptions(searchData)} />
       </div>
 
       {!searching && (
