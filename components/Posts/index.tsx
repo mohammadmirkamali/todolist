@@ -43,26 +43,6 @@ const Posts: React.FC = () => {
           {selectedPost?.title}
         </h2>
 
-        {/* <div className="relative w-full">
-          {selectedPost?.post_type && (
-            <React.Fragment key={selectedPost.post_film}>
-              <Player className="toRight" poster={selectedPost.post_img}>
-                <source src={selectedPost.post_film} />
-                <ControlBar>
-                  <ReplayControl seconds={10} order={1.1} />
-                  <ForwardControl seconds={30} order={1.2} />
-                  <CurrentTimeDisplay order={4.1} />
-                  <TimeDivider order={4.2} />
-                  <PlaybackRateMenuButton
-                    rates={[5, 2, 1.5, 1.25, 1, 0.7, 0.5]}
-                    order={7.1}
-                  />
-                </ControlBar>
-              </Player>
-            </React.Fragment>
-          )}
-        </div> */}
-
         {selectedPost && !selectedPost?.description && (
           <div className="relative w-full h-[300px] md:h-[500px]">
             <Image src={selectedPost?.image} layout="fill" objectFit="contain" alt="" />

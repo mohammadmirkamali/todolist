@@ -84,11 +84,6 @@ export type CourseType = {
 };
 
 export type PostType = {
-  // user_name: string;
-  // user_avatar: string;
-  // created_at: string;
-  // post_text: string;
-  // post_type: string;
   image: string;
   datetime_formatDifference: string;
   description: string;
