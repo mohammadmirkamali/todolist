@@ -87,7 +87,7 @@ export type PostType = {
   image: string;
   datetime_formatDifference: string;
   description: string;
-  categories: { id: number; title: string; name: string | null; image: string }[];
+  categories: { id: number; title: string; name: string; image: string }[];
   title: string;
   film: string;
   id: number;
