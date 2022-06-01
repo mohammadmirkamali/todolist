@@ -8,7 +8,7 @@ import { SContainer } from 'components/Common/Card/style';
 import { PostsRoute } from 'services/routes';
 
 const Card: React.FC<{ post: PostType }> = ({ post }) => (
-  <Link href={{ pathname: PostsRoute(), query: { id: post.post_id } }}>
+  <Link href={{ pathname: PostsRoute(), query: { id: post.id } }}>
     <a>
       <SContainer className="w-[300px] h-[380px] bg-white border border-gray-5 cursor-pointer relative rounded-[6px] m-[10px]">
         <div className="bg-gray-7 absolute top-0 h-full w-full z-10 rounded-[6px] enter">
@@ -19,26 +19,26 @@ const Card: React.FC<{ post: PostType }> = ({ post }) => (
 
         <div className="h-[250px] overflow-hidden rounded-tl-[6px] rounded-tr-[6px]">
           <Image
-            src={post.post_img}
+            src={post.image}
             width={300}
             height={250}
-            alt={post.post_title}
+            alt={post.title}
             className="img  mt-[-20px]"
           />
         </div>
 
         <div className="h-[100px] flex justify-center flex-col">
-          <h2 className="mx-[30px] text-[18px] font-bold">{post.post_title}</h2>
+          <h2 className="mx-[30px] text-[18px] font-bold">{post.title}</h2>
 
           <div className="flex items-center mr-[30px] mt-[6px] text-[16px]">
             <Image
-              src={post.user_avatar}
+              src={post.film}
               width={27}
               height={27}
-              alt={post.user_name}
+              alt={post.categories.at(0).image}
               className="rounded-full"
             />
-            <div className="mr-[8px] text-gray-3">{post.user_name}</div>
+            <div className="mr-[8px] text-gray-3">{post.categories[0].title}</div>
           </div>
         </div>
 

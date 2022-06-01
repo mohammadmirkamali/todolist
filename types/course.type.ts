@@ -105,16 +105,13 @@ export type CourseType = {
 };
 
 export type PostType = {
-  post_img: string;
-  user_name: string;
-  user_avatar: string;
+  image: string;
   datetime_formatDifference: string;
-  created_at: string;
-  post_text: string;
-  post_title: string;
-  post_film: string;
-  post_type: string;
-  post_id: number;
+  description: string;
+  categories: { id: number; title: string; name: string; image: string }[];
+  title: string;
+  film: string;
+  id: number;
 };
 
 export type WebinarType = {
