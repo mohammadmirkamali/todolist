@@ -1,4 +1,4 @@
-import { FileDoneOutlined } from '@ant-design/icons';
+import { DownloadOutlined, FileDoneOutlined } from '@ant-design/icons';
 import { Checkbox, message } from 'antd';
 import { t } from 'i18next';
 import Link from 'next/link';
@@ -14,6 +14,7 @@ import 'plyr-react/dist/plyr.css';
 import Image from 'next/image';
 import LessonTabs from './lessonTabs';
 import request from 'services/request';
+import { faNumber, fileSize } from 'utils/common.util';
 
 const controls = [
   'play',
@@ -35,18 +36,16 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
   const type = file.includes('mp4') ? 'video' : 'audio';
   const [error, setError] = useState(false);
   const [data, setData] = useState(null);
+
   useEffect(() => {
+    lessonId && setData(null);
     const getData = async (): Promise<void> => {
       const res = await request.get(LessonUrl(courseId, lessonId));
       res.ok ? setData(res.data) : setError(true);
     };
-    courseId && getData();
-  }, [courseId]);
+    lessonId && getData();
+  }, [lessonId]);
 
-  // const mp3 = lesson?.attaches?.find((item) => item.attach_type === 'mp3');
-  // const pdf = lesson?.attaches?.find((item) => item.attach_type === 'pdf');
-
-  // console.log(lesson, file, course);
   const onLesson = (id): void => {
     const target = course.chapters
       ?.map((item) => item.lessons.map((k) => k))
@@ -116,29 +115,27 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
         </div>
 
         <div className="absolute p-[20px] flex-col flex-wrap flex text-[15px] bg-white bottom-[490px] rounded-[8px]  w-full xl:bottom-0 h-[150px]">
-          {/* {mp3 && (
-              <Link href={mp3.attach_link} passHref>
-                <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
-                  <DownloadOutlined className="ml-[8px] text-[20px]" />
-                  {t('course.voiceDownload')}
-                </a>
-              </Link>
-            )} */}
-          {/* {pdf && (
-              <Link href={pdf.attach_link} passHref>
-                <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
-                  <DownloadOutlined className="ml-[8px] text-[20px]" />
-                  {t('course.pdfDownload')}
-                </a>
-              </Link>
-            )} */}
-          {lesson.can_start_exam === 1 && (
+          {!data ? null : data?.exam?.passed ? (
+            <div className="mb-[14px] rounded-[4px] items-center flex text-green-0">
+              {t('course.passedExam', { grade: faNumber(data?.exam?.grade) })}
+            </div>
+          ) : (
             <LoginLink href={ExamInfoRoute(course.id, lesson.id)}>
               <div className="mb-5 rounded-[4px] items-center flex cursor-pointer text-gray-3 hover:text-black duration-300">
                 <FileDoneOutlined className="ml-[8px] text-[25px]" /> {t('course.exam')}
               </div>
             </LoginLink>
           )}
+
+          {data?.attaches.map((item) => (
+            <Link key={item.link} href={item.link} passHref>
+              <a className="mb-5 rounded-[4px] cursor-pointer text-gray-3 hover:text-black duration-300">
+                <DownloadOutlined className="ml-[8px] text-[20px]" />
+                {item.name} ({fileSize(item.size)})
+              </a>
+            </Link>
+          ))}
+
           <Checkbox className="text-gray-3 hover:text-black duration-300">
             <div className="mb-5 text-gray-3 hover:text-black">{t('course.isSeen')}</div>
           </Checkbox>

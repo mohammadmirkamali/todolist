@@ -136,6 +136,8 @@
     "videoDownload": "دانلود فیلم",
     "pdfDownload": "دانلود درسنامه",
     "exam": "شرکت در آزمون",
+    "passedExam": "شما با نمره {{grade}} قبول شدید.",
+    "returnToLesson": "بازگشت به صفحه جلسه",
     "conversation": "مباحثه کردم",
     "payAmount": "مبلغ قابل پرداخت",
     "discountAmount": "مقدار تخفیف:",

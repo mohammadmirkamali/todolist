@@ -26,7 +26,9 @@ const ExamInfo: React.FC<{ data: ExamInfoType }> = ({ data }) => {
           </div>
           <div>
             <div className="my-[8px]">{faNumber(data.acceptance_percent)}</div>
-            <div className="my-[8px]">{faNumber(data.duration)}</div>
+            <div className="my-[8px]">
+              {faNumber(!data.duration ? data.number_of_questions * 1.5 : data.duration)}
+            </div>
             <div className="my-[8px]">{faNumber(data.number_of_questions)}</div>
             <div className="my-[8px]">
               {t(`exam.${data.qtype === 1 ? 'test' : 'descriptive'}`)}

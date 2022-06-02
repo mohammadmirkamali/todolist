@@ -128,7 +128,7 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player }) => {
       ) : error ? (
         <div>error</div>
       ) : (
-        <Skeleton />
+        <Skeleton className="p-[40px]" active />
       )}
     </div>
   );

@@ -67,7 +67,6 @@ export const ContactUsRoute = (): string => `/contact-us`;
 export const PostsRoute = (): string => `/posts`;
 // /////////////////////////////////////////////////////////////////////
 
-
 export const ProfileUrl = (): string => `/api/v2/getProfile`;
 export const WebinarUrl = (id): string => `/api/v2/webinar/${id}`;
 export const WorkshopUrl = (id): string => `/api/v2/workshop/${id}`;

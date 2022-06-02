@@ -36,6 +36,23 @@ export const getChapterAction = (id) => {
   };
 };
 
+export const getExamInfoAction = (courseId, lessonId) => {
+  return async (dispatch): Promise<unknown> => {
+    dispatch({ type: type.GET_EXAM_INFO_REQUEST });
+    const response: ResType = await request.get(api.ExamInfoUrl(courseId, lessonId));
+    if (response.ok) {
+      dispatch({
+        type: type.GET_EXAM_INFO_SUCCESS,
+        payload: response.data,
+      });
+      return response.data;
+    }
+
+    dispatch({ type: type.GET_EXAM_INFO_ERROR });
+    return false;
+  };
+};
+
 export const getPostsAction = () => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_POSTS_REQUEST });

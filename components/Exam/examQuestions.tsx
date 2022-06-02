@@ -1,27 +1,36 @@
 import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
-import { ExamType } from 'types/course.type';
+import { ExamInfoType, ExamType } from 'types/course.type';
 import { faNumber } from 'utils/common.util';
 import { message, Popconfirm, Radio } from 'antd';
 import AntButton from 'components/Common/AntButton';
 import styled from '@emotion/styled';
 import request from 'services/request';
-import { ExamResultUrl } from 'services/routes';
+import { ExamResultUrl, LessonRoute } from 'services/routes';
 import { useRouter } from 'next/router';
 import useStopWatch from 'components/Common/StopWatch';
+import Link from 'next/link';
 
 const SGroup = styled(Radio.Group)<{ length: number }>`
   display: flex;
   flex-direction: ${({ length }): string => (length > 80 ? 'column' : 'row')};
 `;
 
-const ExamQuestions: React.FC<{ data: ExamType[] }> = ({ data }) => {
+const ExamQuestions: React.FC<{ data: ExamType[]; info: ExamInfoType }> = ({
+  data,
+  info,
+}) => {
   const router = useRouter();
   const { courseId, lessonId } = router.query;
   const [answers, setAnswers] = useState(new Array(data.length).fill(null));
+  const [sendResult, setSendResult] = useState(false);
+  const [loading, setLoading] = useState(false);
   const emptyQuestion = answers.filter((item) => item === null).length;
   const [startStopWatch, setStartStopWatch] = useState(false);
-  const timer = useStopWatch(130, startStopWatch);
+  const timer = useStopWatch(
+    info.duration || info.number_of_questions * 90,
+    startStopWatch,
+  );
   const minutes = Math.floor(timer / 60);
   const seconds = timer - minutes * 60;
 
@@ -43,11 +52,13 @@ const ExamQuestions: React.FC<{ data: ExamType[] }> = ({ data }) => {
     item.options.map((key) => key.option.length).reduce((a, b) => a + b, 0);
 
   const confirm = async (): Promise<void> => {
+    setLoading(true);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = await request.post(ExamResultUrl(courseId, lessonId), {
       answers: JSON.stringify(answers).replace('[', '').replace(']', ''),
     });
-
+    setSendResult(true);
+    setLoading(false);
     res.data.passed
       ? message.success(t('exam.passed', { grad: faNumber(res.data.grade) }))
       : message.warn(t('exam.failed', { grad: faNumber(res.data.grade) }));
@@ -80,25 +91,31 @@ const ExamQuestions: React.FC<{ data: ExamType[] }> = ({ data }) => {
           ))}
         </div>
 
-        <Popconfirm
-          title={
-            <div>
-              {t('exam.confirm')}
-              {!!emptyQuestion && (
-                <div className="text-red-0">
-                  {t('exam.emptyQuestion', { count: emptyQuestion })}
-                </div>
-              )}
-            </div>
-          }
-          onConfirm={confirm}
-          cancelText={t('global.no')}
-          okText={t('global.yes')}
-        >
-          <AntButton width={250} fontSize={16} height={36}>
-            {t('exam.submit')}
-          </AntButton>
-        </Popconfirm>
+        {sendResult ? (
+          <Link href={LessonRoute(courseId, lessonId, 'exam')}>
+            <a className="text-[18px]">{t('course.returnToLesson')}</a>
+          </Link>
+        ) : (
+          <Popconfirm
+            title={
+              <div>
+                {t('exam.confirm')}
+                {!!emptyQuestion && (
+                  <div className="text-red-0">
+                    {t('exam.emptyQuestion', { count: emptyQuestion })}
+                  </div>
+                )}
+              </div>
+            }
+            onConfirm={confirm}
+            cancelText={t('global.no')}
+            okText={t('global.yes')}
+          >
+            <AntButton width={250} fontSize={16} height={36} loading={loading}>
+              {t('exam.submit')}
+            </AntButton>
+          </Popconfirm>
+        )}
 
         <div
           className={`absolute top-[40px] left-[50px] ${

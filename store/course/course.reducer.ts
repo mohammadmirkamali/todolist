@@ -8,6 +8,9 @@ const initialState: CourseReducerType = {
   postsLoading: false,
   posts: null,
   postsError: false,
+  examInfoLoading: false,
+  examInfo: null,
+  examInfoError: false,
   event: null,
   chapters: null,
 };
@@ -26,6 +29,18 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
       };
     case type.GET_POSTS_ERROR:
       return { ...state, postsLoading: false, posts: null, postsError: true };
+
+    case type.GET_EXAM_INFO_REQUEST:
+      return { ...state, examInfoLoading: true, examInfo: null, examInfoError: false };
+    case type.GET_EXAM_INFO_SUCCESS:
+      return {
+        ...state,
+        examInfoLoading: false,
+        examInfo: action.payload,
+        examInfoError: false,
+      };
+    case type.GET_EXAM_INFO_ERROR:
+      return { ...state, examInfoLoading: false, examInfo: null, examInfoError: true };
 
     case type.GET_EVENT_REQUEST:
       return {
