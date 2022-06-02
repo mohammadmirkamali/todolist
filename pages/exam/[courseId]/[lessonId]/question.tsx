@@ -32,7 +32,7 @@ const ExamPage: React.FC = () => {
 
   useEffect(() => {
     !examInfo && courseId && dispatch(getExamInfoAction(courseId, lessonId));
-  }, [courseId, examInfo]);
+  }, [courseId, examInfo, lessonId]);
   return (
     <>
       <Head>

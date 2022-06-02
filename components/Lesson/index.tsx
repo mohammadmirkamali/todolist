@@ -115,7 +115,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
         </div>
 
         <div className="absolute p-[20px] flex-col flex-wrap flex text-[15px] bg-white bottom-[490px] rounded-[8px]  w-full xl:bottom-0 h-[150px]">
-          {!data ? null : data?.exam?.passed ? (
+          {!data || lesson?.exam === false ? null : data?.exam?.passed ? (
             <div className="mb-[14px] rounded-[4px] items-center flex text-green-0">
               {t('course.passedExam', { grade: faNumber(data?.exam?.grade) })}
             </div>

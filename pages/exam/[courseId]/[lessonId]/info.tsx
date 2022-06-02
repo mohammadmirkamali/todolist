@@ -18,8 +18,8 @@ const ExamInfoPage: React.FC = () => {
   const error = useSelector((state) => state.course.examInfoError);
 
   useEffect(() => {
-    !examInfo && courseId && dispatch(getExamInfoAction(courseId, lessonId));
-  }, [courseId, examInfo]);
+    courseId && dispatch(getExamInfoAction(courseId, lessonId));
+  }, [courseId, lessonId]);
 
   return (
     <>

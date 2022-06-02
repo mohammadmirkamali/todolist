@@ -2,7 +2,7 @@ import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
 import { ExamInfoType, ExamType } from 'types/course.type';
 import { faNumber } from 'utils/common.util';
-import { message, Popconfirm, Radio } from 'antd';
+import { Popconfirm, Radio } from 'antd';
 import AntButton from 'components/Common/AntButton';
 import styled from '@emotion/styled';
 import request from 'services/request';
@@ -23,8 +23,8 @@ const ExamQuestions: React.FC<{ data: ExamType[]; info: ExamInfoType }> = ({
   const router = useRouter();
   const { courseId, lessonId } = router.query;
   const [answers, setAnswers] = useState(new Array(data.length).fill(null));
-  const [sendResult, setSendResult] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
   const emptyQuestion = answers.filter((item) => item === null).length;
   const [startStopWatch, setStartStopWatch] = useState(false);
   const timer = useStopWatch(
@@ -38,7 +38,7 @@ const ExamQuestions: React.FC<{ data: ExamType[]; info: ExamInfoType }> = ({
     setStartStopWatch(true);
   }, []);
   useEffect(() => {
-    !timer && setStartStopWatch(false);
+    (!timer || result) && setStartStopWatch(false);
   }, [timer]);
 
   const handleSelect = (e, index): void => {
@@ -57,11 +57,8 @@ const ExamQuestions: React.FC<{ data: ExamType[]; info: ExamInfoType }> = ({
     const res: any = await request.post(ExamResultUrl(courseId, lessonId), {
       answers: JSON.stringify(answers).replace('[', '').replace(']', ''),
     });
-    setSendResult(true);
     setLoading(false);
-    res.data.passed
-      ? message.success(t('exam.passed', { grad: faNumber(res.data.grade) }))
-      : message.warn(t('exam.failed', { grad: faNumber(res.data.grade) }));
+    setResult(res.data);
   };
 
   return (
@@ -82,7 +79,7 @@ const ExamQuestions: React.FC<{ data: ExamType[]; info: ExamInfoType }> = ({
                 value={answers[index]}
               >
                 {item.options.map((key) => (
-                  <Radio key={key.id} value={key.id} disabled={!timer}>
+                  <Radio key={key.id} value={key.id} disabled={!timer || result}>
                     {key.option}
                   </Radio>
                 ))}
@@ -91,10 +88,25 @@ const ExamQuestions: React.FC<{ data: ExamType[]; info: ExamInfoType }> = ({
           ))}
         </div>
 
-        {sendResult ? (
-          <Link href={LessonRoute(courseId, lessonId, 'exam')}>
-            <a className="text-[18px]">{t('course.returnToLesson')}</a>
-          </Link>
+        {result ? (
+          <div className="flex flex-col items-center">
+            <div
+              className={`text-[18px] ${result.passed ? 'text-green-0' : 'text-red-0'}`}
+            >
+              {t(`exam.${result.passed ? 'passed' : 'failed'}`, {
+                grade: faNumber(result.grade),
+              })}
+            </div>
+            <div className="flex mb-[30px]">
+              <div className="my-[8px]">{faNumber(t('exam.passGrad') as string)}</div>
+              <div className="my-[8px] mr-[12px]">
+                {faNumber(info.acceptance_percent)}
+              </div>
+            </div>
+            <Link href={LessonRoute(courseId, lessonId, 'exam')}>
+              <a className="text-[18px]">{t('course.returnToLesson')}</a>
+            </Link>
+          </div>
         ) : (
           <Popconfirm
             title={
