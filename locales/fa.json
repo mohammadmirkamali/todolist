@@ -53,6 +53,8 @@
     "doat": "دعاة",
     "homat": "حماة",
     "roat": "رعاة",
+    "posts": "وبلاگ",
+    "home": "خانه",
     "event": "رویداد",
     "apiError": "خطا در ارتباط. لطفا دوباره تلاش کنید.",
     "coursesCount": "تعداد دوره ها",
@@ -111,14 +113,6 @@
     "talabeLevel": "سطح",
     "successForm": "اطلاعات با موفقیت ثبت شد.",
     "approved": "تایید"
-  },
-  "navbar": {
-    "home": "خانه",
-    "posts": "وبلاگ",
-    "webinar": "وبینار",
-    "finance": "حمایت مالی",
-    "conditions": "قوانین و مقررات",
-    "contactUs": "تماس با ما"
   },
   "course": {
     "lessons": "جلسات",

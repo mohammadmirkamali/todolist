@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { getExamInfoAction } from 'store/course/course.action';
 import { useDispatch, useSelector } from 'react-redux';
 
-const PageLoading = dynamic(() => import('components/Common/pageLoading'));
 const Navbar = dynamic(() => import('components/Navbar'));
 const ExamInfo = dynamic(() => import('components/Exam/examInfo'));
 const Head = dynamic(() => import('next/head'));
@@ -15,7 +14,6 @@ const ExamInfoPage: React.FC = () => {
   const dispatch = useDispatch();
   const { courseId, lessonId } = router.query;
   const examInfo = useSelector((state) => state.course.examInfo);
-  const error = useSelector((state) => state.course.examInfoError);
 
   useEffect(() => {
     courseId && dispatch(getExamInfoAction(courseId, lessonId));
@@ -29,13 +27,7 @@ const ExamInfoPage: React.FC = () => {
       </Head>
 
       <Navbar />
-      {examInfo ? (
-        <ExamInfo data={examInfo} />
-      ) : error ? (
-        <div>error</div>
-      ) : (
-        <PageLoading />
-      )}
+      <ExamInfo data={examInfo} />
     </>
   );
 };

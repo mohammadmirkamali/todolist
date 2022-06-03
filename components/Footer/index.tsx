@@ -17,9 +17,8 @@ const SButton = styled(Button)`
 `;
 
 const categories = [
-  { name: 'homat', route: url.HomeRoute() },
-  { name: 'doat', route: url.HomeRoute() },
-  { name: 'roat', route: url.HomeRoute() },
+  { name: 'home', route: url.HomeRoute() },
+  { name: 'posts', route: url.PostsRoute() },
 ];
 const access = [
   { name: 'conditions', route: url.ConditionRoute() },
@@ -34,7 +33,7 @@ const Footer: React.FC = () => (
       {categories.map((item) => (
         <Link href={item.route} key={item.name} passHref>
           <a className="text-[16px] cursor-pointer my-[10px] text-white  hover:text-blue-2 duration-300 block">
-            {t(`footer.${item.name}`)}
+            {t(`global.${item.name}`)}
           </a>
         </Link>
       ))}

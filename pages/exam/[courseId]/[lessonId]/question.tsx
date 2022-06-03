@@ -8,7 +8,6 @@ import { ExamUrl } from 'services/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExamInfoAction } from 'store/course/course.action';
 
-const PageLoading = dynamic(() => import('components/Common/pageLoading'));
 const Navbar = dynamic(() => import('components/Navbar'));
 const ExamQuestions = dynamic(() => import('components/Exam/examQuestions'));
 const Head = dynamic(() => import('next/head'));
@@ -20,13 +19,12 @@ const ExamPage: React.FC = () => {
   const [error, setError] = useState(null);
   const { courseId, lessonId } = router.query;
   const examInfo = useSelector((state) => state.course.examInfo);
-  const examInfoError = useSelector((state) => state.course.examInfoError);
 
+  const getData = async () => {
+    const res = await request.get(ExamUrl(courseId, lessonId));
+    res.ok ? setData(res.data) : setError(res.data);
+  };
   useEffect(() => {
-    const getData = async () => {
-      const res = await request.get(ExamUrl(courseId, lessonId));
-      res.ok ? setData(res.data) : setError(res.data);
-    };
     courseId && getData();
   }, [courseId]);
 
@@ -41,13 +39,7 @@ const ExamPage: React.FC = () => {
       </Head>
 
       <Navbar />
-      {data && examInfo ? (
-        <ExamQuestions data={data} info={examInfo} />
-      ) : error || examInfoError ? (
-        <div>error</div>
-      ) : (
-        <PageLoading />
-      )}
+      <ExamQuestions data={data} info={examInfo} error={error} reload={getData} />
     </>
   );
 };

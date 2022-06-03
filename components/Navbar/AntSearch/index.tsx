@@ -9,20 +9,21 @@ import useWindowSize from 'hooks/useWidowsSize';
 import { CourseRoute, ProfileRoute, WebinarRoute } from 'services/routes';
 import Image from 'next/image';
 import { SearchOptionType } from 'types/course.type';
+import { useSelector } from 'react-redux';
 
 type SearchType = {
   options: SearchOptionType[];
   landing?: boolean;
-  setSearching?: (e) => void;
 };
 
 const { Option } = Select;
 
-const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => {
+const AntSearch: React.FC<SearchType> = ({ options, landing }) => {
   const [focus, setFocus] = useState(landing);
   const [size] = useWindowSize();
   const router = useRouter();
   const ref = useRef(null);
+  const user = useSelector((state) => state.account.user);
 
   const onSelect = (name: string): void => {
     const selected = options.find((item) => item.name === name);
@@ -41,31 +42,26 @@ const AntSearch: React.FC<SearchType> = ({ options, landing, setSearching }) => 
     <SContainer
       focus={focus ? 1 : 0}
       landing={landing ? 1 : 0}
-      className="translate-y-[35px] xl:mr-[20px] md:translate-y-0"
+      user={user ? 1 : 0}
+      className={`${
+        !landing ? 'translate-y-[55px]' : 'translate-y-[30px]'
+      } xl:mr-[20px] md:translate-y-0`}
     >
       <SSelect
         showSearch
         ref={ref}
         size="large"
         landing={landing ? 1 : 0}
-        suffixIcon={
-          landing ? <SearchOutlined className="text-[25px] !hidden md:!block" /> : null
-        }
+        suffixIcon={<SearchOutlined className="text-[25px] !hidden md:!block" />}
         onSelect={onSelect}
         value={null}
-        onFocus={(): void => (setFocus(true), !landing && setSearching(true))}
+        onFocus={(): void => setFocus(true)}
         notFoundContent={options ? <>{t('global.notFound')}</> : <Spin />}
-        onBlur={(): void =>
-          !landing && (setFocus(false), !landing && setSearching(false))
-        }
+        onBlur={(): void => !landing && setFocus(false)}
         placeholder={
-          landing ? (
-            t(size > 768 ? 'landing.searchTitle' : 'global.search')
-          ) : !focus && size > 768 ? (
-            <SearchOutlined className="text-[20px] m-[-2px]" />
-          ) : (
-            t('global.search')
-          )
+          landing
+            ? t(size > 768 ? 'landing.searchTitle' : 'global.search')
+            : t('global.search')
         }
       >
         {options?.map((option) => (

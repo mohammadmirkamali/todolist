@@ -5,6 +5,10 @@ const useStopWatch: StopWatchType = (length, start) => {
   const [time, setTime] = useState(length);
 
   useEffect(() => {
+    setTime(length);
+  }, [length]);
+
+  useEffect(() => {
     let interval = null;
 
     if (start) {

@@ -4,7 +4,7 @@ import * as api from 'services/routes';
 import { ResType } from 'types/common.type';
 import * as type from './course.constants';
 
-export const getCoursesAction = () => {
+export const getSearchDataAction = () => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_SEARCH_DATA_REQUEST });
     const response: ResType = await request.get(api.SearchUrl());

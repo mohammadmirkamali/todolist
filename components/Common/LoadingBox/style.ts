@@ -7,4 +7,5 @@ export const StyledWrapper = styled.div`
 `;
 export const StyledSkeletonContainer = styled.div`
   padding: 1rem;
+  width: 100%;
 `;
