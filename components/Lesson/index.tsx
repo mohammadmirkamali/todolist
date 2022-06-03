@@ -70,6 +70,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
       : message.warning(t('course.notAllow'));
   };
 
+  console.log('first');
   const reloadData = (): void => {
     dispatch(getChapterAction(courseId));
   };
