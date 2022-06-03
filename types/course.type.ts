@@ -39,7 +39,7 @@ export type LessonType = {
   time: number;
   free: number;
   order: number;
-  can_start_exam: number;
+  exam: boolean;
   previous_lesson: number;
   next_lesson: number;
   description: string;
@@ -129,17 +129,6 @@ export type WebinarType = {
   headline: string;
 };
 
-export type CourseReducerType = {
-  searchDataLoading: boolean;
-  searchDataError: boolean;
-  searchData: SearchDataType;
-  postsLoading: boolean;
-  postsError: boolean;
-  posts: PostType[];
-  event: { [id: number]: { loading: boolean; error: boolean; data: WebinarType } };
-  chapters: { [id: number]: { loading: boolean; error: boolean; data: CourseType } };
-};
-
 export type ExamInfoType = {
   acceptance_percent: number;
   qtype: number;
@@ -149,6 +138,20 @@ export type ExamInfoType = {
   number_of_questions: number;
   title: string;
   needPay: boolean;
+};
+
+export type CourseReducerType = {
+  searchDataLoading: boolean;
+  searchDataError: boolean;
+  searchData: SearchDataType;
+  postsLoading: boolean;
+  postsError: boolean;
+  posts: PostType[];
+  examInfoLoading: boolean;
+  examInfoError: boolean;
+  examInfo: ExamInfoType;
+  event: { [id: number]: { loading: boolean; error: boolean; data: WebinarType } };
+  chapters: { [id: number]: { loading: boolean; error: boolean; data: CourseType } };
 };
 
 export type ExamType = {

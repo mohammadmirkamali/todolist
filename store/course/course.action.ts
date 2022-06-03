@@ -4,7 +4,7 @@ import * as api from 'services/routes';
 import { ResType } from 'types/common.type';
 import * as type from './course.constants';
 
-export const getCoursesAction = () => {
+export const getSearchDataAction = () => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_SEARCH_DATA_REQUEST });
     const response: ResType = await request.get(api.SearchUrl());
@@ -32,6 +32,23 @@ export const getChapterAction = (id) => {
     }
 
     dispatch({ type: type.GET_CHAPTER_ERROR, id });
+    return false;
+  };
+};
+
+export const getExamInfoAction = (courseId, lessonId) => {
+  return async (dispatch): Promise<unknown> => {
+    dispatch({ type: type.GET_EXAM_INFO_REQUEST });
+    const response: ResType = await request.get(api.ExamInfoUrl(courseId, lessonId));
+    if (response.ok) {
+      dispatch({
+        type: type.GET_EXAM_INFO_SUCCESS,
+        payload: response.data,
+      });
+      return response.data;
+    }
+
+    dispatch({ type: type.GET_EXAM_INFO_ERROR });
     return false;
   };
 };

@@ -27,7 +27,7 @@ const LoadingBox: React.FC<LoadingType> = (props) => {
   return (
     <>
       {data ? (
-        { children }
+        children
       ) : error ? (
         <StyledWrapper>
           <Button type="primary" onClick={reload}>

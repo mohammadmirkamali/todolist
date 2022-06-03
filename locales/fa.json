@@ -53,6 +53,8 @@
     "doat": "دعاة",
     "homat": "حماة",
     "roat": "رعاة",
+    "posts": "وبلاگ",
+    "home": "خانه",
     "event": "رویداد",
     "apiError": "خطا در ارتباط. لطفا دوباره تلاش کنید.",
     "coursesCount": "تعداد دوره ها",
@@ -112,14 +114,6 @@
     "successForm": "اطلاعات با موفقیت ثبت شد.",
     "approved": "تایید"
   },
-  "navbar": {
-    "home": "خانه",
-    "posts": "وبلاگ",
-    "webinar": "وبینار",
-    "finance": "حمایت مالی",
-    "conditions": "قوانین و مقررات",
-    "contactUs": "تماس با ما"
-  },
   "course": {
     "lessons": "جلسات",
     "students": "دانشجو",
@@ -136,6 +130,8 @@
     "videoDownload": "دانلود فیلم",
     "pdfDownload": "دانلود درسنامه",
     "exam": "شرکت در آزمون",
+    "passedExam": "شما با نمره {{grade}} قبول شدید.",
+    "returnToLesson": "بازگشت به صفحه جلسه",
     "conversation": "مباحثه کردم",
     "payAmount": "مبلغ قابل پرداخت",
     "discountAmount": "مقدار تخفیف:",
@@ -191,8 +187,8 @@
     "confirm": "آیا مطمئن هستید؟",
     "submit": "ثبت و مشاهده نتیجه",
     "test": "چند گزینه ای",
-    "passed": "شما با نمره {{grad}} قبول شدید.",
-    "failed": "شما با نمره {{grad}} رد شدید.",
+    "passed": "شما با نمره {{grade}} قبول شدید.",
+    "failed": "شما با نمره {{grade}} رد شدید.",
     "remainTime": "زمان باقی مانده : ",
     "descriptive": "تشریحی"
   },

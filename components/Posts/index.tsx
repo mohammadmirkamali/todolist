@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { getPostsAction } from 'store/course/course.action';
 import { PostsRoute } from 'services/routes';
 import Card from './card';
-import PageLoading from 'components/Common/pageLoading';
 
 const Posts: React.FC = () => {
   const dispatch = useDispatch();
@@ -21,7 +20,7 @@ const Posts: React.FC = () => {
   }, []);
 
   if (!posts) {
-    return <PageLoading />;
+    return <div>loading</div>;
   }
 
   return (

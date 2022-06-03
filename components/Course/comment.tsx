@@ -51,7 +51,8 @@ const UserComment: React.FC<CommentType> = ({ data, comment, id, type }) => {
     setLoading(true);
     const res: any = await request.get(url); // eslint-disable-line
     setLoading(false);
-    res.ok && (setAllData([...allData, ...res.data.data]), setPage(page + 1));
+    setPage(page + 1);
+    res.ok && setAllData([...allData, ...res.data.data]);
   };
   const text = comment ? 'text' : 'description';
   const name = comment ? 'nickname' : 'title';

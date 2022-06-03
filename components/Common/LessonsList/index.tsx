@@ -26,7 +26,7 @@ const LessonsList: React.FC<LessonsType> = ({ course, activeId }) => (
               url={LessonRoute(course.id, item.id, item.title)}
             >
               <div
-                className={`text-[16px] px-[30px] items-center py-[15px] cursor-pointer flex text-black hover:bg-gray-4 ${
+                className={`text-[14px] px-[30px] items-center py-[15px] cursor-pointer flex text-black hover:bg-gray-4 ${
                   item.id === activeId && 'bg-gray-4'
                 } duration-300`}
               >

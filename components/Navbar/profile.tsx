@@ -1,4 +1,4 @@
-import { LogoutOutlined, StarFilled, UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Tooltip } from 'antd';
 import { t } from 'i18next';
 import Link from 'next/link';
@@ -6,7 +6,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProfileRoute } from 'services/routes';
 import { logoutAction } from 'store/account/account.action';
-import { faNumber } from 'utils/common.util';
+// import { faNumber } from 'utils/common.util';
 import { SButton, SExit } from './style';
 
 const Profile: React.FC<{ setIsModalVisible: (value) => void }> = ({
@@ -27,12 +27,12 @@ const Profile: React.FC<{ setIsModalVisible: (value) => void }> = ({
           </Tooltip>
         </a>
       </Link>
-      <Tooltip title={t('global.star')}>
+      {/* <Tooltip title={t('global.star')}>
         <div className="text-[20px] center mr-[12px]">
           <StarFilled />
           <span className="text-[18px] mr-[6px] mt-[4px]">{faNumber(223)}</span>
         </div>
-      </Tooltip>
+      </Tooltip> */}
       <SExit title={t('global.exit')} placement="left">
         <LogoutOutlined
           onClick={(): void => {

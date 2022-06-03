@@ -1,28 +1,24 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { t } from 'i18next';
 import { useRouter } from 'next/router';
-import request from 'services/request';
-import { ExamInfoUrl } from 'services/routes';
+import { getExamInfoAction } from 'store/course/course.action';
+import { useDispatch, useSelector } from 'react-redux';
 
-const PageLoading = dynamic(() => import('components/Common/pageLoading'));
 const Navbar = dynamic(() => import('components/Navbar'));
 const ExamInfo = dynamic(() => import('components/Exam/examInfo'));
 const Head = dynamic(() => import('next/head'));
 
 const ExamInfoPage: React.FC = () => {
   const router = useRouter();
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
   const { courseId, lessonId } = router.query;
+  const examInfo = useSelector((state) => state.course.examInfo);
+
   useEffect(() => {
-    const getData = async () => {
-      const res = await request.get(ExamInfoUrl(courseId, lessonId));
-      res.ok ? setData(res.data) : setError(res.data);
-    };
-    courseId && getData();
-  }, [courseId]);
+    courseId && dispatch(getExamInfoAction(courseId, lessonId));
+  }, [courseId, lessonId]);
+
   return (
     <>
       <Head>
@@ -31,7 +27,7 @@ const ExamInfoPage: React.FC = () => {
       </Head>
 
       <Navbar />
-      {data ? <ExamInfo data={data} /> : error ? <div>error</div> : <PageLoading />}
+      <ExamInfo data={examInfo} />
     </>
   );
 };

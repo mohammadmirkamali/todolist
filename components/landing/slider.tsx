@@ -7,22 +7,35 @@ import 'swiper/css';
 import Card from 'components/Common/Card';
 import { CoursesType } from 'types/course.type';
 import useWindowSize from 'hooks/useWidowsSize';
+import LoadingBox from 'components/Common/LoadingBox';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSearchDataAction } from 'store/course/course.action';
 
 type SliderType = { courses: CoursesType[]; title: string };
 const Slider: React.FC<SliderType> = ({ courses, title }) => {
+  const dispatch = useDispatch();
+  const error = useSelector((state) => state.course.searchDataError);
   const [size] = useWindowSize();
   const data = size >= 1280 ? courses.slice(0, 7) : courses.slice(0, 5);
+  const reloadData = (): void => {
+    dispatch(getSearchDataAction());
+  };
   return (
     <div className="bg-blue-11 w-full md:my-[50px] center flex-col pb-[60px]">
       <h2 className="font-bold text-[24px] md:text-[27px] my-[30px]">
         {t(`landing.${title}`)}
       </h2>
-      <div className="flex-wrap center w-[320px] md:w-[900px] xl:w-[1300px] ">
-        {data.map((item) => (
-          <div key={item.id} className="md:scale-[.85] md:m-[-24px] xl:scale-100 xl:m-0">
-            <Card data={item} />
-          </div>
-        ))}
+      <div className="flex-wrap center w-[320px] min-h-[250px] md:w-[900px] xl:w-[1300px]">
+        <LoadingBox data={!!data.length} error={error} reload={reloadData}>
+          {data.map((item) => (
+            <div
+              key={item.id}
+              className="md:scale-[.85] md:m-[-24px] xl:scale-100 xl:m-0"
+            >
+              <Card data={item} />
+            </div>
+          ))}
+        </LoadingBox>
       </div>
     </div>
   );
