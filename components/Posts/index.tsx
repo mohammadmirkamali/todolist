@@ -19,6 +19,10 @@ const Posts: React.FC = () => {
     !posts && dispatch(getPostsAction());
   }, []);
 
+  if (!posts) {
+    return <div>loading</div>;
+  }
+
   return (
     <div className="py-[110px] md:pt-[70px] min-h-screen flex flex-col xl:flex-row bg-gray-0">
       <div
