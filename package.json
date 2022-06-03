@@ -73,7 +73,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged --no-stash",
+      "pre-commit": "lint-staged --no-stash npm run type-check",
       "pre-push": "npm run type-check"
     }
   },
