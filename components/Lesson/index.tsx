@@ -9,7 +9,6 @@ import { CourseType, LessonType } from 'types/course.type';
 import { LeftArrow, MenuItems, RightArrow } from 'components/Common/AnitmateLogo';
 import LessonsList from 'components/Common/LessonsList';
 import LoginLink from 'components/Common/LoginLink';
-import Plyr from 'plyr-react';
 import 'plyr-react/dist/plyr.css';
 import Image from 'next/image';
 import LessonTabs from './lessonTabs';
@@ -18,6 +17,8 @@ import { faNumber, fileSize } from 'utils/common.util';
 import LoadingBox from 'components/Common/LoadingBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChapterAction } from 'store/course/course.action';
+import Plyr from 'plyr-react';
+import styled from '@emotion/styled';
 
 const controls = [
   'play',
@@ -29,6 +30,12 @@ const controls = [
   'download',
   'fullscreen',
 ];
+
+const SPlyr = styled.div`
+  .plyr-react {
+    display: none;
+  }
+`;
 
 type LessonPageType = { course: CourseType; lesson: LessonType };
 const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
@@ -85,13 +92,13 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
                 alt=""
               />
             )}
-            <div>
+            <SPlyr>
               <Plyr
                 ref={(player) => (ref.current = player)} // eslint-disable-line
                 source={{ type, sources: [{ src: file }] }}
                 options={{ controls }}
               />
-            </div>
+            </SPlyr>
 
             <LessonTabs data={data} error={error} player={ref} reload={getData} />
           </LoadingBox>

@@ -34,14 +34,7 @@ module.exports = {
     },
   ],
 
-  plugins: [
-    'css-modules',
-    'prettier',
-    'cypress',
-    'react-hooks',
-    '@emotion',
-    '@typescript-eslint',
-  ],
+  plugins: ['css-modules', 'prettier', 'cypress', '@emotion', '@typescript-eslint'],
 
   env: {
     browser: true,
