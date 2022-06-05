@@ -14,7 +14,11 @@ import Papers from './papers';
 import LoadingBox from 'components/Common/LoadingBox';
 
 const SCheckbox = styled(Checkbox)`
-  font-size: 18px;
+  font-size: 12px;
+
+  ${({ theme }): string => theme.mediaQueries.sm} {
+    font-size: 16px;
+  }
 `;
 
 type LessonTabsType = {
@@ -62,7 +66,7 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player, reload }) =
 
   return (
     <div>
-      <div className="text-[14px] md:text-[18px] m-[30px] mb-[10px]">
+      <div className="text-[12px] md:text-[18px] m-[30px] mb-[10px]">
         {tabs.map((item, index) => (
           <span key={item} aria-hidden="true" onClick={(): void => setSlide(item)}>
             <span
@@ -83,7 +87,7 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player, reload }) =
               onChange={(e): void => setNewNote(e.target.value)}
               className="border border-gray-5 rounded-[8px] w-full h-[100px] my-[15px] toLeft text-[16px] p-[10px]"
             />
-            <div className="flex justify-between text-[18px] items-center">
+            <div className="flex justify-between text-[14px] md:text-[18px] items-center">
               <SCheckbox
                 checked={showPublic === 1}
                 onChange={(e): void => setShowPublic(e.target.checked ? 1 : 0)}
@@ -91,9 +95,9 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player, reload }) =
                 {t('course.showPublic')}
               </SCheckbox>
               <AntButton
-                fontSize={20}
-                width={250}
-                height={40}
+                fontSize={[12, 18]}
+                width={[100, 250]}
+                height={[30, 40]}
                 disabled={!newNote}
                 onClick={sendNote}
                 loading={loading}

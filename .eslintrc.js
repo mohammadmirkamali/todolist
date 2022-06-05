@@ -123,6 +123,7 @@ module.exports = {
     'react/no-access-state-in-setstate': 'off',
     'jsx-a11y/no-static-element-interactions': 0,
     'jsx-a11y/click-events-have-key-events': 0,
+    'react/jsx-wrap-multilines': 0,
     camelcase: 'off',
 
     // ESLint plugin for prettier formatting

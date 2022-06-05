@@ -11,7 +11,7 @@ const RateStudents: React.FC<{ data: TopRateType[]; top?: boolean }> = ({
   data,
   top,
 }) => (
-  <div className="py-[7px] flex text-[16px] flex-col pr-[15px] overflow-hidden w-[90%]">
+  <div className="py-[7px] flex text-[16px] flex-col pr-[15px] overflow-hidden w-full">
     <p className="m-0 mb-[8px]">{t(`course.${top ? 'rateStudents' : 'yourRate'}`)}</p>
     <ScrollContainer className="flex">
       {data.map((item) => (

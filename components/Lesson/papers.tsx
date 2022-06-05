@@ -27,10 +27,12 @@ const Papers: React.FC<{ data: LessonNotesType }> = ({ data }) => {
   });
 
   return (
-    <div className="p-[30px] pt-[10px] text-[16px] ">
+    <div className="md:p-[30px] pt-[10px] text-[16px] pb-[20px]">
       {user && (
         <div className=" border border-gray-1 rounded-[6px] mx-[16px] p-[16px]">
-          <div className="text-[20px] font-bold">{t('course.sendPaper')}</div>
+          <div className="text-[16px] md:text-[20px] font-bold">
+            {t('course.sendPaper')}
+          </div>
 
           <AppForm
             initialValues={{ title: '', type: '', description: '' }}
@@ -43,18 +45,20 @@ const Papers: React.FC<{ data: LessonNotesType }> = ({ data }) => {
               //   result && resetForm();
             }}
           >
-            <div className="flex">
-              <div className="flex-1 pl-[24px]">
-                <div className="text-[14px] mr-[4px] mt-[16px]">{t('global.title3')}</div>
+            <div className="flex flex-col md:flex-row">
+              <div className="flex-1 md:pl-[24px]">
+                <div className="text-[11px] md:text-[14px] mr-[4px] mt-[16px]">
+                  {t('global.title3')}
+                </div>
                 <FormField
                   autoFocus
                   name="title"
                   type="text"
                   placeholder={t('global.title3')}
-                  className="w-full h-[40px] border rounded-[6px] pt-[3px] px-[15px] text-[16px]"
+                  className="w-full h-[40px] border rounded-[6px] pt-[3px] px-[15px] text-[14px] md:text-[16px]"
                 />
 
-                <div className="text-[14px] mr-[4px] mt-[16px]">
+                <div className="text-[11px] md:text-[14px] mr-[4px] mt-[16px]">
                   {t('course.paperType')}
                 </div>
                 <RadioForm
@@ -76,17 +80,9 @@ const Papers: React.FC<{ data: LessonNotesType }> = ({ data }) => {
                     </AntButton>
                   </Upload>
                 </div>
-
-                <SubmitForm
-                  width={250}
-                  fontSize={16}
-                  height={35}
-                  loading={loading}
-                  title={t('global.send')}
-                />
               </div>
-              <div className="flex-1 pl-[16px]">
-                <div className="text-[14px] mr-[4px] mt-[16px]">
+              <div className="flex-1 md:pl-[16px] mb-[12px]">
+                <div className="text-[11px] md:text-[14px] mr-[4px] mt-[16px]">
                   {t('global.description')}
                 </div>
                 <FormField
@@ -98,12 +94,19 @@ const Papers: React.FC<{ data: LessonNotesType }> = ({ data }) => {
                 />
               </div>
             </div>
+            <SubmitForm
+              width={[160, 250]}
+              fontSize={16}
+              height={35}
+              loading={loading}
+              title={t('global.send')}
+            />
           </AppForm>
         </div>
       )}
       {data.trainings.map((train) => (
         <div
-          className="m-[16px] bg-blue-11 p-[16px] rounded-[6px]"
+          className="m-[16px] bg-blue-11 py-[16px] md:p-[16px] rounded-[6px] pb-[20px]"
           key={train.description}
         >
           <AntComment

@@ -25,7 +25,7 @@ const Information: React.FC<InfoType> = ({ course }) => {
   }, [user, course, rate]);
 
   return (
-    <div className="text-[18px] pr-[30px] text-gray-10">
+    <div className="text-[18px] px-[30px] flex flex-col text-gray-10">
       {course.teachers.map((teacher) => (
         <TeacherAvatar
           key={teacher.nickname}
@@ -57,11 +57,7 @@ const Information: React.FC<InfoType> = ({ course }) => {
 
       <LoginLayout data={course}>
         <div className="py-[7px] text-[16px] flex items-center pr-[15px]">
-          <Rate
-            value={course.rate}
-            allowHalf
-            onChange={(value): void => setRate(value)}
-          />
+          <Rate value={course.rate} onChange={(value): void => setRate(value)} />
           <div className="px-[15px] toRight">
             {`( ${t('global.person')} ${faNumber((2).toLocaleString())} ) `}
           </div>
@@ -84,20 +80,22 @@ const Information: React.FC<InfoType> = ({ course }) => {
         <RateStudents data={course?.user_rate} />
       ) : null}
 
-      {(!course.registered || !user) && (
-        <LoginLayout data={course} setLoading={setLoading}>
-          <SButton loading={loading} className="toLeft">
-            {t('global.register')}
-            <span className="text-[16px] mr-[10px]">
-              (
-              {course.price
-                ? `${faNumber(course.price / 1000)} ${t('global.tooman')}`
-                : t('global.free')}
-              )
-            </span>
-          </SButton>
-        </LoginLayout>
-      )}
+      <div className="center">
+        {(!course.registered || !user) && (
+          <LoginLayout data={course} setLoading={setLoading}>
+            <SButton loading={loading} className="toLeft">
+              {t('global.register')}
+              <span className="text-[16px] mr-[10px]">
+                (
+                {course.price
+                  ? `${faNumber(course.price / 1000)} ${t('global.tooman')}`
+                  : t('global.free')}
+                )
+              </span>
+            </SButton>
+          </LoginLayout>
+        )}
+      </div>
     </div>
   );
 };
