@@ -81,9 +81,11 @@ const Card: React.FC<CardType> = ({ data, webinar }) => {
             )}
 
             <i className="fas fa-user-graduate ml-[6px]" />
-            <div className="ml-[17px]">{`${faNumber(
-              (Number(data.price) / 1000).toLocaleString(),
-            )} ${t('global.person')}`}</div>
+            <div className="ml-[17px]">
+              {`${faNumber((Number(data.price) / 1000).toLocaleString())} ${t(
+                'global.person',
+              )}`}
+            </div>
 
             <i className="fas fa-money-bill-wave ml-[6px] mt-[3px]" />
             <div>

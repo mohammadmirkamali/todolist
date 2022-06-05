@@ -31,7 +31,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
   const discountAmount = Number(data.price) - discountPrice;
 
   const handleDiscount = async (): Promise<void> => {
-    const body = { code, for: type, id_for: id };
+    const body = { code, for: type, id_for: id }; // eslint-disable-line
     setDiscount(code);
     setLoading(true);
     const res: any = await request.post(discountUrl(), body); // eslint-disable-line
