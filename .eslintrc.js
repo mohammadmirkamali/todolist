@@ -125,6 +125,7 @@ module.exports = {
     'jsx-a11y/click-events-have-key-events': 0,
     'react/jsx-wrap-multilines': 0,
     camelcase: 'off',
+    '@typescript-eslint/camelcase': ['warn'],
 
     // ESLint plugin for prettier formatting
     // https://github.com/prettier/eslint-plugin-prettier
