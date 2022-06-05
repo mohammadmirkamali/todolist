@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { t } from 'i18next';
 import ScrollContainer from 'react-indiana-drag-scroll';
@@ -43,11 +43,30 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
     dispatch(getSearchDataAction());
   };
 
+  const relatedCourses = (): ReactElement =>
+    !!categories?.length && (
+      <div className="w-screen md:w-[600px] bg-white rounded-[8px] min-h-[200px] overflow-hidden">
+        <h3 className="h-[70px] center w-full font-bold text-[22px] m-[0px]">
+          {t('course.relatedCourses')}
+        </h3>
+
+        <LoadingBox data={course} error={error} reload={reloadSearchData}>
+          <ScrollContainer className="flex overflow-auto">
+            {similarCourses?.map((item) => (
+              <div className="scale-[.8] m-[-27px]" key={item.id}>
+                <Card data={item} />
+              </div>
+            ))}
+          </ScrollContainer>
+        </LoadingBox>
+      </div>
+    );
+
   return (
     <div className="bg-gray-0 duration-300 min-h-screen flex xl:block flex-col center">
       {/* title and description */}
-      <div className=" w-[300px] md:w-[600px] xl:px-[370px] py-[20px] xl:justify-self-start xl:w-full ">
-        <div className="w-full bg-white min-h-[500px] rounded-[8px]">
+      <div className=" w-full md:w-[600px] xl:px-[370px] py-[20px] xl:justify-self-start xl:w-full ">
+        <div className="w-full bg-white mt-[20px] md:mt-0 md:min-h-[500px] rounded-[8px]">
           <LoadingBox data={course} error={error} reload={reloadData}>
             <h2 className="h-[70px] center w-full font-bold text-[26px] m-[0px]">
               {course?.title}
@@ -63,27 +82,11 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
             <p className="mx-[40px] py-[50px] text-[18px]">{course?.description}</p>
           </LoadingBox>
         </div>
-        {!!categories?.length && (
-          <div className="w-full bg-white rounded-[8px] min-h-[200px] overflow-hidden">
-            <h3 className="h-[70px] center w-full font-bold text-[22px] m-[0px]">
-              {t('course.relatedCourses')}
-            </h3>
-
-            <LoadingBox data={course} error={error} reload={reloadSearchData}>
-              <ScrollContainer className="flex overflow-auto">
-                {similarCourses?.map((item) => (
-                  <div className="scale-[.8] m-[-27px]" key={item.id}>
-                    <Card data={item} />
-                  </div>
-                ))}
-              </ScrollContainer>
-            </LoadingBox>
-          </div>
-        )}
+        <div className="hidden xl:block ">{relatedCourses()}</div>
       </div>
 
       {/* information */}
-      <div className="w-[300px] border-b border-b-gray-1 md:w-[600px] xl:fixed left-0 top-[70px]  xl:w-[350px] xl:h-[calc(100%-70px)] bg-white z-10">
+      <div className="w-full border-b border-b-gray-1 md:w-[600px] xl:fixed left-0 top-[70px]  xl:w-[350px] xl:h-[calc(100%-70px)] bg-white z-10">
         <div className="h-[55px] center w-full border-b-gray-1 border-b font-bold text-[18px]">
           {t('course.info')}
         </div>
@@ -93,7 +96,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
         </LoadingBox>
       </div>
 
-      <div className="w-[300px] h-[620px] md:w-[600px]   xl:fixed right-0 top-[70px] bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
+      <div className="w-full md:w-[600px]   xl:fixed right-0 top-[70px] bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
         <LoadingBox data={course} error={error} reload={reloadData}>
           <div
             className={`h-[55px] center w-full flex text-[${
@@ -115,7 +118,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
               </span>
             ))}
           </div>
-          <div className="overflow-auto h-[550px] xl:h-[90%] toRight">
+          <div className="overflow-auto xl:h-[90%] toRight mb-[40px] xl:mb-0">
             {slideId === 'lessons' && <LessonsList course={course} />}
             {slideId === 'attaches' && <Attaches data={course?.attaches} />}
             {slideId === 'questions' && (
@@ -132,6 +135,8 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           </div>
         </LoadingBox>
       </div>
+
+      <div className="block xl:hidden mt-[10px]">{relatedCourses()}</div>
     </div>
   );
 };

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-for */
 import styled from '@emotion/styled';
 import { Field, useFormikContext } from 'formik';
 import React, { ReactElement, useEffect, useRef } from 'react';
@@ -73,9 +75,8 @@ export const RadioForm: React.FC<RadioType> = ({ items, name }) => {
     <div>
       <div role="group" className="flex">
         {items.map((item) => (
-          // eslint-disable-next-line jsx-a11y/label-has-associated-control
           <label
-            className="text-[16px] cursor-pointer flex items-center ml-[12px]"
+            className="text-[14px] md:text-[16px] cursor-pointer flex items-center ml-[12px]"
             key={item.title}
           >
             <SField
@@ -89,7 +90,9 @@ export const RadioForm: React.FC<RadioType> = ({ items, name }) => {
         ))}
       </div>
       {hasError && (
-        <div className="text-red-0 text-[12px] text-right">{errors[name]}</div>
+        <div className="text-red-0 text-[10px] md:text-[12px] text-right">
+          {errors[name]}
+        </div>
       )}
     </div>
   );

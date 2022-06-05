@@ -34,14 +34,7 @@ module.exports = {
     },
   ],
 
-  plugins: [
-    'css-modules',
-    'prettier',
-    'cypress',
-    'react-hooks',
-    '@emotion',
-    '@typescript-eslint',
-  ],
+  plugins: ['css-modules', 'prettier', 'cypress', '@emotion', '@typescript-eslint'],
 
   env: {
     browser: true,
@@ -126,9 +119,11 @@ module.exports = {
     'no-restricted-imports': ['error', { patterns: ['..*'] }],
     'react/forbid-prop-types': 'off',
     'react/destructuring-assignment': 'off',
+    'react/jsx-one-expression-per-line': 'off',
     'react/no-access-state-in-setstate': 'off',
     'jsx-a11y/no-static-element-interactions': 0,
     'jsx-a11y/click-events-have-key-events': 0,
+    'react/jsx-wrap-multilines': 0,
     camelcase: 'off',
 
     // ESLint plugin for prettier formatting

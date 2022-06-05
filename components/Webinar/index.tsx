@@ -27,7 +27,7 @@ const Webinar: React.FC = () => {
   };
   return (
     <div className="duration-300 bg-gray-0 min-h-screen flex-col flex items-center justify-items-start">
-      <div className="xl:pr-[370px] w-[300px] md:w-[600px] py-[20px] xl:pl-[20px]  xl:justify-self-start xl:w-full">
+      <div className="xl:pr-[370px] mt-[20px] md:mt-0 w-screen md:w-[700px] py-[20px] xl:pl-[20px]  xl:justify-self-start xl:w-full">
         <div className="w-full bg-white rounded-[8px] min-h-[500px]">
           <LoadingBox data={data} error={error} reload={reload}>
             <h2 className="h-[70px] center w-full font-bold text-[26px] m-[0px]">
@@ -49,7 +49,7 @@ const Webinar: React.FC = () => {
           </LoadingBox>
         </div>
       </div>
-      <div className="w-[300px] mb-[20px] overflow-auto toRight rounded-[8px] xl:rounded mt-[20px] xl:mt-0 xl:mb-0 md:w-[600px] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
+      <div className="w-screen mb-[20px] overflow-auto toRight rounded-[8px] xl:rounded mt-[20px] xl:mt-0 xl:mb-0 md:w-[700px] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
         <LoadingBox data={data} error={error} reload={reload}>
           <div className="h-[55px] center text-[16px] w-full flex flex-row-reverse border-b-gray-1 border-b text-gray-3">
             {tabs.map((item, index) => (
@@ -145,7 +145,7 @@ const Webinar: React.FC = () => {
           )}
 
           {slide === 'comments' && (
-            <div>
+            <div className="mb-[32px]">
               <UserComment
                 data={data?.comments.data}
                 id={data?.id}

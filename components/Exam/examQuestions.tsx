@@ -81,8 +81,8 @@ const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) =>
 
   return (
     <div className="flex justify-center items-start min-h-[calc(100vh-70px)] bg-blue-7">
-      <div className="w-[300px] relative md:w-[800px] mt-[60px] mb-[40px] md:mt-[40px] shadow-lg rounded-[8px] bg-white flex flex-col items-center p-[25px] md:p-[40px]">
-        <div className="text-[20px] font-bold mb-[20px] md:mb-[30px]">
+      <div className="w-screen mx-[24px] relative md:w-[800px] mt-[60px] mb-[40px] md:mt-[40px] shadow-lg rounded-[8px] bg-white flex flex-col items-center p-[25px] md:p-[40px]">
+        <div className="text-[16px] md:text-[20px] font-bold mb-[20px] md:mb-[30px]">
           {t('exam.questions')}
         </div>
         <LoadingBox
@@ -154,7 +154,7 @@ const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) =>
         </LoadingBox>
 
         <div
-          className={`absolute top-[40px] left-[50px] ${
+          className={`absolute md:top-[40px] md:left-[50px] top-[20px] left-[24px] ${
             !minutes && 'text-red-0'
           } w-[70px] h-[35px] bg-blue-11 center font-bold rounded-[4px] text-[16px]`}
         >

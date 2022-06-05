@@ -21,14 +21,14 @@ const ExamInfo: React.FC<{ data: ExamInfoType }> = ({ data }) => {
 
   return (
     <div className="center min-h-[calc(100vh-70px)] bg-blue-7">
-      <div className="w-[300px] md:w-[400px] shadow-lg rounded-[8px] min-h-[400px] bg-white flex flex-col items-center p-[40px]">
+      <div className="w-screen mx-[24px] md:w-[400px] shadow-lg rounded-[8px] min-h-[400px] bg-white flex flex-col items-center p-[40px]">
         <LoadingBox data={data} error={error} reload={reloadData}>
-          <div className="text-[18px] font-bold text-center">
+          <div className="md:text-[18px] text-[16px] font-bold text-center">
             {data?.title.split('-').map((item) => (
               <div key={item}>{item}</div>
             ))}
           </div>
-          <div className="mt-[50px] self-start text-[16px] flex">
+          <div className="mt-[50px] self-start text-[14px] md:text-[16px] flex">
             <div className="w-[150px]">
               <div className="my-[8px]">{faNumber(t('exam.passGrad') as string)}</div>
               <div className="my-[8px]">{t('exam.time')}</div>
