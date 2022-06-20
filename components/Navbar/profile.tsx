@@ -20,7 +20,7 @@ const Profile: React.FC<{ setIsModalVisible: (value) => void }> = ({
     </SButton>
   ) : (
     <div className="flex items-center text-gray-3 justify-center">
-      <Link href={ProfileRoute('user')}>
+      <Link href={ProfileRoute('user', 'profile')}>
         <a>
           <Tooltip title={t('global.seeProfile')}>
             <Avatar icon={<UserOutlined />} size={40} />

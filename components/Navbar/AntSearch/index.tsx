@@ -32,9 +32,9 @@ const AntSearch: React.FC<SearchType> = ({ options, landing }) => {
     router.push(
       selected.webinar
         ? WebinarRoute(selected.id, selected.name)
-        : selected.id
-        ? CourseRoute(selected.id, selected.name)
-        : ProfileRoute(selected.name),
+        : selected.isTeacher
+        ? ProfileRoute(selected.id, selected.name)
+        : CourseRoute(selected.id, selected.name),
     );
   };
 

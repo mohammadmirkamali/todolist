@@ -33,19 +33,19 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
     ...(searchData?.workshops || []),
     ...(searchData?.events || []).map((item) => ({ ...item, isWebinar: true })),
   ];
-  const query = useRouter().query.name;
+  const query = useRouter().query.profileId;
   const isUser = query === 'user';
   const profile = isUser
     ? user
     : data
         .map((item) => item.teachers.map((k) => k))
         .flat()
-        .find((item) => item?.nickname?.replace(/ /g, '-') === query);
+        .find((item) => item?.id.toString() === query);
 
   const profileCourses = isUser
     ? data
     : data.filter((item) =>
-        item.teachers.every((teacher) => teacher.nickname?.replace(/ /g, '-') === query),
+        item.teachers.every((teacher) => teacher.id.toString() === query),
       );
 
   const [isModalVisible, setIsModalVisible] = useState(0);
@@ -64,7 +64,7 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
         (a, b) => time(b.created_at || '0') - time(a.created_at || '0'),
       ),
     );
-  }, [query, data]);
+  }, [query, searchData]);
 
   // const changePassword = async (): Promise<void> => {
   //   const body = { type: 1, new: 1 };

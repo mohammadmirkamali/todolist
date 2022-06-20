@@ -67,8 +67,9 @@ const Webinar: React.FC = () => {
           {slide === 'info' && (
             <div className="toLeft px-[40px]">
               <TeacherAvatar
-                name={data?.teachers[0].nickname}
+                name={data?.teachers[0].nickname || data?.teachers[0].family}
                 img={data?.teachers[0].avatar}
+                id={data?.teachers[0].id}
               />
 
               <div className="flex w-full justify-between mt-[10px]">
