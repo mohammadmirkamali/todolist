@@ -68,7 +68,9 @@ const Card: React.FC<CardType> = ({ data, webinar }) => {
                     alt={data.teachers[0].nickname}
                     className="rounded-full"
                   />
-                  <div className="mr-[8px] text-gray-3">{data.teachers[0].nickname}</div>
+                  <div className="mr-[8px] text-gray-3">
+                    {data.teachers[0].nickname || data.teachers[0].family}
+                  </div>
                 </>
               )}
             </div>

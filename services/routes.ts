@@ -6,6 +6,8 @@ export const CookieRoute = (): string => `/sanctum/csrf-cookie`;
 export const HomeUrl = (): string => `/api/v1/home`;
 export const UserUrl = (): string => `/api/user`;
 export const AllTermsUrl = (): string => `/api/v1/terms`;
+export const PassedUrl = (courseId, lessonId): string =>
+  `/api/v1/workshops/${courseId}/lessons/${lessonId}/passed`;
 export const TermUrl = (id): string => `/api/v1/terms/${id}`;
 export const MobileVerifyUrl = (): string => `/api/v1/verifyMobile`;
 export const EmailVerifyUrl = (): string => `/api/v1/verifyEmail`;

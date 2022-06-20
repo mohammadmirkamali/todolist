@@ -98,6 +98,7 @@ export type CourseType = {
   price: number;
   progress_percent: number;
   time: number;
+  passed_lessons: number[];
   registered: boolean;
   chapters: ChapterType[];
   attaches: AttachesType[];

@@ -49,8 +49,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
         ? walletPayUrl(id, type)
         : DirectPayUrl(id, type);
     const body = { code: discount };
-    const res: any = // eslint-disable-line
-      method !== 'rate' ? await request.post(href, body) : await request.get(href);
+    const res: any = await request.post(href, body); // eslint-disable-line
     res.ok ? message.success(res.data.message) : message.warn(res.data.message);
     res.ok &&
       (dispatch(eventId ? getEventAction(eventId) : getChapterAction(data.id)),

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import HeroSection from './heroSection';
 import Slider from './slider';
 import Terms from './terms';
 import { useSelector } from 'react-redux';
+import request from 'services/request';
+import { HomeUrl } from 'services/routes';
 
 const Info = dynamic(() => import('./Info'));
 const Webinars = dynamic(() => import('./webinars'));
