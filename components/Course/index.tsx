@@ -45,7 +45,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
 
   const relatedCourses = (): ReactElement =>
     !!categories?.length && (
-      <div className="w-screen md:w-[600px] bg-white rounded-[8px] min-h-[200px] overflow-hidden">
+      <div className="w-screen md:w-[600px] xl:w-full bg-white rounded-[8px] min-h-[200px] overflow-hidden">
         <h3 className="h-[70px] center w-full font-bold text-[22px] m-[0px]">
           {t('course.relatedCourses')}
         </h3>

@@ -1,4 +1,4 @@
-import { LockFilled, PlayCircleFilled } from '@ant-design/icons';
+import { CheckCircleFilled, LockFilled, PlayCircleFilled } from '@ant-design/icons';
 import { t } from 'i18next';
 import React from 'react';
 import { LessonRoute } from 'services/routes';
@@ -30,8 +30,16 @@ const LessonsList: React.FC<LessonsType> = ({ course, activeId }) => (
                   item.id === activeId && 'bg-gray-4'
                 } duration-300`}
               >
-                <div className="ml-[16px] text-gray-3">
-                  {item.files[0].file ? <PlayCircleFilled /> : <LockFilled />}
+                <div className="ml-[16px] text-gray-3 text-[20px]">
+                  {item.files[0].file ? (
+                    course.passed_lessons.includes(item.id) ? (
+                      <CheckCircleFilled style={{ color: '#429933' }} />
+                    ) : (
+                      <PlayCircleFilled />
+                    )
+                  ) : (
+                    <LockFilled />
+                  )}
                 </div>
                 <div>
                   <div>

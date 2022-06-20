@@ -1,4 +1,9 @@
-export type TeacherType = { nickname: string; avatar: string; family: string };
+export type TeacherType = {
+  nickname: string;
+  avatar: string;
+  family: string;
+  id: number;
+};
 
 export type CoursesType = {
   id: number;
@@ -93,6 +98,7 @@ export type CourseType = {
   price: number;
   progress_percent: number;
   time: number;
+  passed_lessons: number[];
   registered: boolean;
   chapters: ChapterType[];
   attaches: AttachesType[];
@@ -178,4 +184,5 @@ export type SearchOptionType = {
   avatar?: string;
   category?: string;
   webinar?: boolean;
+  isTeacher?: boolean;
 };

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CameraFilled } from '@ant-design/icons';
 import Image from 'next/image';
 import user from 'public/user.svg';
@@ -25,6 +25,10 @@ const ProfileImg: React.FC<{ image: string; isUser: boolean }> = ({ image, isUse
     const base64 = await convertBase64(file);
     setImg(base64 as string);
   };
+
+  useEffect(() => {
+    setImg(image); // need it on search from one teacher to another
+  }, [image]);
 
   return (
     <div

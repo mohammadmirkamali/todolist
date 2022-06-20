@@ -1,10 +1,16 @@
 import { DownloadOutlined, FileDoneOutlined } from '@ant-design/icons';
-import { Checkbox, message } from 'antd';
+import { Checkbox, message, Spin } from 'antd';
 import { t } from 'i18next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
-import { CourseRoute, ExamInfoRoute, LessonRoute, LessonUrl } from 'services/routes';
+import {
+  CourseRoute,
+  ExamInfoRoute,
+  LessonRoute,
+  LessonUrl,
+  PassedUrl,
+} from 'services/routes';
 import { CourseType, LessonType } from 'types/course.type';
 import { LeftArrow, MenuItems, RightArrow } from 'components/Common/AnitmateLogo';
 import LessonsList from 'components/Common/LessonsList';
@@ -19,6 +25,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getChapterAction } from 'store/course/course.action';
 import Plyr from 'plyr-react';
 import styled from '@emotion/styled';
+import { UPDATE_COURSE } from 'store/course/course.constants';
 
 const controls = [
   'play',
@@ -47,6 +54,8 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
   const type = file?.includes('mp4') ? 'video' : 'audio';
   const [error, setError] = useState(false);
   const [data, setData] = useState(null);
+  const [seeLoading, setSeeLoading] = useState(false);
+  const [seeStatus, setSeeStatus] = useState(false);
   const courseError = useSelector((state) => state.course.chapters)?.[courseId as string]
     ?.error;
 
@@ -57,7 +66,10 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
   useEffect(() => {
     lessonId && setData(null);
     lessonId && getData();
-  }, [lessonId]);
+    lessonId && course?.passed_lessons.includes(Number(lessonId))
+      ? setSeeStatus(true)
+      : setSeeStatus(false);
+  }, [lessonId, course]);
 
   const onLesson = (id): void => {
     const target = course.chapters
@@ -68,6 +80,20 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
     target.files[0].file
       ? router.push(LessonRoute(course.id, id, target.title))
       : message.warning(t('course.notAllow'));
+  };
+
+  const handleSeen = async (): Promise<void> => {
+    setSeeLoading(true);
+    const res: any = await request.post(PassedUrl(courseId, lessonId)); // eslint-disable-line
+    setSeeLoading(false);
+    res.ok && (setSeeStatus(true), message.success(res.data.message));
+    res.ok &&
+      dispatch({
+        type: UPDATE_COURSE,
+        filed: 'passed_lessons',
+        lessonId,
+        courseId,
+      });
   };
 
   const reloadData = (): void => {
@@ -157,14 +183,15 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
               </Link>
             ))}
 
-            <Checkbox className="text-gray-3 hover:text-black duration-300">
+            <Checkbox
+              checked={seeStatus}
+              disabled={seeStatus}
+              className="text-gray-3 hover:text-black duration-300"
+              onClick={handleSeen}
+            >
               <div className="mb-5 text-gray-3 hover:text-black">
                 {t('course.isSeen')}
-              </div>
-            </Checkbox>
-            <Checkbox className="text-gray-3 hover:text-black duration-300">
-              <div className="text-gray-3 hover:text-black duration-300">
-                {t('course.conversation')}
+                <Spin spinning={seeLoading} />
               </div>
             </Checkbox>
           </div>
