@@ -6,6 +6,8 @@ export const CookieRoute = (): string => `/sanctum/csrf-cookie`;
 export const HomeUrl = (): string => `/api/v1/home`;
 export const UserUrl = (): string => `/api/user`;
 export const AllTermsUrl = (): string => `/api/v1/terms`;
+export const PassedUrl = (courseId, lessonId): string =>
+  `/api/v1/workshops/${courseId}/lessons/${lessonId}/passed`;
 export const TermUrl = (id): string => `/api/v1/terms/${id}`;
 export const MobileVerifyUrl = (): string => `/api/v1/verifyMobile`;
 export const EmailVerifyUrl = (): string => `/api/v1/verifyEmail`;
@@ -55,7 +57,8 @@ export const WebinarRoute = (id, name): string =>
   `/event/${id}/${name?.replace(/ /g, '-')}`;
 export const LessonRoute = (courseId, lessonId, lessonName): string =>
   `/workshop/${courseId}/lesson/${lessonId}/${lessonName.replace(/ /g, '-')}`;
-export const ProfileRoute = (name): string => `/profile/${name?.replace(/ /g, '-')}`;
+export const ProfileRoute = (id, name): string =>
+  `/profile/${id}/${name?.replace(/ /g, '-')}`;
 export const ExamInfoRoute = (courseId, lessonId): string =>
   `/exam/${courseId}/${lessonId}/info`;
 export const ExamRoute = (courseId, lessonId): string =>

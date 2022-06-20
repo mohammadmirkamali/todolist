@@ -13,6 +13,8 @@ import {
 import request from 'services/request';
 import { message, Skeleton } from 'antd';
 import { faNumber } from 'utils/common.util';
+import LoginLayout from 'components/Common/LoginLayout';
+import { useSelector } from 'react-redux';
 
 type CommentType = {
   data: CommentsType[] | QuestionsType[];
@@ -27,6 +29,7 @@ const UserComment: React.FC<CommentType> = ({ data, comment, id, type }) => {
   const [title, setTitle] = useState('');
   const [page, setPage] = useState(1);
   const [sendLoading, setSendLoading] = useState(false);
+  const user = useSelector((state) => state.account.user);
 
   const handleSubmit = async (): Promise<void> => {
     const body = comment ? { text: description } : { title, description };
@@ -89,34 +92,36 @@ const UserComment: React.FC<CommentType> = ({ data, comment, id, type }) => {
           </div>
         )}
       </div>
-      <div className="w-full center flex-col toLeft text-[16px]">
-        {!comment && (
-          <div className="self-start pr-[27px] text-[14px] mt-[12px]">
-            {t('global.title3')}
-          </div>
-        )}
-        {!comment && (
-          <input
-            className="border border-gray-5 rounded-[8px] w-[270px] md:w-[300px] h-[40px] p-[10px]"
-            placeholder={t('global.title3')}
-            value={title}
-            onChange={(e): void => setTitle(e.target.value)}
+      {user && (
+        <div className="w-full center flex-col toLeft text-[16px]">
+          {!comment && (
+            <div className="self-start pr-[27px] text-[14px] mt-[12px]">
+              {t('global.title3')}
+            </div>
+          )}
+          {!comment && (
+            <input
+              className="border border-gray-5 rounded-[8px] w-[270px] md:w-[300px] h-[40px] p-[10px]"
+              placeholder={t('global.title3')}
+              value={title}
+              onChange={(e): void => setTitle(e.target.value)}
+            />
+          )}
+          <textarea
+            onChange={(e): void => setDescription(e.target.value)}
+            placeholder={t('global.description')}
+            value={description}
+            className="border border-gray-5 rounded-[8px] w-[270px] md:w-[300px] h-[100px] my-[15px] p-[10px]"
           />
-        )}
-        <textarea
-          onChange={(e): void => setDescription(e.target.value)}
-          placeholder={t('global.description')}
-          value={description}
-          className="border border-gray-5 rounded-[8px] w-[270px] md:w-[300px] h-[100px] my-[15px] p-[10px]"
-        />
-        <SComment
-          onClick={handleSubmit}
-          loading={sendLoading}
-          disabled={comment ? !description : !(description && title)}
-        >
-          {t(`course.${comment ? 'sendComment' : 'sendQuestion'}`)}
-        </SComment>
-      </div>
+          <SComment
+            onClick={handleSubmit}
+            loading={sendLoading}
+            disabled={comment ? !description : !(description && title)}
+          >
+            {t(`course.${comment ? 'sendComment' : 'sendQuestion'}`)}
+          </SComment>
+        </div>
+      )}
     </div>
   );
 };

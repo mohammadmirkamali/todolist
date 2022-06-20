@@ -29,7 +29,8 @@ const Information: React.FC<InfoType> = ({ course }) => {
       {course.teachers.map((teacher) => (
         <TeacherAvatar
           key={teacher.nickname}
-          name={teacher.nickname}
+          name={teacher.nickname || teacher.family}
+          id={teacher.id}
           title={t('global.teacher')}
           img={teacher.avatar}
         />

@@ -42,6 +42,12 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
     case type.GET_EXAM_INFO_ERROR:
       return { ...state, examInfoLoading: false, examInfo: null, examInfoError: true };
 
+    case type.UPDATE_COURSE: {
+      const rewChapter = { ...state.chapters };
+      rewChapter[action.courseId].data.passed_lessons.push(Number(action.lessonId));
+      return { ...state, chapters: rewChapter };
+    }
+
     case type.GET_EVENT_REQUEST:
       return {
         ...state,

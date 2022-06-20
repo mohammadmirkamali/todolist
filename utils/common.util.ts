@@ -95,14 +95,17 @@ export const generateOptions = (searchData: SearchDataType): SearchOptionType[] 
     ),
   ];
 
-  const teacherOptions = teachers.map((name) => ({
-    name,
-    id: null,
-    category: null,
-    avatar: data
-      .find((item) => item.teachers.every((teacher) => teacher.nickname === teachers[0]))
-      .teachers.find((teacher) => teacher.nickname === teachers[0]).avatar,
-  }));
+  const teacherOptions = teachers.map((name) => {
+    const target = data
+      ?.find((item) => item.teachers.every((teacher) => teacher.nickname === name))
+      .teachers.find((teacher) => teacher.nickname === name);
+    return {
+      name,
+      id: target.id,
+      isTeacher: true,
+      avatar: target.avatar,
+    };
+  });
 
   const coursesOptions =
     data?.map((item) => ({
