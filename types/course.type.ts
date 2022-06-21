@@ -34,9 +34,31 @@ export type WebinarsType = {
   title: string;
 };
 
+export type TermItemType = {
+  description: string;
+  title: string;
+  time: number;
+  lesson_id: number;
+  workshop_id: number;
+};
+
+export type TermType = {
+  description: string;
+  title: string;
+  end: string;
+  image: string;
+  start: string;
+  id: number;
+  price: number;
+  term_number: number;
+  registered: boolean;
+  items: TermItemType[];
+};
+
 export type SearchDataType = {
   workshops: CoursesType[];
   events: WebinarsType[];
+  terms: TermType[];
 };
 
 export type LessonType = {
