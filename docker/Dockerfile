@@ -4,15 +4,17 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Copy lock files if file exists
-COPY package.json .
-
+COPY ["package*.json","./"]
 # Omit --production flag for TypeScript devDependencies
 RUN yarn install
 
-COPY src ./src
-COPY public ./public
-COPY next.config.js .
-COPY tsconfig.json .
+#COPY src ./src
+#COPY public ./public
+COPY ["public","./public"]
+#COPY next.config.js ./
+COPY ["next.config.js","./"]
+#COPY tsconfig.json ./
+COPY ["tsconfig.json","./"]
 
 # Environment variables must be present at build time
 # https://github.com/vercel/next.js/discussions/14030
@@ -40,7 +42,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.js .
 COPY --from=builder /app/package.json .
 
-# Automatically leverage output traces to reduce image size 
+# Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
