@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    restart: unless-stopped
+    environment:
+      VIRTUAL_HOST: "taalei-edu.com"
+      LETSENCRYPT_HOST: "taalei-edu.com"
+      LETSENCRYPT_EMAIL: "info@taalei-edu.com"
+    ports:
+      - "80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /mystorage/docker_logs/tfront/nginx:/var/log/nginx:rw
+    depends_on:
+      - app
+    networks:
+      - public
+  app:
+    container_name: taalei-next-app
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+      args:
+        ENV_VARIABLE: ${ENV_VARIABLE}
+        NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+    restart: always
+    ports:
+      - "3200:3000"
+    networks:
+      - public
+
+  # Add more containers below (nginx, postgres, etc.)
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  public:
+    external:
+      name: public
