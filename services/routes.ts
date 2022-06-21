@@ -63,6 +63,8 @@ export const ExamInfoRoute = (courseId, lessonId): string =>
   `/exam/${courseId}/${lessonId}/info`;
 export const ExamRoute = (courseId, lessonId): string =>
   `/exam/${courseId}/${lessonId}/question`;
+export const TermRoute = (termId, termTitle): string =>
+  `/term/${termId}/${termTitle?.replace(/ /g, '-')}/`;
 
 export const ConditionRoute = (): string => `/conditions`;
 export const FinanceRoute = (): string => `https://idpay.ir/taaleei`;

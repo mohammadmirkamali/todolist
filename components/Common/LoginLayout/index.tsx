@@ -8,11 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import request from 'services/request';
 import { RegisterUrl } from 'services/routes';
 import { getChapterAction, getEventAction } from 'store/course/course.action';
-import { CourseType, WebinarType } from 'types/course.type';
+import { CourseType, TermType, WebinarType } from 'types/course.type';
 
 type LayoutType = {
   url?: string;
-  data: CourseType | WebinarType;
+  data: CourseType | WebinarType | TermType;
   condition?: boolean;
   setLoading?: (item) => void;
   handleNext?: () => void;
