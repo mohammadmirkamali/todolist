@@ -4,7 +4,7 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Copy lock files if file exists
-COPY package.json package-lock.json* ./
+COPY package.json package-lock.json ./
 
 # Omit --production flag for TypeScript devDependencies
 RUN yarn install
