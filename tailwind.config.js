@@ -22,6 +22,7 @@ module.exports = {
         '#888', // 12 hover
         '#1a1a1a',
         '#b4b4b4',
+        'rgba(0,0,0,.06)', // 15 border
       ],
       blue: [
         '#1890ff', // link

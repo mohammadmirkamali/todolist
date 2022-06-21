@@ -1,8 +1,11 @@
-import { Select, Tag } from 'antd';
+import styled from '@emotion/styled';
+import { Card, Select, Skeleton, Tag } from 'antd';
 import { t } from 'i18next';
+import Link from 'next/link';
 import React, { ReactElement, useState } from 'react';
+import { LessonRoute } from 'services/routes';
 import { TermItemType, TermType } from 'types/course.type';
-import { faNumber } from 'utils/common.util';
+import { calcTime, faNumber } from 'utils/common.util';
 
 const { Option } = Select;
 const HOURS = [8, 9, 10, 11, 12];
@@ -11,36 +14,59 @@ const DAYS = [0, 1, 2, 3, 4, 5, 6].map((day) => ({
   label: t(`global.weekDay${day}`),
 }));
 
+const SCard = styled(Card)<{ index?: number }>`
+  overflow: auto;
+  margin-bottom: 40px;
+  border-radius: 12px;
+  .ant-card-head {
+    font-weight: bold;
+  }
+  .ant-card-body {
+    padding: 0;
+  }
+`;
+
+const SCardItem = styled(Card.Grid)<{ index?: number }>`
+  width: ${({ index }): string => (index === 0 || index === 1 ? '120px' : '250px')};
+  cursor: ${({ index }): string => !(index === 0 || index === 1) && 'pointer'};
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: initial;
+`;
+
 const Term: React.FC<{ data: TermType }> = ({ data }) => {
   const [hourPerWeek, setHourPerWeek] = useState(11);
   const [days, setDays] = useState([0, 1, 2]);
   const allWeeks = []; // final data that keep weeks and lesson of each day in week
 
-  // if (data?.items && !!days.length) {
-  //   const lessons: TermItemType[] = [...data.items]; // all lessons
-  //   const dailySecond = Number(((hourPerWeek * 3600) / (days.length || 1)).toFixed(0)); // time of each day in second
+  if (data?.items && !!days.length) {
+    const lessons: TermItemType[] = [...data.items]; // all lessons
+    const dailySecond = Number(((hourPerWeek * 3600) / (days.length || 1)).toFixed(0)); // time of each day in second
 
-  //   while (lessons.length > 0) {
-  //     const week = [];
-  //     days.forEach((day, index) => {
-  //       const dayLessons = [];
-  //       let dayTime = 0;
-  //       const endTime =
-  //         index === days.length - 1
-  //           ? hourPerWeek * 3600 - week.reduce((a, b) => a + b.total, 0)
-  //           : dailySecond;
-  //       while (dayTime < endTime && !!lessons.length) {
-  //         const bb = lessons.shift();
-  //         dayLessons.push(bb);
-  //         dayTime += bb.time;
-  //       }
+    while (lessons.length > 0) {
+      const week = [];
+      days.forEach((day, index) => {
+        const dayLessons = [];
+        let dayTime = 0;
+        const endTime =
+          index === days.length - 1
+            ? hourPerWeek * 3600 - week.reduce((a, b) => a + b.total, 0)
+            : dailySecond;
+        while (dayTime < endTime && !!lessons.length) {
+          const bb = lessons.shift();
+          dayLessons.push(bb);
+          dayTime += bb.time;
+        }
 
-  //       week.push({ total: dayTime, title: day, data: dayLessons });
-  //     });
+        week.push({ total: dayTime, title: day, data: dayLessons });
+      });
 
-  //     allWeeks.push({ total: week.reduce((a, b) => a + b.total, 0), data: week });
-  //   }
-  // }
+      allWeeks.push({ total: week.reduce((a, b) => a + b.total, 0), data: week });
+    }
+  }
 
   const tagRender = (props): ReactElement => {
     const { label, closable, onClose } = props;
@@ -106,19 +132,43 @@ const Term: React.FC<{ data: TermType }> = ({ data }) => {
         </div>
       </div>
 
-      <div className="xl:pr-[370px] w-screen mt-[20px] md:mt-0 md:w-[700px] py-[20px] xl:pl-[20px]  xl:justify-self-start xl:w-full">
-        <div className="w-full bg-white rounded-[8px] min-h-[200px]">
-          <div className="bg-blue-5 rounded-t-[8px] text-[18px] p-[8px]">
-            {t('global.week')} {faNumber(1)}
-          </div>
-
-          {days.map((day) => (
-            <div key={day}>
-              <div className="text-[15px] p-[6px]">{t(`global.weekDay${day}`)}</div>
-            </div>
+      {data ? (
+        <div className="xl:pr-[370px] w-screen mt-[20px] md:mt-0 md:w-[700px] py-[20px] xl:pl-[20px]  xl:justify-self-start xl:w-full">
+          {allWeeks.map((week, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <SCard title={`${t('global.week')} ${faNumber(index + 1)}`} key={index}>
+              {week?.data?.map((day) => (
+                <div className="grid text-[15px]" key={day.title}>
+                  <div className="flex">
+                    <SCardItem hoverable={false} index={0}>
+                      {t(`global.weekDay${day.title}`)}
+                    </SCardItem>
+                    <SCardItem hoverable={false} index={1}>
+                      {calcTime(day.total)}
+                    </SCardItem>
+                    {day.data.map((lesson) => (
+                      <Link
+                        key={lesson.title}
+                        href={LessonRoute(
+                          lesson.workshop_id,
+                          lesson.lesson_id,
+                          lesson.title,
+                        )}
+                      >
+                        <a>
+                          <SCardItem>{lesson.title}</SCardItem>
+                        </a>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </SCard>
           ))}
         </div>
-      </div>
+      ) : (
+        <Skeleton active className="p-[50px] pr-[400px]" />
+      )}
     </div>
   );
 };
