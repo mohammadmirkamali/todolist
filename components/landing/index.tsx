@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import dynamic from 'next/dynamic';
 import HeroSection from './heroSection';
 import Slider from './slider';
 import Terms from './terms';
 import { useSelector } from 'react-redux';
-import request from 'services/request';
-import { HomeUrl } from 'services/routes';
 
 const Info = dynamic(() => import('./Info'));
 const Webinars = dynamic(() => import('./webinars'));
@@ -21,7 +19,7 @@ const Landing: React.FC = () => {
   return (
     <div className="bg-gray-11 relative flex-col min-h-full center">
       <HeroSection />
-      {/* <Terms /> */}
+      <Terms />
       <Slider courses={newest} title="newCourses" />
       <Info />
       <Slider courses={mostPopular} title="popularCourses" />

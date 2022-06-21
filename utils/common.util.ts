@@ -9,6 +9,7 @@ export const BadgeCategory = (type): { name: string; color: string } | undefined
     { name: t('global.roat'), color: 'magenta' },
     { name: t('global.event'), color: 'geekblue' },
     { name: t('global.qoran'), color: 'gold' },
+    { name: t('global.term'), color: 'orange' },
   ];
 
   return types.find((item) => item.name === type);

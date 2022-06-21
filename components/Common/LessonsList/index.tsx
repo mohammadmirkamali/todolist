@@ -32,7 +32,7 @@ const LessonsList: React.FC<LessonsType> = ({ course, activeId }) => (
               >
                 <div className="ml-[16px] text-gray-3 text-[20px]">
                   {item.files[0].file ? (
-                    course.passed_lessons.includes(item.id) ? (
+                    course.passed_lessons?.includes(item.id) ? (
                       <CheckCircleFilled style={{ color: '#429933' }} />
                     ) : (
                       <PlayCircleFilled />

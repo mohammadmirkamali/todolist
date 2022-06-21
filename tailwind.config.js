@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     colors: {
       purple: [],
-      green: ['#1de9b6', '#79b832', 'rgb(129,178,20)', '#52c41a'],
+      green: ['#1de9b6', '#79b832', 'rgb(129,178,20)', '#52c41a', '#7aaf39'],
       red: ['#E53935'],
       yellow: [],
       gray: [

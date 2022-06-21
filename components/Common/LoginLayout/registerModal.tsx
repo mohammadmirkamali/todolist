@@ -1,6 +1,6 @@
 import { message, Modal } from 'antd';
 import React, { useState } from 'react';
-import { CourseType, WebinarType } from 'types/course.type';
+import { CourseType, TermType, WebinarType } from 'types/course.type';
 import { t } from 'i18next';
 import AntButton from 'components/Common/AntButton';
 import { faNumber } from 'utils/common.util';
@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 type ModalType = {
   isVisible: boolean;
   setIsVisible: (status) => void;
-  data: CourseType | WebinarType;
+  data: CourseType | WebinarType | TermType;
   url?: string;
 };
 const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url }) => {
