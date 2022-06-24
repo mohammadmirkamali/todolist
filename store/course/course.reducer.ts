@@ -128,6 +128,8 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
     case type.GET_TERM_ERROR:
       return { ...state, termLoading: false, term: null, termError: true };
 
+    case type.CLEAR_STORE:
+      return { ...state, term: null, chapters: null, event: null };
     case type.GET_CHAPTER_REQUEST:
       return {
         ...state,
@@ -143,7 +145,7 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
           ...state.chapters,
           [action.id]: {
             loading: false,
-            data: action.payload,
+            data: { ...action.payload, user: action.user },
             error: null,
           },
         },

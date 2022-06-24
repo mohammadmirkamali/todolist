@@ -11,7 +11,6 @@ export const PassedUrl = (courseId, lessonId): string =>
 export const TermUrl = (id): string => `/api/v1/terms/${id}`;
 export const MobileVerifyUrl = (): string => `/api/v1/verifyMobile`;
 export const EmailVerifyUrl = (): string => `/api/v1/verifyEmail`;
-export const RegisterUrl = (id, type): string => `/api/v1/${type}/${id}/register`;
 export const discountUrl = (): string => `/api/v1/takhfif-check`;
 export const ratePayUrl = (id, type): string => `/api/v1/buyUsingRate/${type}/${id}`;
 export const walletPayUrl = (id, type): string => `/api/v1/buyUsingWallet/${type}/${id}`;
@@ -32,6 +31,8 @@ export const SendNoteUrl = (courseId, lessonId): string =>
   `/api/v1/workshops/${courseId}/lessons/${lessonId}/notes`;
 export const SendTrainUrl = (courseId, lessonId): string =>
   `/api/v1/workshops/${courseId}/lessons/${lessonId}/trainings`;
+export const DeleteNoteUrl = (courseId, lessonId, noteId): string =>
+  `/api/v1/workshops/${courseId}/lessons/${lessonId}/notes/${noteId}`;
 export const PostsUrl = (): string => `/api/v1/posts`;
 export const RateCourseUrl = (id): string => `/api/v1/workshops/${id}/setRate`;
 export const ChangeUserImgUrl = (): string => `/api/v1/change-user-avatar`;

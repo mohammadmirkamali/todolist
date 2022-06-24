@@ -212,7 +212,11 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
           </SSelect>
 
           <div className="justify-center xl:justify-start flex flex-wrap">
-            <LoadingBox data={data && profile} error={error} reload={reloadData}>
+            <LoadingBox
+              data={data && profile && searchData}
+              error={error}
+              reload={reloadData}
+            >
               {filterCourses.map((item) => (
                 <div key={item.id} className="scale-[.9] m-[-15px]">
                   <Card data={item} webinar={(item as WebinarsType).isWebinar} />

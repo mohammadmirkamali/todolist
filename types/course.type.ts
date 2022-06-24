@@ -123,6 +123,7 @@ export type CourseType = {
   time: number;
   passed_lessons: number[];
   registered: boolean;
+  user: boolean;
   chapters: ChapterType[];
   attaches: AttachesType[];
   comments: CommentsType[];
@@ -213,7 +214,7 @@ export type ExamType = {
 };
 
 export type LessonNotesType = {
-  notes: { text: string; time: number }[];
+  notes: { text: string; time: number; user: { avatar: string; nickname: string } }[];
   my_notes: { text: string; time: number }[];
   attaches: { link: string; size?: string }[];
   questions: { title: string; description: string; visit: number }[];
@@ -231,5 +232,6 @@ export type SearchOptionType = {
   avatar?: string;
   category?: string;
   webinar?: boolean;
+  term?: boolean;
   isTeacher?: boolean;
 };

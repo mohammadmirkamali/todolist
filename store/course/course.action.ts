@@ -18,7 +18,7 @@ export const getSearchDataAction = () => {
   };
 };
 
-export const getChapterAction = (id) => {
+export const getChapterAction = (id, user) => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_CHAPTER_REQUEST, id });
     const response: ResType = await request.get(api.CourseUrl(id));
@@ -28,6 +28,7 @@ export const getChapterAction = (id) => {
         type: type.GET_CHAPTER_SUCCESS,
         payload: response.data,
         id,
+        user,
       });
       return response.data;
     }

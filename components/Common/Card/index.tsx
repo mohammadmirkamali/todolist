@@ -3,6 +3,7 @@ import { t } from 'i18next';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { CourseRoute, WebinarRoute } from 'services/routes';
 import { CoursesType, WebinarsType } from 'types/course.type';
 import { BadgeCategory, faNumber } from 'utils/common.util';
@@ -10,6 +11,10 @@ import { SBadge, SContainer } from './style';
 
 type CardType = { data: CoursesType | WebinarsType; webinar?: boolean };
 const Card: React.FC<CardType> = ({ data, webinar }) => {
+  const user = useSelector((state) => state.account.user);
+  const register = webinar
+    ? user?.events?.map((item) => item.id).includes(data.id)
+    : user?.workshops?.map((item) => item.id).includes(data.id);
   const badge = BadgeCategory(
     webinar ? t('global.event') : (data as CoursesType).categories?.[0]?.title,
   );
@@ -26,7 +31,7 @@ const Card: React.FC<CardType> = ({ data, webinar }) => {
 
           <div className="bg-gray-7 absolute top-0 h-full w-full z-10 rounded-[6px] enter">
             <div className="text-white absolute bottom-[60px] text-center w-full text-[25px] text-bold register">
-              {t('global.register')}
+              {t(`global.${register ? 'see' : 'register'}`)}
             </div>
           </div>
 
@@ -82,12 +87,12 @@ const Card: React.FC<CardType> = ({ data, webinar }) => {
               <div className="ml-[17px]">{`${faNumber(time)} ${t('global.hour')}`}</div>
             )}
 
-            <i className="fas fa-user-graduate ml-[6px]" />
+            {/* <StarFilled />
             <div className="ml-[17px]">
               {`${faNumber((Number(data.price) / 1000).toLocaleString())} ${t(
                 'global.person',
               )}`}
-            </div>
+            </div> */}
 
             <i className="fas fa-money-bill-wave ml-[6px] mt-[3px]" />
             <div>

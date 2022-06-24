@@ -16,7 +16,6 @@ import { LeftArrow, MenuItems, RightArrow } from 'components/Common/AnitmateLogo
 import LessonsList from 'components/Common/LessonsList';
 import LoginLink from 'components/Common/LoginLink';
 import 'plyr-react/dist/plyr.css';
-import Image from 'next/image';
 import LessonTabs from './lessonTabs';
 import request from 'services/request';
 import { faNumber, fileSize } from 'utils/common.util';
@@ -56,6 +55,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
   const [data, setData] = useState(null);
   const [seeLoading, setSeeLoading] = useState(false);
   const [seeStatus, setSeeStatus] = useState(false);
+  const user = useSelector((state) => state.account.user);
   const courseError = useSelector((state) => state.course.chapters)?.[courseId as string]
     ?.error;
 
@@ -97,7 +97,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
   };
 
   const reloadData = (): void => {
-    dispatch(getChapterAction(courseId));
+    dispatch(getChapterAction(courseId, !!user));
   };
   return (
     <div className="duration-300 bg-gray-0 min-h-[calc(100vh-70px)] flex-col flex items-center justify-items-start">
@@ -111,15 +111,6 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
               <h3 className="text-[14px] md:text-[16px] m-0">{lesson?.title}</h3>
             </div>
 
-            {type === 'audio' && (
-              <Image
-                src={course?.image}
-                layout="responsive"
-                width={530}
-                height={300}
-                alt=""
-              />
-            )}
             <SPlyr>
               <Plyr
                 ref={(player) => (ref.current = player)} // eslint-disable-line
@@ -128,7 +119,13 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
               />
             </SPlyr>
 
-            <LessonTabs data={data} error={error} player={ref} reload={getData} />
+            <LessonTabs
+              data={data}
+              course={course}
+              error={error}
+              player={ref}
+              reload={getData}
+            />
           </LoadingBox>
         </div>
       </div>

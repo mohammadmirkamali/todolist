@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import request from 'services/request';
-import { RegisterUrl } from 'services/routes';
+import { ratePayUrl } from 'services/routes';
 import { getChapterAction, getEventAction } from 'store/course/course.action';
 import { CourseType, PageTermType, WebinarType } from 'types/course.type';
 
@@ -23,7 +23,7 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
   const router = useRouter();
   const { courseId, eventId, termId } = router.query;
   const id = courseId || eventId;
-  const type = termId ? 'term' : eventId ? 'events' : 'workshops';
+  const type = termId ? 'term' : eventId ? 'event' : 'workshop';
   const user = useSelector((state) => state.account.user);
   const [loginModal, setLoginModal] = useState(null);
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
@@ -35,11 +35,12 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
       setRegisterModalVisible(true);
     } else {
       setLoading && setLoading(true);
-      const res: any = await request.post(RegisterUrl(data.id, type)); // eslint-disable-line
+      const res: any = await request.post(ratePayUrl(data.id, type)); // eslint-disable-line
       setLoading && setLoading(false);
       const text = res.data.message;
       res.ok ? message.success(text) : message.error(text);
-      res.ok && dispatch(eventId ? getEventAction(eventId) : getChapterAction(data.id));
+      res.ok &&
+        dispatch(eventId ? getEventAction(eventId) : getChapterAction(data.id, !!user));
       res.ok && url && router.push(url);
       res.ok && handleNext && handleNext();
     }

@@ -19,8 +19,7 @@ export const SSelect = styled(Select)<SelectType>`
 
 export const SContainer = styled.div<SelectType>`
   width: ${({ landing }): string => (landing === 1 ? '250px' : '100vw')};
-  margin-right: ${({ landing, user }): string =>
-    landing === 0 && (user === 0 ? '-205px' : '-140px')} ;
+  margin-right: ${({ landing }): string => landing === 0 && '-40px'} ;
   margin-left: ${({ landing }): string => landing === 0 && '-40px'} ;
   overflow: hidden;
   border: ${({ landing, focus }): string =>

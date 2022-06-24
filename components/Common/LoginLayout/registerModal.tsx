@@ -12,7 +12,7 @@ import {
   getEventAction,
   getTermAction,
 } from 'store/course/course.action';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
 type ModalType = {
@@ -32,6 +32,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
   const [discount, setDiscount] = useState(null);
   const [discountPrice, setDiscountPrice] = useState(null);
   const price = discountPrice || Number(data?.price);
+  const user = useSelector((state) => state.account.user);
   const discountAmount = Number(data?.price) - discountPrice;
 
   const handleDiscount = async (): Promise<void> => {
@@ -62,7 +63,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
           ? getTermAction(termId)
           : eventId
           ? getEventAction(eventId)
-          : getChapterAction(data.id),
+          : getChapterAction(data.id, !!user),
       ),
       setIsVisible(false));
   };
@@ -124,7 +125,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
             >
               {t(`course.directRegister`)}
             </StyledButton>
-            {['rate', 'wallet'].map((item) => (
+            {['wallet'].map((item) => (
               <Popconfirm
                 title={t('global.areYouSure')}
                 onConfirm={(): Promise<void> => handlePay(item)}

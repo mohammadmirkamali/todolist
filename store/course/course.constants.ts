@@ -31,3 +31,4 @@ export const GET_HOME_SUCCESS = 'GET_HOME_SUCCESS';
 export const GET_HOME_ERROR = 'GET_HOME_ERROR';
 
 export const UPDATE_COURSE = 'UPDATE_COURSE';
+export const CLEAR_STORE = 'CLEAR_STORE';

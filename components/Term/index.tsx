@@ -10,7 +10,7 @@ import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LessonRoute } from 'services/routes';
 import { getTermAction } from 'store/course/course.action';
-import { PageTermType, TermItemType } from 'types/course.type';
+import { TermItemType } from 'types/course.type';
 import { calcTime, faNumber } from 'utils/common.util';
 
 const { Option } = Select;
@@ -50,7 +50,7 @@ const Term: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const error = useSelector((state) => state.course.termError);
   const data = useSelector((state) => state.course.term);
-  const user = useSelector((state) => state.account.user);
+  // const user = useSelector((state) => state.account.user);
   const [hourPerWeek, setHourPerWeek] = useState(12);
   const [days, setDays] = useState([0, 1, 2, 3, 4, 5, 6]);
   const allWeeks = []; // final data that keep weeks and lesson of each day in week

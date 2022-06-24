@@ -2,10 +2,12 @@ import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Tooltip } from 'antd';
 import { t } from 'i18next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ProfileRoute } from 'services/routes';
+import { HomeRoute, ProfileRoute } from 'services/routes';
 import { logoutAction } from 'store/account/account.action';
+import { CLEAR_STORE } from 'store/course/course.constants';
 // import { faNumber } from 'utils/common.util';
 import { SButton, SExit } from './style';
 
@@ -14,13 +16,14 @@ const Profile: React.FC<{ setIsModalVisible: (value) => void }> = ({
 }) => {
   const user = useSelector((state) => state.account.user);
   const dispatch = useDispatch();
+  const router = useRouter();
   return !user ? (
     <SButton onClick={(): void => setIsModalVisible(true)}>
       <p>{t(`account.signIn`)}</p>
     </SButton>
   ) : (
     <div className="flex items-center text-gray-3 justify-center">
-      <Link href={ProfileRoute('user', 'profile')}>
+      <Link href={ProfileRoute('user', t('global.profile'))}>
         <a>
           <Tooltip title={t('global.seeProfile')}>
             <Avatar icon={<UserOutlined />} size={40} />
@@ -36,6 +39,8 @@ const Profile: React.FC<{ setIsModalVisible: (value) => void }> = ({
       <SExit title={t('global.exit')} placement="left">
         <LogoutOutlined
           onClick={(): void => {
+            router.push(HomeRoute());
+            dispatch({ type: CLEAR_STORE });
             dispatch(logoutAction());
           }}
           className="text-[20px] pr-[20px] cursor-pointer "
