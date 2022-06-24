@@ -21,14 +21,12 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
   const { url, setLoading, condition, data, children, handleNext } = props;
   const dispatch = useDispatch();
   const router = useRouter();
-  const { courseId, eventId, termId } = router.query;
-  const id = courseId || eventId;
+  const { eventId, termId } = router.query;
   const type = termId ? 'term' : eventId ? 'event' : 'workshop';
   const user = useSelector((state) => state.account.user);
   const [loginModal, setLoginModal] = useState(null);
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
   const [tryRegister, setTryRegister] = useState(false);
-  const [nextAction, setNextAction] = useState(null);
 
   const registerCourse = async (): Promise<void> => {
     if (Number(data.price)) {
@@ -49,7 +47,6 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
   const handleSelect = (): void => {
     setTryRegister(true);
     !user ? setLoginModal(true) : data ? registerCourse() : null;
-    !user && data && setNextAction({ type: eventId ? 'event' : 'chapter', id });
   };
 
   // to show register pop after user login
@@ -72,7 +69,7 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
       <Login
         isVisible={loginModal}
         setIsVisible={setLoginModal}
-        nextAction={nextAction}
+        // nextAction={nextAction}
       />
       <RegisterModal
         url={url}

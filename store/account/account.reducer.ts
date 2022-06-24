@@ -6,6 +6,8 @@ const initialState: AccountType = {
   userLoading: false,
   login: { data: null, prevStep: null },
   loginLoading: false,
+  profile: { data: null, prevStep: null },
+  profileLoading: false,
 };
 
 // eslint-disable-next-line default-param-last
@@ -22,6 +24,13 @@ const accountReducer = (state = initialState, action): AccountType => {
       return { ...state, loginLoading: false, login: action.payload };
     case type.POST_LOGIN_ERROR:
       return { ...state, loginLoading: false };
+
+    case type.POST_PROFILE_REQUEST:
+      return { ...state, profileLoading: true };
+    case type.POST_PROFILE_SUCCESS:
+      return { ...state, profileLoading: false, profile: action.payload };
+    case type.POST_PROFILE_ERROR:
+      return { ...state, profileLoading: false };
 
     default:
       return state;

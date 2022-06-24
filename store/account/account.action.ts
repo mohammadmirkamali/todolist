@@ -25,6 +25,25 @@ export const postLoginAction = (url, body) => {
   };
 };
 
+export const postProfileAction = (url, body) => {
+  return async (dispatch): Promise<unknown> => {
+    dispatch({ type: type.POST_PROFILE_REQUEST });
+    const response: any = url ? await request.post(url, body) : body; // eslint-disable-line
+
+    if (response.ok) {
+      const { data } = response;
+      data.token &&
+        setCookie(null, 'taalei', data.token.replace('Bearer ', ''), { path: '/' });
+      dispatch({ type: type.POST_PROFILE_SUCCESS, payload: data });
+      return data.token && !data.next ? null : response;
+    }
+
+    message.error(response.data.message || t('global.apiError'));
+    dispatch({ type: type.POST_PROFILE_ERROR });
+    return false;
+  };
+};
+
 export const getUserAction = () => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_USER_REQUEST });

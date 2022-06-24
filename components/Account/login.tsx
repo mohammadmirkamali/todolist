@@ -10,9 +10,9 @@ import { postLoginAction } from 'store/account/account.action';
 type ModalType = {
   isVisible: boolean;
   setIsVisible: (value) => void;
-  nextAction?: { type: string; id: number[] };
+  // nextAction?: { type: string; id: number[] };
 };
-const Login: React.FC<ModalType> = ({ isVisible, setIsVisible, nextAction }) => {
+const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
   const loginData = useSelector((state) => state.account.login);
   const user = useSelector((state) => state.account.user);
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const Login: React.FC<ModalType> = ({ isVisible, setIsVisible, nextAction }) => 
       ) : (
         <SimpleForm
           loginData={loginData}
-          nextAction={nextAction}
+          // nextAction={nextAction}
           setIsVisible={setIsVisible}
         />
       )}

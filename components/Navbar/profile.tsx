@@ -38,8 +38,8 @@ const Profile: React.FC<{ setIsModalVisible: (value) => void }> = ({
       </Tooltip> */}
       <SExit title={t('global.exit')} placement="left">
         <LogoutOutlined
-          onClick={(): void => {
-            router.push(HomeRoute());
+          onClick={async (): Promise<void> => {
+            await router.push(HomeRoute()); // to not get error on logout on profile page
             dispatch({ type: CLEAR_STORE });
             dispatch(logoutAction());
           }}

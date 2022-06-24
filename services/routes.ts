@@ -47,11 +47,8 @@ export const FillFormUrl = (): string => `/api/v1/RequiredFieldsFill`;
 export const ForgetPasswordUrl = (): string => `/api/v1/forget_password_step0`;
 export const ForgetPasswordCodedUrl = (): string => `/api/v1/forget_password_step1`;
 export const ForgetPasswordNewUrl = (): string => `/api/v1/forget_password_step2`;
-
-// //////////////////////////////////////////////////////
-
-export const ChangeMobileUrl = (): string => `/auth/changeMobileOrEmail`;
-export const ConfirmMobileUrl = (): string => `/auth/confirmMobileOrEmail`;
+export const ChangeMobileUrl = (): string => `/api/v1/changeMobileOrEmail`;
+export const ConfirmMobileUrl = (): string => `/api/v1/confirm-MobileOrEmail`;
 
 // //////////////////////////////////////////////////////////////////////////////////
 export const HomeRoute = (): string => `/`;
