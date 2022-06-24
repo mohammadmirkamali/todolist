@@ -24,7 +24,7 @@ const WebinarPage: React.FC = () => {
     <>
       <Head>
         <title>
-          {t('global.title', { title: (eventName as string).replace(/-/g, ' ') })}
+          {t('global.title', { title: ((eventName as string) || '').replace(/-/g, ' ') })}
         </title>
         <meta name="description" content={t('global.ceoDescription')} />
       </Head>

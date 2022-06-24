@@ -1,5 +1,4 @@
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (req, res) => {
-  const { phone } = req.body;
-  console.log(req.body);
   res.json(req);
 };

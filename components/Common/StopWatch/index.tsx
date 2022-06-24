@@ -19,7 +19,7 @@ const useStopWatch: StopWatchType = (length, start) => {
       clearInterval(interval);
     }
 
-    return () => clearInterval(interval);
+    return (): void => clearInterval(interval);
   }, [start]);
 
   return time;
