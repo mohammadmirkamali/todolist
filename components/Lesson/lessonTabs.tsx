@@ -43,7 +43,7 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player, reload }) =
       const tab = [];
       user && tab.push('myComments');
       !!data?.notes.length && tab.push('publicComments');
-      !!data?.trainings.length && tab.push('papers');
+      tab.push('papers');
       setTabs(tab);
       setSlide(tab[0] || null);
     }

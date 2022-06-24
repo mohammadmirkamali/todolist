@@ -1,34 +1,38 @@
-import { message, Modal } from 'antd';
+import { message, Modal, Popconfirm } from 'antd';
 import React, { useState } from 'react';
-import { CourseType, TermType, WebinarType } from 'types/course.type';
+import { CourseType, PageTermType, WebinarType } from 'types/course.type';
 import { t } from 'i18next';
 import AntButton from 'components/Common/AntButton';
 import { faNumber } from 'utils/common.util';
 import request from 'services/request';
 import { DirectPayUrl, discountUrl, ratePayUrl, walletPayUrl } from 'services/routes';
 import { StyledButton } from 'components/Common/commonStyle';
-import { getChapterAction, getEventAction } from 'store/course/course.action';
+import {
+  getChapterAction,
+  getEventAction,
+  getTermAction,
+} from 'store/course/course.action';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 
 type ModalType = {
   isVisible: boolean;
   setIsVisible: (status) => void;
-  data: CourseType | WebinarType | TermType;
+  data: CourseType | WebinarType | PageTermType;
   url?: string;
 };
 const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url }) => {
-  const { id } = data;
+  const id = data?.id;
   const router = useRouter();
   const dispatch = useDispatch();
-  const { eventId } = router.query;
+  const { eventId, termId } = router.query;
   const [code, setCode] = useState('');
   const type = eventId ? 'event' : 'workshop';
   const [loading, setLoading] = useState(false);
   const [discount, setDiscount] = useState(null);
   const [discountPrice, setDiscountPrice] = useState(null);
-  const price = discountPrice || Number(data.price);
-  const discountAmount = Number(data.price) - discountPrice;
+  const price = discountPrice || Number(data?.price);
+  const discountAmount = Number(data?.price) - discountPrice;
 
   const handleDiscount = async (): Promise<void> => {
     const body = { code, for: type, id_for: id }; // eslint-disable-line
@@ -48,11 +52,18 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
         : method === 'wallet'
         ? walletPayUrl(id, type)
         : DirectPayUrl(id, type);
+
     const body = { code: discount };
     const res: any = await request.post(href, body); // eslint-disable-line
     res.ok ? message.success(res.data.message) : message.warn(res.data.message);
     res.ok &&
-      (dispatch(eventId ? getEventAction(eventId) : getChapterAction(data.id)),
+      (dispatch(
+        termId
+          ? getTermAction(termId)
+          : eventId
+          ? getEventAction(eventId)
+          : getChapterAction(data.id),
+      ),
       setIsVisible(false));
   };
   return (
@@ -66,7 +77,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
     >
       <div className="center flex-col ">
         <div className="font-bold text-[24px] border-b border-b-gray-1 w-full text-center pb-[15px]">
-          {data.title}
+          {data?.title}
         </div>
 
         <div className="my-[20px] flex w-full">
@@ -103,17 +114,34 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
         <div className="flex flex-col w-full mt-[60px] text-[16px]">
           <div className="mb-[8px]">{t('course.choosePayMethod')}</div>
           <div>
-            {['direct', 'rate', 'wallet'].map((item) => (
-              <StyledButton
-                type="primary"
-                fontSize={18}
-                ml="12px"
-                height="40px"
+            <StyledButton
+              type="primary"
+              fontSize={16}
+              ml="12px"
+              height="40px"
+              borderRadius="8px"
+              onClick={(): Promise<void> => handlePay('direct')}
+            >
+              {t(`course.directRegister`)}
+            </StyledButton>
+            {['rate', 'wallet'].map((item) => (
+              <Popconfirm
+                title={t('global.areYouSure')}
+                onConfirm={(): Promise<void> => handlePay(item)}
+                okText={t('global.yes')}
+                showCancel={false}
                 key={item}
-                onClick={(): Promise<void> => handlePay(item)}
               >
-                {t(`course.${item}Register`)}
-              </StyledButton>
+                <StyledButton
+                  type="primary"
+                  fontSize={16}
+                  ml="12px"
+                  height="40px"
+                  borderRadius="8px"
+                >
+                  {t(`course.${item}Register`)}
+                </StyledButton>
+              </Popconfirm>
             ))}
           </div>
         </div>

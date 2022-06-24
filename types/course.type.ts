@@ -51,7 +51,6 @@ export type TermType = {
   id: number;
   price: number;
   term_number: number;
-  registered: boolean;
   items: TermItemType[];
 };
 
@@ -111,10 +110,12 @@ export type CourseType = {
   create_at: string;
   image: string;
   title: string;
+  rate: number;
+  rate_count: number;
+  workshop_user_rate: number;
   description: string;
   discount: number;
   students_count: number;
-  rate: number;
   id: number;
   lessons_count: number;
   price: number;
@@ -168,6 +169,24 @@ export type ExamInfoType = {
   needPay: boolean;
 };
 
+export type HomeType = {
+  events: WebinarsType[];
+  favorite_workshops: CoursesType[];
+  recent_workshops: CoursesType[];
+  teachers: TeacherType[];
+};
+
+export type PageTermType = {
+  available_days: number[];
+  week_hours: number;
+  price: number;
+  id: number;
+  group_type: string;
+  title: string;
+  registered: boolean;
+  term: TermType;
+};
+
 export type CourseReducerType = {
   searchDataLoading: boolean;
   searchDataError: boolean;
@@ -175,6 +194,12 @@ export type CourseReducerType = {
   postsLoading: boolean;
   postsError: boolean;
   posts: PostType[];
+  homeLoading: boolean;
+  homeError: boolean;
+  home: HomeType;
+  termLoading: boolean;
+  termError: boolean;
+  term: PageTermType;
   examInfoLoading: boolean;
   examInfoError: boolean;
   examInfo: ExamInfoType;

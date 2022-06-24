@@ -1,8 +1,12 @@
 export type UserType = {
   avatar: string;
   nickname: string;
+  name: string;
+  family: string;
+  sex: number;
   info: { birthYear: string };
-  workshops: { workshop_id: number }[];
+  workshops: { id: number; passed_lessons: number }[];
+  events: { id: number; title: string }[];
 };
 
 export type AccountType = {

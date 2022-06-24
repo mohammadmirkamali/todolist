@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import HeroSection from './heroSection';
 import Slider from './slider';
 import Terms from './terms';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getHomeAction } from 'store/course/course.action';
 
 const Info = dynamic(() => import('./Info'));
 const Webinars = dynamic(() => import('./webinars'));
@@ -11,18 +12,20 @@ const Teachers = dynamic(() => import('./teachers'));
 const Footer = dynamic(() => import('components/Footer'));
 
 const Landing: React.FC = () => {
-  const courses = useSelector((state) => state.course.searchData?.workshops) || [];
-  const time = (date): number => new Date(date).getTime();
-  const mostPopular = [...courses]?.sort((a, b) => b.price - a.price);
-  const newest = [...courses]?.sort((a, b) => time(b.created_at) - time(a.created_at));
+  const dispatch = useDispatch();
+  const home = useSelector((state) => state.course.home);
+
+  useEffect(() => {
+    !home && dispatch(getHomeAction());
+  }, [home]);
 
   return (
     <div className="bg-gray-11 relative flex-col min-h-full center">
       <HeroSection />
-      <Terms />
-      <Slider courses={newest} title="newCourses" />
+      <Slider courses={home?.recent_workshops} title="newCourses" />
       <Info />
-      <Slider courses={mostPopular} title="popularCourses" />
+      <Slider courses={home?.favorite_workshops} title="popularCourses" />
+      <Terms />
       <Webinars />
       <Teachers />
       {/* <AskUs /> */}

@@ -8,11 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import request from 'services/request';
 import { RegisterUrl } from 'services/routes';
 import { getChapterAction, getEventAction } from 'store/course/course.action';
-import { CourseType, TermType, WebinarType } from 'types/course.type';
+import { CourseType, PageTermType, WebinarType } from 'types/course.type';
 
 type LayoutType = {
   url?: string;
-  data: CourseType | WebinarType | TermType;
+  data?: CourseType | WebinarType | PageTermType;
   condition?: boolean;
   setLoading?: (item) => void;
   handleNext?: () => void;
@@ -21,9 +21,9 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
   const { url, setLoading, condition, data, children, handleNext } = props;
   const dispatch = useDispatch();
   const router = useRouter();
-  const { courseId, eventId } = router.query;
+  const { courseId, eventId, termId } = router.query;
   const id = courseId || eventId;
-  const type = eventId ? 'events' : 'workshops';
+  const type = termId ? 'term' : eventId ? 'events' : 'workshops';
   const user = useSelector((state) => state.account.user);
   const [loginModal, setLoginModal] = useState(null);
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
@@ -47,8 +47,8 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
 
   const handleSelect = (): void => {
     setTryRegister(true);
-    user ? registerCourse() : setLoginModal(true),
-      setNextAction({ type: eventId ? 'event' : 'chapter', id });
+    !user ? setLoginModal(true) : data ? registerCourse() : null;
+    !user && data && setNextAction({ type: eventId ? 'event' : 'chapter', id });
   };
 
   // to show register pop after user login
@@ -58,7 +58,7 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
 
   return (
     <div>
-      {condition || (user && data.registered && url) ? (
+      {condition || (user && data?.registered && url) ? (
         <Link href={url}>
           <a>{children}</a>
         </Link>

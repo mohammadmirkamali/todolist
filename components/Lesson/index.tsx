@@ -66,7 +66,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
   useEffect(() => {
     lessonId && setData(null);
     lessonId && getData();
-    lessonId && course?.passed_lessons.includes(Number(lessonId))
+    lessonId && course?.passed_lessons?.includes(Number(lessonId))
       ? setSeeStatus(true)
       : setSeeStatus(false);
   }, [lessonId, course]);

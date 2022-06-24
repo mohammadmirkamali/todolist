@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { CameraFilled } from '@ant-design/icons';
 import Image from 'next/image';
 import user from 'public/user.svg';
+import request from 'services/request';
+import { ChangeUserImgUrl } from 'services/routes';
 
 const ProfileImg: React.FC<{ image: string; isUser: boolean }> = ({ image, isUser }) => {
   const inputRef: React.MutableRefObject<any> = useRef();
@@ -22,8 +24,10 @@ const ProfileImg: React.FC<{ image: string; isUser: boolean }> = ({ image, isUse
 
   const handleUpload = async (event): Promise<any> => {
     const file = event.target.files[0];
-    const base64 = await convertBase64(file);
-    setImg(base64 as string);
+    // const base64 = await convertBase64(file);
+    // setImg(base64 as string);
+    // const res = await request.post(ChangeUserImgUrl(), { avatar: file });
+    // console.log('upload', res);
   };
 
   useEffect(() => {

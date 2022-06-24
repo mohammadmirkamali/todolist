@@ -22,6 +22,7 @@ export const getChapterAction = (id) => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_CHAPTER_REQUEST, id });
     const response: ResType = await request.get(api.CourseUrl(id));
+
     if (response.ok) {
       dispatch({
         type: type.GET_CHAPTER_SUCCESS,
@@ -32,6 +33,44 @@ export const getChapterAction = (id) => {
     }
 
     dispatch({ type: type.GET_CHAPTER_ERROR, id });
+    return false;
+  };
+};
+
+export const getHomeAction = () => {
+  return async (dispatch): Promise<unknown> => {
+    dispatch({ type: type.GET_HOME_REQUEST });
+    const response: ResType = await request.get(api.HomeUrl());
+
+    if (response.ok) {
+      dispatch({ type: type.GET_HOME_SUCCESS, payload: response.data });
+      return response.data;
+    }
+
+    dispatch({ type: type.GET_HOME_ERROR });
+    return false;
+  };
+};
+
+export const getTermAction = (id) => {
+  return async (dispatch): Promise<unknown> => {
+    dispatch({ type: type.GET_TERM_REQUEST });
+    const response: ResType = await request.get(api.TermUrl(id));
+
+    if (response.ok) {
+      dispatch({
+        type: type.GET_TERM_SUCCESS,
+        payload: {
+          ...response.data,
+          price: response.data.term.price,
+          id: response.data.term.id,
+          title: response.data.term.title,
+        },
+      });
+      return response.data;
+    }
+
+    dispatch({ type: type.GET_TERM_ERROR });
     return false;
   };
 };
