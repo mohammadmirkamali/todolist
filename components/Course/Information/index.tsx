@@ -1,28 +1,45 @@
 import { ClockCircleOutlined } from '@ant-design/icons';
-import { Rate } from 'antd';
+import { message, Progress, Rate, Spin } from 'antd';
 import { t } from 'i18next';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { CourseType } from 'types/course.type';
 import { calcTime, faNumber } from 'utils/common.util';
 import TeacherAvatar from 'components/Common/TeacherAvatar';
 import { SButton } from 'components/Course/style';
 import RateStudents from './rateStudents';
 import LoginLayout from 'components/Common/LoginLayout';
+import request from 'services/request';
+import { RateCourseUrl } from 'services/routes';
+import { UPDATE_COURSE } from 'store/course/course.constants';
 
 type InfoType = { course: CourseType };
 const Information: React.FC<InfoType> = ({ course }) => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.account.user);
   const [rate, setRate] = useState(null);
+  const [rateLoading, setRateLoading] = useState(false);
   const categories = course.categories.map((item) => item.title.replace(/ /g, '_'));
+  const allLessons = course.chapters.reduce((a, b) => a + b.lessons.length, 0);
+  const passedLessons = course.passed_lessons?.length || 0;
 
-  useEffect(() => {
-    if (user && course.registered && rate) {
-      // todo: ...
+  const handleRate = async (value): Promise<void> => {
+    setRateLoading(true);
+    setRate(value);
+    if (value) {
+      const res: any = await request.post(RateCourseUrl(course.id), { rate: value }); // eslint-disable-line
+      setRateLoading(false);
+      res.ok ? message.success(res.data.message) : message.error(res.data.message);
+      dispatch({
+        type: UPDATE_COURSE,
+        filed: 'workshop_user_rate',
+        id: course.id,
+        rate: value,
+      });
     }
-  }, [user, course, rate]);
+  };
 
   return (
     <div className="text-[18px] px-[30px] flex flex-col text-gray-10">
@@ -56,21 +73,46 @@ const Information: React.FC<InfoType> = ({ course }) => {
         <div>{t('global.course')}</div>
       </div>
 
-      <LoginLayout data={course}>
+      {course.registered && (
+        <div className="py-[7px] text-[16px] items-center pr-[6px]">
+          <div>{t('course.progress')}:</div>
+          <Progress
+            strokeColor={{ from: '#108ee9', to: '#87d068' }}
+            percent={Math.floor((passedLessons * 100) / allLessons)}
+            status="active"
+          />
+        </div>
+      )}
+
+      <LoginLayout>
         <div className="py-[7px] text-[16px] flex items-center pr-[15px]">
-          <Rate value={course.rate} onChange={(value): void => setRate(value)} />
-          <div className="px-[15px] toRight">
-            {`( ${t('global.person')} ${faNumber((2).toLocaleString())} ) `}
-          </div>
+          <Rate
+            style={{ color: course.workshop_user_rate ? '#507adc' : 'gold' }}
+            value={rate || course.workshop_user_rate || course.rate}
+            onChange={handleRate}
+          />
+          {rateLoading ? (
+            <Spin style={{ marginRight: 10 }} />
+          ) : course.workshop_user_rate ? null : (
+            <div className="px-[15px] toRight flex">
+              <span className="mr-[4px]"> {`( ${t('global.person')}`}</span>
+              <span>{`${faNumber(course.rate_count.toLocaleString())} )`}</span>
+            </div>
+          )}
         </div>
       </LoginLayout>
 
       {!!categories.length && (
-        <div className="py-[7px] text-[16px] flex items-center pr-[15px]">
+        <div className="py-[7px] text-[16px] my-[10px] flex items-center pr-[15px]">
           <div className="text-[16px]">{t('global.tag')}:</div>
           <div className="pr-[10px] pl-[8px]">
             {categories.map((item) => (
-              <span key={item}>#{item} </span>
+              <span
+                key={item}
+                className="border border-gray-15 py-[6px] text-[14px] px-[12px] ml-[6px] text-[16px]"
+              >
+                {item}
+              </span>
             ))}
           </div>
         </div>

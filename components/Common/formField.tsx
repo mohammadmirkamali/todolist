@@ -69,7 +69,7 @@ const SField = styled(Field)`
 
 type RadioType = { items: { title: string; value: string }[]; name: string };
 export const RadioForm: React.FC<RadioType> = ({ items, name }) => {
-  const { errors, touched } = useFormikContext();
+  const { errors, touched, values } = useFormikContext();
   const hasError = touched[name] && errors[name];
   return (
     <div>
@@ -83,6 +83,7 @@ export const RadioForm: React.FC<RadioType> = ({ items, name }) => {
               type="radio"
               name={name}
               value={item.value}
+              checked={item.value === values[name]}
               className="w-[16px] h-[16px] ml-[6px]"
             />
             {item.title}

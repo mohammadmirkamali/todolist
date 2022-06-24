@@ -1,13 +1,11 @@
 import { SBadge, SContainer } from 'components/Common/Card/style';
 import LoadingBox from 'components/Common/LoadingBox';
-import LoginLayout from 'components/Common/LoginLayout';
 import { t } from 'i18next';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import request from 'services/request';
-import { AllTermsUrl, HomeRoute, TermRoute } from 'services/routes';
+import { TermRoute } from 'services/routes';
 import { getSearchDataAction } from 'store/course/course.action';
 import { BadgeCategory, faNumber } from 'utils/common.util';
 
@@ -18,24 +16,19 @@ const Terms: React.FC = () => {
   const terms = useSelector((state) => state.course.searchData?.terms);
   const error = useSelector((state) => state.course.searchDataError);
   const badge = BadgeCategory(t('global.term'));
-  // useEffect(async () => {
-  //   const res = await request.get(AllTermsUrl());
-  //   setData(res.data);
-  // }, []);
 
   const reloadData = (): void => {
     dispatch(getSearchDataAction());
   };
 
   return (
-    <div className="bg-blue-11 w-full md:my-[50px] center flex-col pb-[60px]">
+    <div className="w-full mb-[40px] center flex-col pb-[60px]">
       <h2 className="font-bold text-[24px] md:text-[27px] my-[30px]">
         {t(`global.terms`)}
       </h2>
       <div className="flex-wrap center w-[320px] min-h-[250px] md:w-[900px] xl:w-[1300px]">
         <LoadingBox data={!!terms} error={error} reload={reloadData}>
           {terms?.map((item) => (
-            // <LoginLayout key={item.id} data={item}>
             <div
               className="md:scale-[.85] md:m-[-24px] xl:scale-100 xl:m-0"
               key={item.id}
@@ -90,7 +83,6 @@ const Terms: React.FC = () => {
                 </a>
               </Link>
             </div>
-            // </LoginLayout>
           ))}
         </LoadingBox>
       </div>

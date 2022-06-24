@@ -2,41 +2,41 @@ import { t } from 'i18next';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ProfileRoute } from 'services/routes';
 import user from 'public/user.svg';
+import LoadingBox from 'components/Common/LoadingBox';
+import { getHomeAction } from 'store/course/course.action';
 
 const Teachers: React.FC = () => {
-  const searchData = useSelector((state) => state.course.searchData);
-  const teachers = [...(searchData?.workshops || []), ...(searchData?.events || [])]
-    .map((item) => item.teachers)
-    .flat()
-    .filter((k) => k.nickname !== null);
+  const dispatch = useDispatch();
+  const teachers = useSelector((state) => state.course.home)?.teachers;
+  const error = useSelector((state) => state.course.homeError);
 
-  const uniqueTeachers = [...new Set(teachers.map((item) => item.id))].map((id) =>
-    teachers.find((teacher) => teacher.id === id),
-  );
+  const reloadData = (): void => {
+    dispatch(getHomeAction());
+  };
 
   return (
-    !!uniqueTeachers.length && (
-      <div className="center flex-col overflow-hidden">
-        <h2 className="font-bold text-[24px] md:text-[27px] my-[30px]">
-          {t('global.teachers')}
-        </h2>
+    <div className="center flex-col overflow-hidden">
+      <h2 className="font-bold text-[24px] md:text-[27px] my-[30px]">
+        {t('global.teachers')}
+      </h2>
 
-        <div className="grid grid-cols-[repeat(2,170px)] md:grid-cols-[repeat(5,220px)]">
-          {uniqueTeachers.map((teacher) => {
+      <LoadingBox data={!!teachers} error={error} reload={reloadData}>
+        <div className="flex flex-wrap items-center justify-center">
+          {teachers?.map((teacher) => {
             return (
               <Link
                 href={ProfileRoute(teacher.id, teacher.nickname || teacher.family)}
                 key={teacher.id}
                 passHref
               >
-                <a className="center flex-col cursor-pointer my-[10px] md:m-[20px] transition-all duration-500 text-center opacity-70 hover:opacity-100 hover:text-blue-2 grayscale-[1] hover:grayscale-0">
+                <a className="center mx-[16px] flex-col cursor-pointer my-[10px] md:m-[20px] transition-all duration-500 text-center opacity-70 hover:opacity-100 hover:text-blue-2 grayscale-[1] hover:grayscale-0">
                   <Image
                     src={teacher.avatar || user}
-                    width={120}
-                    height={120}
+                    width={130}
+                    height={130}
                     alt={teacher.nickname}
                     className="rounded-full "
                   />
@@ -48,8 +48,8 @@ const Teachers: React.FC = () => {
             );
           })}
         </div>
-      </div>
-    )
+      </LoadingBox>
+    </div>
   );
 };
 

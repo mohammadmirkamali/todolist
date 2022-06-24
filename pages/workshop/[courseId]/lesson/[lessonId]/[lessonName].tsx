@@ -22,13 +22,9 @@ const LessonPage: React.FC = () => {
     .find((item) => item.id === Number(lessonId));
 
   useEffect(() => {
-    courseId && !course && dispatch(getChapterAction(courseId));
-  }, [courseId]);
+    courseId && !course?.user && dispatch(getChapterAction(courseId, !!user));
+  }, [courseId, user]);
 
-  // re-get data on user login and logout
-  useEffect(() => {
-    course && dispatch(getChapterAction(courseId));
-  }, [user]);
   return (
     <>
       <Head>

@@ -19,13 +19,8 @@ const CoursePage: React.FC<PageType> = () => {
   const user = useSelector((state) => state.account.user);
 
   useEffect(() => {
-    id && !course && dispatch(getChapterAction(id));
-  }, [id]);
-
-  // re-get data on user login and logout
-  useEffect(() => {
-    course && dispatch(getChapterAction(id));
-  }, [user]);
+    id && !course?.user && dispatch(getChapterAction(id, !!user));
+  }, [id, user]);
 
   return (
     <>

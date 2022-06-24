@@ -109,12 +109,19 @@ export const generateOptions = (searchData: SearchDataType): SearchOptionType[] 
   });
 
   const coursesOptions =
-    data?.map((item) => ({
-      name: item.title,
-      id: item.id,
-      category: item.webinar ? t('global.event') : item.categories[0]?.title,
-      webinar: item.webinar,
-    })) || [];
+    data
+      ?.concat(searchData.terms.map((item) => ({ ...item, term: true })))
+      .map((item) => ({
+        name: item.title,
+        id: item.id,
+        category: item.term
+          ? t('global.term')
+          : item.webinar
+          ? t('global.event')
+          : item.categories[0]?.title,
+        webinar: item.webinar,
+        term: item.term,
+      })) || [];
 
   return [...coursesOptions, ...teacherOptions];
 };

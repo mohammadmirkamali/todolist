@@ -6,7 +6,7 @@ import { t } from 'i18next';
 
 import { SContainer, SSelect } from './style';
 import useWindowSize from 'hooks/useWidowsSize';
-import { CourseRoute, ProfileRoute, WebinarRoute } from 'services/routes';
+import { CourseRoute, ProfileRoute, TermRoute, WebinarRoute } from 'services/routes';
 import Image from 'next/image';
 import { SearchOptionType } from 'types/course.type';
 import { useSelector } from 'react-redux';
@@ -32,6 +32,8 @@ const AntSearch: React.FC<SearchType> = ({ options, landing }) => {
     router.push(
       selected.webinar
         ? WebinarRoute(selected.id, selected.name)
+        : selected.term
+        ? TermRoute(selected.id, selected.name)
         : selected.isTeacher
         ? ProfileRoute(selected.id, selected.name)
         : CourseRoute(selected.id, selected.name),

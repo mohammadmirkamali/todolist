@@ -9,16 +9,16 @@ import { CoursesType } from 'types/course.type';
 import useWindowSize from 'hooks/useWidowsSize';
 import LoadingBox from 'components/Common/LoadingBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSearchDataAction } from 'store/course/course.action';
+import { getHomeAction } from 'store/course/course.action';
 
 type SliderType = { courses: CoursesType[]; title: string };
 const Slider: React.FC<SliderType> = ({ courses, title }) => {
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.course.searchDataError);
+  const error = useSelector((state) => state.course.homeError);
   const [size] = useWindowSize();
-  const data = size >= 1280 ? courses.slice(0, 7) : courses.slice(0, 5);
+  const data = size >= 1280 ? courses?.slice(0, 7) : courses?.slice(0, 5);
   const reloadData = (): void => {
-    dispatch(getSearchDataAction());
+    dispatch(getHomeAction());
   };
   return (
     <div className="bg-blue-11 w-full md:my-[50px] center flex-col pb-[60px]">
@@ -26,8 +26,8 @@ const Slider: React.FC<SliderType> = ({ courses, title }) => {
         {t(`landing.${title}`)}
       </h2>
       <div className="flex-wrap center w-[320px] min-h-[250px] md:w-[900px] xl:w-[1300px]">
-        <LoadingBox data={!!data.length} error={error} reload={reloadData}>
-          {data.map((item) => (
+        <LoadingBox data={!!data?.length} error={error} reload={reloadData}>
+          {data?.map((item) => (
             <div
               key={item.id}
               className="md:scale-[.85] md:m-[-24px] xl:scale-100 xl:m-0"

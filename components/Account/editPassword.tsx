@@ -7,11 +7,11 @@ import FormField from 'components/Common/formField';
 import { SSubmitForm } from 'components/Profile/style';
 import { ForgetPasswordNewUrl } from 'services/routes';
 import { useDispatch, useSelector } from 'react-redux';
-import { postLoginAction } from 'store/account/account.action';
+import { postLoginAction, postProfileAction } from 'store/account/account.action';
 
-type EditPasswordType = { setIsVisible: (e) => void };
+type EditPasswordType = { setIsVisible: (e) => void; profile?: boolean };
 const fields = ['newPassword', 'repeatNewPassword'];
-const EditPassword: React.FC<EditPasswordType> = ({ setIsVisible }) => {
+const EditPassword: React.FC<EditPasswordType> = ({ setIsVisible, profile }) => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.account.loginLoading);
   const validationSchema = Yup.object({
@@ -31,7 +31,12 @@ const EditPassword: React.FC<EditPasswordType> = ({ setIsVisible }) => {
         validationSchema={validationSchema}
         onSubmit={async (values): Promise<void> => {
           const body = { password: values.newPassword };
-          const res: any = await dispatch(postLoginAction(ForgetPasswordNewUrl(), body)); // eslint-disable-line
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const res: any = await dispatch(
+            profile
+              ? postProfileAction(ForgetPasswordNewUrl(), body)
+              : postLoginAction(ForgetPasswordNewUrl(), body),
+          );
           if (res.ok) {
             setIsVisible(false);
             message.success(t('account.successChangePassword'));
