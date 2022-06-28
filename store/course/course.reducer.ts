@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { CourseReducerType } from 'types/course.type';
 import * as type from './course.constants';
 
@@ -11,6 +12,12 @@ const initialState: CourseReducerType = {
   examInfoLoading: false,
   examInfo: null,
   examInfoError: false,
+  homeLoading: false,
+  home: null,
+  homeError: false,
+  termLoading: false,
+  term: null,
+  termError: false,
   event: null,
   chapters: null,
 };
@@ -44,7 +51,15 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
 
     case type.UPDATE_COURSE: {
       const rewChapter = { ...state.chapters };
-      rewChapter[action.courseId].data.passed_lessons.push(Number(action.lessonId));
+      if (action.filed === 'passed_lessons') {
+        let passed: number[] = rewChapter[action.courseId].data.passed_lessons;
+        passed = [...(passed || []), Number(action.lessonId)];
+        rewChapter[action.courseId].data.passed_lessons = passed;
+      }
+
+      if (action.filed === 'workshop_user_rate')
+        rewChapter[action.id].data.workshop_user_rate = action.rate;
+
       return { ...state, chapters: rewChapter };
     }
 
@@ -99,6 +114,22 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
         searchDataError: true,
       };
 
+    case type.GET_HOME_REQUEST:
+      return { ...state, homeLoading: true, home: null, homeError: false };
+    case type.GET_HOME_SUCCESS:
+      return { ...state, homeLoading: false, home: action.payload, homeError: false };
+    case type.GET_HOME_ERROR:
+      return { ...state, homeLoading: false, home: null, homeError: true };
+
+    case type.GET_TERM_REQUEST:
+      return { ...state, termLoading: true, term: null, termError: false };
+    case type.GET_TERM_SUCCESS:
+      return { ...state, termLoading: false, term: action.payload, termError: false };
+    case type.GET_TERM_ERROR:
+      return { ...state, termLoading: false, term: null, termError: true };
+
+    case type.CLEAR_STORE:
+      return { ...state, term: null, chapters: null, event: null };
     case type.GET_CHAPTER_REQUEST:
       return {
         ...state,
@@ -114,7 +145,7 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
           ...state.chapters,
           [action.id]: {
             loading: false,
-            data: action.payload,
+            data: { ...action.payload, user: action.user },
             error: null,
           },
         },

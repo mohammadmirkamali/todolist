@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEventAction } from 'store/course/course.action';
 
-const tabs = ['info', 'comments'];
+const tabs = ['info', 'comments', 'questions'];
 const Webinar: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [slide, setSlide] = useState('info');
@@ -64,97 +64,108 @@ const Webinar: React.FC = () => {
             ))}
           </div>
 
-          {slide === 'info' && (
-            <div className="toLeft px-[40px]">
-              <TeacherAvatar
-                name={data?.teachers[0].nickname || data?.teachers[0].family}
-                img={data?.teachers[0].avatar}
-                id={data?.teachers[0].id}
-              />
+          <div className="overflow-auto xl:h-[90%] toRight mb-[40px] xl:mb-0">
+            {slide === 'info' && (
+              <div className="toLeft px-[40px]">
+                <TeacherAvatar
+                  name={data?.teachers[0].nickname || data?.teachers[0].family}
+                  img={data?.teachers[0].avatar}
+                  id={data?.teachers[0].id}
+                />
 
-              <div className="flex w-full justify-between mt-[10px]">
-                <div>{t('webinar.type')}</div>
-                <div>{t('global.online')}</div>
-              </div>
-
-              <div className="flex w-full justify-between mt-[15px]">
-                <div>{t('global.status')}</div>
-                <div className="text-green-2">{t('webinar.active')}</div>
-              </div>
-
-              {data?.headline && (
-                <div className=" w-full mt-[15px]">
-                  <div className="font-bold">{t('webinar.headline')}</div>
-                  <div className="">
-                    {data?.headline.split('\r\n').map((item) => (
-                      <div className="my-[5px]" key={item}>
-                        {item}
-                      </div>
-                    ))}
-                  </div>
+                <div className="flex w-full justify-between mt-[10px]">
+                  <div>{t('webinar.type')}</div>
+                  <div>{t('global.online')}</div>
                 </div>
-              )}
 
-              <LoginLayout data={data} setLoading={setLoading}>
-                <AntButton className="w-full mt-[20px]" loading={loading}>
-                  {data?.link && data?.registered ? (
-                    <a href={data?.link} target="_blank" rel="noreferrer">
-                      {t('webinar.link')}
-                    </a>
-                  ) : (
-                    <>
-                      {t('webinar.register')}
-                      <span className="mr-[30px]">
-                        {Number(data?.price) !== 0
-                          ? faNumber(Number(data?.price) / 1000) + t('global.tooman')
-                          : t('global.free')}
-                      </span>
-                    </>
-                  )}
-                </AntButton>
-              </LoginLayout>
-
-              {!!data?.times.length && (
-                <div>
-                  <div className="font-bold text-[16px] mt-[20px]">
-                    {t('global.courses')}
-                  </div>
-
-                  <div className="mb-[30px]">
-                    {data?.times.map((time, index) => (
-                      <div className="my-[5px]" key={time.date}>
-                        <div className="flex">
-                          <div className="font-bold ml-[15px]">
-                            {t('global.course')} {faNumber(index + 1)}
-                          </div>
-                          {time.description && <div>({time.description})</div>}
-                        </div>
-                        <div className="flex">
-                          <div className="ml-[10px]">{t('global.date')}:</div>
-                          <div>{faNumber(time.date)}</div>
-                          <div className="ml-[10px] mr-[20px]">{t('global.hour')}:</div>
-                          <div>
-                            {faNumber(time.start)} {t('webinar.to')} {faNumber(time.end)}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                <div className="flex w-full justify-between mt-[15px]">
+                  <div>{t('global.status')}</div>
+                  <div className="text-green-2">{t('webinar.active')}</div>
                 </div>
-              )}
-            </div>
-          )}
 
-          {slide === 'comments' && (
-            <div className="mb-[32px]">
+                {data?.headline && (
+                  <div className=" w-full mt-[15px]">
+                    <div className="font-bold">{t('webinar.headline')}</div>
+                    <div className="">
+                      {data?.headline.split('\r\n').map((item) => (
+                        <div className="my-[5px]" key={item}>
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <LoginLayout data={data} setLoading={setLoading}>
+                  <AntButton className="w-full mt-[20px]" loading={loading}>
+                    {data?.link && data?.registered ? (
+                      <a href={data?.link} target="_blank" rel="noreferrer">
+                        {t('webinar.link')}
+                      </a>
+                    ) : (
+                      <>
+                        {t('webinar.register')}
+                        <span className="mr-[30px]">
+                          {Number(data?.price) !== 0
+                            ? faNumber(Number(data?.price) / 1000) + t('global.tooman')
+                            : t('global.free')}
+                        </span>
+                      </>
+                    )}
+                  </AntButton>
+                </LoginLayout>
+
+                {!!data?.times.length && (
+                  <div>
+                    <div className="font-bold text-[16px] mt-[20px]">
+                      {t('global.courses')}
+                    </div>
+
+                    <div className="mb-[30px]">
+                      {data?.times.map((time, index) => (
+                        <div className="my-[5px]" key={time.date}>
+                          <div className="flex">
+                            <div className="font-bold ml-[15px]">
+                              {t('global.course')} {faNumber(index + 1)}
+                            </div>
+                            {time.description && <div>({time.description})</div>}
+                          </div>
+                          <div className="flex">
+                            <div className="ml-[10px]">{t('global.date')}:</div>
+                            <div>{faNumber(time.date)}</div>
+                            <div className="ml-[10px] mr-[20px]">{t('global.hour')}:</div>
+                            <div>
+                              {faNumber(time.start)} {t('webinar.to')}{' '}
+                              {faNumber(time.end)}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {slide === 'comments' && (
+              <div className="mb-[32px]">
+                <UserComment
+                  register={data?.registered}
+                  data={data?.comments.data}
+                  id={data?.id}
+                  type="events"
+                  comment
+                />
+              </div>
+            )}
+            {slide === 'questions' && (
               <UserComment
                 data={data?.comments.data}
                 id={data?.id}
-                type="events"
-                comment
+                register={data?.registered}
               />
-            </div>
-          )}
+            )}
+          </div>
         </LoadingBox>
       </div>
     </div>

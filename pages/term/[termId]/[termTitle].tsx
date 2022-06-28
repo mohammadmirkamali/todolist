@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { t } from 'i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { getTermAction } from 'store/course/course.action';
 
 const Navbar = dynamic(() => import('components/Navbar'));
 const Term = dynamic(() => import('components/Term'));
@@ -10,9 +11,13 @@ const Head = dynamic(() => import('next/head'));
 
 const WebinarPage: React.FC = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { termId, termTitle } = router.query;
-  const terms = useSelector((state) => state.course.searchData?.terms);
-  const data = terms?.find((term) => term.id === Number(termId));
+  const term = useSelector((state) => state.course.term);
+
+  useEffect(() => {
+    termId && Number(termId) !== term?.term.id && dispatch(getTermAction(termId));
+  }, [termId]);
 
   return (
     <>
@@ -24,7 +29,7 @@ const WebinarPage: React.FC = () => {
       </Head>
 
       <Navbar />
-      <Term data={data} />
+      <Term />
     </>
   );
 };

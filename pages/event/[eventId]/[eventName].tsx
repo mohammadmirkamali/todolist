@@ -13,7 +13,7 @@ const Head = dynamic(() => import('next/head'));
 const WebinarPage: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { eventId } = router.query;
+  const { eventId, eventName } = router.query;
   const webinar = useSelector((state) => state.course.event);
 
   useEffect(() => {
@@ -23,7 +23,9 @@ const WebinarPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>{t('global.title', { title: t('navbar.posts') })}</title>
+        <title>
+          {t('global.title', { title: ((eventName as string) || '').replace(/-/g, ' ') })}
+        </title>
         <meta name="description" content={t('global.ceoDescription')} />
       </Head>
 

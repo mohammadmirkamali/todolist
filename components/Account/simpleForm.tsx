@@ -21,10 +21,10 @@ import { Spin } from 'antd';
 
 type FormType = {
   loginData: any; // eslint-disable-line
-  nextAction: { type: string; id: number[] };
+  // nextAction: { type: string; id: number[] };
   setIsVisible: (value) => void;
 };
-const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible, nextAction }) => {
+const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
   const step = loginData?.next || 'enterNumber';
   const loading = useSelector((state) => state.account.loginLoading);
   const userLoading = useSelector((state) => state.account.userLoading);
@@ -137,9 +137,6 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible, nextAction })
           );
           if (result.data.next === 'login') {
             dispatch(getUserAction());
-            // nextAction?.type === 'chapter' &&
-            //   dispatch(getChapterAction(nextAction.id[0]));
-            // nextAction?.type === 'event' && dispatch(getEventAction(nextAction.id[0]));
             setIsVisible(false);
             dispatch(postLoginAction(null, { data: { next: 'enterNumber' }, ok: true }));
           }

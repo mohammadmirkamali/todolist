@@ -34,7 +34,7 @@ const ExamPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>{t('global.title', { title: t('navbar.posts') })}</title>
+        <title>{t('global.title', { title: t('global.exam') })}</title>
         <meta name="description" content={t('global.ceoDescription')} />
       </Head>
 

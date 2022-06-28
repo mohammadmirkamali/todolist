@@ -1,18 +1,25 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import SimpleForm from './simpleForm';
 import FillForm from './fillForm';
 import { SModal } from './style';
 import EditPassword from './editPassword';
+import { postLoginAction } from 'store/account/account.action';
 
 type ModalType = {
   isVisible: boolean;
   setIsVisible: (value) => void;
-  nextAction?: { type: string; id: number[] };
+  // nextAction?: { type: string; id: number[] };
 };
-const Login: React.FC<ModalType> = ({ isVisible, setIsVisible, nextAction }) => {
+const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
   const loginData = useSelector((state) => state.account.login);
+  const user = useSelector((state) => state.account.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    !user && dispatch(postLoginAction(null, { data: 'enterNumber', ok: true }));
+  }, [user]);
 
   return (
     <SModal
@@ -31,7 +38,7 @@ const Login: React.FC<ModalType> = ({ isVisible, setIsVisible, nextAction }) => 
       ) : (
         <SimpleForm
           loginData={loginData}
-          nextAction={nextAction}
+          // nextAction={nextAction}
           setIsVisible={setIsVisible}
         />
       )}

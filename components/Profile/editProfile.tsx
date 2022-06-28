@@ -3,50 +3,30 @@ import { t } from 'i18next';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import AppForm from 'components/Common/appForm';
-import FormField from 'components/Common/formField';
+import FormField, { RadioForm } from 'components/Common/formField';
 import { SSubmitForm } from './style';
 import request from 'services/request';
-import { ConfirmMobileUrl } from 'services/routes';
+import { UpdateUserInfoUrl } from 'services/routes';
+import { UserType } from 'types/account.type';
+import { useDispatch } from 'react-redux';
+import { getUserAction } from 'store/account/account.action';
 
-type EditProfilType = {
+type EditProfileType = {
   visible: boolean;
   setIsModalVisible: (e) => void;
-  type: string;
-  input: string;
-  auth: string; // mobile or email
-  authType: string; // mobile or email
+  user: UserType;
 };
 
-const types = {
-  name: {
-    type: 'text',
-    validation: Yup.string().required(t('account.emptyField')),
-  },
-  number: {
-    type: 'number',
-    validation: Yup.number().required(t('account.emptyField')),
-  },
-  birth: {
-    type: 'number',
-    validation: Yup.number().required(t('account.emptyField')),
-  },
-  changePassword: {
-    type: 'number',
-    validation: Yup.number().required(t('account.emptyField')),
-  },
-  email: {
-    type: 'email',
-    validation: Yup.string()
-      .email(t('account.validEmail'))
-      .required(t('account.emptyField')),
-  },
-};
-
-const EditProfile: React.FC<EditProfilType> = (props) => {
-  const { visible, setIsModalVisible, type, input, auth, authType } = props;
+const EditProfile: React.FC<EditProfileType> = (props) => {
+  const { visible, setIsModalVisible, user } = props;
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const validationSchema = Yup.object({
-    value: types[type]?.validation,
+    nickname: Yup.string().required(t('account.emptyField')),
+    name: Yup.string().required(t('account.emptyField')),
+    family: Yup.string().required(t('account.emptyField')),
+    sex: Yup.string().required(t('account.emptyField')),
+    birthYear: Yup.number().required(t('account.emptyField')),
   });
 
   return (
@@ -58,34 +38,75 @@ const EditProfile: React.FC<EditProfilType> = (props) => {
       footer={null}
     >
       <div className=" flex flex-col justify-center items-center">
-        <div className="text-[26px] font-bold">{t(`account.${type}`)}</div>
+        <div className="text-[24px] font-bold">{t(`account.editInfo`)}</div>
 
         <AppForm
-          initialValues={{ value: input }}
+          initialValues={{
+            nickname: user?.nickname,
+            name: user?.name,
+            family: user?.family,
+            sex: '1',
+            birthYear: user?.info.birthYear,
+          }}
           validationSchema={validationSchema}
-          onSubmit={async (values): Promise<void> => {
-            if (type === 'changePassword') {
-              setLoading(true);
-              const body = { new: auth, code: values.value, type: authType };
-              const res: any = await request.post(ConfirmMobileUrl(), body); // eslint-disable-line
+          onSubmit={async ({ nickname, sex, birthYear, name, family }): Promise<void> => {
+            setLoading(true);
+            const body = { nickname, sex, birthYear, name, family };
+            const res: any = await request.post(UpdateUserInfoUrl(), body); // eslint-disable-line
+            if (res.ok) {
+              await dispatch(getUserAction());
               setLoading(false);
-              if (res.ok) {
-                res.data.success ? setIsModalVisible(2) : message.error(res.data.message);
-              } else {
-                message.error(t('global.apiError'));
-              }
+              setIsModalVisible(2);
+              message.success(res.data.message);
+            } else {
+              setLoading(false);
+              message.error(res.data.message || t('global.apiError'));
             }
           }}
         >
+          <p className="m-0 text-[12px] mr-[6px] mt-[20px]">{t('global.name')}</p>
           <FormField
-            name="value"
+            name="name"
             autoFocus
-            type={types[type]?.type}
-            placeholder={t(`account.${type}Placeholder`)}
-            className={`${
-              type !== 'name' && 'toRight'
-            } w-[400px] h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px] mt-[30px]`}
+            type="text"
+            placeholder={t(`account.nameFamily`)}
+            className={` w-[400px] h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px]`}
           />
+          <p className="m-0 text-[12px] mr-[6px] mt-[20px]">{t('global.family')}</p>
+          <FormField
+            name="family"
+            autoFocus
+            type="text"
+            placeholder={t(`account.nameFamily`)}
+            className={` w-[400px] h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px]`}
+          />
+          <p className="m-0 text-[12px] mr-[6px] mt-[20px]">{t('account.nickname')}</p>
+          <FormField
+            name="nickname"
+            autoFocus
+            type="text"
+            placeholder={t(`account.nameFamily`)}
+            className={` w-[400px] h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px]`}
+          />
+
+          <p className="m-0 text-[12px] mr-[6px] mt-[20px]">{t('account.birth')}</p>
+          <FormField
+            name="birthYear"
+            type="number"
+            placeholder="1374"
+            className="toRight overflow-hidden w-[400px] h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px]"
+          />
+
+          <div className="flex-1 mt-[20px]">
+            <p className="m-0 w-full mr-[5px]">{t('global.sex')}</p>
+            <RadioForm
+              items={[
+                { title: t('global.man'), value: '1' },
+                { title: t('global.woman'), value: '2' },
+              ]}
+              name="sex"
+            />
+          </div>
 
           <SSubmitForm loading={loading} title={t('account.approved')} />
         </AppForm>

@@ -27,18 +27,18 @@ const Navbar: React.FC = () => {
   }, [searchData]);
 
   return (
-    <SNav className="border-b border-b-gray-1 justify-center">
-      <div className=" items-center flex pl-[20px] md:flex md:absolute right-[20px]">
-        <Profile setIsModalVisible={setIsModalVisible} />
-      </div>
-
-      <AntSearch options={generateOptions(searchData)} />
-
+    <SNav className="border-b hidden border-b-gray-1 justify-center">
       <Link href={url.HomeRoute()}>
-        <a className="absolute left-[10px] md:left-[40px] cursor-pointer">
+        <a className="absolute right-[10px] md:right-[24px] cursor-pointer">
           <Image src="/main-logo.webp" width={120} height={60} priority alt="" />
         </a>
       </Link>
+
+      <AntSearch options={generateOptions(searchData)} />
+
+      <div className="items-center flex pl-[20px] absolute left-[10px] md:left-[24px]">
+        <Profile setIsModalVisible={setIsModalVisible} />
+      </div>
 
       <Login isVisible={isModalVisible} setIsVisible={setIsModalVisible} />
     </SNav>

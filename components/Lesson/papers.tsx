@@ -1,4 +1,4 @@
-import { UploadOutlined } from '@ant-design/icons';
+import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import { Upload } from 'antd';
 import AntButton from 'components/Common/AntButton';
 import AntComment from 'components/Common/AntComment';
@@ -106,7 +106,7 @@ const Papers: React.FC<{ data: LessonNotesType }> = ({ data }) => {
       )}
       {data.trainings.map((train) => (
         <div
-          className="m-[16px] bg-blue-11 py-[16px] md:p-[16px] rounded-[6px] pb-[20px]"
+          className="m-[16px] bg-blue-11 py-[16px] items-center flex md:p-[16px] rounded-[6px] pb-[20px]"
           key={train.description}
         >
           <AntComment
@@ -116,8 +116,8 @@ const Papers: React.FC<{ data: LessonNotesType }> = ({ data }) => {
             title={train.title}
           />
           {train.attachment?.includes('pdf') && (
-            <a className="mr-[30px]" href={train.attachment}>
-              {t('global.download')}
+            <a className="mx-[12px] text-[24px] text-black" href={train.attachment}>
+              <DownloadOutlined />
             </a>
           )}
         </div>

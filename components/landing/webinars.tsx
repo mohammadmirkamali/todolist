@@ -9,20 +9,20 @@ import 'swiper/css/pagination';
 import 'swiper/css';
 import Card from 'components/Common/Card';
 import LoadingBox from 'components/Common/LoadingBox';
-import { getSearchDataAction } from 'store/course/course.action';
+import { getHomeAction } from 'store/course/course.action';
 
 const Webinars: React.FC = () => {
   const dispatch = useDispatch();
-  const searchData = useSelector((state) => state.course.searchData);
-  const error = useSelector((state) => state.course.searchDataError);
+  const events = useSelector((state) => state.course.home)?.events;
+  const error = useSelector((state) => state.course.homeError);
 
   const reloadData = (): void => {
-    dispatch(getSearchDataAction());
+    dispatch(getHomeAction());
   };
   return (
     <div className="w-full min-h-[300px] text-center px-[40px] mb-[40px]">
       <h2 className="font-bold mb-[40px] text-[27px]">{t('webinar.webinars')}</h2>
-      <LoadingBox data={searchData} error={error} reload={reloadData}>
+      <LoadingBox data={events} error={error} reload={reloadData}>
         <div>
           <Swiper
             modules={[Navigation, Pagination]}
@@ -36,7 +36,7 @@ const Webinars: React.FC = () => {
               '1250': { slidesPerView: 4 },
             }}
           >
-            {searchData?.events.map((item) => (
+            {events?.map((item) => (
               <SwiperSlide key={item.id}>
                 <Card data={item} webinar />
               </SwiperSlide>

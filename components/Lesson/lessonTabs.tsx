@@ -1,17 +1,18 @@
 /* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
 import { t } from 'i18next';
-import { LessonNotesType } from 'types/course.type';
+import { CourseType, LessonNotesType } from 'types/course.type';
 import { calcTime } from 'utils/common.util';
 import { Checkbox, message } from 'antd';
 import AntButton from 'components/Common/AntButton';
 import styled from '@emotion/styled';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import request from 'services/request';
-import { SendNoteUrl } from 'services/routes';
+import { DeleteNoteUrl, SendNoteUrl } from 'services/routes';
 import Papers from './papers';
 import LoadingBox from 'components/Common/LoadingBox';
+import { CloseOutlined } from '@ant-design/icons';
+import AntComment from 'components/Common/AntComment';
 
 const SCheckbox = styled(Checkbox)`
   font-size: 12px;
@@ -24,10 +25,17 @@ const SCheckbox = styled(Checkbox)`
 type LessonTabsType = {
   data: LessonNotesType;
   error: boolean;
+  course: CourseType;
   player: any; // eslint-disable-line
   reload: () => void;
 };
-const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player, reload }) => {
+const LessonTabs: React.FC<LessonTabsType> = ({
+  data,
+  error,
+  course,
+  player,
+  reload,
+}) => {
   const router = useRouter();
   const { courseId, lessonId } = router.query;
   const [tabs, setTabs] = useState([]);
@@ -36,18 +44,18 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player, reload }) =
   const [myNotes, setMyNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
   const [loading, setLoading] = useState(false);
-  const user = useSelector((state) => state.account.user);
 
   useEffect(() => {
     if (data) {
       const tab = [];
-      user && tab.push('myComments');
+      course?.registered && tab.push('myComments');
       !!data?.notes.length && tab.push('publicComments');
-      !!data?.trainings.length && tab.push('papers');
+      (course?.registered || !!data.trainings.length) && tab.push('papers');
       setTabs(tab);
       setSlide(tab[0] || null);
+      setMyNotes(data.my_notes);
     }
-  }, [data, user]);
+  }, [data, course]);
 
   const sendNote = async (): Promise<void> => {
     const time = Math.floor(player.current?.plyr.currentTime);
@@ -62,6 +70,12 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player, reload }) =
     } else {
       message.error(res.data?.message);
     }
+  };
+
+  const handleDeleteNote = async (note): Promise<void> => {
+    setMyNotes(myNotes.filter((item) => item.id !== note.id));
+    const res = await request.delete(DeleteNoteUrl(course.id, note.lesson_id, note.id));
+    res.ok && message.success((res as any).data.message); // eslint-disable-line
   };
 
   return (
@@ -109,9 +123,13 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player, reload }) =
             <div className="text-[16px] h-fit">
               {myNotes?.map((note) => (
                 <div
-                  className="my-[16px] bg-blue-11 p-[16px] rounded-[6px]"
+                  className="my-[16px] bg-blue-11 relative p-[16px] pl-[32px] break-all rounded-[6px]"
                   key={note.text}
                 >
+                  <CloseOutlined
+                    className="absolute left-7 cursor-pointer"
+                    onClick={(): Promise<void> => handleDeleteNote(note)}
+                  />
                   {note.text}
                   <div className="mt-[8px]">{calcTime(note.time)}</div>
                 </div>
@@ -123,8 +141,12 @@ const LessonTabs: React.FC<LessonTabsType> = ({ data, error, player, reload }) =
           <div className="p-[30px] pt-[10px] text-[16px]">
             {data?.notes.map((note) => (
               <div className="m-[16px] bg-blue-11 p-[16px] rounded-[6px]" key={note.text}>
-                {note.text}
-                <div className="mt-[8px]">{calcTime(note.time)}</div>
+                <AntComment
+                  text={note.text}
+                  avatar={note.user.avatar}
+                  name={note.user.nickname}
+                />
+                <div className="mr-[32px]">{calcTime(note.time)}</div>
               </div>
             ))}
           </div>

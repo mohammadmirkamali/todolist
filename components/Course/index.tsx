@@ -21,6 +21,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
   const [slideId, setSlideId] = useState('lessons');
   const id = router.query.courseId as string;
   const categories = course?.categories.map((k) => k.title);
+  const user = useSelector((state) => state.account.user);
   const error = useSelector((state) => state.course?.chapters)?.[id]?.error;
   const similarCourses =
     searchData &&
@@ -36,7 +37,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
   }, [course]);
 
   const reloadData = (): void => {
-    dispatch(getChapterAction(id));
+    dispatch(getChapterAction(id, !!user));
   };
 
   const reloadSearchData = (): void => {
@@ -122,10 +123,15 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
             {slideId === 'lessons' && <LessonsList course={course} />}
             {slideId === 'attaches' && <Attaches data={course?.attaches} />}
             {slideId === 'questions' && (
-              <UserComment data={course?.questions} id={course?.id} />
+              <UserComment
+                data={course?.questions}
+                id={course?.id}
+                register={course?.registered}
+              />
             )}
             {slideId === 'comments' && (
               <UserComment
+                register={course?.registered}
                 data={course?.comments}
                 type="workshops"
                 id={course?.id}
