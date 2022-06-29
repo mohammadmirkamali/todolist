@@ -1,6 +1,6 @@
 import { message, Modal, Popconfirm } from 'antd';
 import React, { useState } from 'react';
-import { CourseType, PageTermType, WebinarType } from 'types/course.type';
+import { CourseType, TermType, WebinarType } from 'types/course.type';
 import { t } from 'i18next';
 import AntButton from 'components/Common/AntButton';
 import { faNumber } from 'utils/common.util';
@@ -18,7 +18,7 @@ import { useRouter } from 'next/router';
 type ModalType = {
   isVisible: boolean;
   setIsVisible: (status) => void;
-  data: CourseType | WebinarType | PageTermType;
+  data: CourseType | WebinarType | TermType;
   url?: string;
 };
 const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url }) => {
@@ -28,7 +28,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
   const { eventId, termId } = router.query;
   const [code, setCode] = useState('');
   const type = eventId ? 'event' : 'workshop';
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(null);
   const [discount, setDiscount] = useState(null);
   const [discountPrice, setDiscountPrice] = useState(null);
   const price = discountPrice || Number(data?.price);
@@ -38,9 +38,9 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
   const handleDiscount = async (): Promise<void> => {
     const body = { code, for: type, id_for: id }; // eslint-disable-line
     setDiscount(code);
-    setLoading(true);
+    setLoading('discount');
     const res: any = await request.post(discountUrl(), body); // eslint-disable-line
-    setLoading(false);
+    setLoading(null);
     res.data.code ? message.success(res.data.msg) : message.warn(res.data.msg);
     res.data.code && setDiscountPrice(Number(res.data.price));
     res.data.code && url && router.push(url);
@@ -55,18 +55,25 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
         : DirectPayUrl(id, type);
 
     const body = { code: discount };
+    setLoading(method);
     const res: any = await request.post(href, body); // eslint-disable-line
-    res.ok ? message.success(res.data.message) : message.warn(res.data.message);
-    res.ok &&
-      (dispatch(
-        termId
-          ? getTermAction(termId)
-          : eventId
-          ? getEventAction(eventId)
-          : getChapterAction(data.id, !!user),
-      ),
-      setIsVisible(false));
+    setLoading(null);
+    if (method === 'direct') {
+      window.location.assign(res.data.link);
+    } else {
+      res.ok ? message.success(res.data.message) : message.warn(res.data.message);
+      res.ok &&
+        (dispatch(
+          termId
+            ? getTermAction(termId)
+            : eventId
+            ? getEventAction(eventId)
+            : getChapterAction(data.id, !!user),
+        ),
+        setIsVisible(false));
+    }
   };
+
   return (
     <Modal
       title={null}
@@ -93,7 +100,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
             width="120px"
             height="40px"
             fontSize={18}
-            loading={loading}
+            loading={loading === 'discount'}
             onClick={handleDiscount}
             disabled={!code.length}
           >
@@ -112,7 +119,11 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
           </div>
         )}
 
-        <div className="flex flex-col w-full mt-[60px] text-[16px]">
+        <div className="flex w-full text-[16px] mt-[24px]">
+          {t('global.walletCredit')} : {faNumber(Number(user?.price).toLocaleString())}
+        </div>
+
+        <div className="flex flex-col w-full mt-[16px] text-[16px]">
           <div className="mb-[8px]">{t('course.choosePayMethod')}</div>
           <div>
             <StyledButton
@@ -120,6 +131,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
               fontSize={16}
               ml="12px"
               height="40px"
+              loading={loading === 'direct'}
               borderRadius="8px"
               onClick={(): Promise<void> => handlePay('direct')}
             >
@@ -136,6 +148,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
                 <StyledButton
                   type="primary"
                   fontSize={16}
+                  loading={loading === item}
                   ml="12px"
                   height="40px"
                   borderRadius="8px"

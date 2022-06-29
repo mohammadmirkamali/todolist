@@ -18,7 +18,7 @@ const SButton = styled(Button)`
 
 const categories = [
   { name: 'home', route: url.HomeRoute() },
-  { name: 'posts', route: url.PostsRoute() },
+  // { name: 'posts', route: url.PostsRoute() },
 ];
 const access = [
   { name: 'conditions', route: url.ConditionRoute() },

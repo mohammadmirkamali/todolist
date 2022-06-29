@@ -141,14 +141,28 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
 
                 <div className="flex justify-between">
                   <p className="text-[16px]">{t('account.walletAmount')}</p>
-                  <p>{faNumber(Number(user?.price).toLocaleString())}</p>
+                  <div className="flex">
+                    <p>{faNumber(Number(user?.price).toLocaleString())}</p>
+                    <PlusOutlined
+                      className="text-[18px] mr-[4px] mt-[2px] cursor-pointer hover:text-blue-10 duration-300"
+                      onClick={(): void => {
+                        setIsModalVisible('mobile');
+                        dispatch(
+                          postProfileAction(null, {
+                            data: { next: 'chargeWallet' },
+                            ok: true,
+                          }),
+                        );
+                      }}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex justify-between ">
                   <p>{t('global.phoneNumber')}</p>
                   <div>
                     {faNumber(user?.mobile)}
-                    {/* <Edit type="mobile" text={user?.mobile} /> */}
+                    <Edit type="mobile" text={user?.mobile} />
                   </div>
                 </div>
 
@@ -233,7 +247,7 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
         footer={null}
         width={600}
         destroyOnClose
-        visible={isModalVisible === 'password'}
+        visible={isModalVisible === 'password' || isModalVisible === 'mobile'}
         onCancel={(): void => setIsModalVisible('')}
       >
         {profileData?.next === 'ForgetPassword_step2' ? (

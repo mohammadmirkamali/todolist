@@ -15,6 +15,7 @@ const initialState: CourseReducerType = {
   homeLoading: false,
   home: null,
   homeError: false,
+  changeTermLoading: false,
   termLoading: false,
   term: null,
   termError: false,
@@ -51,11 +52,6 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
 
     case type.UPDATE_COURSE: {
       const rewChapter = { ...state.chapters };
-      if (action.filed === 'passed_lessons') {
-        let passed: number[] = rewChapter[action.courseId].data.passed_lessons;
-        passed = [...(passed || []), Number(action.lessonId)];
-        rewChapter[action.courseId].data.passed_lessons = passed;
-      }
 
       if (action.filed === 'workshop_user_rate')
         rewChapter[action.id].data.workshop_user_rate = action.rate;
@@ -127,6 +123,17 @@ const courseReducer = (state = initialState, action): CourseReducerType => {
       return { ...state, termLoading: false, term: action.payload, termError: false };
     case type.GET_TERM_ERROR:
       return { ...state, termLoading: false, term: null, termError: true };
+
+    case type.CHANGE_TERM_HOUR_REQUEST:
+      return { ...state, changeTermLoading: true };
+    case type.CHANGE_TERM_HOUR_SUCCESS: {
+      const term = { ...state.term };
+      term.available_days = action.days;
+      term.week_hours = action.hours;
+      return { ...state, changeTermLoading: false, term };
+    }
+    case type.CHANGE_TERM_HOUR_ERROR:
+      return { ...state, changeTermLoading: false };
 
     case type.CLEAR_STORE:
       return { ...state, term: null, chapters: null, event: null };

@@ -17,6 +17,9 @@ export const SNav = styled.nav`
 
 export const SExit = styled(Tooltip)`
   transition: all 0.3s;
+  transform: rotate(-180deg);
+  margin-left: -8px;
+  margin-right: 12px;
   :hover {
     color: ${({ theme }): string => theme.colors.red[0]};
   }

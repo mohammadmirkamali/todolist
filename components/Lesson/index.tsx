@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getChapterAction } from 'store/course/course.action';
 import Plyr from 'plyr-react';
 import styled from '@emotion/styled';
-import { UPDATE_COURSE } from 'store/course/course.constants';
+import { UPDATE_USER } from 'store/account/account.constants';
 
 const controls = [
   'play',
@@ -89,7 +89,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
     res.ok && (setSeeStatus(true), message.success(res.data.message));
     res.ok &&
       dispatch({
-        type: UPDATE_COURSE,
+        type: UPDATE_USER,
         filed: 'passed_lessons',
         lessonId,
         courseId,
@@ -160,7 +160,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
 
           <div className="absolute p-[20px] flex-col md:flex-wrap flex text-[15px] bg-white bottom-[480px] md:bottom-[490px] rounded-[8px]  w-full xl:bottom-0 h-[170px] md:h-[150px]">
             {!data || lesson?.exam === false ? null : data?.exam?.passed ? (
-              <div className="mb-[14px] rounded-[4px] items-center flex text-green-0">
+              <div className="mb-[14px] rounded-[4px] items-center flex text-green-5">
                 {t('course.passedExam', { grade: faNumber(data?.exam?.grade) })}
               </div>
             ) : (
