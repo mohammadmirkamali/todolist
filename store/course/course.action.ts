@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable arrow-body-style */
+import { message } from 'antd';
 import request from 'services/request';
 import * as api from 'services/routes';
 import { ResType } from 'types/common.type';
@@ -59,19 +61,31 @@ export const getTermAction = (id) => {
     const response: ResType = await request.get(api.TermUrl(id));
 
     if (response.ok) {
-      dispatch({
-        type: type.GET_TERM_SUCCESS,
-        payload: {
-          ...response.data,
-          price: response.data.term.price,
-          id: response.data.term.id,
-          title: response.data.term.title,
-        },
-      });
+      dispatch({ type: type.GET_TERM_SUCCESS, payload: response.data });
       return response.data;
     }
 
     dispatch({ type: type.GET_TERM_ERROR });
+    return false;
+  };
+};
+
+export const changeTermHourAction = (id, hours, days) => {
+  return async (dispatch): Promise<unknown> => {
+    dispatch({ type: type.CHANGE_TERM_HOUR_REQUEST });
+    const response: ResType = await request.post(api.ChangeTermHoursUrl(id), {
+      week_hours: hours,
+      available_days: days,
+    });
+
+    if (response.ok) {
+      message.success(response.data.message);
+      dispatch({ type: type.CHANGE_TERM_HOUR_SUCCESS, hours, days });
+      return response.data;
+    }
+
+    message.error(response.data.message);
+    dispatch({ type: type.CHANGE_TERM_HOUR_ERROR });
     return false;
   };
 };

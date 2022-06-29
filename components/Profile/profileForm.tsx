@@ -4,9 +4,15 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import FormField from 'components/Common/formField';
 import AppForm from 'components/Common/appForm';
-import { postProfileAction } from 'store/account/account.action';
-import { ForgetPasswordCodedUrl } from 'services/routes';
+import { getUserAction, postProfileAction } from 'store/account/account.action';
+import {
+  ChangeMobileUrl,
+  ConfirmMobileUrl,
+  ForgetPasswordCodedUrl,
+} from 'services/routes';
 import { SSubmitForm } from './style';
+import { faNumber } from 'utils/common.util';
+import { message } from 'antd';
 
 type FormType = {
   profileData: any; // eslint-disable-line
@@ -14,7 +20,9 @@ type FormType = {
   setIsVisible: (value) => void;
 };
 const ProfileForm: React.FC<FormType> = ({ profileData, setIsVisible }) => {
-  const step = profileData?.next || 'enterNumber';
+  const step =
+    profileData?.next === 'login' ? 'newMobile' : profileData?.next || 'newMobile'; // after change password next is login
+  const user = useSelector((state) => state.account.user);
   const loading = useSelector((state) => state.account.profileLoading);
   const dispatch = useDispatch();
 
@@ -24,11 +32,27 @@ const ProfileForm: React.FC<FormType> = ({ profileData, setIsVisible }) => {
 
   switch (step) {
     case 'ForgetPassword_step1':
-      data = ['forgotPassword', null, ForgetPasswordCodedUrl(), 'number', 'code'];
+      data = ['addMobileCode', null, ForgetPasswordCodedUrl(), 'number', 'code'];
       body = (value): object => ({
-        auth: '09356942668',
+        auth: user.mobile,
         code: value.toString(),
         AuthType: 'mobile',
+      });
+      yup = Yup.number().required(t('account.emptyField'));
+      break;
+
+    case 'newMobile' || 'login':
+      data = ['newMobile', null, ChangeMobileUrl(), 'number', 'number'];
+      body = (value): object => ({ type: 'mobile', new: value.toString() });
+      yup = Yup.number().required(t('account.emptyField'));
+      break;
+
+    case 'confirm-MobileOrEmail':
+      data = ['addMobileCode', null, ConfirmMobileUrl(), 'number', 'code'];
+      body = (value): object => ({
+        type: 'mobile',
+        code: value.toString(),
+        new: profileData.new,
       });
       yup = Yup.number().required(t('account.emptyField'));
       break;
@@ -42,6 +66,11 @@ const ProfileForm: React.FC<FormType> = ({ profileData, setIsVisible }) => {
   return (
     <div className=" flex flex-col justify-center items-center">
       <div className="text-[26px] font-bold">{t(`account.${data[0]}`)}</div>
+      {step === 'confirm-MobileOrEmail' && (
+        <div className="text-[16px] mt-[8px]">
+          {t(`account.mobileCode`, { number: faNumber(profileData.new) })}
+        </div>
+      )}
 
       <AppForm
         initialValues={{ value: '' }}
@@ -51,13 +80,11 @@ const ProfileForm: React.FC<FormType> = ({ profileData, setIsVisible }) => {
           const result: any = await dispatch(
             postProfileAction(data[2], body(values.value)),
           );
-          //   if (result.data.next === 'login') {
-          //     dispatch(getUserAction());
-          //     setIsVisible(false);
-          //     dispatch(
-          //       postProfileAction(null, { data: { next: 'enterNumber' }, ok: true }),
-          //     );
-          //   }
+          if (result.data.success && !result.data.next) {
+            dispatch(getUserAction());
+            setIsVisible(false);
+            message.success(result.data.message);
+          }
           result && resetForm();
         }}
       >

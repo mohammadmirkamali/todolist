@@ -103,7 +103,17 @@ const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) =>
                 >
                   {item.options.map((key) => (
                     <Radio key={key.id} value={key.id} disabled={!timer || result}>
-                      {key.option}
+                      <div
+                        className={`${
+                          result?.answers[index]?.correct_option === key.id
+                            ? 'text-green-5'
+                            : result?.answers[index]?.option_id === key.id
+                            ? 'text-red-0'
+                            : ''
+                        }`}
+                      >
+                        {key.option}
+                      </div>
                     </Radio>
                   ))}
                 </SGroup>
@@ -114,7 +124,7 @@ const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) =>
           {result ? (
             <div className="flex flex-col items-center">
               <div
-                className={`text-[18px] ${result.passed ? 'text-green-0' : 'text-red-0'}`}
+                className={`text-[18px] ${result.passed ? 'text-green-5' : 'text-red-0'}`}
               >
                 {t(`exam.${result.passed ? 'passed' : 'failed'}`, {
                   grade: faNumber(result.grade),

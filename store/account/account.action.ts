@@ -14,7 +14,10 @@ export const postLoginAction = (url, body) => {
     if (response.ok) {
       const { data } = response;
       data.token &&
-        setCookie(null, 'taalei', data.token.replace('Bearer ', ''), { path: '/' });
+        setCookie(null, 'taalei', data.token.replace('Bearer ', ''), {
+          path: '/',
+          maxAge: 99999999,
+        });
       dispatch({ type: type.POST_LOGIN_SUCCESS, payload: data });
       return data.token && !data.next ? null : response;
     }
@@ -33,7 +36,10 @@ export const postProfileAction = (url, body) => {
     if (response.ok) {
       const { data } = response;
       data.token &&
-        setCookie(null, 'taalei', data.token.replace('Bearer ', ''), { path: '/' });
+        setCookie(null, 'taalei', data.token.replace('Bearer ', ''), {
+          path: '/',
+          maxAge: 99999999,
+        });
       dispatch({ type: type.POST_PROFILE_SUCCESS, payload: data });
       return data.token && !data.next ? null : response;
     }

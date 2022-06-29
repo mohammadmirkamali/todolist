@@ -148,7 +148,7 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
                   <p>{t('global.phoneNumber')}</p>
                   <div>
                     {faNumber(user?.mobile)}
-                    {/* <Edit type="mobile" text={user?.mobile} /> */}
+                    <Edit type="mobile" text={user?.mobile} />
                   </div>
                 </div>
 
@@ -233,7 +233,7 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
         footer={null}
         width={600}
         destroyOnClose
-        visible={isModalVisible === 'password'}
+        visible={isModalVisible === 'password' || isModalVisible === 'mobile'}
         onCancel={(): void => setIsModalVisible('')}
       >
         {profileData?.next === 'ForgetPassword_step2' ? (

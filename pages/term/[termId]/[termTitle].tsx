@@ -16,7 +16,7 @@ const WebinarPage: React.FC = () => {
   const term = useSelector((state) => state.course.term);
 
   useEffect(() => {
-    termId && Number(termId) !== term?.term.id && dispatch(getTermAction(termId));
+    termId && Number(termId) !== term?.id && dispatch(getTermAction(termId));
   }, [termId]);
 
   return (

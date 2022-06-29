@@ -32,6 +32,16 @@ const accountReducer = (state = initialState, action): AccountType => {
     case type.POST_PROFILE_ERROR:
       return { ...state, profileLoading: false };
 
+    case type.UPDATE_USER: {
+      const newUser = { ...state.user };
+      if (action.filed === 'passed_lessons') {
+        newUser.workshops
+          .find((item) => item.id === Number(action.courseId))
+          .passed_lessons.push(Number(action.lessonId));
+      }
+
+      return { ...state, user: newUser };
+    }
     default:
       return state;
   }

@@ -10,7 +10,7 @@ export type UserType = {
   fake_rate: string;
   sex: number;
   info: { birthYear: string };
-  workshops: { id: number; passed_lessons: number }[];
+  workshops: { id: number; passed_lessons: number[] }[];
   events: { id: number; title: string }[];
 };
 

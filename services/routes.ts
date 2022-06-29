@@ -35,6 +35,7 @@ export const DeleteNoteUrl = (courseId, lessonId, noteId): string =>
   `/api/v1/workshops/${courseId}/lessons/${lessonId}/notes/${noteId}`;
 export const PostsUrl = (): string => `/api/v1/posts`;
 export const RateCourseUrl = (id): string => `/api/v1/workshops/${id}/setRate`;
+export const ChangeTermHoursUrl = (id): string => `/api/v1/terms/${id}/update-setting`;
 export const ChangeUserImgUrl = (): string => `/api/v1/change-user-avatar`;
 export const UpdateUserInfoUrl = (): string => `/api/v1/update-user-info`;
 
