@@ -36,7 +36,7 @@ const Profile: React.FC<{ setIsModalVisible: (value) => void }> = ({
           <span className="text-[18px] mr-[6px] mt-[4px]">{faNumber(223)}</span>
         </div>
       </Tooltip> */}
-      <SExit title={t('global.exit')} placement="left">
+      <SExit title={t('global.exit')}>
         <LogoutOutlined
           onClick={async (): Promise<void> => {
             await router.push(HomeRoute()); // to not get error on logout on profile page

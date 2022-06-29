@@ -32,7 +32,6 @@ export const postProfileAction = (url, body) => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.POST_PROFILE_REQUEST });
     const response: any = url ? await request.post(url, body) : body; // eslint-disable-line
-
     if (response.ok) {
       const { data } = response;
       data.token &&

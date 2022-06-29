@@ -38,6 +38,7 @@ export const RateCourseUrl = (id): string => `/api/v1/workshops/${id}/setRate`;
 export const ChangeTermHoursUrl = (id): string => `/api/v1/terms/${id}/update-setting`;
 export const ChangeUserImgUrl = (): string => `/api/v1/change-user-avatar`;
 export const UpdateUserInfoUrl = (): string => `/api/v1/update-user-info`;
+export const PayResultUrl = (): string => `/api/v1/DirectPay/result`;
 
 // ///////////////////////////////////////////////////////////////
 
@@ -50,6 +51,7 @@ export const ForgetPasswordCodedUrl = (): string => `/api/v1/forget_password_ste
 export const ForgetPasswordNewUrl = (): string => `/api/v1/forget_password_step2`;
 export const ChangeMobileUrl = (): string => `/api/v1/changeMobileOrEmail`;
 export const ConfirmMobileUrl = (): string => `/api/v1/confirm-MobileOrEmail`;
+export const ChargeWalletUrl = (amount): string => `/api/v1/DirectPay/wallet/${amount}`;
 
 // //////////////////////////////////////////////////////////////////////////////////
 export const HomeRoute = (): string => `/`;
@@ -74,8 +76,3 @@ export const DownloadRoute = (): string => `https://dl.taalei-edu.ir/taalei.apk`
 export const TelNumber = (): string => `0915 424 1197`;
 export const ContactUsRoute = (): string => `/contact-us`;
 export const PostsRoute = (): string => `/posts`;
-// /////////////////////////////////////////////////////////////////////
-
-export const ProfileUrl = (): string => `/api/v2/getProfile`;
-export const WebinarUrl = (id): string => `/api/v2/webinar/${id}`;
-export const WorkshopUrl = (id): string => `/api/v2/workshop/${id}`;

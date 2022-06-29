@@ -8,7 +8,7 @@ import { CourseType } from 'types/course.type';
 import { calcTime, faNumber } from 'utils/common.util';
 import TeacherAvatar from 'components/Common/TeacherAvatar';
 import { SButton } from 'components/Course/style';
-import RateStudents from './rateStudents';
+// import RateStudents from './rateStudents';
 import LoginLayout from 'components/Common/LoginLayout';
 import request from 'services/request';
 import { RateCourseUrl } from 'services/routes';
@@ -118,10 +118,10 @@ const Information: React.FC<InfoType> = ({ course }) => {
         </div>
       )}
 
-      {course?.top_users?.length ? <RateStudents data={course?.top_users} top /> : null}
+      {/* {course?.top_users?.length ? <RateStudents data={course?.top_users} top /> : null}
       {user && course?.user_rate?.length ? (
         <RateStudents data={course?.user_rate} />
-      ) : null}
+      ) : null} */}
 
       <div className="center">
         {(!course.registered || !user) && (

@@ -141,7 +141,21 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
 
                 <div className="flex justify-between">
                   <p className="text-[16px]">{t('account.walletAmount')}</p>
-                  <p>{faNumber(Number(user?.price).toLocaleString())}</p>
+                  <div className="flex">
+                    <p>{faNumber(Number(user?.price).toLocaleString())}</p>
+                    <PlusOutlined
+                      className="text-[18px] mr-[4px] mt-[2px] cursor-pointer hover:text-blue-10 duration-300"
+                      onClick={(): void => {
+                        setIsModalVisible('mobile');
+                        dispatch(
+                          postProfileAction(null, {
+                            data: { next: 'chargeWallet' },
+                            ok: true,
+                          }),
+                        );
+                      }}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex justify-between ">

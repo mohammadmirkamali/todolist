@@ -7,12 +7,14 @@ import AppForm from 'components/Common/appForm';
 import { getUserAction, postProfileAction } from 'store/account/account.action';
 import {
   ChangeMobileUrl,
+  ChargeWalletUrl,
   ConfirmMobileUrl,
   ForgetPasswordCodedUrl,
 } from 'services/routes';
 import { SSubmitForm } from './style';
 import { faNumber } from 'utils/common.util';
 import { message } from 'antd';
+import request from 'services/request';
 
 type FormType = {
   profileData: any; // eslint-disable-line
@@ -41,9 +43,14 @@ const ProfileForm: React.FC<FormType> = ({ profileData, setIsVisible }) => {
       yup = Yup.number().required(t('account.emptyField'));
       break;
 
-    case 'newMobile' || 'login':
+    case 'newMobile':
       data = ['newMobile', null, ChangeMobileUrl(), 'number', 'number'];
       body = (value): object => ({ type: 'mobile', new: value.toString() });
+      yup = Yup.number().required(t('account.emptyField'));
+      break;
+
+    case 'chargeWallet':
+      data = ['chargeWallet', null, null, 'number', 'payInTooman'];
       yup = Yup.number().required(t('account.emptyField'));
       break;
 
@@ -76,16 +83,25 @@ const ProfileForm: React.FC<FormType> = ({ profileData, setIsVisible }) => {
         initialValues={{ value: '' }}
         validationSchema={validationSchema}
         onSubmit={async (values, { resetForm }): Promise<void> => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const result: any = await dispatch(
-            postProfileAction(data[2], body(values.value)),
-          );
-          if (result.data.success && !result.data.next) {
-            dispatch(getUserAction());
-            setIsVisible(false);
-            message.success(result.data.message);
+          if (step === 'chargeWallet') {
+            const res: any = await request.post(ChargeWalletUrl(values.value)); // eslint-disable-line
+            if (res.ok) {
+              await window.location.assign(res.data.link);
+              setIsVisible(false);
+              dispatch(postProfileAction(null, { data: { next: null }, ok: true }));
+            }
+          } else {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const result: any = await dispatch(
+              postProfileAction(data[2], body(values.value)),
+            );
+            if (result.data.success && !result.data.next) {
+              dispatch(getUserAction());
+              setIsVisible(false);
+              message.success(result.data.message);
+            }
+            result && resetForm();
           }
-          result && resetForm();
         }}
       >
         <FormField
