@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import React, { ReactElement, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { t } from 'i18next';
-import ScrollContainer from 'react-indiana-drag-scroll';
+// import ScrollContainer from 'react-indiana-drag-scroll';
 import Card from 'components/Common/Card';
 import { CourseType } from 'types/course.type';
 import UserComment from './comment';
@@ -51,7 +51,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
           {t('course.relatedCourses')}
         </h3>
 
-        <LoadingBox data={course} error={error} reload={reloadSearchData}>
+        {/* <LoadingBox data={course} error={error} reload={reloadSearchData}>
           <ScrollContainer className="flex overflow-auto">
             {similarCourses?.map((item) => (
               <div className="scale-[.8] m-[-27px]" key={item.id}>
@@ -59,7 +59,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
               </div>
             ))}
           </ScrollContainer>
-        </LoadingBox>
+        </LoadingBox> */}
       </div>
     );
 
