@@ -13,8 +13,8 @@ const RateStudents: React.FC<{ data: TopRateType[]; top?: boolean }> = ({
 }) => (
   <div className="py-[7px] flex text-[16px] flex-col pr-[15px] overflow-hidden w-full">
     <p className="m-0 mb-[8px]">{t(`course.${top ? 'rateStudents' : 'yourRate'}`)}</p>
-    <>
-      <ScrollContainer className="flex">
+    <ScrollContainer className="flex">
+      <>
         {data.map((item) => (
           <div
             key={item.id}
@@ -38,8 +38,8 @@ const RateStudents: React.FC<{ data: TopRateType[]; top?: boolean }> = ({
             </div>
           </div>
         ))}
-      </ScrollContainer>
-    </>
+      </>
+    </ScrollContainer>
   </div>
 );
 
