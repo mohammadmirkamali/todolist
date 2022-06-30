@@ -34,10 +34,10 @@ const AllData: React.FC<{ type: string }> = ({ type }) => {
   };
   return (
     <div className="p-[36px] bg-gray-11 min-h-screen">
+      <div className="center font-bold my-[24px] text-[32px]">
+        {t(`landing.all-${type}`)}
+      </div>
       <LoadingBox data={searchData} error={error} reload={reload}>
-        <div className="center font-bold my-[24px] text-[32px]">
-          {t(`landing.all-${type}`)}
-        </div>
         <div className="flex flex-wrap center">
           {(type === 'events' || type === 'courses') &&
             data?.map((item) => (

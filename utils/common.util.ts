@@ -123,7 +123,9 @@ export const generateOptions = (searchData: SearchDataType): SearchOptionType[] 
         term: item.term,
       })) || [];
 
-  return [...coursesOptions, ...teacherOptions];
+  const homeRote = { name: t('global.home'), home: true, id: 1 };
+
+  return [homeRote, ...coursesOptions, ...teacherOptions];
 };
 
 export const ellipsisText = (text, length): string => {

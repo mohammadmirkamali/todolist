@@ -229,5 +229,6 @@ export type SearchOptionType = {
   category?: string;
   webinar?: boolean;
   term?: boolean;
+  home?: boolean;
   isTeacher?: boolean;
 };

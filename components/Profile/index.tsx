@@ -3,17 +3,14 @@ import { EditOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import { message, Select } from 'antd';
+import { Select } from 'antd';
 import { t } from 'i18next';
 import AntTooltip from 'components/Common/AntTooltip';
-import { CoursesType, CourseType, SearchDataType, WebinarsType } from 'types/course.type';
+import { SearchDataType, WebinarsType } from 'types/course.type';
 import { faNumber } from 'utils/common.util';
 import Card from 'components/Common/Card';
 import ProfileImg from './profileImg';
-import { SSelect } from './style';
-import { UserType } from 'types/account.type';
-import request from 'services/request';
-import { ChangeMobileUrl, ForgetPasswordUrl } from 'services/routes';
+import { ForgetPasswordUrl } from 'services/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingBox from 'components/Common/LoadingBox';
 import { getSearchDataAction } from 'store/course/course.action';
@@ -55,7 +52,6 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
 
   const [isModalVisible, setIsModalVisible] = useState('');
   const [loading, setLoading] = useState(null);
-  const [input, setInput] = useState('');
   const [filterCourses, setFilterCourses] = useState(
     [...profileCourses].sort(
       (a, b) => time(b.created_at || '0') - time(a.created_at || '0'),
@@ -215,10 +211,10 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
 
       <div className="xl:pr-[370px] w-[320px] md:w-[650px] py-[20px] xl:pl-[20px]  xl:justify-self-start xl:w-full">
         <div>
-          <SSelect defaultValue="newest" onChange={handleFilter} className="rounded-sm">
+          {/* <SSelect defaultValue="newest" onChange={handleFilter} className="rounded-sm">
             <Option value="newest">{t('global.newest')}</Option>
             <Option value="mostPopular">{t('global.mostPopular')}</Option>
-          </SSelect>
+          </SSelect> */}
 
           <div className="justify-center xl:justify-start flex flex-wrap">
             <LoadingBox
