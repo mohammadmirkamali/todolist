@@ -13,23 +13,23 @@ services:
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
       - /mystorage/docker_logs/tfront/nginx:/var/log/nginx:rw
-#    depends_on:
-#      - app
+    depends_on:
+      - app
     networks:
       - public
-#  app:
-#    container_name: taalei-next-app
-#    build:
-#      context: "./"
-#      dockerfile: Dockerfile
-#      args:
-#        ENV_VARIABLE: ${ENV_VARIABLE}
-#        NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
-#    restart: always
-#    ports:
-#      - "3200:3200"
-#    networks:
-#      - public
+  front_app:
+    container_name: taalei-next-app
+    build:
+      context: "./"
+      dockerfile: Dockerfile
+      args:
+        ENV_VARIABLE: ${ENV_VARIABLE}
+        NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+    restart: always
+    ports:
+      - "3200:3200"
+    networks:
+      - public
   # Add more containers below (nginx, postgres, etc.)
 
 # Define a network, which allows containers to communicate
