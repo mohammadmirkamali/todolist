@@ -25,6 +25,7 @@ const Webinar: React.FC = () => {
   const reload = (): void => {
     dispatch(getEventAction(eventId));
   };
+
   return (
     <div className="duration-300 bg-gray-0 min-h-screen flex-col flex items-center justify-items-start">
       <div className="xl:pr-[370px] mt-[20px] md:mt-0 w-screen md:w-[700px] py-[20px] xl:pl-[20px]  xl:justify-self-start xl:w-full">
@@ -160,7 +161,8 @@ const Webinar: React.FC = () => {
             )}
             {slide === 'questions' && (
               <UserComment
-                data={data?.comments.data}
+                type="events"
+                data={data?.questions}
                 id={data?.id}
                 register={data?.registered}
               />

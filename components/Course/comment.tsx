@@ -17,11 +17,13 @@ import { faNumber } from 'utils/common.util';
 type CommentType = {
   data: CommentsType[] | QuestionsType[];
   comment?: boolean;
+  notAllowToAsk?: boolean;
   register: boolean;
   id: number;
-  type?: 'workshops' | 'events';
+  type: 'workshops' | 'events';
 };
-const UserComment: React.FC<CommentType> = ({ data, comment, id, register, type }) => {
+const UserComment: React.FC<CommentType> = (props) => {
+  const { data, comment, id, register, type, notAllowToAsk } = props;
   const [loading, setLoading] = useState(false);
   const [allData, setAllData] = useState(data);
   const [description, setDescription] = useState('');
@@ -34,7 +36,7 @@ const UserComment: React.FC<CommentType> = ({ data, comment, id, register, type 
     setSendLoading(true);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = await request.post(
-      comment ? SendCommentUrl(id, type) : SendQuestionUrl(id),
+      comment ? SendCommentUrl(id, type) : SendQuestionUrl(id, type),
       body,
     );
     setSendLoading(false);
@@ -91,7 +93,7 @@ const UserComment: React.FC<CommentType> = ({ data, comment, id, register, type 
           </div>
         )}
       </div>
-      {register && (
+      {register && !notAllowToAsk && (
         <div className="w-full center flex-col toLeft text-[16px]">
           {!comment && (
             <div>

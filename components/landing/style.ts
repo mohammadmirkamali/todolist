@@ -8,3 +8,15 @@ export const StyledLanding = styled.div`
   width: 100%;
   height: 200vh;
 `;
+
+export const SAllLink = styled.a`
+  .anticon {
+    transform: translateX(-4px);
+    transition: all 0.3s;
+  }
+  :hover {
+    .anticon {
+      transform: translateX(-16px);
+    }
+  }
+`;

@@ -3,10 +3,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ProfileRoute } from 'services/routes';
+import { AllPageRoute, ProfileRoute } from 'services/routes';
 import user from 'public/user.svg';
 import LoadingBox from 'components/Common/LoadingBox';
 import { getHomeAction } from 'store/course/course.action';
+import { SAllLink } from './style';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const Teachers: React.FC = () => {
   const dispatch = useDispatch();
@@ -49,6 +51,12 @@ const Teachers: React.FC = () => {
           })}
         </div>
       </LoadingBox>
+
+      <Link href={AllPageRoute('teachers')}>
+        <SAllLink className="mb-[36px] text-[16px] text-blue-1 cursor-pointer">
+          {t('landing.seeAllTeachers')} <ArrowLeftOutlined />
+        </SAllLink>
+      </Link>
     </div>
   );
 };

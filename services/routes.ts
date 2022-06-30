@@ -19,7 +19,7 @@ export const EventUrl = (id): string => `/api/v1/events/${id}`;
 export const CommentUrl = (id, page): string =>
   `/api/v1/workshops/${id}/comments?page=${page}`;
 export const SendCommentUrl = (id, type): string => `/api/v1/${type}/${id}/comments`;
-export const SendQuestionUrl = (id): string => `/api/v1/workshops/${id}/questions`;
+export const SendQuestionUrl = (id, type): string => `/api/v1/${type}/${id}/questions`;
 export const QuestionUrl = (id): string => `/api/v1/workshops/${id}/questions`;
 export const ExamInfoUrl = (courseId, lessonId): string =>
   `/api/v1/workshops/${courseId}/lessons/${lessonId}/exam-review`;
@@ -55,6 +55,7 @@ export const ChargeWalletUrl = (amount): string => `/api/v1/DirectPay/wallet/${a
 
 // //////////////////////////////////////////////////////////////////////////////////
 export const HomeRoute = (): string => `/`;
+export const AllPageRoute = (type): string => `/all/${type}`;
 export const CourseRoute = (id, name): string =>
   `/workshop/${id}/${name?.replace(/ /g, '-')}`;
 export const WebinarRoute = (id, name): string =>
