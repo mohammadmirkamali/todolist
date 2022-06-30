@@ -13,31 +13,33 @@ const RateStudents: React.FC<{ data: TopRateType[]; top?: boolean }> = ({
 }) => (
   <div className="py-[7px] flex text-[16px] flex-col pr-[15px] overflow-hidden w-full">
     <p className="m-0 mb-[8px]">{t(`course.${top ? 'rateStudents' : 'yourRate'}`)}</p>
-    <ScrollContainer className="flex">
-      {data.map((item) => (
-        <div
-          key={item.id}
-          className=" flex flex-col ml-[30px] items-center max-w-[100px] text-[14px] shrink-0 text-center"
-        >
-          {item.avatar ? (
-            <Avatar src={item.avatar} alt="avatar" />
-          ) : (
-            <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-          )}
+    <>
+      <ScrollContainer className="flex">
+        {data.map((item) => (
+          <div
+            key={item.id}
+            className=" flex flex-col ml-[30px] items-center max-w-[100px] text-[14px] shrink-0 text-center"
+          >
+            {item.avatar ? (
+              <Avatar src={item.avatar} alt="avatar" />
+            ) : (
+              <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+            )}
 
-          <div className="toRight">
-            <AntTooltip name={item.nickname || ''} length={13}>
-              {item.nickname}
-            </AntTooltip>
+            <div className="toRight">
+              <AntTooltip name={item.nickname || ''} length={13}>
+                {item.nickname}
+              </AntTooltip>
 
-            <div className="text-[12px]">
-              ( {faNumber(item.total_rate)} <StarFilled className="translate-y-[-2px] " />{' '}
-              )
+              <div className="text-[12px]">
+                ( {faNumber(item.total_rate)}{' '}
+                <StarFilled className="translate-y-[-2px] " /> )
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-    </ScrollContainer>
+        ))}
+      </ScrollContainer>
+    </>
   </div>
 );
 
