@@ -10,6 +10,10 @@ import useWindowSize from 'hooks/useWidowsSize';
 import LoadingBox from 'components/Common/LoadingBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHomeAction } from 'store/course/course.action';
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import Link from 'next/link';
+import { AllPageRoute } from 'services/routes';
+import { SAllLink } from './style';
 
 type SliderType = { courses: CoursesType[]; title: string };
 const Slider: React.FC<SliderType> = ({ courses, title }) => {
@@ -21,7 +25,7 @@ const Slider: React.FC<SliderType> = ({ courses, title }) => {
     dispatch(getHomeAction());
   };
   return (
-    <div className="bg-blue-11 w-full md:my-[50px] center flex-col pb-[60px]">
+    <div className="bg-blue-11 w-full md:my-[50px] center flex-col pb-[40px]">
       <h2 className="font-bold text-[24px] md:text-[27px] my-[30px]">
         {t(`landing.${title}`)}
       </h2>
@@ -37,6 +41,11 @@ const Slider: React.FC<SliderType> = ({ courses, title }) => {
           ))}
         </LoadingBox>
       </div>
+      <Link href={AllPageRoute('courses')}>
+        <SAllLink className="mt-[24px] text-[16px] text-blue-1 cursor-pointer">
+          {t('landing.seeAllCourses')} <ArrowLeftOutlined />
+        </SAllLink>
+      </Link>
     </div>
   );
 };

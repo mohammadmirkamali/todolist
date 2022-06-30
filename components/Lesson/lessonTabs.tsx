@@ -156,6 +156,7 @@ const LessonTabs: React.FC<LessonTabsType> = ({
         {slide === 'questions' && (
           <div className="p-[24px]">
             <UserComment
+              type="workshops"
               data={data?.questions}
               id={course?.id}
               register={course?.registered}

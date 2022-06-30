@@ -20,7 +20,7 @@ type CommentType = {
   notAllowToAsk?: boolean;
   register: boolean;
   id: number;
-  type?: 'workshops' | 'events';
+  type: 'workshops' | 'events';
 };
 const UserComment: React.FC<CommentType> = (props) => {
   const { data, comment, id, register, type, notAllowToAsk } = props;
@@ -36,7 +36,7 @@ const UserComment: React.FC<CommentType> = (props) => {
     setSendLoading(true);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = await request.post(
-      comment ? SendCommentUrl(id, type) : SendQuestionUrl(id),
+      comment ? SendCommentUrl(id, type) : SendQuestionUrl(id, type),
       body,
     );
     setSendLoading(false);
