@@ -118,10 +118,8 @@ const Information: React.FC<InfoType> = ({ course }) => {
         </div>
       )}
 
-      {course?.top_users?.length ? <RateStudents data={course?.top_users} top /> : null}
-      {user && course?.user_rate?.length ? (
-        <RateStudents data={course?.user_rate} />
-      ) : null}
+      {!!course?.top_users?.length && <RateStudents data={course?.top_users} top />}
+      {user && !!course?.user_rate?.length && <RateStudents data={course?.user_rate} />}
 
       <div className="center">
         {(!course.registered || !user) && (
