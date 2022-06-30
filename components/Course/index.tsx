@@ -127,6 +127,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
                 data={course?.questions}
                 id={course?.id}
                 register={course?.registered}
+                notAllowToAsk
               />
             )}
             {slideId === 'comments' && (

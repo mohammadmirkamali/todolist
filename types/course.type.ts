@@ -213,7 +213,7 @@ export type LessonNotesType = {
   notes: { text: string; time: number; user: { avatar: string; nickname: string } }[];
   my_notes: { text: string; time: number }[];
   attaches: { link: string; size?: string }[];
-  questions: { title: string; description: string; visit: number }[];
+  questions: QuestionsType[];
   trainings: {
     attachment: string;
     description: string;

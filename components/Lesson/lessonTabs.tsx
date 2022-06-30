@@ -13,6 +13,7 @@ import Papers from './papers';
 import LoadingBox from 'components/Common/LoadingBox';
 import { CloseOutlined } from '@ant-design/icons';
 import AntComment from 'components/Common/AntComment';
+import UserComment from 'components/Course/comment';
 
 const SCheckbox = styled(Checkbox)`
   font-size: 12px;
@@ -50,6 +51,7 @@ const LessonTabs: React.FC<LessonTabsType> = ({
       const tab = [];
       course?.registered && tab.push('myComments');
       !!data?.notes.length && tab.push('publicComments');
+      (course?.registered || !!data.questions.length) && tab.push('questions');
       (course?.registered || !!data.trainings.length) && tab.push('papers');
       setTabs(tab);
       setSlide(tab[0] || null);
@@ -149,6 +151,15 @@ const LessonTabs: React.FC<LessonTabsType> = ({
                 <div className="mr-[32px]">{calcTime(note.time)}</div>
               </div>
             ))}
+          </div>
+        )}
+        {slide === 'questions' && (
+          <div className="p-[24px]">
+            <UserComment
+              data={data?.questions}
+              id={course?.id}
+              register={course?.registered}
+            />
           </div>
         )}
         {slide === 'papers' && <Papers data={data} />}
