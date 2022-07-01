@@ -23,7 +23,7 @@ const categories = [
 const access = [
   { name: 'conditions', route: url.ConditionRoute() },
   { name: 'finance', route: url.FinanceRoute() },
-  { name: 'contactUs', route: url.ContactUsRoute() },
+  // { name: 'contactUs', route: url.ContactUsRoute() },
 ];
 
 const Footer: React.FC = () => (

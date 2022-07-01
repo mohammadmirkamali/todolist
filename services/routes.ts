@@ -39,6 +39,10 @@ export const ChangeTermHoursUrl = (id): string => `/api/v1/terms/${id}/update-se
 export const ChangeUserImgUrl = (): string => `/api/v1/change-user-avatar`;
 export const UpdateUserInfoUrl = (): string => `/api/v1/update-user-info`;
 export const PayResultUrl = (): string => `/api/v1/DirectPay/result`;
+export const MyTransactionsUrl = (): string => `/api/my_transactions`;
+export const MyCommentsUrl = (): string => `/api/my_comments`;
+export const MyTrainingUrl = (): string => `/api/my_trainings`;
+export const MyQuestionsUrl = (): string => `/api/my_questions`;
 
 // ///////////////////////////////////////////////////////////////
 

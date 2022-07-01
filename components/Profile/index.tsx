@@ -17,6 +17,8 @@ import { getSearchDataAction } from 'store/course/course.action';
 import { getUserAction, postProfileAction } from 'store/account/account.action';
 import { SModal } from 'components/Account/style';
 import ProfileForm from './profileForm';
+import Transaction from './transaction';
+import MyComments from './myComments';
 
 const { Option } = Select;
 const time = (date): number => new Date(date).getTime();
@@ -158,7 +160,18 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
                   <p>{t('global.phoneNumber')}</p>
                   <div>
                     {faNumber(user?.mobile)}
-                    <Edit type="mobile" text={user?.mobile} />
+                    <EditOutlined
+                      className="text-[18px] mr-[10px] cursor-pointer hover:text-blue-10 duration-300"
+                      onClick={(): void => {
+                        setIsModalVisible('mobile');
+                        dispatch(
+                          postProfileAction(null, {
+                            data: { next: 'newMobile' },
+                            ok: true,
+                          }),
+                        );
+                      }}
+                    />
                   </div>
                 </div>
 
@@ -196,6 +209,8 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
                     <EditOutlined className="text-[18px] mr-[10px] " />
                   )}
                 </button>
+
+                <Transaction />
               </div>
             ) : (
               <div className="flex flex-col">

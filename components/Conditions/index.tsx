@@ -4,7 +4,7 @@ import React from 'react';
 const Conditions: React.FC = () => {
   const infos = [1, 2, 3, 4, 5, 6, 7];
   return (
-    <div className="pt-[130px] md:pt-[100px] px-[50px] mb-[80px]">
+    <div className="pt-[64px] md:pt-[32px] px-[50px] mb-[80px]">
       <h2 className="font-bold text-[30px]">{t('conditions.h2')}</h2>
       {infos.map((key) => (
         <div key={key}>
