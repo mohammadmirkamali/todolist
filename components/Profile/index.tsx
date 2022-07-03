@@ -19,6 +19,8 @@ import { SModal } from 'components/Account/style';
 import ProfileForm from './profileForm';
 import Transaction from './transaction';
 import MyComments from './myComments';
+import MyQuestions from './myQuestions';
+import MyTraining from './myTraining';
 
 const { Option } = Select;
 const time = (date): number => new Date(date).getTime();
@@ -118,7 +120,7 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
               <div className="w-[290px] text-[16px] mt-[30px] flex flex-col">
                 <div className="flex justify-between ">
                   <p>{t('global.birthYear')}</p>
-                  <p>{faNumber(user?.info.birthYear)}</p>
+                  <p>{faNumber(user?.info?.birthYear)}</p>
                 </div>
 
                 <div className="flex justify-between">
@@ -211,6 +213,9 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
                 </button>
 
                 <Transaction />
+                <MyQuestions />
+                <MyComments />
+                {/* <MyTraining /> */}
               </div>
             ) : (
               <div className="flex flex-col">
@@ -271,10 +276,6 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
           />
         )}
       </SModal>
-      {/* <EditPassword
-        visible={isModalVisible === 2}
-        setIsModalVisible={setIsModalVisible}
-      /> */}
     </div>
   );
 };

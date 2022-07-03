@@ -72,7 +72,9 @@ const ProfileForm: React.FC<FormType> = ({ profileData, setIsVisible }) => {
 
   return (
     <div className=" flex flex-col justify-center items-center">
-      <div className="text-[26px] font-bold">{t(`account.${data[0]}`)}</div>
+      <div className="text-[18px] md:text-[26px] font-bold text-center">
+        {t(`account.${data[0]}`)}
+      </div>
       {step === 'confirm-MobileOrEmail' && (
         <div className="text-[16px] mt-[8px]">
           {t(`account.mobileCode`, { number: faNumber(profileData.new) })}
