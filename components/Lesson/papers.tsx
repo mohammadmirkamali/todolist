@@ -39,8 +39,11 @@ const Papers: React.FC<{ data: LessonNotesType }> = ({ data }) => {
             validationSchema={validationSchema}
             onSubmit={async (values, { resetForm }): Promise<void> => {
               setLoading(true);
-              const body = { attachment: fileList, ...values };
-              const res = await request.post(SendTrainUrl(courseId, lessonId), body);
+              const formData = new FormData();
+              formData.append('attachment', fileList[0]);
+              // const body = { formData, ...values };
+              // const res = await request.post(SendTrainUrl(courseId, lessonId), body);
+              // console.log(res);
               setLoading(false);
               //   result && resetForm();
             }}

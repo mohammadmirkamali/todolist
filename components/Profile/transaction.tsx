@@ -19,7 +19,7 @@ const Transaction: React.FC = () => {
     setData(res.data);
   };
   return (
-    <div>
+    <div className="mb-[12px]">
       <div onClick={handleClick} className="cursor-pointer hover:text-blue-0">
         {t('account.myTransactions')} <Spin spinning={loading} />
       </div>

@@ -17,6 +17,8 @@ type EditProfileType = {
   user: UserType;
 };
 
+const style = `w-[250px] md:w-[400px] h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px]`;
+
 const EditProfile: React.FC<EditProfileType> = (props) => {
   const { visible, setIsModalVisible, user } = props;
   const [loading, setLoading] = useState(false);
@@ -42,11 +44,11 @@ const EditProfile: React.FC<EditProfileType> = (props) => {
 
         <AppForm
           initialValues={{
-            nickname: user?.nickname,
-            name: user?.name,
-            family: user?.family,
+            nickname: user?.nickname || '',
+            name: user?.name || '',
+            family: user?.family || '',
             sex: '1',
-            birthYear: user?.info.birthYear,
+            birthYear: user?.info?.birthYear,
           }}
           validationSchema={validationSchema}
           onSubmit={async ({ nickname, sex, birthYear, name, family }): Promise<void> => {
@@ -64,51 +66,51 @@ const EditProfile: React.FC<EditProfileType> = (props) => {
             }
           }}
         >
-          <p className="m-0 text-[12px] mr-[6px] mt-[20px]">{t('global.name')}</p>
-          <FormField
-            name="name"
-            autoFocus
-            type="text"
-            placeholder={t(`account.nameFamily`)}
-            className={` w-[400px] h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px]`}
-          />
-          <p className="m-0 text-[12px] mr-[6px] mt-[20px]">{t('global.family')}</p>
-          <FormField
-            name="family"
-            autoFocus
-            type="text"
-            placeholder={t(`account.nameFamily`)}
-            className={` w-[400px] h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px]`}
-          />
-          <p className="m-0 text-[12px] mr-[6px] mt-[20px]">{t('account.nickname')}</p>
-          <FormField
-            name="nickname"
-            autoFocus
-            type="text"
-            placeholder={t(`account.nameFamily`)}
-            className={` w-[400px] h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px]`}
-          />
-
-          <p className="m-0 text-[12px] mr-[6px] mt-[20px]">{t('account.birth')}</p>
-          <FormField
-            name="birthYear"
-            type="number"
-            placeholder="1374"
-            className="toRight overflow-hidden w-[400px] h-[50px] border overflow-hidden rounded-[8px] pt-[3px] px-[15px] text-[18px]"
-          />
-
-          <div className="flex-1 mt-[20px]">
-            <p className="m-0 w-full mr-[5px]">{t('global.sex')}</p>
-            <RadioForm
-              items={[
-                { title: t('global.man'), value: '1' },
-                { title: t('global.woman'), value: '2' },
-              ]}
-              name="sex"
+          <div className="flex flex-col w-[250px] md:w-[400px]">
+            <p className="m-0 text-[12px] mr-[6px] mt-[20px]">{t('global.name')}</p>
+            <FormField
+              name="name"
+              type="text"
+              placeholder={t(`global.name`)}
+              className={style}
             />
-          </div>
+            <p className="m-0 text-[12px] mr-[6px] mt-[20px]">{t('global.family')}</p>
+            <FormField
+              name="family"
+              type="text"
+              placeholder={t(`global.family`)}
+              className={style}
+            />
+            <p className="m-0 text-[12px] mr-[6px] mt-[20px]">{t('account.nickname')}</p>
+            <FormField
+              name="nickname"
+              autoFocus
+              type="text"
+              placeholder={t(`account.nameFamily`)}
+              className={style}
+            />
 
-          <SSubmitForm loading={loading} title={t('account.approved')} />
+            <p className="m-0 text-[12px] mr-[6px] mt-[20px]">{t('account.birth')}</p>
+            <FormField
+              name="birthYear"
+              type="number"
+              placeholder="1374"
+              className={`toRight ${style}`}
+            />
+
+            <div className="flex-1 mt-[20px]">
+              <p className="m-0 w-full mr-[5px]">{t('global.sex')}</p>
+              <RadioForm
+                items={[
+                  { title: t('global.man'), value: '1' },
+                  { title: t('global.woman'), value: '2' },
+                ]}
+                name="sex"
+              />
+            </div>
+
+            <SSubmitForm loading={loading} title={t('account.approved')} />
+          </div>
         </AppForm>
       </div>
     </Modal>

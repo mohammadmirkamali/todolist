@@ -7,7 +7,10 @@ export const SSubmitForm = styled(SubmitForm)`
   height: 40px;
   font-size: 18px;
   margin: 30px 0;
-  width: 400px;
+  width: 250px;
+  ${({ theme }): string => theme.mediaQueries.sm} {
+    width: 400px;
+  }
 `;
 
 export const SSelect = styled(Select)`
