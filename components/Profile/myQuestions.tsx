@@ -43,7 +43,7 @@ const MyQuestions: React.FC = () => {
         visible={showModal}
         onCancel={(): void => setShowModal(false)}
       >
-        <div className="flex flex-col w-full ">
+        <div className="flex flex-col w-full self-start">
           <div className="self-center font-bold text-[18px] mb-[24px]">
             {t('account.questionList')}
           </div>

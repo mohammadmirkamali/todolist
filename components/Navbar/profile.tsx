@@ -1,6 +1,7 @@
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Tooltip } from 'antd';
 import { t } from 'i18next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -26,7 +27,17 @@ const Profile: React.FC<{ setIsModalVisible: (value) => void }> = ({
       <Link href={ProfileRoute('user', t('global.profile'))}>
         <a>
           <Tooltip title={t('global.seeProfile')}>
-            <Avatar icon={<UserOutlined />} size={40} />
+            {user.avatar ? (
+              <div className="rounded-full overflow-hidden w-[40px] h-[40px]">
+                <Image src={user.avatar} width={40} height={40} alt="profile" />
+              </div>
+            ) : (
+              <Avatar
+                style={{ backgroundColor: '#87d068' }}
+                icon={<UserOutlined />}
+                size={40}
+              />
+            )}
           </Tooltip>
         </a>
       </Link>
