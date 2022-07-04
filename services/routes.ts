@@ -9,8 +9,6 @@ export const AllTermsUrl = (): string => `/v1/terms`;
 export const PassedUrl = (courseId, lessonId): string =>
   `/v1/workshops/${courseId}/lessons/${lessonId}/passed`;
 export const TermUrl = (id): string => `/v1/terms/${id}`;
-export const MobileVerifyUrl = (): string => `/v1/verifyMobile`;
-export const EmailVerifyUrl = (): string => `/v1/verifyEmail`;
 export const discountUrl = (): string => `/v1/takhfif-check`;
 export const ratePayUrl = (id, type): string => `/v1/buyUsingRate/${type}/${id}`;
 export const walletPayUrl = (id, type): string => `/v1/buyUsingWallet/${type}/${id}`;
@@ -46,6 +44,8 @@ export const MyQuestionsUrl = (): string => `/my_questions`;
 
 // ///////////////////////////////////////////////////////////////
 
+export const MobileVerifyUrl = (): string => `/v1/verifyMobile`;
+export const EmailVerifyUrl = (): string => `/v1/verifyEmail`;
 export const CheckAuthPhoneUrl = (): string => `/v1/checkAuthPhone`;
 export const CheckAuthEmailUrl = (): string => `/v1/checkAuthEmail`;
 export const LoginUrl = (): string => `/v1/loginUsingMobilePassword`;

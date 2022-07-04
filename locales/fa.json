@@ -133,6 +133,7 @@
     "chargeWallet": "افزایش موجودی",
     "payInTooman": "مبلغ به تومان",
     "name": "نام و نام خانوادگی",
+    "sameMobile": "شماره جدید باید متفاوت با شماره فعلی باشد.",
     "namePlaceholder": "نام و نام خانوادگی",
     "currentPassword": "رمز عبور فعلی",
     "newPassword": "رمز عبور جدید",

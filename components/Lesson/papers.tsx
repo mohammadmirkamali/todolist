@@ -41,9 +41,8 @@ const Papers: React.FC<{ data: LessonNotesType }> = ({ data }) => {
               setLoading(true);
               const formData = new FormData();
               formData.append('attachment', fileList[0]);
-              // const body = { formData, ...values };
-              // const res = await request.post(SendTrainUrl(courseId, lessonId), body);
-              // console.log(res);
+              const body = { ...values };
+              const res = await request.post(SendTrainUrl(courseId, lessonId), body);
               setLoading(false);
               //   result && resetForm();
             }}

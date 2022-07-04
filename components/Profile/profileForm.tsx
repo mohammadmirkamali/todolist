@@ -84,7 +84,7 @@ const ProfileForm: React.FC<FormType> = ({ profileData, setIsVisible }) => {
       <AppForm
         initialValues={{ value: '' }}
         validationSchema={validationSchema}
-        onSubmit={async (values, { resetForm }): Promise<void> => {
+        onSubmit={async (values, { resetForm }): Promise<boolean> => {
           if (step === 'chargeWallet') {
             const res: any = await request.post(ChargeWalletUrl(values.value)); // eslint-disable-line
             if (res.ok) {
@@ -93,6 +93,11 @@ const ProfileForm: React.FC<FormType> = ({ profileData, setIsVisible }) => {
               dispatch(postProfileAction(null, { data: { next: null }, ok: true }));
             }
           } else {
+            if (step === 'newMobile' && `0${values.value}` === user.mobile) {
+              message.warn(t('account.sameMobile'));
+              return false;
+            }
+
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const result: any = await dispatch(
               postProfileAction(data[2], body(values.value)),
@@ -104,6 +109,7 @@ const ProfileForm: React.FC<FormType> = ({ profileData, setIsVisible }) => {
             }
             result && resetForm();
           }
+          return true;
         }}
       >
         <FormField
