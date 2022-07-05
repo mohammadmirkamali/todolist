@@ -5,7 +5,7 @@ services:
     image: nginx:stable-alpine
     restart: unless-stopped
     environment:
-      VIRTUAL_HOST: "taalei-edu.com"
+      VIRTUAL_HOST: "taalei-edu.com,www.taalei-edu.com"
       LETSENCRYPT_HOST: "taalei-edu.com"
       LETSENCRYPT_EMAIL: "info@taalei-edu.com"
     ports:
