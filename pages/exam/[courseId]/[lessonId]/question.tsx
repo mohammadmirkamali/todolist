@@ -35,6 +35,7 @@ const ExamPage: React.FC = () => {
       (router.push(LessonRoute(courseId, lessonId, t('global.course'))),
       message.warn(t('exam.alreadyPassed')));
   }, [courseId, examInfo, lessonId]);
+
   return (
     <>
       <Head>
@@ -43,7 +44,15 @@ const ExamPage: React.FC = () => {
       </Head>
 
       <Navbar />
-      <ExamQuestions data={data} info={examInfo} error={error} reload={getData} />
+      {data?.message ? (
+        <div className="flex justify-center min-h-[calc(100vh-70px)] bg-blue-7">
+          <div className="w-screen mx-[24px] h-[200px] mt-[100px] text-center md:w-[400px] shadow-lg rounded-[8px] bg-white flex flex-col items-center p-[40px]">
+            {data?.message}
+          </div>
+        </div>
+      ) : (
+        <ExamQuestions data={data} info={examInfo} error={error} reload={getData} />
+      )}
     </>
   );
 };

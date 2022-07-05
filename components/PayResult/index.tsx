@@ -18,7 +18,7 @@ const PayResult: React.FC = () => {
     const sendData = async (): Promise<void> => {
       const res = await request.post(PayResultUrl(), { Authority, Status });
       dispatch(getUserAction());
-      router.push(ProfileRoute('user', t('global.profile')));
+      // router.push(ProfileRoute('user', t('global.profile')));
     };
     if (Status) {
       setStatus(Status === 'OK');

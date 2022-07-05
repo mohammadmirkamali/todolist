@@ -34,6 +34,8 @@
     "download": "دانلود",
     "terms": "شذرات",
     "term": "شذره",
+    "workshopTitle": "نام دوره",
+    "lessonTitle": "نام درس",
     "comment": "نظر شما درباره این دوره ...",
     "taali": "موسسه تعالی",
     "exam": "آزمون",
@@ -261,17 +263,19 @@
     "type": "نوع رویداد"
   },
   "footer": {
-    "category": "دسته بندی ها",
+    "support": "پشتیبانی",
+    "whatsapp": "واتس آپ",
+    "eeta": "ایتا",
+    "telegram": "تلگرام",
     "access": "دسترسی سریع",
     "conditions": "قوانین و مقررات",
     "contactUs": "تماس با ما",
     "finance": "حمایت مالی",
-    "homat": "حماة",
-    "doat": "دعاة",
-    "roat": "رعاة",
-    "designBy": "طراحی و توسعه توسط رسانه",
+    "home": "خانه",
+    "directDownload": "دانلود مستقیم",
+    "googleDownload": "دانلود از گوگل پلی",
     "taali": "کلیه حقوق مادی و معنوی برای موسسه تعالی محفوظ میباشد.",
-    "downloadApp": "دانلود اپیلیکیشن"
+    "downloadApp": "دانلود نرم افزار"
   },
   "contactUs": {
     "title": "تماس با ما",

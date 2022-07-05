@@ -35,12 +35,12 @@ const ProfileImg: React.FC<{ image: string; isUser: boolean }> = ({ image, isUse
     <div
       onMouseEnter={(): void => setShowImage(isUser && true)}
       onMouseLeave={(): void => setShowImage(isUser && false)}
-      className="bg-white rounded-full w-[150px] h-[150px] relative overflow-hidden"
+      className="bg-white rounded-full w-[130px] h-[130px] relative overflow-hidden"
     >
       <Image
         src={img || user}
-        width={150}
-        height={150}
+        width={130}
+        height={130}
         alt="profile"
         className="rounded-full overflow-hidden"
       />

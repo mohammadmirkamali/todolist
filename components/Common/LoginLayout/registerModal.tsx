@@ -61,7 +61,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
     if (method === 'direct') {
       window.location.assign(res.data.link);
     } else {
-      res.ok ? message.success(res.data.message) : message.warn(res.data.message);
+      res.ok && message.success(res.data.message);
       res.ok &&
         (dispatch(
           termId

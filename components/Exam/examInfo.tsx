@@ -1,6 +1,7 @@
 import AntButton from 'components/Common/AntButton';
 import LoadingBox from 'components/Common/LoadingBox';
 import { t } from 'i18next';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -62,16 +63,19 @@ const ExamInfo: React.FC<{ data: ExamInfoType }> = ({ data }) => {
               </div>
             )}
           </div>
-          <AntButton
-            width={250}
-            height={36}
-            fontSize={16}
-            mt="50px"
-            disabled={data?.needPay}
-            href={ExamRoute(courseId, lessonId)}
-          >
-            {t('exam.start')}
-          </AntButton>
+          <Link href={ExamRoute(courseId, lessonId)}>
+            <a>
+              <AntButton
+                width={250}
+                height={36}
+                fontSize={16}
+                mt="50px"
+                disabled={data?.needPay}
+              >
+                {t('exam.start')}
+              </AntButton>
+            </a>
+          </Link>
         </LoadingBox>
       </div>
     </div>

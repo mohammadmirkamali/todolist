@@ -109,21 +109,21 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
 
   return (
     <div className="duration-300 bg-gray-0 min-h-screen flex-col flex items-center justify-items-start">
-      <div className="w-full py-[30px] rounded-[8px] xl:rounded mt-[10px] xl:mt-0 xl:mb-0 md:w-[560px] xl:pb-[23rem] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
+      <div className="w-full xl:overflow-auto py-[20px] rounded-[8px] xl:rounded mt-[10px] xl:mt-0 xl:mb-0 md:w-[560px] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
         <LoadingBox data={profile} error={error} reload={reloadData}>
           <div className=" items-center flex-col flex">
             <ProfileImg image={profile?.avatar} isUser={isUser} />
-            <h2 className="font-bold text-[20px] pt-[10px] w-[250px] mt-[10px] flex items-center text-center justify-center">
+            <h2 className="font-bold text-[20px] pt-[10px] w-[250px] flex items-center text-center justify-center">
               {profile?.nickname}
             </h2>
             {isUser ? (
-              <div className="w-[290px] text-[16px] mt-[30px] flex flex-col">
+              <div className="w-[290px] text-[16px] mt-[20px] flex flex-col">
                 <div className="flex justify-between ">
                   <p>{t('global.birthYear')}</p>
                   <p>{faNumber(user?.info?.birthYear)}</p>
                 </div>
 
-                <div className="flex justify-between">
+                {/* <div className="flex justify-between">
                   <p className="text-[16px]">{t('global.sex')}</p>
                   <p>
                     {t(
@@ -132,7 +132,7 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
                       }`,
                     )}
                   </p>
-                </div>
+                </div> */}
 
                 <div className="flex justify-between">
                   <p className="text-[16px]">{t('global.coursesCount')}</p>
@@ -182,7 +182,7 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
                     <p>{t('global.email')}</p>
                     <span>
                       <AntTooltip name={user.email || ''} length={18} />
-                      <Edit type="email" text={user.email} />
+                      {/* <Edit type="email" text={user.email} /> */}
                     </span>
                   </div>
                 )}
@@ -214,8 +214,8 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
 
                 <Transaction />
                 <MyQuestions />
+                <MyTraining />
                 <MyComments />
-                {/* <MyTraining /> */}
               </div>
             ) : (
               <div className="flex flex-col">

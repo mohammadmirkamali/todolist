@@ -97,24 +97,25 @@ const Webinar: React.FC = () => {
                   </div>
                 )}
 
-                <LoginLayout data={data} setLoading={setLoading}>
+                {!(data?.link && data?.registered) && (
+                  <LoginLayout data={data} setLoading={setLoading}>
+                    <AntButton className="w-full mt-[20px]" loading={loading}>
+                      {t('webinar.register')}
+                      <span className="mr-[30px]">
+                        {Number(data?.price) !== 0
+                          ? faNumber(Number(data?.price) / 1000) + t('global.tooman')
+                          : t('global.free')}
+                      </span>
+                    </AntButton>
+                  </LoginLayout>
+                )}
+                {data?.link && data?.registered && (
                   <AntButton className="w-full mt-[20px]" loading={loading}>
-                    {data?.link && data?.registered ? (
-                      <a href={data?.link} target="_blank" rel="noreferrer">
-                        {t('webinar.link')}
-                      </a>
-                    ) : (
-                      <>
-                        {t('webinar.register')}
-                        <span className="mr-[30px]">
-                          {Number(data?.price) !== 0
-                            ? faNumber(Number(data?.price) / 1000) + t('global.tooman')
-                            : t('global.free')}
-                        </span>
-                      </>
-                    )}
+                    <a href={data?.link} target="_blank" rel="noreferrer">
+                      {t('webinar.link')}
+                    </a>
                   </AntButton>
-                </LoginLayout>
+                )}
 
                 {!!data?.times.length && (
                   <div>

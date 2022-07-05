@@ -10,28 +10,34 @@ const MyTraining: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState(null);
 
-  const handleClick = async (): Promise<void> => {
+  const handleClick = async (): Promise<boolean> => {
     setLoading(true);
     const res = await request.get(MyTrainingUrl());
     setLoading(false);
-    setShowModal(true);
-    setData(res.data);
+    if (res.ok) {
+      setShowModal(true);
+      setData(res.data);
+      return true;
+    }
+    return null;
   };
 
-  //   const dataSource = data?.data.map((item) => ({
-  //     department: item.department,
-  //     title3: item.title,
-  //     status: item.status,
-  //   }));
+  const dataSource = data?.data.map((item) => ({
+    description: item.description,
+    title3: item.title,
+    workshopTitle: item.workshop_title,
+    lessonTitle: item.lesson_title,
+  }));
 
-  //   const columns = ['title3', 'department', 'status'].map((item) => ({
-  //     title: t(`global.${item}`),
-  //     dataIndex: item,
-  //   }));
+  const columns = ['title3', 'description', 'workshopTitle', 'lessonTitle'].map(
+    (item) => ({
+      title: t(`global.${item}`),
+      dataIndex: item,
+    }),
+  );
 
-  //   console.log(data);
   return (
-    <div>
+    <div className="mb-[12px]">
       <div onClick={handleClick} className="cursor-pointer hover:text-blue-0">
         {t('account.myTrainings')} <Spin spinning={loading} />
       </div>
@@ -39,7 +45,7 @@ const MyTraining: React.FC = () => {
         centered
         title={null}
         footer={null}
-        width={600}
+        width={1400}
         destroyOnClose
         visible={showModal}
         onCancel={(): void => setShowModal(false)}
@@ -48,15 +54,7 @@ const MyTraining: React.FC = () => {
           <div className="self-center font-bold text-[18px] mb-[24px]">
             {t('account.trainingList')}
           </div>
-          {/* <div className="flex flex-col  p-[16px] text-[16px]]"> */}
-          {/* <Table dataSource={dataSource} columns={columns} pagination={false} /> */}
-          {/* {data?.data.map((item, index) => (
-              <div key={item.trackingCode} className="mb-[4px]">
-                {faNumber(index + 1)}.{item.description} {item.title} (
-                {faNumber(item.price.toLocaleString())})
-              </div>
-            ))} */}
-          {/* </div> */}
+          <Table dataSource={dataSource} columns={columns} pagination={false} />
         </div>
       </SModal>
     </div>
