@@ -35,12 +35,12 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
       setLoading && setLoading(true);
       const res: any = await request.post(ratePayUrl(data.id, type)); // eslint-disable-line
       setLoading && setLoading(false);
-      const text = res.data.message;
-      res.ok ? message.success(text) : message.error(text);
-      res.ok &&
+      if (res.ok) {
+        message.success(res.data.message);
         dispatch(eventId ? getEventAction(eventId) : getChapterAction(data.id, !!user));
-      res.ok && url && router.push(url);
-      res.ok && handleNext && handleNext();
+        url && router.push(url);
+        handleNext && handleNext();
+      }
     }
   };
 

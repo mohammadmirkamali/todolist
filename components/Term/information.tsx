@@ -59,7 +59,7 @@ const Information: React.FC<InfoType> = (props) => {
     dispatch(getTermAction(termId));
   };
   return (
-    <div className="w-screen mb-[20px] flex p-[30px] flex-col rounded-[8px] xl:rounded mt-[40px] xl:mt-0 xl:mb-0 h-[450px] md:w-[700px] xl:pb-[23rem] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
+    <div className="w-screen mb-[20px] flex p-[30px] flex-col rounded-[8px] xl:rounded mt-[40px] xl:mt-0 xl:mb-0 h-[600px] md:w-[700px] xl:pb-[23rem] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
       <LoadingBox data={!!data} error={error} reload={reloadData}>
         <h2 className="mx-[30px] text-[20px] mb-[30px] self-center text-right font-bold">
           {data?.title}
@@ -124,7 +124,7 @@ const Information: React.FC<InfoType> = (props) => {
         )}
 
         <AntButton
-          className="w-full mt-[20px]"
+          className="w-[290px] mt-[20px]"
           loading={saveLoading}
           disabled={!hasChange}
           onClick={(): void => {
@@ -134,7 +134,7 @@ const Information: React.FC<InfoType> = (props) => {
           {data?.registered && t('global.save')}
         </AntButton>
         <LoginLayout data={data} setLoading={setLoading}>
-          <AntButton className="w-full mt-[20px]" loading={loading}>
+          <AntButton className="w-[290px] mt-[20px]" loading={loading}>
             {!data?.registered && (
               <>
                 {t('global.register')}{' '}

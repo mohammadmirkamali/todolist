@@ -78,6 +78,8 @@ export const TermRoute = (termId, termTitle): string =>
 export const ConditionRoute = (): string => `/conditions`;
 export const FinanceRoute = (): string => `https://idpay.ir/taaleei`;
 export const DownloadRoute = (): string => `https://dl.taalei-edu.ir/taalei.apk`;
+export const GooglePlayRoute = (): string =>
+  `https://play.google.com/store/apps/details?id=ir.taalei.app`;
 export const TelNumber = (): string => `0915 424 1197`;
 export const ContactUsRoute = (): string => `/contact-us`;
 export const PostsRoute = (): string => `/posts`;
