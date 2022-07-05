@@ -34,7 +34,7 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
 
   const prevStep = {
     next:
-      step === 'verifyCode' || step === 'loginUsingPassword'
+      step === 'VerifyMobile' || step === 'loginUsingPassword'
         ? 'enterNumber'
         : 'enterEmail',
   };
@@ -79,7 +79,7 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
       yup = Yup.string().required(t('account.emptyField'));
       break;
 
-    case 'verifyCode':
+    case 'VerifyMobile':
       data = ['addMobileCode', null, MobileVerifyUrl(), 'number', 'code'];
       body = (value): object => ({ mobile: loginData.mobile, code: value.toString() });
       yup = Yup.number().required(t('account.emptyField'));
@@ -104,7 +104,7 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
   return (
     <div className=" flex flex-col justify-center items-center">
       <div className="text-[26px] font-bold">{t(`account.${data[0]}`)}</div>
-      {(step === 'VerifyEmail' || step === 'verifyCode') && (
+      {(step === 'VerifyEmail' || step === 'VerifyMobile') && (
         <div className="text-[16px] mt-[8px]">
           {step === 'VerifyEmail'
             ? t(`account.emailCode`, { email: loginData.email })
@@ -114,7 +114,7 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
       {data[1] && <div className="text-[18px] mt-[15px]">{t(`account.${data[1]}`)}</div>}
 
       {(step === 'VerifyEmail' ||
-        step === 'verifyCode' ||
+        step === 'VerifyMobile' ||
         step === 'loginUsingPassword' ||
         step === 'loginUsingEmail') && (
         <div className="absolute right-[24px] top-[16px] toLeft text-gray-14">

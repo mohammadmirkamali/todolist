@@ -1,22 +1,13 @@
 import { t } from 'i18next';
-import CountUp from 'react-countup';
-import VisibilitySensor from 'react-visibility-sensor';
-import React, { useState } from 'react';
+import React from 'react';
+import { faNumber } from 'utils/common.util';
 
 type ItemsType = { count: number; text: string };
 const Items: React.FC<ItemsType> = ({ count, text }) => {
-  const [isSeen, setIsSeen] = useState(false);
   return (
     <div className="center flex-col w-[250px] my-[30px]">
       <div className="font-bold text-[40px] xl:text-[48px] mt-[10px] center">
-        <VisibilitySensor onChange={(event): void => event && setIsSeen(true)}>
-          <div>
-            {isSeen && (
-              <CountUp end={count} duration={1} separator="," className="ml-[5px]" />
-            )}
-            +
-          </div>
-        </VisibilitySensor>
+        {faNumber(count.toLocaleString())}+
       </div>
       <div className="text-[16px] xl:text-[18px] center text-gray-8">
         {t(`landing.${text}`)}

@@ -45,6 +45,7 @@ const LessonTabs: React.FC<LessonTabsType> = ({
   const [myNotes, setMyNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
   const [loading, setLoading] = useState(false);
+  const [time, setTime] = useState(0);
 
   useEffect(() => {
     if (data) {
@@ -60,7 +61,6 @@ const LessonTabs: React.FC<LessonTabsType> = ({
   }, [data, course]);
 
   const sendNote = async (): Promise<void> => {
-    const time = Math.floor(player.current?.plyr.currentTime);
     const body = { public: showPublic, text: newNote, time };
     setLoading(true);
     const res: any = await request.post(SendNoteUrl(courseId, lessonId), body); // eslint-disable-line
@@ -100,6 +100,7 @@ const LessonTabs: React.FC<LessonTabsType> = ({
           <div className="p-[30px] pt-[10px] min-h-[300px]">
             <textarea
               value={newNote}
+              onFocus={(): void => setTime(Math.floor(player.current?.plyr.currentTime))}
               onChange={(e): void => setNewNote(e.target.value)}
               className="border border-gray-5 rounded-[8px] w-full h-[100px] my-[15px] toLeft text-[16px] p-[10px]"
             />

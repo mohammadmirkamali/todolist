@@ -11,12 +11,16 @@ const Transaction: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState(null);
 
-  const handleClick = async (): Promise<void> => {
+  const handleClick = async (): Promise<boolean> => {
     setLoading(true);
     const res = await request.get(MyTransactionsUrl());
     setLoading(false);
-    setShowModal(true);
-    setData(res.data);
+    if (res.ok) {
+      setShowModal(true);
+      setData(res.data);
+      return true;
+    }
+    return null;
   };
   return (
     <div className="mb-[12px]">

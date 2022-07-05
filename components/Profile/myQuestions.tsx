@@ -10,12 +10,16 @@ const MyQuestions: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState(null);
 
-  const handleClick = async (): Promise<void> => {
+  const handleClick = async (): Promise<boolean> => {
     setLoading(true);
     const res = await request.get(MyQuestionsUrl());
     setLoading(false);
-    setShowModal(true);
-    setData(res.data);
+    if (res.ok) {
+      setShowModal(true);
+      setData(res.data);
+      return true;
+    }
+    return null;
   };
 
   const dataSource = data?.data.map((item) => ({
