@@ -19,12 +19,10 @@ export const CommentUrl = (id, page): string =>
 export const SendCommentUrl = (id, type): string => `/v1/${type}/${id}/comments`;
 export const SendQuestionUrl = (id, type): string => `/v1/${type}/${id}/questions`;
 export const QuestionUrl = (id): string => `/v1/workshops/${id}/questions`;
-export const ExamInfoUrl = (courseId, lessonId): string =>
-  `/v1/workshops/${courseId}/lessons/${lessonId}/exam-review`;
-export const ExamUrl = (courseId, lessonId): string =>
-  `/v1/workshops/${courseId}/lessons/${lessonId}/exam-questions`;
-export const ExamResultUrl = (courseId, lessonId): string =>
-  `/v1/workshops/${courseId}/lessons/${lessonId}/submit-exam-answers`;
+export const ExamInfoUrl = (examId): string => `/v1/exams/${examId}/exam-review`;
+export const ExamUrl = (examId): string => `/v1/exams/${examId}/exam-questions`;
+export const ExamResultUrl = (examId): string =>
+  `/v1/exams/${examId}/submit-exam-answers`;
 export const SendNoteUrl = (courseId, lessonId): string =>
   `/v1/workshops/${courseId}/lessons/${lessonId}/notes`;
 export const SendTrainUrl = (courseId, lessonId): string =>
@@ -68,10 +66,8 @@ export const LessonRoute = (courseId, lessonId, lessonName): string =>
   `/workshop/${courseId}/lesson/${lessonId}/${lessonName.replace(/ /g, '-')}`;
 export const ProfileRoute = (id, name): string =>
   `/profile/${id}/${name?.replace(/ /g, '-')}`;
-export const ExamInfoRoute = (courseId, lessonId): string =>
-  `/exam/${courseId}/${lessonId}/info`;
-export const ExamRoute = (courseId, lessonId): string =>
-  `/exam/${courseId}/${lessonId}/question`;
+export const ExamInfoRoute = (examId): string => `/exam/${examId}/info`;
+export const ExamRoute = (examId): string => `/exam/${examId}/question`;
 export const TermRoute = (termId, termTitle): string =>
   `/term/${termId}/${termTitle?.replace(/ /g, '-')}/`;
 

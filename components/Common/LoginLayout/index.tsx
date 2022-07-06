@@ -12,7 +12,11 @@ import { CourseType, TermType, WebinarType } from 'types/course.type';
 
 type LayoutType = {
   url?: string;
-  data?: CourseType | WebinarType | TermType;
+  data?:
+    | CourseType
+    | WebinarType
+    | TermType
+    | { price: number; registered: boolean; id: string; title: string };
   condition?: boolean;
   setLoading?: (item) => void;
   handleNext?: () => void;

@@ -10,6 +10,7 @@ import { StyledButton } from 'components/Common/commonStyle';
 import {
   getChapterAction,
   getEventAction,
+  getExamInfoAction,
   getTermAction,
 } from 'store/course/course.action';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,16 +19,20 @@ import { useRouter } from 'next/router';
 type ModalType = {
   isVisible: boolean;
   setIsVisible: (status) => void;
-  data: CourseType | WebinarType | TermType;
+  data:
+    | CourseType
+    | WebinarType
+    | TermType
+    | { price: number; registered: boolean; id: string; title: string };
   url?: string;
 };
 const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url }) => {
   const id = data?.id;
   const router = useRouter();
   const dispatch = useDispatch();
-  const { eventId, termId } = router.query;
+  const { eventId, termId, examId } = router.query;
   const [code, setCode] = useState('');
-  const type = eventId ? 'event' : 'workshop';
+  const type = eventId ? 'event' : examId ? 'exam' : 'workshop';
   const [loading, setLoading] = useState(null);
   const [discount, setDiscount] = useState(null);
   const [discountPrice, setDiscountPrice] = useState(null);
@@ -66,6 +71,8 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
         (dispatch(
           termId
             ? getTermAction(termId)
+            : examId
+            ? getExamInfoAction(examId)
             : eventId
             ? getEventAction(eventId)
             : getChapterAction(data.id, !!user),
