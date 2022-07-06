@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { t } from 'i18next';
-import TeacherAvatar from 'components/Common/TeacherAvatar';
 import AntButton from 'components/Common/AntButton';
 import { faNumber } from 'utils/common.util';
 import LoginLayout from 'components/Common/LoginLayout';
@@ -10,6 +9,7 @@ import LoadingBox from 'components/Common/LoadingBox';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEventAction } from 'store/course/course.action';
+import TeacherLink from 'components/Common/TeacherLink';
 
 const tabs = ['info', 'comments', 'questions'];
 const Webinar: React.FC = () => {
@@ -68,11 +68,7 @@ const Webinar: React.FC = () => {
           <div className="overflow-auto xl:h-[90%] toRight mb-[40px] xl:mb-0">
             {slide === 'info' && (
               <div className="toLeft px-[40px]">
-                <TeacherAvatar
-                  name={data?.teachers[0].nickname || data?.teachers[0].family}
-                  img={data?.teachers[0].avatar}
-                  id={data?.teachers[0].id}
-                />
+                <TeacherLink teacher={data?.teachers[0]} />
 
                 <div className="flex w-full justify-between mt-[10px]">
                   <div>{t('webinar.type')}</div>

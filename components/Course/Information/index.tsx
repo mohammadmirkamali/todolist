@@ -6,13 +6,13 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CourseType } from 'types/course.type';
 import { calcTime, faNumber } from 'utils/common.util';
-import TeacherAvatar from 'components/Common/TeacherAvatar';
 import { SButton } from 'components/Course/style';
 import RateStudents from './rateStudents';
 import LoginLayout from 'components/Common/LoginLayout';
 import request from 'services/request';
 import { RateCourseUrl } from 'services/routes';
 import { UPDATE_COURSE } from 'store/course/course.constants';
+import TeacherLink from 'components/Common/TeacherLink';
 
 type InfoType = { course: CourseType };
 const Information: React.FC<InfoType> = ({ course }) => {
@@ -44,13 +44,7 @@ const Information: React.FC<InfoType> = ({ course }) => {
   return (
     <div className="text-[18px] px-[30px] flex flex-col text-gray-10">
       {course.teachers.map((teacher) => (
-        <TeacherAvatar
-          key={teacher.nickname}
-          name={teacher.nickname || teacher.family}
-          id={teacher.id}
-          title={t('global.teacher')}
-          img={teacher.avatar}
-        />
+        <TeacherLink teacher={teacher} key={teacher.id} />
       ))}
 
       <div className="py-[7px] flex items-center text-[16px]">

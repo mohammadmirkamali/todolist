@@ -19,7 +19,7 @@ const ExamInfo: React.FC<{ data: ExamInfoType }> = ({ data }) => {
   const reloadData = (): void => {
     dispatch(getExamInfoAction(courseId, lessonId));
   };
-
+  console.log(data);
   return (
     <div className="center min-h-[calc(100vh-70px)] bg-blue-7">
       <div className="w-screen mx-[24px] md:w-[400px] shadow-lg rounded-[8px] min-h-[400px] bg-white flex flex-col items-center p-[40px]">

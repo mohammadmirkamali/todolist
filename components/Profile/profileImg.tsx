@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from 'react';
-import { CameraFilled } from '@ant-design/icons';
+import { CameraFilled, UserOutlined } from '@ant-design/icons';
 import Image from 'next/image';
-import user from 'public/user.svg';
 import request from 'services/request';
 import { ChangeUserImgUrl } from 'services/routes';
-import { message, Spin } from 'antd';
+import { Avatar, message, Spin } from 'antd';
 import { useDispatch } from 'react-redux';
 import { getUserAction } from 'store/account/account.action';
 
@@ -37,13 +36,21 @@ const ProfileImg: React.FC<{ image: string; isUser: boolean }> = ({ image, isUse
       onMouseLeave={(): void => setShowImage(isUser && false)}
       className="bg-white rounded-full w-[130px] h-[130px] relative overflow-hidden"
     >
-      <Image
-        src={img || user}
-        width={130}
-        height={130}
-        alt="profile"
-        className="rounded-full overflow-hidden"
-      />
+      {img ? (
+        <Image
+          src={img}
+          width={130}
+          height={130}
+          alt="profile"
+          className="rounded-full overflow-hidden"
+        />
+      ) : (
+        <Avatar
+          style={{ backgroundColor: '#87d068' }}
+          icon={<UserOutlined style={{ fontSize: 130 / 1.6 }} />}
+          size={130}
+        />
+      )}
 
       <div
         aria-hidden="true"

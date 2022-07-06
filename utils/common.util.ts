@@ -1,5 +1,6 @@
 import { t } from 'i18next';
 import { SearchDataType, SearchOptionType } from 'types/course.type';
+import userImage from 'public/user.svg';
 
 export const BadgeCategory = (type): { name: string; color: string } | undefined => {
   // see antd badge color : https://ant.design/components/badge/
@@ -101,10 +102,10 @@ export const generateOptions = (searchData: SearchDataType): SearchOptionType[] 
       ?.find((item) => item.teachers.every((teacher) => teacher.nickname === name))
       .teachers.find((teacher) => teacher.nickname === name);
     return {
-      name,
+      name: name || target.family,
       id: target.id,
       isTeacher: true,
-      avatar: target.avatar,
+      avatar: target.avatar || userImage,
     };
   });
 
