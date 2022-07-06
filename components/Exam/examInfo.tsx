@@ -1,9 +1,10 @@
 import AntButton from 'components/Common/AntButton';
 import LoadingBox from 'components/Common/LoadingBox';
+import LoginLayout from 'components/Common/LoginLayout';
 import { t } from 'i18next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ExamRoute } from 'services/routes';
 import { getExamInfoAction } from 'store/course/course.action';
@@ -13,13 +14,19 @@ import { faNumber } from 'utils/common.util';
 const ExamInfo: React.FC<{ data: ExamInfoType }> = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { courseId, lessonId } = router.query;
+  const { examId } = router.query;
   const error = useSelector((state) => state.course.examInfoError);
+  const [loading, setLoading] = useState(false);
 
-  const reloadData = (): void => {
-    dispatch(getExamInfoAction(courseId, lessonId));
+  const payData = {
+    price: data?.payAmount,
+    id: examId as string,
+    registered: true,
+    title: t('exam.payExamTitle'),
   };
-  console.log(data);
+  const reloadData = (): void => {
+    dispatch(getExamInfoAction(examId));
+  };
   return (
     <div className="center min-h-[calc(100vh-70px)] bg-blue-7">
       <div className="w-screen mx-[24px] md:w-[400px] shadow-lg rounded-[8px] min-h-[400px] bg-white flex flex-col items-center p-[40px]">
@@ -59,23 +66,39 @@ const ExamInfo: React.FC<{ data: ExamInfoType }> = ({ data }) => {
             )}
             {!!data?.needPay && (
               <div className="my-[8px]">
-                {t('exam.payAmount')} {faNumber(data?.payAmount)}
+                {t('exam.payAmount')} {faNumber(data?.payAmount.toLocaleString())}
               </div>
             )}
           </div>
-          <Link href={ExamRoute(courseId, lessonId)}>
-            <a>
+          {!data?.needPay && (
+            <Link href={ExamRoute(examId)}>
+              <a>
+                <AntButton
+                  width={250}
+                  height={36}
+                  fontSize={16}
+                  mt="50px"
+                  disabled={data?.needPay}
+                >
+                  {t('exam.start')}
+                </AntButton>
+              </a>
+            </Link>
+          )}
+
+          {data?.needPay && (
+            <LoginLayout data={payData} setLoading={setLoading}>
               <AntButton
                 width={250}
                 height={36}
                 fontSize={16}
                 mt="50px"
-                disabled={data?.needPay}
+                loading={loading}
               >
-                {t('exam.start')}
+                {t('exam.payExam')}
               </AntButton>
-            </a>
-          </Link>
+            </LoginLayout>
+          )}
         </LoadingBox>
       </div>
     </div>

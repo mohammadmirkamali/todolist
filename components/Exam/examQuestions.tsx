@@ -28,7 +28,7 @@ type QuestionType = {
 const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { courseId, lessonId } = router.query;
+  const { examId } = router.query;
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -42,7 +42,7 @@ const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) =>
   const examInfoError = useSelector((state) => state.course.examInfoError);
 
   const reloadData = (): void => {
-    dispatch(getExamInfoAction(courseId, lessonId));
+    dispatch(getExamInfoAction(examId));
     reload();
   };
 
@@ -72,7 +72,7 @@ const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) =>
   const confirm = async (): Promise<void> => {
     setLoading(true);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const res: any = await request.post(ExamResultUrl(courseId, lessonId), {
+    const res: any = await request.post(ExamResultUrl(examId), {
       answers: JSON.stringify(answers).replace('[', '').replace(']', ''),
     });
     setLoading(false);
@@ -136,9 +136,9 @@ const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) =>
                   {faNumber(info?.acceptance_percent)}
                 </div>
               </div>
-              <Link href={LessonRoute(courseId, lessonId, 'exam')}>
+              {/* <Link href={LessonRoute(examId, 'exam')}>
                 <a className="text-[18px]">{t('course.returnToLesson')}</a>
-              </Link>
+              </Link> */}
             </div>
           ) : (
             <Popconfirm

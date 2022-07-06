@@ -90,10 +90,10 @@ export const changeTermHourAction = (id, hours, days) => {
   };
 };
 
-export const getExamInfoAction = (courseId, lessonId) => {
+export const getExamInfoAction = (examId) => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_EXAM_INFO_REQUEST });
-    const response: ResType = await request.get(api.ExamInfoUrl(courseId, lessonId));
+    const response: ResType = await request.get(api.ExamInfoUrl(examId));
     if (response.ok) {
       dispatch({
         type: type.GET_EXAM_INFO_SUCCESS,

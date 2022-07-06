@@ -5,7 +5,13 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import request from 'services/request';
-import { PayResultUrl, ProfileRoute } from 'services/routes';
+import {
+  CourseRoute,
+  ExamInfoRoute,
+  PayResultUrl,
+  ProfileRoute,
+  WebinarRoute,
+} from 'services/routes';
 import { getUserAction } from 'store/account/account.action';
 
 const PayResult: React.FC = () => {
@@ -16,9 +22,15 @@ const PayResult: React.FC = () => {
     const { Authority, Status } = router.query;
 
     const sendData = async (): Promise<void> => {
-      const res = await request.post(PayResultUrl(), { Authority, Status });
+      const res: any = await request.post(PayResultUrl(), { Authority, Status }); // eslint-disable-line
+      res?.data?.type === 'exam' && router.push(ExamInfoRoute(res.data.product_id));
+      res?.data?.type === 'wallet' &&
+        router.push(ProfileRoute('user', t('global.profile')));
+      res?.data?.type === 'workshop' &&
+        router.push(CourseRoute(res.data.product_id, t('global.course')));
+      res?.data?.type === 'event' &&
+        router.push(WebinarRoute(res.data.product_id, t('global.event')));
       dispatch(getUserAction());
-      // router.push(ProfileRoute('user', t('global.profile')));
     };
     if (Status) {
       setStatus(Status === 'OK');
