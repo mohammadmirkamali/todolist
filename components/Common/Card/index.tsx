@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { CourseRoute, WebinarRoute } from 'services/routes';
 import { CoursesType, WebinarsType } from 'types/course.type';
 import { BadgeCategory, faNumber } from 'utils/common.util';
+import { TeacherAvatar } from 'utils/component.util';
 import { SBadge, SContainer } from './style';
 
 type CardType = { data: CoursesType | WebinarsType; webinar?: boolean };
@@ -55,24 +56,12 @@ const Card: React.FC<CardType> = ({ data, webinar }) => {
                     key={teacher.avatar}
                     className={`h-[30px] translate-x-[${index * 5}px]`}
                   >
-                    <Image
-                      src={teacher.avatar}
-                      width={30}
-                      height={30}
-                      alt={teacher.nickname}
-                      className="rounded-full"
-                    />
+                    <TeacherAvatar teacher={teacher} size={30} />
                   </div>
                 ))
               ) : (
                 <>
-                  <Image
-                    src={data.teachers[0].avatar}
-                    width={30}
-                    height={30}
-                    alt={data.teachers[0].nickname}
-                    className="rounded-full"
-                  />
+                  <TeacherAvatar teacher={data.teachers[0]} size={30} />
                   <div className="mr-[8px] text-gray-3">
                     {data.teachers[0].nickname || data.teachers[0].family}
                   </div>

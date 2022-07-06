@@ -2,6 +2,7 @@ export type TeacherType = {
   nickname: string;
   avatar: string;
   family: string;
+  title?: string;
   id: number;
 };
 

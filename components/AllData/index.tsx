@@ -1,13 +1,12 @@
 import Card from 'components/Common/Card';
 import LoadingBox from 'components/Common/LoadingBox';
 import { t } from 'i18next';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProfileRoute } from 'services/routes';
 import { getSearchDataAction } from 'store/course/course.action';
-import user from 'public/user.svg';
+import { TeacherAvatar } from 'utils/component.util';
 
 const AllData: React.FC<{ type: string }> = ({ type }) => {
   const dispatch = useDispatch();
@@ -57,13 +56,7 @@ const AllData: React.FC<{ type: string }> = ({ type }) => {
                   passHref
                 >
                   <a className="center mx-[16px] flex-col cursor-pointer my-[10px] md:m-[20px] text-black transition-all duration-500 text-center opacity-100 hover:opacity-70 hover:text-blue-2">
-                    <Image
-                      src={teacher.avatar || user}
-                      width={130}
-                      height={130}
-                      alt={teacher.nickname}
-                      className="rounded-full "
-                    />
+                    <TeacherAvatar teacher={teacher} size={130} />
                     <div className="text-[16px] my-[5px] font-bold">
                       {teacher.nickname || teacher.family}
                     </div>

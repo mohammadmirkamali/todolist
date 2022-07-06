@@ -20,7 +20,9 @@ const Footer: React.FC = () => (
         <WhatsAppOutlined style={{ fontSize: '20px', marginLeft: 4 }} />{' '}
         {t(`footer.whatsapp`)} : ۹۸۹۹۰۰۰۱۴۰۹۰+
       </div>
-      <div className="my-[10px] text-white block">{t(`footer.eeta`)} : ۹۸۹۹۰۰۰۱۴۰۹۰+</div>
+      <div className="my-[10px] text-white block">
+        {t(`footer.eeta`)} : ravabet_omumi_taalei@
+      </div>
       <div className="my-[10px] text-white block">
         {t(`footer.telegram`)} : taalei_support@
       </div>
