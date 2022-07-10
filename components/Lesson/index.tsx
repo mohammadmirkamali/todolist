@@ -164,7 +164,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
                 {t('course.passedExam', { grade: faNumber(data?.exam?.grade) })}
               </div>
             ) : (
-              <LoginLink href={ExamInfoRoute(data.exam_id)}>
+              <LoginLink href={ExamInfoRoute(data.exam_id, courseId, lessonId)}>
                 <div className="mb-5 rounded-[4px] items-center flex cursor-pointer text-gray-3 hover:text-black duration-300">
                   <FileDoneOutlined className="ml-[8px] text-[25px]" /> {t('course.exam')}
                 </div>

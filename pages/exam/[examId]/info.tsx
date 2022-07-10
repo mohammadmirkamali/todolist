@@ -14,17 +14,17 @@ const Head = dynamic(() => import('next/head'));
 const ExamInfoPage: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { examId } = router.query;
+  const { examId, courseId, lessonId } = router.query;
   const examInfo = useSelector((state) => state.course.examInfo);
 
   useEffect(() => {
     examId && dispatch(getExamInfoAction(examId));
   }, [examId]);
-  // useEffect(() => {
-  //   examInfo?.is_passed &&
-  //     (router.push(LessonRoute(courseId, lessonId, t('global.course'))),
-  //     message.warn(t('exam.alreadyPassed')));
-  // }, [examInfo]);
+  useEffect(() => {
+    examInfo?.is_passed &&
+      (router.push(LessonRoute(courseId, lessonId, t('global.course'))),
+      message.warn(t('exam.alreadyPassed')));
+  }, [examInfo]);
 
   return (
     <>

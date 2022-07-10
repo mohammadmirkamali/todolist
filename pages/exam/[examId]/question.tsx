@@ -18,7 +18,7 @@ const ExamPage: React.FC = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const { examId } = router.query;
+  const { examId, courseId, lessonId } = router.query;
   const examInfo = useSelector((state) => state.course.examInfo);
 
   const getData = async () => {
@@ -29,12 +29,12 @@ const ExamPage: React.FC = () => {
     examId && getData();
   }, [examId]);
 
-  // useEffect(() => {
-  //   !examInfo && courseId && dispatch(getExamInfoAction(courseId, lessonId));
-  //   examInfo?.is_passed &&
-  //     (router.push(LessonRoute(courseId, lessonId, t('global.course'))),
-  //     message.warn(t('exam.alreadyPassed')));
-  // }, [courseId, examInfo, lessonId]);
+  useEffect(() => {
+    !examInfo && courseId && dispatch(getExamInfoAction(examId));
+    examInfo?.is_passed &&
+      (router.push(LessonRoute(courseId, lessonId, t('global.course'))),
+      message.warn(t('exam.alreadyPassed')));
+  }, [courseId, examInfo, lessonId]);
 
   return (
     <>
