@@ -28,7 +28,7 @@ type QuestionType = {
 const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { examId } = router.query;
+  const { examId, courseId, lessonId } = router.query;
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -105,9 +105,9 @@ const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) =>
                     <Radio key={key.id} value={key.id} disabled={!timer || result}>
                       <div
                         className={`${
-                          result?.answers[index]?.correct_option === key.id
+                          result?.answers?.[index]?.correct_option === key.id
                             ? 'text-green-5'
-                            : result?.answers[index]?.option_id === key.id
+                            : result?.answers?.[index]?.option_id === key.id
                             ? 'text-red-0'
                             : ''
                         }`}
@@ -136,9 +136,9 @@ const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) =>
                   {faNumber(info?.acceptance_percent)}
                 </div>
               </div>
-              {/* <Link href={LessonRoute(examId, 'exam')}>
+              <Link href={LessonRoute(courseId, lessonId, 'lesson')}>
                 <a className="text-[18px]">{t('course.returnToLesson')}</a>
-              </Link> */}
+              </Link>
             </div>
           ) : (
             <Popconfirm

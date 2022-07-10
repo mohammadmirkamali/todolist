@@ -1,40 +1,38 @@
-export const SearchUrl = (): string => `/v1/initial`;
-export const CourseUrl = (id): string => `/v1/workshops/${id}`;
+export const SearchUrl = (): string => `/initial`;
+export const CourseUrl = (id): string => `/workshops/${id}`;
 export const LessonUrl = (courseId, lessonId): string =>
-  `/v1/workshops/${courseId}/lessons/${lessonId}`;
+  `/workshops/${courseId}/lessons/${lessonId}`;
 export const CookieRoute = (): string => `/sanctum/csrf-cookie`;
-export const HomeUrl = (): string => `/v1/home`;
+export const HomeUrl = (): string => `/home`;
 export const UserUrl = (): string => `/user`;
-export const AllTermsUrl = (): string => `/v1/terms`;
+export const AllTermsUrl = (): string => `/terms`;
 export const PassedUrl = (courseId, lessonId): string =>
-  `/v1/workshops/${courseId}/lessons/${lessonId}/passed`;
-export const TermUrl = (id): string => `/v1/terms/${id}`;
-export const discountUrl = (): string => `/v1/takhfif-check`;
-export const ratePayUrl = (id, type): string => `/v1/buyUsingRate/${type}/${id}`;
-export const walletPayUrl = (id, type): string => `/v1/buyUsingWallet/${type}/${id}`;
-export const DirectPayUrl = (id, type): string => `/v1/DirectPay/${type}/${id}`;
-export const EventUrl = (id): string => `/v1/events/${id}`;
-export const CommentUrl = (id, page): string =>
-  `/v1/workshops/${id}/comments?page=${page}`;
-export const SendCommentUrl = (id, type): string => `/v1/${type}/${id}/comments`;
-export const SendQuestionUrl = (id, type): string => `/v1/${type}/${id}/questions`;
-export const QuestionUrl = (id): string => `/v1/workshops/${id}/questions`;
-export const ExamInfoUrl = (examId): string => `/v1/exams/${examId}/exam-review`;
-export const ExamUrl = (examId): string => `/v1/exams/${examId}/exam-questions`;
-export const ExamResultUrl = (examId): string =>
-  `/v1/exams/${examId}/submit-exam-answers`;
+  `/workshops/${courseId}/lessons/${lessonId}/passed`;
+export const TermUrl = (id): string => `/terms/${id}`;
+export const discountUrl = (): string => `/takhfif-check`;
+export const ratePayUrl = (id, type): string => `/buyUsingRate/${type}/${id}`;
+export const walletPayUrl = (id, type): string => `/buyUsingWallet/${type}/${id}`;
+export const DirectPayUrl = (id, type): string => `/DirectPay/${type}/${id}`;
+export const EventUrl = (id): string => `/events/${id}`;
+export const CommentUrl = (id, page): string => `/workshops/${id}/comments?page=${page}`;
+export const SendCommentUrl = (id, type): string => `/${type}/${id}/comments`;
+export const SendQuestionUrl = (id, type): string => `/${type}/${id}/questions`;
+export const QuestionUrl = (id): string => `/workshops/${id}/questions`;
+export const ExamInfoUrl = (examId): string => `/exams/${examId}/exam-review`;
+export const ExamUrl = (examId): string => `/exams/${examId}/exam-questions`;
+export const ExamResultUrl = (examId): string => `/exams/${examId}/submit-exam-answers`;
 export const SendNoteUrl = (courseId, lessonId): string =>
-  `/v1/workshops/${courseId}/lessons/${lessonId}/notes`;
+  `/workshops/${courseId}/lessons/${lessonId}/notes`;
 export const SendTrainUrl = (courseId, lessonId): string =>
-  `/v1/workshops/${courseId}/lessons/${lessonId}/trainings`;
+  `/workshops/${courseId}/lessons/${lessonId}/trainings`;
 export const DeleteNoteUrl = (courseId, lessonId, noteId): string =>
-  `/v1/workshops/${courseId}/lessons/${lessonId}/notes/${noteId}`;
-export const PostsUrl = (): string => `/v1/posts`;
-export const RateCourseUrl = (id): string => `/v1/workshops/${id}/setRate`;
-export const ChangeTermHoursUrl = (id): string => `/v1/terms/${id}/update-setting`;
-export const ChangeUserImgUrl = (): string => `/v1/change-user-avatar`;
-export const UpdateUserInfoUrl = (): string => `/v1/update-user-info`;
-export const PayResultUrl = (): string => `/v1/DirectPay/result`;
+  `/workshops/${courseId}/lessons/${lessonId}/notes/${noteId}`;
+export const PostsUrl = (): string => `/posts`;
+export const RateCourseUrl = (id): string => `/workshops/${id}/setRate`;
+export const ChangeTermHoursUrl = (id): string => `/terms/${id}/update-setting`;
+export const ChangeUserImgUrl = (): string => `/change-user-avatar`;
+export const UpdateUserInfoUrl = (): string => `/update-user-info`;
+export const PayResultUrl = (): string => `/DirectPay/result`;
 export const MyTransactionsUrl = (): string => `/my_transactions`;
 export const MyCommentsUrl = (): string => `/my_comments`;
 export const MyTrainingUrl = (): string => `/my_trainings`;
@@ -42,18 +40,18 @@ export const MyQuestionsUrl = (): string => `/my_questions`;
 
 // ///////////////////////////////////////////////////////////////
 
-export const MobileVerifyUrl = (): string => `/v1/verifyMobile`;
-export const EmailVerifyUrl = (): string => `/v1/verifyEmail`;
-export const CheckAuthPhoneUrl = (): string => `/v1/checkAuthPhone`;
-export const CheckAuthEmailUrl = (): string => `/v1/checkAuthEmail`;
-export const LoginUrl = (): string => `/v1/loginUsingMobilePassword`;
-export const FillFormUrl = (): string => `/v1/RequiredFieldsFill`;
-export const ForgetPasswordUrl = (): string => `/v1/forget_password_step0`;
-export const ForgetPasswordCodedUrl = (): string => `/v1/forget_password_step1`;
-export const ForgetPasswordNewUrl = (): string => `/v1/forget_password_step2`;
-export const ChangeMobileUrl = (): string => `/v1/changeMobileOrEmail`;
-export const ConfirmMobileUrl = (): string => `/v1/confirm-MobileOrEmail`;
-export const ChargeWalletUrl = (amount): string => `/v1/DirectPay/wallet/${amount}`;
+export const MobileVerifyUrl = (): string => `/verifyMobile`;
+export const EmailVerifyUrl = (): string => `/verifyEmail`;
+export const CheckAuthPhoneUrl = (): string => `/checkAuthPhone`;
+export const CheckAuthEmailUrl = (): string => `/checkAuthEmail`;
+export const LoginUrl = (): string => `/loginUsingMobilePassword`;
+export const FillFormUrl = (): string => `/RequiredFieldsFill`;
+export const ForgetPasswordUrl = (): string => `/forget_password_step0`;
+export const ForgetPasswordCodedUrl = (): string => `/forget_password_step1`;
+export const ForgetPasswordNewUrl = (): string => `/forget_password_step2`;
+export const ChangeMobileUrl = (): string => `/changeMobileOrEmail`;
+export const ConfirmMobileUrl = (): string => `/confirm-MobileOrEmail`;
+export const ChargeWalletUrl = (amount): string => `/DirectPay/wallet/${amount}`;
 
 // //////////////////////////////////////////////////////////////////////////////////
 export const HomeRoute = (): string => `/`;
@@ -66,8 +64,10 @@ export const LessonRoute = (courseId, lessonId, lessonName): string =>
   `/workshop/${courseId}/lesson/${lessonId}/${lessonName.replace(/ /g, '-')}`;
 export const ProfileRoute = (id, name): string =>
   `/profile/${id}/${name?.replace(/ /g, '-')}`;
-export const ExamInfoRoute = (examId): string => `/exam/${examId}/info`;
-export const ExamRoute = (examId): string => `/exam/${examId}/question`;
+export const ExamInfoRoute = (examId, courseId, lessonId): string =>
+  `/exam/${examId}/info/?courseId=${courseId}&lessonId=${lessonId}`;
+export const ExamRoute = (examId, courseId, lessonId): string =>
+  `/exam/${examId}/question/?courseId=${courseId}&lessonId=${lessonId}`;
 export const TermRoute = (termId, termTitle): string =>
   `/term/${termId}/${termTitle?.replace(/ /g, '-')}/`;
 
