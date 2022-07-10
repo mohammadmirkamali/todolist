@@ -11,6 +11,7 @@ if (typeof require !== 'undefined') {
 }
 
 const nextConfig = {
+  output: 'standalone',
   poweredByHeader: false,
   images: { domains: ['dl.taalei-edu.ir', 'taalei-edu.ir'] },
   webpack: (config, { isServer, dev }) => {
