@@ -12,7 +12,7 @@ const request = ((): ApisauceInstance => {
     'Accept-Language': 'fa',
   };
 
-  return create({ baseURL, headers });
+  return create({ baseURL, headers, withCredentials: true });
 })();
 
 request.addRequestTransform((req) => {
