@@ -4,7 +4,6 @@ import { parseCookies } from 'nookies';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'https://api.taalei-edu.com';
-const oldURL = process.env.NEXT_PUBLIC_OLD_URL || 'https://taalei-edu.ir';
 
 // create main request configs
 const request = ((): ApisauceInstance => {
@@ -69,4 +68,4 @@ export const requestMonitor = (response): void => {
 };
 
 export default request;
-export { baseURL, isDevelopment, oldURL };
+export { baseURL, isDevelopment };

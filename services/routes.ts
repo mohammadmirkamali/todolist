@@ -2,7 +2,7 @@ export const SearchUrl = (): string => `/initial`;
 export const CourseUrl = (id): string => `/workshops/${id}`;
 export const LessonUrl = (courseId, lessonId): string =>
   `/workshops/${courseId}/lessons/${lessonId}`;
-export const CookieRoute = (): string => `/sanctum/csrf-cookie`;
+export const CookieRoute = (): string => `https://api.taalei-edu.com/sanctum/csrf-cookie`;
 export const HomeUrl = (): string => `/home`;
 export const UserUrl = (): string => `/user`;
 export const AllTermsUrl = (): string => `/terms`;
