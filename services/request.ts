@@ -21,14 +21,13 @@ request.addRequestTransform((req) => {
   if (token) {
     req.headers.Authorization = `Bearer ${token}`;
   }
-  if (req.url.includes('/trainings')) {
-    req.headers['Content-Type'] = `multipart/form-data`;
-    req.headers.Accept = 'application/json';
-  }
 });
 
 request.axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log('res', response); // eslint-disable-line
+    return response;
+  },
   async (error) => {
     if (error.response.status !== 401) {
       return error;

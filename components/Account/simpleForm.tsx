@@ -8,6 +8,7 @@ import { getUserAction, postLoginAction } from 'store/account/account.action';
 import {
   CheckAuthEmailUrl,
   CheckAuthPhoneUrl,
+  CookieRoute,
   EmailVerifyUrl,
   ForgetPasswordCodedUrl,
   ForgetPasswordUrl,
@@ -18,6 +19,7 @@ import { SSubmitForm } from './style';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { faNumber } from 'utils/common.util';
 import { Spin } from 'antd';
+import request from 'services/request';
 
 type FormType = {
   loginData: any; // eslint-disable-line
@@ -136,6 +138,7 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
             postLoginAction(data[2], body(values.value)),
           );
           if (result.data.next === 'login') {
+            await request.get(CookieRoute());
             dispatch(getUserAction());
             setIsVisible(false);
             dispatch(postLoginAction(null, { data: { next: 'enterNumber' }, ok: true }));
