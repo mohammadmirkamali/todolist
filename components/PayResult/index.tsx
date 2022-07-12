@@ -23,7 +23,7 @@ const PayResult: React.FC = () => {
 
     const sendData = async (): Promise<void> => {
       const res: any = await request.post(PayResultUrl(), { Authority, Status }); // eslint-disable-line
-      res?.data?.type === 'exam' && router.push(ExamInfoRoute(res.data.product_id));
+      res?.data?.type === 'exam' && router.push(ExamInfoRoute(res.data.product_id, 1, 1));
       res?.data?.type === 'wallet' &&
         router.push(ProfileRoute('user', t('global.profile')));
       res?.data?.type === 'workshop' &&
