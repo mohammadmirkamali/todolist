@@ -17,6 +17,8 @@ const accountReducer = (state = initialState, action): AccountType => {
       return { ...state, userLoading: true };
     case type.GET_USER_SUCCESS:
       return { ...state, user: action.payload, userLoading: false };
+    case type.GET_USER_ERROR:
+      return { ...state, userLoading: false };
 
     case type.POST_LOGIN_REQUEST:
       return { ...state, loginLoading: true };

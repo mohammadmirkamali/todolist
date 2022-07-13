@@ -14,7 +14,6 @@
     "next-compose-plugins": "^2.2.1",
     "next-images": "^1.8.4",
     "next-redux-wrapper": "^7.0.5",
-    "nookies": "^2.5.2",
     "plyr-react": "^4.0.0",
     "preact": "^10.7.0",
     "react": "17.0.2",
@@ -90,7 +89,7 @@
   "scripts": {
     "analyze": "cross-env ANALYZE=true yarn build",
     "build": "next build",
-    "dev": "next dev",
+    "dev": "next dev --port=80",
     "fix": "npm run fix-js && npm run fix-css",
     "fix-css": "npm run lint-css --fix",
     "fix-js": "npm run lint-js --fix",

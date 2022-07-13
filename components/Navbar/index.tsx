@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import Link from 'next/link';
-import { parseCookies } from 'nookies';
 import { getSearchDataAction } from 'store/course/course.action';
 import { getUserAction } from 'store/account/account.action';
 import Login from 'components/Account/login';
@@ -17,10 +16,10 @@ const Navbar: React.FC = () => {
   const searchData = useSelector((state) => state.course.searchData);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const user = useSelector((state) => state.account.user);
-  const token = parseCookies()?.taalei;
+
   useEffect(() => {
-    token && !user && dispatch(getUserAction());
-  }, [token]);
+    !user && dispatch(getUserAction());
+  }, []);
 
   useEffect(() => {
     !searchData && dispatch(getSearchDataAction());

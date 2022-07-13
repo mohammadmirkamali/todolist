@@ -1,6 +1,5 @@
 import { message } from 'antd';
 import { ApisauceInstance, create } from 'apisauce';
-import { parseCookies } from 'nookies';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'https://api.taalei-edu.com';
@@ -15,18 +14,13 @@ const request = ((): ApisauceInstance => {
   return create({ baseURL, headers, withCredentials: true });
 })();
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 request.addRequestTransform((req) => {
-  const token = parseCookies()?.taalei;
-  if (token) {
-    req.headers.Authorization = `Bearer ${token}`;
-  }
+  // this call before any request
 });
 
 request.axiosInstance.interceptors.response.use(
-  (response) => {
-    console.log('res', response); // eslint-disable-line
-    return response;
-  },
+  (response) => response,
   async (error) => {
     if (error.response.status !== 401) {
       return error;
@@ -58,7 +52,7 @@ export const requestMonitor = (response): void => {
     dict[response.problem],
   ];
 
-  if (response.config.url.includes('profile')) {
+  if (response.config.url.includes('user')) {
     return;
   }
 

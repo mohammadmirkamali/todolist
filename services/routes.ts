@@ -5,6 +5,7 @@ export const LessonUrl = (courseId, lessonId): string =>
 export const CookieRoute = (): string => `https://api.taalei-edu.com/sanctum/csrf-cookie`;
 export const HomeUrl = (): string => `/home`;
 export const UserUrl = (): string => `/user`;
+export const LogoutUrl = (): string => `/logout`;
 export const AllTermsUrl = (): string => `/terms`;
 export const PassedUrl = (courseId, lessonId): string =>
   `/workshops/${courseId}/lessons/${lessonId}/passed`;
