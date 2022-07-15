@@ -1,4 +1,4 @@
-import { Avatar, Select, Tag } from 'antd';
+import { Avatar, Radio, Select, Tag } from 'antd';
 import AntButton from 'components/Common/AntButton';
 import LoadingBox from 'components/Common/LoadingBox';
 import LoginLayout from 'components/Common/LoginLayout';
@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeTermHourAction, getTermAction } from 'store/course/course.action';
+import { TermType } from 'types/course.type';
 import { faNumber } from 'utils/common.util';
 
 const { Option } = Select;
@@ -36,7 +37,7 @@ const tagRender = (props): ReactElement => {
 };
 
 type InfoType = {
-  data: any; // eslint-disable-line
+  data: TermType;
   setHourPerWeek: (item) => void;
   hourPerWeek: number;
   setDays: (item) => void;
@@ -48,6 +49,7 @@ const Information: React.FC<InfoType> = (props) => {
   const router = useRouter();
   const { termId } = router.query;
   const [loading, setLoading] = useState(false);
+  const [type, setType] = useState(0);
 
   const error = useSelector((state) => state.course.termError);
   const saveLoading = useSelector((state) => state.course.changeTermLoading);
@@ -58,6 +60,7 @@ const Information: React.FC<InfoType> = (props) => {
   const reloadData = (): void => {
     dispatch(getTermAction(termId));
   };
+
   return (
     <div className="w-screen mb-[20px] flex p-[30px] flex-col rounded-[8px] xl:rounded mt-[40px] xl:mt-0 xl:mb-0 h-[600px] md:w-[700px] xl:pb-[23rem] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
       <LoadingBox data={!!data} error={error} reload={reloadData}>
@@ -67,7 +70,17 @@ const Information: React.FC<InfoType> = (props) => {
 
         <div className="flex text-[16px] mb-[12px]">
           <div className="ml-[8px]">{t('global.group')} : </div>
-          <div>{t(`term.${data?.group_type === 2 ? 'sabeq' : 'abrar'}`)}</div>
+          {data?.registered ? (
+            <div>{t(`term.${data?.group_type === 2 ? 'sabeq' : 'abrar'}`)}</div>
+          ) : (
+            <Radio.Group onChange={(e): void => setType(e.target.value)} value={type}>
+              {data?.settings.map((item, index) => (
+                <Radio key={item.name} value={index}>
+                  {item.name}
+                </Radio>
+              ))}
+            </Radio.Group>
+          )}
         </div>
         {data?.supporter && (
           <div className="text-[16px] my-[16px]">
@@ -81,6 +94,10 @@ const Information: React.FC<InfoType> = (props) => {
             </div>
           </div>
         )}
+        <div className="flex text-[16px] mb-[12px]">
+          <div className="ml-[8px]">{t('term.capacity')} : </div>
+          <div>{faNumber(data?.settings?.[type]?.capacity)}</div>
+        </div>
         <div className="flex text-[16px] mb-[12px]">
           <div className="ml-[8px]">{t('term.start')} : </div>
           <div>{faNumber(data?.start.split(' ')[0])}</div>
@@ -124,7 +141,7 @@ const Information: React.FC<InfoType> = (props) => {
         )}
 
         <AntButton
-          className="w-[290px] mt-[20px]"
+          className="w-full md:w-[290px] mt-[20px]"
           loading={saveLoading}
           disabled={!hasChange}
           onClick={(): void => {
@@ -133,14 +150,19 @@ const Information: React.FC<InfoType> = (props) => {
         >
           {data?.registered && t('global.save')}
         </AntButton>
-        <LoginLayout data={data} setLoading={setLoading}>
-          <AntButton className="w-[290px] mt-[20px]" loading={loading}>
+        <LoginLayout
+          data={{ ...data, price: data?.settings?.[type]?.price || 0 }}
+          setLoading={setLoading}
+          termData={data?.settings[type]}
+        >
+          <AntButton className="w-full md:w-[290px] mt-[20px]" loading={loading}>
             {!data?.registered && (
               <>
-                {t('global.register')}{' '}
+                {t('global.register')} ({data?.settings?.[type]?.name})
                 <span className="mr-[30px]">
-                  {Number(data?.price) !== 0
-                    ? faNumber(Number(data?.price) / 1000) + t('global.tooman')
+                  {Number(data?.settings?.[type]?.price) !== 0
+                    ? faNumber(Number(data?.settings?.[type]?.price || 0) / 1000) +
+                      t('global.tooman')
                     : t('global.free')}
                 </span>
               </>

@@ -31,9 +31,10 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
       .slice(0, 5);
 
   useEffect(() => {
-    course?.attaches.length
-      ? setTabs(['attaches', 'questions', 'comments', 'lessons'])
-      : setTabs(['questions', 'comments', 'lessons']);
+    const rawTabs = ['comments', 'lessons'];
+    !!course?.ask_teacher && rawTabs.unshift('questions');
+    course?.attaches.length && rawTabs.unshift('attaches');
+    setTabs(rawTabs);
   }, [course]);
 
   const reloadData = (): void => {
@@ -80,10 +81,14 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
               height={300}
               priority
             />
-            <p className="mx-[40px] py-[50px] text-[18px]">{course?.description}</p>
+            <div className="mx-[40px] py-[50px] text-[18px]">
+              {course?.description.split('\n').map((item) => (
+                <p key={item}>{item}</p>
+              ))}
+            </div>
           </LoadingBox>
         </div>
-        <div className="hidden xl:block ">{relatedCourses()}</div>
+        <div className="hidden xl:block mt-[16px]">{relatedCourses()}</div>
       </div>
 
       {/* information */}
@@ -103,7 +108,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
             className={`h-[55px] center w-full flex text-[${
               tabs.length > 3 ? 13 : 16
             }px] md:text-[${
-              tabs.length > 3 ? 16 : 18
+              tabs.length > 3 ? 14 : 18
             }px] flex-row-reverse border-b-gray-1 border-b text-gray-3`}
           >
             {tabs.map((item, index) => (

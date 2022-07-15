@@ -10,6 +10,7 @@ import {
   ExamInfoRoute,
   PayResultUrl,
   ProfileRoute,
+  TermRoute,
   WebinarRoute,
 } from 'services/routes';
 import { getUserAction } from 'store/account/account.action';
@@ -19,18 +20,16 @@ const PayResult: React.FC = () => {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(null);
   useEffect(() => {
-    const { Authority, Status } = router.query;
+    const { Authority, Status, id, type } = router.query;
 
     const sendData = async (): Promise<void> => {
       const res: any = await request.post(PayResultUrl(), { Authority, Status }); // eslint-disable-line
-      res?.data?.type === 'exam' && router.push(ExamInfoRoute(res.data.product_id, 1, 1));
-      res?.data?.type === 'wallet' &&
-        router.push(ProfileRoute('user', t('global.profile')));
-      res?.data?.type === 'workshop' &&
-        router.push(CourseRoute(res.data.product_id, t('global.course')));
-      res?.data?.type === 'event' &&
-        router.push(WebinarRoute(res.data.product_id, t('global.event')));
-      dispatch(getUserAction());
+      type === 'exam' && router.push(ExamInfoRoute(id));
+      type === 'wallet' && router.push(ProfileRoute('user', t('global.profile')));
+      type === 'workshop' && router.push(CourseRoute(id, t('global.course')));
+      type === 'event' && router.push(WebinarRoute(id, t('global.event')));
+      type === 'term' && router.push(TermRoute(id, t('global.event')));
+      res.ok && dispatch(getUserAction());
     };
     if (Status) {
       setStatus(Status === 'OK');

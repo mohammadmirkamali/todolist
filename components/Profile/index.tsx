@@ -3,7 +3,7 @@ import { EditOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import { Select } from 'antd';
+import { Select, Spin } from 'antd';
 import { t } from 'i18next';
 import AntTooltip from 'components/Common/AntTooltip';
 import { SearchDataType, WebinarsType } from 'types/course.type';
@@ -71,10 +71,13 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
   }, [query, searchData]);
 
   const changePassword = async (): Promise<void> => {
-    const body = { AuthType: 'mobile', auth: user.mobile };
+    const body = {
+      AuthType: user.email ? 'email' : 'mobile',
+      auth: user.email ? user.email : user.mobile,
+    };
     setLoading('password');
-    await dispatch(postProfileAction(ForgetPasswordUrl(), body));
-    setIsModalVisible('password');
+    const res: any = await dispatch(postProfileAction(ForgetPasswordUrl(), body)); // eslint-disable-line
+    res.ok && setIsModalVisible('password');
     setLoading('');
   };
 
@@ -86,22 +89,6 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
     );
   };
 
-  const Edit = React.useCallback(
-    ({ type, text }) =>
-      text?.length ? (
-        <EditOutlined
-          className="text-[18px] mr-[10px] cursor-pointer hover:text-blue-10 duration-300"
-          onClick={(): void => setIsModalVisible(type)}
-        />
-      ) : (
-        <PlusOutlined
-          className="text-[18px] mr-[10px] cursor-pointer hover:text-blue-10 duration-300"
-          onClick={(): void => setIsModalVisible(type)}
-        />
-      ),
-    [],
-  );
-
   const reloadData = (): void => {
     dispatch(getSearchDataAction());
     dispatch(getUserAction());
@@ -111,7 +98,7 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
     <div className="duration-300 bg-gray-0 min-h-screen flex-col flex items-center justify-items-start">
       <div className="w-full xl:overflow-auto py-[20px] rounded-[8px] xl:rounded mt-[10px] xl:mt-0 xl:mb-0 md:w-[560px] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
         <LoadingBox data={profile} error={error} reload={reloadData}>
-          <div className=" items-center flex-col flex">
+          <div className=" items-center flex-col flex mt-[30px] md:mt-0">
             <ProfileImg image={profile?.avatar} isUser={isUser} />
             <h2 className="font-bold text-[20px] pt-[10px] w-[250px] flex items-center text-center justify-center">
               {profile?.nickname}
@@ -138,6 +125,10 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
                   <p className="text-[16px]">{t('global.coursesCount')}</p>
                   <p>{faNumber(user?.workshops.length + user?.events.length)} </p>
                 </div>
+                <div className="flex justify-between">
+                  <p className="text-[16px]">{t('global.hasanat')}</p>
+                  <p>{faNumber(user?.real_rate)} </p>
+                </div>
 
                 <div className="flex justify-between">
                   <p className="text-[16px]">{t('account.walletAmount')}</p>
@@ -158,31 +149,32 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
                   </div>
                 </div>
 
-                <div className="flex justify-between ">
-                  <p>{t('global.phoneNumber')}</p>
-                  <div>
-                    {faNumber(user?.mobile)}
-                    <EditOutlined
-                      className="text-[18px] mr-[10px] cursor-pointer hover:text-blue-10 duration-300"
-                      onClick={(): void => {
-                        setIsModalVisible('mobile');
-                        dispatch(
-                          postProfileAction(null, {
-                            data: { next: 'newMobile' },
-                            ok: true,
-                          }),
-                        );
-                      }}
-                    />
+                {user?.mobile && user?.mobile !== '09' && (
+                  <div className="flex justify-between ">
+                    <p>{t('global.phoneNumber')}</p>
+                    <div>
+                      {faNumber(user?.mobile)}
+                      <EditOutlined
+                        className="text-[18px] mr-[10px] cursor-pointer hover:text-blue-10 duration-300"
+                        onClick={(): void => {
+                          setIsModalVisible('mobile');
+                          dispatch(
+                            postProfileAction(null, {
+                              data: { next: 'newMobile' },
+                              ok: true,
+                            }),
+                          );
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {user?.email && (
                   <div className="flex justify-between flex-wrap">
                     <p>{t('global.email')}</p>
                     <span>
                       <AntTooltip name={user.email || ''} length={18} />
-                      {/* <Edit type="email" text={user.email} /> */}
                     </span>
                   </div>
                 )}
@@ -194,7 +186,7 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
                 >
                   <p className="text-[16px]">{t('account.changePassword')}</p>
                   {loading === 'password' ? (
-                    <LoadingOutlined />
+                    <Spin />
                   ) : (
                     <EditOutlined className="text-[18px] mr-[10px] " />
                   )}
@@ -206,7 +198,7 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
                 >
                   <p className="text-[16px]">{t('account.editInfo')}</p>
                   {loading === 'info' ? (
-                    <LoadingOutlined />
+                    <Spin />
                   ) : (
                     <EditOutlined className="text-[18px] mr-[10px] " />
                   )}

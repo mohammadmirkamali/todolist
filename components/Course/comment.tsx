@@ -62,7 +62,9 @@ const UserComment: React.FC<CommentType> = (props) => {
 
   return (
     <div className="h-full overflow-hidden relative">
-      <div className="h-[calc(100%-240px)] overflow-auto">
+      <div
+        className={`${notAllowToAsk ? 'h-full' : 'h-[calc(100%-240px)]'}  overflow-auto`}
+      >
         {allData.map((item) => (
           <AntComment
             text={item[text]}

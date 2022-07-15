@@ -4,7 +4,7 @@ import { t } from 'i18next';
 import { useRouter } from 'next/router';
 import { getExamInfoAction } from 'store/course/course.action';
 import { useDispatch, useSelector } from 'react-redux';
-import { LessonRoute } from 'services/routes';
+import { HomeRoute } from 'services/routes';
 import { message } from 'antd';
 
 const Navbar = dynamic(() => import('components/Navbar'));
@@ -14,7 +14,7 @@ const Head = dynamic(() => import('next/head'));
 const ExamInfoPage: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { examId, courseId, lessonId } = router.query;
+  const { examId } = router.query;
   const examInfo = useSelector((state) => state.course.examInfo);
 
   useEffect(() => {
@@ -22,8 +22,7 @@ const ExamInfoPage: React.FC = () => {
   }, [examId]);
   useEffect(() => {
     examInfo?.is_passed &&
-      (router.push(LessonRoute(courseId, lessonId, t('global.course'))),
-      message.warn(t('exam.alreadyPassed')));
+      (router.push(HomeRoute()), message.warn(t('exam.alreadyPassed')));
   }, [examInfo]);
 
   return (

@@ -5,7 +5,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
 import Card from 'components/Common/Card';
-import { CoursesType } from 'types/course.type';
+import { CoursesType, WebinarsType } from 'types/course.type';
 import useWindowSize from 'hooks/useWidowsSize';
 import LoadingBox from 'components/Common/LoadingBox';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +15,7 @@ import Link from 'next/link';
 import { AllPageRoute } from 'services/routes';
 import { SAllLink } from './style';
 
-type SliderType = { courses: CoursesType[]; title: string };
+type SliderType = { courses: CoursesType[] | WebinarsType[]; title: string };
 const Slider: React.FC<SliderType> = ({ courses, title }) => {
   const dispatch = useDispatch();
   const error = useSelector((state) => state.course.homeError);
@@ -25,25 +25,27 @@ const Slider: React.FC<SliderType> = ({ courses, title }) => {
     dispatch(getHomeAction());
   };
   return (
-    <div className="bg-blue-11 w-full md:my-[50px] center flex-col pb-[40px]">
+    <div
+      className={`${
+        title === 'event' ? '' : 'bg-blue-11'
+      } w-full md:my-[50px] center flex-col pb-[40px]`}
+    >
       <h2 className="font-bold text-[24px] md:text-[27px] my-[30px]">
         {t(`landing.${title}`)}
       </h2>
-      <div className="flex-wrap center w-[320px] min-h-[250px] md:w-[900px] xl:w-[1300px]">
+      <div className="flex-wrap center w-[300px] min-h-[250px] md:w-[900px] xl:w-[1300px]">
         <LoadingBox data={!!data?.length} error={error} reload={reloadData}>
           {data?.map((item) => (
-            <div
-              key={item.id}
-              className="md:scale-[.85] md:m-[-24px] xl:scale-100 xl:m-0"
-            >
-              <Card data={item} />
+            <div key={item.id} className="scale-[.85] md:m-[-24px] xl:scale-100 xl:m-0">
+              <Card data={item} webinar={title === 'event'} />
             </div>
           ))}
         </LoadingBox>
       </div>
-      <Link href={AllPageRoute('courses')}>
+      <Link href={title === 'event' ? AllPageRoute('events') : AllPageRoute('courses')}>
         <SAllLink className="mt-[24px] text-[16px] text-blue-1 cursor-pointer">
-          {t('landing.seeAllCourses')} <ArrowLeftOutlined />
+          {t(`landing.seeAll${title === 'event' ? 'Webinars' : 'Courses'}`)}{' '}
+          <ArrowLeftOutlined />
         </SAllLink>
       </Link>
     </div>

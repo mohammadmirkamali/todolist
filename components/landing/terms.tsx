@@ -29,10 +29,7 @@ const Terms: React.FC = () => {
       <div className="flex-wrap center w-[320px] min-h-[250px] md:w-[900px] xl:w-[1300px]">
         <LoadingBox data={!!terms} error={error} reload={reloadData}>
           {terms?.map((item) => (
-            <div
-              className="md:scale-[.85] md:m-[-24px] xl:scale-100 xl:m-0"
-              key={item.id}
-            >
+            <div className="scale-[.85] md:m-[-24px] xl:scale-100 xl:m-0" key={item.id}>
               <Link href={TermRoute(item.id, item.title)}>
                 <a>
                   <SContainer className="w-[300px] h-[310px] bg-white border border-gray-5 cursor-pointer relative rounded-[6px] m-[10px]">
@@ -70,12 +67,13 @@ const Terms: React.FC = () => {
                         <div className="mr-[8px] text-gray-3">{t('global.taali')}</div>
                       </div>
                     </div>
-
                     <div className="absolute bottom-[4px] text-gray-6 text-[12px] flex right-[28px] ">
                       <i className="fas fa-money-bill-wave ml-[6px] mt-[3px]" />
                       <div>
-                        {Number(item.price)
-                          ? `${faNumber(Number(item.price) / 1000)} ${t('global.tooman')}`
+                        {Number(item?.settings?.[0]?.price)
+                          ? `${faNumber(Number(item.settings[0].price) / 1000)} ${t(
+                              'global.tooman',
+                            )}`
                           : t('global.free')}
                       </div>
                     </div>

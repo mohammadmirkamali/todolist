@@ -6,12 +6,13 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import request from 'services/request';
-import { ratePayUrl } from 'services/routes';
+import { walletPayUrl } from 'services/routes';
 import { getChapterAction, getEventAction } from 'store/course/course.action';
-import { CourseType, TermType, WebinarType } from 'types/course.type';
+import { CourseType, TermSettingType, TermType, WebinarType } from 'types/course.type';
 
 type LayoutType = {
   url?: string;
+  termData?: TermSettingType;
   data?:
     | CourseType
     | WebinarType
@@ -22,7 +23,7 @@ type LayoutType = {
   handleNext?: () => void;
 };
 const LoginLayout: React.FC<LayoutType> = (props) => {
-  const { url, setLoading, condition, data, children, handleNext } = props;
+  const { url, setLoading, condition, data, children, handleNext, termData } = props;
   const dispatch = useDispatch();
   const router = useRouter();
   const { eventId, termId } = router.query;
@@ -37,7 +38,7 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
       setRegisterModalVisible(true);
     } else {
       setLoading && setLoading(true);
-      const res: any = await request.post(ratePayUrl(data.id, type)); // eslint-disable-line
+      const res: any = await request.post(walletPayUrl(data.id, type)); // eslint-disable-line
       setLoading && setLoading(false);
       if (res.ok) {
         message.success(res.data.message);
@@ -70,14 +71,11 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
         </div>
       )}
 
-      <Login
-        isVisible={loginModal}
-        setIsVisible={setLoginModal}
-        // nextAction={nextAction}
-      />
+      <Login isVisible={loginModal} setIsVisible={setLoginModal} />
       <RegisterModal
         url={url}
         data={data}
+        termData={termData}
         isVisible={registerModalVisible}
         setIsVisible={setRegisterModalVisible}
       />

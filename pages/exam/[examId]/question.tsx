@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { t } from 'i18next';
 import { useRouter } from 'next/router';
 import request from 'services/request';
-import { ExamUrl, LessonRoute } from 'services/routes';
+import { ExamUrl, HomeRoute } from 'services/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExamInfoAction } from 'store/course/course.action';
 import { message } from 'antd';
@@ -18,7 +18,7 @@ const ExamPage: React.FC = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const { examId, courseId, lessonId } = router.query;
+  const { examId } = router.query;
   const examInfo = useSelector((state) => state.course.examInfo);
 
   const getData = async () => {
@@ -30,11 +30,10 @@ const ExamPage: React.FC = () => {
   }, [examId]);
 
   useEffect(() => {
-    !examInfo && courseId && dispatch(getExamInfoAction(examId));
+    !examInfo && dispatch(getExamInfoAction(examId));
     examInfo?.is_passed &&
-      (router.push(LessonRoute(courseId, lessonId, t('global.course'))),
-      message.warn(t('exam.alreadyPassed')));
-  }, [courseId, examInfo, lessonId]);
+      (router.push(HomeRoute()), message.warn(t('exam.alreadyPassed')));
+  }, [examInfo]);
 
   return (
     <>

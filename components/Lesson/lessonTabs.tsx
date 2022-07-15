@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { CourseType, LessonNotesType } from 'types/course.type';
-import { calcTime } from 'utils/common.util';
+import { calcTime, faNumber } from 'utils/common.util';
 import { Checkbox, message } from 'antd';
 import AntButton from 'components/Common/AntButton';
 import styled from '@emotion/styled';
@@ -46,13 +46,16 @@ const LessonTabs: React.FC<LessonTabsType> = ({
   const [newNote, setNewNote] = useState('');
   const [loading, setLoading] = useState(false);
   const [time, setTime] = useState(0);
+  const leftCharacters = 510 - newNote.length;
 
   useEffect(() => {
     if (data) {
       const tab = [];
       course?.registered && tab.push('myComments');
       !!data?.notes.length && tab.push('publicComments');
-      (course?.registered || !!data.questions.length) && tab.push('questions');
+      !!course.ask_teacher &&
+        (course?.registered || !!data.questions.length) &&
+        tab.push('questions');
       (course?.registered || !!data.trainings.length) && tab.push('papers');
       setTabs(tab);
       setSlide(tab[0] || null);
@@ -67,7 +70,7 @@ const LessonTabs: React.FC<LessonTabsType> = ({
     setLoading(false);
     if (res.ok) {
       message.success(res.data?.message);
-      setMyNotes([{ showPublic, text: newNote, time }, ...myNotes]);
+      setMyNotes([res.data.note, ...myNotes]);
       setNewNote('');
     } else {
       message.error(res.data?.message);
@@ -77,6 +80,7 @@ const LessonTabs: React.FC<LessonTabsType> = ({
   const handleDeleteNote = async (note): Promise<void> => {
     setMyNotes(myNotes.filter((item) => item.id !== note.id));
     const res = await request.delete(DeleteNoteUrl(course.id, note.lesson_id, note.id));
+
     res.ok && message.success((res as any).data.message); // eslint-disable-line
   };
 
@@ -115,11 +119,12 @@ const LessonTabs: React.FC<LessonTabsType> = ({
                 fontSize={[12, 18]}
                 width={[100, 250]}
                 height={[30, 40]}
-                disabled={!newNote}
+                disabled={!newNote || leftCharacters < 0}
                 onClick={sendNote}
                 loading={loading}
               >
-                {t('course.addComment')}
+                {t('course.addComment')}{' '}
+                {leftCharacters < 30 ? `(${faNumber(leftCharacters)})` : ''}
               </AntButton>
             </div>
 

@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getHomeAction } from 'store/course/course.action';
 
 const Info = dynamic(() => import('./Info'));
-const Webinars = dynamic(() => import('./webinars'));
 const Teachers = dynamic(() => import('./teachers'));
 const Footer = dynamic(() => import('components/Footer'));
 
@@ -24,9 +23,9 @@ const Landing: React.FC = () => {
       <HeroSection />
       <Slider courses={home?.recent_workshops} title="newCourses" />
       <Info />
-      <Slider courses={home?.favorite_workshops} title="popularCourses" />
       <Terms />
-      <Webinars />
+      <Slider courses={home?.favorite_workshops} title="popularCourses" />
+      <Slider courses={home?.events} title="event" />
       <Teachers />
       {/* <AskUs /> */}
       <Footer />
