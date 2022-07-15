@@ -63,6 +63,11 @@ export const SubmitForm: React.FC<any> = ({ title, loading, ...rest }) => {
   );
 };
 
+export const ResetForm = ({ children }): JSX.Element => {
+  const { resetForm } = useFormikContext();
+  return <div onClick={(): void => resetForm()}>{children}</div>;
+};
+
 const SField = styled(Field)`
   color: ${({ theme }): string => theme.colors.red[0]};
 `;

@@ -14,7 +14,7 @@ import { faNumber } from 'utils/common.util';
 const ExamInfo: React.FC<{ data: ExamInfoType }> = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { examId, courseId, lessonId } = router.query;
+  const { examId } = router.query;
   const error = useSelector((state) => state.course.examInfoError);
   const [loading, setLoading] = useState(false);
 
@@ -71,7 +71,7 @@ const ExamInfo: React.FC<{ data: ExamInfoType }> = ({ data }) => {
             )}
           </div>
           {!data?.needPay && (
-            <Link href={ExamRoute(examId, courseId, lessonId)}>
+            <Link href={ExamRoute(examId)}>
               <a>
                 <AntButton
                   width={250}

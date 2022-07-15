@@ -43,6 +43,17 @@ export type TermItemType = {
   workshop_id: number;
 };
 
+export type TermSettingType = {
+  default_days: number[];
+  default_hour: number;
+  min_hour: number;
+  max_hour: number;
+  price: number;
+  term_type: number;
+  capacity: number;
+  name: string;
+};
+
 export type TermType = {
   description: string;
   title: string;
@@ -50,12 +61,13 @@ export type TermType = {
   image: string;
   start: string;
   id: number;
-  price: number;
+  price: number; // we need this for pay don't remove it
   term_number: number;
   available_days: number[];
   week_hours: number;
   group_type: number;
   registered: boolean;
+  settings: TermSettingType[];
   supporter?: { avatar: string; nickName: string; mobile: string; family: string };
   items: TermItemType[];
 };
@@ -127,6 +139,7 @@ export type CourseType = {
   price: number;
   progress_percent: number;
   time: number;
+  ask_teacher: number;
   passed_lessons: number[];
   registered: boolean;
   user: boolean;

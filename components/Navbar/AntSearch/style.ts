@@ -19,8 +19,8 @@ export const SSelect = styled(Select)<SelectType>`
 
 export const SContainer = styled.div<SelectType>`
   width: ${({ landing }): string => (landing === 1 ? '250px' : '100vw')};
-  margin-right: ${({ landing }): string => landing === 0 && '-40px'} ;
-  margin-left: ${({ landing }): string => landing === 0 && '-40px'} ;
+  margin-right: ${({ landing }): string => landing === 0 && '-40px'};
+  margin-left: ${({ landing }): string => landing === 0 && '-40px'};
   overflow: hidden;
   border: ${({ landing, focus }): string =>
     focus ? '1px solid #000' : landing === 0 && '1px solid #dee2e6'};
@@ -34,8 +34,5 @@ export const SContainer = styled.div<SelectType>`
   }
   ${({ theme }): string => theme.mediaQueries.lg} {
     width: ${({ landing }): string => (landing ? '500px' : '500px')};
-
+  }
 `;
-// border-radius: ${({ focus, landing }): string =>
-// focus === 1 || landing === 1 ? '8px' : '50%'};
-// }

@@ -1,11 +1,11 @@
 import { message, Modal, Popconfirm } from 'antd';
 import React, { useState } from 'react';
-import { CourseType, TermType, WebinarType } from 'types/course.type';
+import { CourseType, TermSettingType, TermType, WebinarType } from 'types/course.type';
 import { t } from 'i18next';
 import AntButton from 'components/Common/AntButton';
 import { faNumber } from 'utils/common.util';
 import request from 'services/request';
-import { DirectPayUrl, discountUrl, ratePayUrl, walletPayUrl } from 'services/routes';
+import { DirectPayUrl, discountUrl, walletPayUrl } from 'services/routes';
 import { StyledButton } from 'components/Common/commonStyle';
 import {
   getChapterAction,
@@ -25,16 +25,17 @@ type ModalType = {
     | TermType
     | { price: number; registered: boolean; id: string; title: string };
   url?: string;
+  termData?: TermSettingType;
 };
-const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url }) => {
+const RegisterModal: React.FC<ModalType> = (props) => {
+  const { isVisible, setIsVisible, data, url, termData } = props;
   const id = data?.id;
   const router = useRouter();
   const dispatch = useDispatch();
   const { eventId, termId, examId } = router.query;
   const [code, setCode] = useState('');
-  const type = eventId ? 'event' : examId ? 'exam' : 'workshop';
+  const type = eventId ? 'event' : examId ? 'exam' : termId ? 'term' : 'workshop';
   const [loading, setLoading] = useState(null);
-  const [discount, setDiscount] = useState(null);
   const [discountPrice, setDiscountPrice] = useState(null);
   const price = discountPrice || Number(data?.price);
   const user = useSelector((state) => state.account.user);
@@ -42,7 +43,6 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
 
   const handleDiscount = async (): Promise<void> => {
     const body = { code, for: type, id_for: id }; // eslint-disable-line
-    setDiscount(code);
     setLoading('discount');
     const res: any = await request.post(discountUrl(), body); // eslint-disable-line
     setLoading(null);
@@ -52,17 +52,14 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
   };
 
   const handlePay = async (method): Promise<void> => {
-    const href =
-      method === 'rate'
-        ? ratePayUrl(id, type)
-        : method === 'wallet'
-        ? walletPayUrl(id, type)
-        : DirectPayUrl(id, type);
+    const href = method === 'wallet' ? walletPayUrl(id, type) : DirectPayUrl(id, type);
 
-    const body = { code: discount };
+    let body: any = { code }; // eslint-disable-line
+    body = termData ? { ...body, term_type: termData.term_type } : body; // eslint-disable-line
     setLoading(method);
     const res: any = await request.post(href, body); // eslint-disable-line
     setLoading(null);
+    if (!res.ok) return;
     if (method === 'direct') {
       window.location.assign(res.data.link);
     } else {
@@ -92,7 +89,7 @@ const RegisterModal: React.FC<ModalType> = ({ isVisible, setIsVisible, data, url
     >
       <div className="center flex-col ">
         <div className="font-bold text-[24px] border-b border-b-gray-1 w-full text-center pb-[15px]">
-          {data?.title}
+          {data?.title} {termData ? `(${termData.name})` : ''}
         </div>
 
         <div className="my-[20px] flex w-full">

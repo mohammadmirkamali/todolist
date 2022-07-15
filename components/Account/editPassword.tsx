@@ -7,7 +7,11 @@ import FormField from 'components/Common/formField';
 import { SSubmitForm } from 'components/Profile/style';
 import { ForgetPasswordNewUrl } from 'services/routes';
 import { useDispatch, useSelector } from 'react-redux';
-import { postLoginAction, postProfileAction } from 'store/account/account.action';
+import {
+  getUserAction,
+  postLoginAction,
+  postProfileAction,
+} from 'store/account/account.action';
 
 type EditPasswordType = { setIsVisible: (e) => void; profile?: boolean };
 const fields = ['newPassword', 'repeatNewPassword'];
@@ -38,6 +42,7 @@ const EditPassword: React.FC<EditPasswordType> = ({ setIsVisible, profile }) => 
               : postLoginAction(ForgetPasswordNewUrl(), body),
           );
           if (res.ok) {
+            dispatch(getUserAction());
             setIsVisible(false);
             message.success(t('account.successChangePassword'));
           }

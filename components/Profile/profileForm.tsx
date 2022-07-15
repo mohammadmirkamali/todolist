@@ -34,11 +34,11 @@ const ProfileForm: React.FC<FormType> = ({ profileData, setIsVisible }) => {
 
   switch (step) {
     case 'ForgetPassword_step1':
-      data = ['addMobileCode', null, ForgetPasswordCodedUrl(), 'number', 'code'];
+      data = ['changePassword', null, ForgetPasswordCodedUrl(), 'number', 'code'];
       body = (value): object => ({
-        auth: user.mobile,
+        auth: profileData.auth,
         code: value.toString(),
-        AuthType: 'mobile',
+        AuthType: profileData.authType,
       });
       yup = Yup.number().required(t('account.emptyField'));
       break;

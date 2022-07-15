@@ -1,5 +1,6 @@
 import { message } from 'antd';
 import { ApisauceInstance, create } from 'apisauce';
+import { t } from 'i18next';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'https://api.taalei-edu.com';
@@ -52,7 +53,9 @@ export const requestMonitor = (response): void => {
     dict[response.problem],
   ];
 
-  if (response.config.url.includes('user')) {
+  if (response.config.url.includes('user')) return;
+  if (response.config.url.includes('DirectPay/result') && !response.ok) {
+    message.warn(t('global.failedPay'));
     return;
   }
 

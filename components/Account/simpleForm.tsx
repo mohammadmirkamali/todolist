@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { t } from 'i18next';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import FormField from 'components/Common/formField';
+import FormField, { ResetForm } from 'components/Common/formField';
 import AppForm from 'components/Common/appForm';
 import { getUserAction, postLoginAction } from 'store/account/account.action';
 import {
@@ -11,7 +11,8 @@ import {
   EmailVerifyUrl,
   ForgetPasswordCodedUrl,
   ForgetPasswordUrl,
-  LoginUrl,
+  LoginEmailUrl,
+  LoginMobileUrl,
   MobileVerifyUrl,
 } from 'services/routes';
 import { SSubmitForm } from './style';
@@ -62,8 +63,14 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
       break;
 
     case 'loginUsingPassword':
-      data = ['enterPassword', null, LoginUrl(), 'password', 'password'];
+      data = ['enterPassword', null, LoginMobileUrl(), 'password', 'password'];
       body = (value): object => ({ mobile: loginData.mobile, password: value });
+      yup = Yup.string().required(t('account.emptyField'));
+      break;
+
+    case 'loginUsingEmailPassword':
+      data = ['enterPassword', null, LoginEmailUrl(), 'password', 'password'];
+      body = (value): object => ({ email: loginData.email, password: value });
       yup = Yup.string().required(t('account.emptyField'));
       break;
 
@@ -73,7 +80,7 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
       yup = Yup.string().email(t('account.validEmail')).required(t('account.emptyField'));
       break;
 
-    case 'VerifyEmail':
+    case 'verifyEmail':
       data = ['addEmailCode', null, EmailVerifyUrl(), 'number', 'code'];
       body = (value): object => ({ email: loginData.email, code: value.toString() });
       yup = Yup.string().required(t('account.emptyField'));
@@ -88,9 +95,9 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
     case 'ForgetPassword_step1':
       data = ['forgotPassword', null, ForgetPasswordCodedUrl(), 'number', 'code'];
       body = (value): object => ({
-        auth: '09356942668',
+        auth: loginData.auth,
         code: value.toString(),
-        AuthType: 'mobile',
+        AuthType: loginData.authType,
       });
       yup = Yup.number().required(t('account.emptyField'));
       break;
@@ -104,16 +111,16 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
   return (
     <div className=" flex flex-col justify-center items-center">
       <div className="text-[26px] font-bold">{t(`account.${data[0]}`)}</div>
-      {(step === 'VerifyEmail' || step === 'VerifyMobile') && (
+      {(step === 'verifyEmail' || step === 'VerifyMobile') && (
         <div className="text-[16px] mt-[8px]">
-          {step === 'VerifyEmail'
+          {step === 'verifyEmail'
             ? t(`account.emailCode`, { email: loginData.email })
             : t(`account.mobileCode`, { number: faNumber(loginData.mobile) })}
         </div>
       )}
       {data[1] && <div className="text-[18px] mt-[15px]">{t(`account.${data[1]}`)}</div>}
 
-      {(step === 'VerifyEmail' ||
+      {(step === 'verifyEmail' ||
         step === 'VerifyMobile' ||
         step === 'loginUsingPassword' ||
         step === 'loginUsingEmail') && (
@@ -155,24 +162,32 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
           loading={!forgotPasswordLoading && (loading || userLoading)}
           title={t('account.approved')}
         />
-      </AppForm>
 
-      {(step === 'loginUsingPassword' || step === 'loginUsingEmail') && (
-        <div className="text-[16px] mt-[10px] link" onClick={handleForgotPassword}>
-          {t(`account.forgotPassword`)} {forgotPasswordLoading && <Spin />}
-        </div>
-      )}
+        <ResetForm>
+          {(step === 'loginUsingPassword' || step === 'loginUsingEmailPassword') && (
+            <div
+              className="text-[16px] mt-[10px] text-center link w-full"
+              onClick={handleForgotPassword}
+            >
+              {t(`account.forgotPassword`)} {forgotPasswordLoading && <Spin />}
+            </div>
+          )}
+        </ResetForm>
 
-      {(step === 'enterNumber' || step === 'enterEmail') && (
         <div
-          className="text-[16px] mt-[10px] link"
+          className="text-[16px] mt-[10px] text-center link w-full"
           onClick={(): void => {
             dispatch(postLoginAction(null, { data: enterWithEmail, ok: true }));
           }}
         >
-          {step === 'enterNumber' ? t('account.loginEmail') : t('account.loginMobile')}
+          <ResetForm>
+            {(step === 'enterNumber' || step === 'enterEmail') &&
+              (step === 'enterNumber'
+                ? t('account.loginEmail')
+                : t('account.loginMobile'))}
+          </ResetForm>
         </div>
-      )}
+      </AppForm>
     </div>
   );
 };

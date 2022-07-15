@@ -1,5 +1,5 @@
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
-import { Upload } from 'antd';
+import { message, Upload } from 'antd';
 import AntButton from 'components/Common/AntButton';
 import AntComment from 'components/Common/AntComment';
 import AppForm from 'components/Common/appForm';
@@ -39,12 +39,11 @@ const Papers: React.FC<{ data: LessonNotesType }> = ({ data }) => {
             validationSchema={validationSchema}
             onSubmit={async (values, { resetForm }): Promise<void> => {
               setLoading(true);
-              const formData = new FormData();
-              formData.append('attachment', fileList[0]);
-              const body = { ...values };
-              const res = await request.post(SendTrainUrl(courseId, lessonId), body);
+              const body = { ...values, attachment: fileList };
+              const res: any = await request.post(SendTrainUrl(courseId, lessonId), body); // eslint-disable-line
               setLoading(false);
-              //   result && resetForm();
+              res.ok && message.success(res.data.message);
+              res.ok && resetForm();
             }}
           >
             <div className="flex flex-col md:flex-row">

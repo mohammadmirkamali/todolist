@@ -28,7 +28,7 @@ type QuestionType = {
 const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { examId, courseId, lessonId } = router.query;
+  const { examId } = router.query;
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -136,7 +136,7 @@ const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) =>
                   {faNumber(info?.acceptance_percent)}
                 </div>
               </div>
-              <Link href={LessonRoute(courseId, lessonId, 'lesson')}>
+              <Link href={LessonRoute(result.workshop_id, result.lesson_id, 'lesson')}>
                 <a className="text-[18px]">{t('course.returnToLesson')}</a>
               </Link>
             </div>

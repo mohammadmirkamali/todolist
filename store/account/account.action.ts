@@ -1,6 +1,4 @@
 /* eslint-disable arrow-body-style */
-import { message } from 'antd';
-import { t } from 'i18next';
 import request from 'services/request';
 import { LogoutUrl, UserUrl } from 'services/routes';
 import * as type from './account.constants';
@@ -31,7 +29,6 @@ export const postProfileAction = (url, body) => {
       return data.token && !data.next ? null : response;
     }
 
-    message.error(response.data.message || t('global.apiError'));
     dispatch({ type: type.POST_PROFILE_ERROR });
     return false;
   };

@@ -11,7 +11,6 @@ export const PassedUrl = (courseId, lessonId): string =>
   `/workshops/${courseId}/lessons/${lessonId}/passed`;
 export const TermUrl = (id): string => `/terms/${id}`;
 export const discountUrl = (): string => `/takhfif-check`;
-export const ratePayUrl = (id, type): string => `/buyUsingRate/${type}/${id}`;
 export const walletPayUrl = (id, type): string => `/buyUsingWallet/${type}/${id}`;
 export const DirectPayUrl = (id, type): string => `/DirectPay/${type}/${id}`;
 export const EventUrl = (id): string => `/events/${id}`;
@@ -45,7 +44,8 @@ export const MobileVerifyUrl = (): string => `/verifyMobile`;
 export const EmailVerifyUrl = (): string => `/verifyEmail`;
 export const CheckAuthPhoneUrl = (): string => `/checkAuthPhone`;
 export const CheckAuthEmailUrl = (): string => `/checkAuthEmail`;
-export const LoginUrl = (): string => `/loginUsingMobilePassword`;
+export const LoginMobileUrl = (): string => `/loginUsingMobilePassword`;
+export const LoginEmailUrl = (): string => `/loginUsingEmailPassword`;
 export const FillFormUrl = (): string => `/RequiredFieldsFill`;
 export const ForgetPasswordUrl = (): string => `/forget_password_step0`;
 export const ForgetPasswordCodedUrl = (): string => `/forget_password_step1`;
@@ -65,10 +65,8 @@ export const LessonRoute = (courseId, lessonId, lessonName): string =>
   `/workshop/${courseId}/lesson/${lessonId}/${lessonName.replace(/ /g, '-')}`;
 export const ProfileRoute = (id, name): string =>
   `/profile/${id}/${name?.replace(/ /g, '-')}`;
-export const ExamInfoRoute = (examId, courseId, lessonId): string =>
-  `/exam/${examId}/info/?courseId=${courseId}&lessonId=${lessonId}`;
-export const ExamRoute = (examId, courseId, lessonId): string =>
-  `/exam/${examId}/question/?courseId=${courseId}&lessonId=${lessonId}`;
+export const ExamInfoRoute = (examId): string => `/exam/${examId}/info`;
+export const ExamRoute = (examId): string => `/exam/${examId}/question`;
 export const TermRoute = (termId, termTitle): string =>
   `/term/${termId}/${termTitle?.replace(/ /g, '-')}/`;
 
