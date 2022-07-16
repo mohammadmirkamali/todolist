@@ -1,9 +1,10 @@
 import { Spin, Table } from 'antd';
 import { SModal } from 'components/Account/style';
 import { t } from 'i18next';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import request from 'services/request';
-import { MyCommentsUrl } from 'services/routes';
+import { CourseRoute, MyCommentsUrl, WebinarRoute } from 'services/routes';
 
 const MyComments: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -23,12 +24,23 @@ const MyComments: React.FC = () => {
   };
 
   const dataSource = data?.data.map((item) => ({
-    department: item.department,
+    department: (
+      <Link
+        href={
+          item.en_department === 'event'
+            ? WebinarRoute(item.department_id, item.title)
+            : CourseRoute(item.department_id, item.title)
+        }
+      >
+        <a>{item.title}</a>
+      </Link>
+    ),
     title3: item.text,
     status: item.status,
+    answer: item.answer?.text,
   }));
 
-  const columns = ['title3', 'department', 'status'].map((item) => ({
+  const columns = ['title3', 'department', 'status', 'answer'].map((item) => ({
     title: t(`global.${item}`),
     dataIndex: item,
   }));
@@ -53,13 +65,6 @@ const MyComments: React.FC = () => {
           </div>
           <div className="flex flex-col  p-[16px] text-[16px]]">
             <Table dataSource={dataSource} columns={columns} pagination={false} />
-
-            {/* {data?.data.map((item, index) => (
-              <div key={item.trackingCode} className="mb-[4px]">
-                {faNumber(index + 1)}.{item.description} {item.title} (
-                {faNumber(item.price.toLocaleString())})
-              </div>
-            ))} */}
           </div>
         </div>
       </SModal>
