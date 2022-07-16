@@ -46,7 +46,7 @@ const LessonTabs: React.FC<LessonTabsType> = ({
   const [newNote, setNewNote] = useState('');
   const [loading, setLoading] = useState(false);
   const [time, setTime] = useState(0);
-  const leftCharacters = 510 - newNote.length;
+  const leftCharacters = 250 - newNote.length;
 
   useEffect(() => {
     if (data) {

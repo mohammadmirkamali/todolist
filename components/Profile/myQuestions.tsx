@@ -25,7 +25,11 @@ const MyQuestions: React.FC = () => {
   const dataSource = data?.data.map((item) => ({
     question: item.description,
     title3: item.title,
-    status: t(`global.${item.type === 'public' ? 'public' : 'private'}`),
+    status: t(
+      `global.${
+        item.state === 0 ? 'waitingToApprove' : item.state === 1 ? 'approved' : 'answered'
+      }`,
+    ),
   }));
 
   const columns = ['title3', 'question', 'status'].map((item) => ({

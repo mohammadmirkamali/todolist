@@ -1,9 +1,12 @@
 import { Spin, Table } from 'antd';
 import { SModal } from 'components/Account/style';
+import { SPlyr } from 'components/Lesson';
 import { t } from 'i18next';
 import React, { useState } from 'react';
 import request from 'services/request';
 import { MyTrainingUrl } from 'services/routes';
+import { faNumber, PLAYER_CONTROLS } from 'utils/common.util';
+import Plyr from 'plyr-react';
 
 const MyTraining: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -27,14 +30,31 @@ const MyTraining: React.FC = () => {
     title3: item.title,
     workshopTitle: item.workshop_title,
     lessonTitle: item.lesson_title,
+    hasane: faNumber(item.score),
+    reviewerComment:
+      item.comment_type === 2 ? (
+        <SPlyr>
+          <Plyr
+            source={{ type: 'audio', sources: [{ src: item.comment }] }}
+            options={{ controls: PLAYER_CONTROLS }}
+          />
+        </SPlyr>
+      ) : (
+        item.comment
+      ),
   }));
 
-  const columns = ['title3', 'description', 'workshopTitle', 'lessonTitle'].map(
-    (item) => ({
-      title: t(`global.${item}`),
-      dataIndex: item,
-    }),
-  );
+  const columns = [
+    'title3',
+    'description',
+    'workshopTitle',
+    'lessonTitle',
+    'hasane',
+    'reviewerComment',
+  ].map((item) => ({
+    title: t(`global.${item}`),
+    dataIndex: item,
+  }));
 
   return (
     <div className="mb-[12px]">

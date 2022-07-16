@@ -18,7 +18,7 @@ import LoginLink from 'components/Common/LoginLink';
 import 'plyr-react/dist/plyr.css';
 import LessonTabs from './lessonTabs';
 import request from 'services/request';
-import { faNumber, fileSize } from 'utils/common.util';
+import { faNumber, fileSize, PLAYER_CONTROLS } from 'utils/common.util';
 import LoadingBox from 'components/Common/LoadingBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChapterAction } from 'store/course/course.action';
@@ -26,18 +26,7 @@ import Plyr from 'plyr-react';
 import styled from '@emotion/styled';
 import { UPDATE_USER } from 'store/account/account.constants';
 
-const controls = [
-  'play',
-  'progress',
-  'current-time',
-  'mute',
-  'volume',
-  'settings',
-  'download',
-  'fullscreen',
-];
-
-const SPlyr = styled.div`
+export const SPlyr = styled.div`
   .plyr-react {
     display: none;
   }
@@ -115,7 +104,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
               <Plyr
                 ref={(player) => (ref.current = player)} // eslint-disable-line
                 source={{ type, sources: [{ src: file }] }}
-                options={{ controls }}
+                options={{ controls: PLAYER_CONTROLS }}
               />
             </SPlyr>
 

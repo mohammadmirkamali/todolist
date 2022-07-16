@@ -132,3 +132,14 @@ export const generateOptions = (searchData: SearchDataType): SearchOptionType[] 
 export const ellipsisText = (text, length): string => {
   return text?.length > length ? `${text.slice(0, length)}...` : text;
 };
+
+export const PLAYER_CONTROLS = [
+  'play',
+  'progress',
+  'current-time',
+  'mute',
+  'volume',
+  'settings',
+  'download',
+  'fullscreen',
+];
