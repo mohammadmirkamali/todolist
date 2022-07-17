@@ -27,6 +27,9 @@ import styled from '@emotion/styled';
 import { UPDATE_USER } from 'store/account/account.constants';
 
 export const SPlyr = styled.div`
+  .plyr {
+    min-width: 150px;
+  }
   .plyr-react {
     display: none;
   }
@@ -169,7 +172,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
               </Link>
             ))}
 
-            {course.registered && (
+            {course?.registered && (
               <Checkbox
                 checked={seeStatus}
                 disabled={seeStatus}
