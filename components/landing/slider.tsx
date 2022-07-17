@@ -33,10 +33,14 @@ const Slider: React.FC<SliderType> = ({ courses, title }) => {
       <h2 className="font-bold text-[24px] md:text-[27px] my-[30px]">
         {t(`landing.${title}`)}
       </h2>
-      <div className="flex-wrap center w-[300px] min-h-[250px] md:w-[900px] xl:w-[1300px]">
+
+      <div className="flex-wrap center w-[300px] min-h-[250px] md:w-[768px] xl:w-[1300px]">
         <LoadingBox data={!!data?.length} error={error} reload={reloadData}>
           {data?.map((item) => (
-            <div key={item.id} className="scale-[.85] md:m-[-24px] xl:scale-100 xl:m-0">
+            <div
+              key={item.id}
+              className="scale-[.85] md:scale-[.8] md:m-[-32px] xl:scale-100 xl:m-0"
+            >
               <Card data={item} webinar={title === 'event'} />
             </div>
           ))}

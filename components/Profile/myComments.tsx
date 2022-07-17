@@ -1,5 +1,6 @@
-import { Spin, Table } from 'antd';
+import { Skeleton, Spin, Table } from 'antd';
 import { SModal } from 'components/Account/style';
+import AntButton from 'components/Common/AntButton';
 import { t } from 'i18next';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -9,21 +10,31 @@ import { CourseRoute, MyCommentsUrl, WebinarRoute } from 'services/routes';
 const MyComments: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [data, setData] = useState(null);
+  const [list, setList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageLoading, setPageLoading] = useState(false);
 
   const handleClick = async (): Promise<boolean> => {
     setLoading(true);
-    const res = await request.get(MyCommentsUrl());
+    const res: any = await request.get(MyCommentsUrl()); // eslint-disable-line
     setLoading(false);
     if (res.ok) {
       setShowModal(true);
-      setData(res.data);
+      setList(res.data.data);
       return true;
     }
     return null;
   };
 
-  const dataSource = data?.data.map((item) => ({
+  const handleLoadMore = async (): Promise<void> => {
+    setPageLoading(true);
+    const res: any = await request.get(MyCommentsUrl(page + 1)); // eslint-disable-line
+    setPageLoading(false);
+    setPage(page + 1);
+    res.ok && setList([...list, ...res.data.data]);
+  };
+
+  const dataSource = list.map((item) => ({
     department: (
       <Link
         href={
@@ -36,11 +47,10 @@ const MyComments: React.FC = () => {
       </Link>
     ),
     title3: item.text,
-    status: item.status,
     answer: item.answer?.text,
   }));
 
-  const columns = ['title3', 'department', 'status', 'answer'].map((item) => ({
+  const columns = ['title3', 'department', 'answer'].map((item) => ({
     title: t(`global.${item}`),
     dataIndex: item,
   }));
@@ -66,6 +76,18 @@ const MyComments: React.FC = () => {
           <div className="flex flex-col  p-[16px] text-[16px]]">
             <Table dataSource={dataSource} columns={columns} pagination={false} />
           </div>
+
+          {list.length === 20 * page && (
+            <div className="w-full px-[30px] text-center my-[30px]">
+              {pageLoading ? (
+                <Skeleton active />
+              ) : (
+                <AntButton width="200px" onClick={handleLoadMore}>
+                  {t('course.loadMore')}
+                </AntButton>
+              )}
+            </div>
+          )}
         </div>
       </SModal>
     </div>

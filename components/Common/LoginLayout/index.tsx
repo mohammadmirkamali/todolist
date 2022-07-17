@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import request from 'services/request';
 import { walletPayUrl } from 'services/routes';
+import { getUserAction } from 'store/account/account.action';
 import { getChapterAction, getEventAction } from 'store/course/course.action';
 import { CourseType, TermSettingType, TermType, WebinarType } from 'types/course.type';
 
@@ -43,6 +44,7 @@ const LoginLayout: React.FC<LayoutType> = (props) => {
       if (res.ok) {
         message.success(res.data.message);
         dispatch(eventId ? getEventAction(eventId) : getChapterAction(data.id, !!user));
+        dispatch(getUserAction()); // we need to get new user with this new course on it's workshop
         url && router.push(url);
         handleNext && handleNext();
       }

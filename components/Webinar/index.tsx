@@ -95,9 +95,9 @@ const Webinar: React.FC = () => {
 
                 {!(data?.link && data?.registered) && (
                   <LoginLayout data={data} setLoading={setLoading}>
-                    <AntButton className="w-full mt-[20px]" loading={loading}>
+                    <AntButton className="w-full mt-[20px] toLeft" loading={loading}>
                       {t('webinar.register')}
-                      <span className="mr-[30px]">
+                      <span className="mr-[30px] ">
                         {Number(data?.price) !== 0
                           ? faNumber(Number(data?.price) / 1000) + t('global.tooman')
                           : t('global.free')}

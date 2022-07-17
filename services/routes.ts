@@ -34,9 +34,9 @@ export const ChangeUserImgUrl = (): string => `/change-user-avatar`;
 export const UpdateUserInfoUrl = (): string => `/update-user-info`;
 export const PayResultUrl = (): string => `/DirectPay/result`;
 export const MyTransactionsUrl = (): string => `/my_transactions`;
-export const MyCommentsUrl = (): string => `/my_comments`;
-export const MyTrainingUrl = (): string => `/my_trainings`;
-export const MyQuestionsUrl = (): string => `/my_questions`;
+export const MyCommentsUrl = (id?): string => `/my_comments?page=${id || 1}`;
+export const MyTrainingUrl = (id?): string => `/my_trainings?page=${id || 1}`;
+export const MyQuestionsUrl = (id?): string => `/my_questions?page=${id || 1}`;
 
 // ///////////////////////////////////////////////////////////////
 

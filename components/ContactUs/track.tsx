@@ -27,7 +27,7 @@ const Track: React.FC = () => {
       <AppForm
         initialValues={{ value: '' }}
         validationSchema={validationSchema}
-        onSubmit={(values): void => {
+        onSubmit={(): void => {
           // console.log(values, 22);
           // dispatch(postCheckPhoneAction('phone=09356942668'));
         }}

@@ -8,7 +8,7 @@ import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeTermHourAction, getTermAction } from 'store/course/course.action';
 import { TermType } from 'types/course.type';
-import { faNumber } from 'utils/common.util';
+import { convertToJalaliDate, faNumber } from 'utils/common.util';
 
 const { Option } = Select;
 const ABRAR_HOURS = [8, 9, 10, 11, 12];
@@ -62,7 +62,7 @@ const Information: React.FC<InfoType> = (props) => {
   };
 
   return (
-    <div className="w-screen mb-[20px] flex p-[30px] flex-col rounded-[8px] xl:rounded mt-[40px] xl:mt-0 xl:mb-0 h-[600px] md:w-[700px] xl:pb-[23rem] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
+    <div className="w-screen mb-[20px] flex p-[30px] flex-col xl:overflow-auto rounded-[8px] xl:rounded mt-[40px] xl:mt-0 xl:mb-0 md:w-[700px] relative xl:fixed right-0 bg-white xl:w-[350px] xl:h-[calc(100%-70px)]">
       <LoadingBox data={!!data} error={error} reload={reloadData}>
         <h2 className="mx-[30px] text-[20px] mb-[30px] self-center text-right font-bold">
           {data?.title}
@@ -100,11 +100,11 @@ const Information: React.FC<InfoType> = (props) => {
         </div>
         <div className="flex text-[16px] mb-[12px]">
           <div className="ml-[8px]">{t('term.start')} : </div>
-          <div>{faNumber(data?.start.split(' ')[0])}</div>
+          <div>{faNumber(convertToJalaliDate(data?.start))}</div>
         </div>
         <div className="flex text-[16px] mb-[30px]">
           <div className="ml-[8px]">{t('term.end')} : </div>
-          <div>{faNumber(data?.end.split(' ')[0])}</div>
+          <div>{faNumber(convertToJalaliDate(data?.end))}</div>
         </div>
 
         {data?.registered && (
@@ -150,13 +150,13 @@ const Information: React.FC<InfoType> = (props) => {
         >
           {data?.registered && t('global.save')}
         </AntButton>
-        <LoginLayout
-          data={{ ...data, price: data?.settings?.[type]?.price || 0 }}
-          setLoading={setLoading}
-          termData={data?.settings[type]}
-        >
-          <AntButton className="w-full md:w-[290px] mt-[20px]" loading={loading}>
-            {!data?.registered && (
+        {!data?.registered && (
+          <LoginLayout
+            data={{ ...data, price: data?.settings?.[type]?.price || 0 }}
+            setLoading={setLoading}
+            termData={data?.settings[type]}
+          >
+            <AntButton className="w-full md:w-[290px] mt-[20px]" loading={loading}>
               <>
                 {t('global.register')} ({data?.settings?.[type]?.name})
                 <span className="mr-[30px]">
@@ -166,9 +166,9 @@ const Information: React.FC<InfoType> = (props) => {
                     : t('global.free')}
                 </span>
               </>
-            )}
-          </AntButton>
-        </LoginLayout>
+            </AntButton>
+          </LoginLayout>
+        )}
       </LoadingBox>
     </div>
   );

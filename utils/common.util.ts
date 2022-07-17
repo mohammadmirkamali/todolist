@@ -1,3 +1,4 @@
+import moment from 'moment-jalaali';
 import { t } from 'i18next';
 import { SearchDataType, SearchOptionType } from 'types/course.type';
 import userImage from 'public/user.svg';
@@ -143,3 +144,19 @@ export const PLAYER_CONTROLS = [
   'download',
   'fullscreen',
 ];
+
+// convert Gregorian date to jalaali
+export const convertToJalaliDate = (date: string | Date): string => {
+  return (
+    (date && moment(date, 'YYYY-MM-DD').locale('en').format('jYYYY/jMM/jDD').trim()) ||
+    null
+  );
+};
+
+// convert jalaali date to Gregorian
+export const convertJalaliToGregorian = (date: string): string => {
+  return (
+    (date && moment(date, 'jYYYY/jjM/jjD').locale('en').format('YYYY-MM-DD').trim()) ||
+    null
+  );
+};

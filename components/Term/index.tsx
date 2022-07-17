@@ -34,7 +34,7 @@ const Term: React.FC = () => {
           <TermInfo />
         )
       ) : (
-        <Skeleton active className="p-[50px] pr-[400px]" />
+        <Skeleton active className="py-[50px] xl:pr-[400px]" />
       )}
     </div>
   );

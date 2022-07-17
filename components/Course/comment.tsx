@@ -12,7 +12,7 @@ import {
 } from 'services/routes';
 import request from 'services/request';
 import { message, Skeleton } from 'antd';
-import { faNumber } from 'utils/common.util';
+import { convertToJalaliDate, faNumber } from 'utils/common.util';
 
 type CommentType = {
   data: CommentsType[] | QuestionsType[];
@@ -73,14 +73,26 @@ const UserComment: React.FC<CommentType> = (props) => {
             date={faNumber(item?.date?.split(' ')[0])}
             key={item[text]}
           >
-            {item.answer && (
+            {comment && item.answer && (
               <AntComment
-                text={item.answer[text]}
+                text={item.answer.text}
                 avatar={item.answer.avatar}
-                name={item.answer[name]}
+                name={item.answer.nickname}
                 date={faNumber(item?.date?.split(' ')[0])}
               />
             )}
+            {!comment &&
+              item.answers &&
+              item.answers.map((key) => (
+                <AntComment
+                  key={key.id}
+                  text={key.content || key.voice}
+                  voice={!!key.voice}
+                  avatar={key.avatar}
+                  name={key.nickname}
+                  date={faNumber(convertToJalaliDate(key?.answer_time))}
+                />
+              ))}
           </AntComment>
         ))}
         {allData.length === 20 * page && (
