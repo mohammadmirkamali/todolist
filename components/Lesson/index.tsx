@@ -169,17 +169,19 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
               </Link>
             ))}
 
-            <Checkbox
-              checked={seeStatus}
-              disabled={seeStatus}
-              className="text-gray-3 hover:text-black duration-300"
-              onClick={handleSeen}
-            >
-              <div className="mb-5 text-gray-3 hover:text-black">
-                {t('course.isSeen')}
-                <Spin spinning={seeLoading} />
-              </div>
-            </Checkbox>
+            {course.registered && (
+              <Checkbox
+                checked={seeStatus}
+                disabled={seeStatus}
+                className="text-gray-3 hover:text-black duration-300"
+                onClick={handleSeen}
+              >
+                <div className="mb-5 text-gray-3 hover:text-black">
+                  {t('course.isSeen')}
+                  <Spin spinning={seeLoading} />
+                </div>
+              </Checkbox>
+            )}
           </div>
         </LoadingBox>
       </div>

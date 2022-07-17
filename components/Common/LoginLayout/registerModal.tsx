@@ -15,6 +15,7 @@ import {
 } from 'store/course/course.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { getUserAction } from 'store/account/account.action';
 
 type ModalType = {
   isVisible: boolean;
@@ -74,6 +75,7 @@ const RegisterModal: React.FC<ModalType> = (props) => {
             ? getEventAction(eventId)
             : getChapterAction(data.id, !!user),
         ),
+        dispatch(getUserAction()), // we need to get new user with this new course on it's workshop
         setIsVisible(false));
     }
   };

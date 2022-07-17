@@ -92,7 +92,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
       </div>
 
       {/* information */}
-      <div className="w-full border-b border-b-gray-1 md:w-[600px] xl:fixed left-0 top-[70px]  xl:w-[350px] xl:h-[calc(100%-70px)] bg-white z-10">
+      <div className="w-full border-b border-b-gray-1 md:w-[600px] xl:overflow-auto xl:fixed left-0 top-[70px]  xl:w-[350px] xl:h-[calc(100%-70px)] bg-white z-10">
         <div className="h-[55px] center w-full border-b-gray-1 border-b font-bold text-[18px]">
           {t('course.info')}
         </div>

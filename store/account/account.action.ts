@@ -38,9 +38,17 @@ export const getUserAction = () => {
   return async (dispatch): Promise<unknown> => {
     dispatch({ type: type.GET_USER_REQUEST });
     // await request.get(CookieRoute());
-    const response = await request.get(UserUrl());
+    const response: any = await request.get(UserUrl()); // eslint-disable-line
     if (response.ok) {
-      dispatch({ type: type.GET_USER_SUCCESS, payload: response.data });
+      const user = {
+        ...response.data,
+        workshops: response.data.workshops.map((item) => ({
+          ...item, // to not get error when user choose isSeen for first time
+          passed_lessons: item.passed_lessons || [], // eslint-disable-line
+        })),
+      };
+
+      dispatch({ type: type.GET_USER_SUCCESS, payload: user });
       return true;
     }
     dispatch({ type: type.GET_USER_ERROR });

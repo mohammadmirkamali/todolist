@@ -26,10 +26,13 @@ const Terms: React.FC = () => {
       <h2 className="font-bold text-[24px] md:text-[27px] my-[30px]">
         {t(`global.terms`)}
       </h2>
-      <div className="flex-wrap center w-[320px] min-h-[250px] md:w-[900px] xl:w-[1300px]">
+      <div className="flex-wrap center w-[320px] min-h-[250px] md:w-[768px] xl:w-[1300px]">
         <LoadingBox data={!!terms} error={error} reload={reloadData}>
           {terms?.map((item) => (
-            <div className="scale-[.85] md:m-[-24px] xl:scale-100 xl:m-0" key={item.id}>
+            <div
+              className="scale-[.85] md:scale-[.8] md:m-[-32px] xl:scale-100 xl:m-0"
+              key={item.id}
+            >
               <Link href={TermRoute(item.id, item.title)}>
                 <a>
                   <SContainer className="w-[300px] h-[310px] bg-white border border-gray-5 cursor-pointer relative rounded-[6px] m-[10px]">

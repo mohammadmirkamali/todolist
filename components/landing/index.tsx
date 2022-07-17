@@ -24,8 +24,8 @@ const Landing: React.FC = () => {
       <Slider courses={home?.recent_workshops} title="newCourses" />
       <Info />
       <Terms />
-      <Slider courses={home?.favorite_workshops} title="popularCourses" />
-      <Slider courses={home?.events} title="event" />
+      {/* <Slider courses={home?.favorite_workshops} title="popularCourses" /> */}
+      {/* <Slider courses={home?.events} title="event" /> */}
       <Teachers />
       {/* <AskUs /> */}
       <Footer />

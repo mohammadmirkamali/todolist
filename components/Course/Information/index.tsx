@@ -23,7 +23,9 @@ const Information: React.FC<InfoType> = ({ course }) => {
   const [rateLoading, setRateLoading] = useState(false);
   const categories = course.categories.map((item) => item.title.replace(/ /g, '_'));
   const allLessons = course.chapters.reduce((a, b) => a + b.lessons.length, 0);
-  const passedLessons = course.passed_lessons?.length || 0;
+  const passedLessons =
+    user?.workshops?.find((item) => item.id === Number(course.id))?.passed_lessons
+      ?.length || 0;
 
   const handleRate = async (value): Promise<void> => {
     setRateLoading(true);

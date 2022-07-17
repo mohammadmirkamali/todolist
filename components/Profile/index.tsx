@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { EditOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  EditOutlined,
+  InfoCircleOutlined,
+  LoadingOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import { Select, Spin } from 'antd';
+import { Select, Spin, Tooltip } from 'antd';
 import { t } from 'i18next';
 import AntTooltip from 'components/Common/AntTooltip';
 import { SearchDataType, WebinarsType } from 'types/course.type';
@@ -126,8 +131,22 @@ const Profile: React.FC<ProfileType> = ({ searchData }) => {
                   <p>{faNumber(user?.workshops.length + user?.events.length)} </p>
                 </div>
                 <div className="flex justify-between">
-                  <p className="text-[16px]">{t('global.hasanat')}</p>
-                  <p>{faNumber(user?.real_rate)} </p>
+                  <div className="text-[16px]">
+                    {t('global.hasanat')}{' '}
+                    <span className="text-blue-0 text-[18px] mr-[4px] cursor-pointer">
+                      <Tooltip
+                        title={t('account.catchHasane')
+                          .split('\n')
+                          .map((key) => (
+                            <div key={key}>{key}</div>
+                          ))}
+                        color="geekblue"
+                      >
+                        <InfoCircleOutlined />
+                      </Tooltip>
+                    </span>
+                  </div>
+                  <p>{faNumber(user?.real_rate)} </p>{' '}
                 </div>
 
                 <div className="flex justify-between">
