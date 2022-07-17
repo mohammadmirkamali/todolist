@@ -60,6 +60,7 @@ module.exports = {
     'no-unused-expressions': 'off',
     'no-nested-ternary': 'off',
     'react/jsx-key': 'warn',
+    'import/no-cycle': 'off',
     // Recommend not to leave any console.log in your code
     // Use console.error, console.warn and console.info instead
     // https://eslint.org/docs/rules/no-console
