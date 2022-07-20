@@ -13,10 +13,12 @@ import Link from 'next/link';
 import LoadingBox from 'components/Common/LoadingBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExamInfoAction } from 'store/course/course.action';
+import useWindowSize from 'hooks/useWidowsSize';
 
-const SGroup = styled(Radio.Group)<{ length: number }>`
+const SGroup = styled(Radio.Group)<{ length: number; isMobile: boolean }>`
   display: flex;
-  flex-direction: ${({ length }): string => (length > 80 ? 'column' : 'row')};
+  flex-direction: ${({ length, isMobile }): string =>
+    length > 80 || isMobile ? 'column' : 'row'};
 `;
 
 type QuestionType = {
@@ -31,6 +33,7 @@ const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) =>
   const { examId } = router.query;
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [size] = useWindowSize();
   const [result, setResult] = useState(null);
   const [length, setLength] = useState(null);
   const emptyQuestion = answers.filter((item) => item === null).length;
@@ -100,6 +103,7 @@ const ExamQuestions: React.FC<QuestionType> = ({ data, info, error, reload }) =>
                   onChange={(e): void => handleSelect(e, index)}
                   length={optionsLength(item)}
                   value={answers[index]}
+                  isMobile={size < 768}
                 >
                   {item.options.map((key) => (
                     <Radio key={key.id} value={key.id} disabled={!timer || result}>

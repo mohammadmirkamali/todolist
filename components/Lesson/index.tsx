@@ -91,6 +91,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
   const reloadData = (): void => {
     dispatch(getChapterAction(courseId, !!user));
   };
+
   return (
     <div className="duration-300 bg-gray-0 min-h-[calc(100vh-70px)] flex-col flex items-center justify-items-start">
       <div className="xl:pr-[370px] w-screen mt-[20px] md:mt-0 md:w-[700px] py-[20px] xl:pl-[20px]  xl:justify-self-start xl:w-full">
@@ -151,7 +152,7 @@ const Lesson: React.FC<LessonPageType> = ({ course, lesson }) => {
           </div>
 
           <div className="absolute p-[20px] flex-col md:flex-wrap flex text-[15px] bg-white bottom-[480px] md:bottom-[490px] rounded-[8px]  w-full xl:bottom-0 h-[170px] md:h-[150px]">
-            {!data || lesson?.exam === false ? null : data?.exam?.passed ? (
+            {!data || !data?.exam ? null : data?.exam?.passed ? (
               <div className="mb-[14px] rounded-[4px] items-center flex text-green-5">
                 {t('course.passedExam', { grade: faNumber(data?.exam?.grade) })}
               </div>

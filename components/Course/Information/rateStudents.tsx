@@ -26,7 +26,7 @@ const RateStudents: React.FC<{ data: TopRateType[]; top?: boolean }> = ({
           )}
 
           <div className="toRight">
-            <AntTooltip name={item.nickname || ''} length={12}>
+            <AntTooltip name={item.nickname || ''} length={9}>
               {item.nickname}
             </AntTooltip>
 
