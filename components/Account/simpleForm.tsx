@@ -17,7 +17,7 @@ import {
 } from 'services/routes';
 import { SSubmitForm } from './style';
 import { ArrowRightOutlined } from '@ant-design/icons';
-import { faNumber } from 'utils/common.util';
+import { engNumber, faNumber } from 'utils/common.util';
 import { Spin } from 'antd';
 
 type FormType = {
@@ -56,7 +56,7 @@ const SimpleForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
   switch (step) {
     case 'enterNumber':
       data = ['signIn', 'signInInfo', CheckAuthPhoneUrl(), 'number', 'number'];
-      body = (value): object => ({ phone: `0${value}` });
+      body = (value): object => ({ phone: `0${engNumber(value)}` });
       yup = Yup.number()
         .required(t('account.emptyField'))
         .min(11, t('account.wrongNumber'));

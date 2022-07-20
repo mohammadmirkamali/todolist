@@ -33,7 +33,7 @@ const Course: React.FC<{ course: CourseType }> = ({ course }) => {
   useEffect(() => {
     const rawTabs = ['comments', 'lessons'];
     !!course?.ask_teacher && rawTabs.unshift('questions');
-    course?.attaches.length && rawTabs.unshift('attaches');
+    course?.attaches.length && course.registered && rawTabs.unshift('attaches');
     setTabs(rawTabs);
   }, [course]);
 

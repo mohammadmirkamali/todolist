@@ -1,5 +1,5 @@
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Popconfirm, Tooltip } from 'antd';
+import { Avatar, Tooltip } from 'antd';
 import { t } from 'i18next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -48,19 +48,14 @@ const Profile: React.FC<{ setIsModalVisible: (value) => void }> = ({
         </div>
       </Tooltip> */}
       <SExit title={t('global.exit')} placement="bottom">
-        <Popconfirm
-          placement="rightTop"
-          title={t('global.areYouSure')}
-          onConfirm={async (): Promise<void> => {
+        <LogoutOutlined
+          className="text-[20px] pr-[20px] cursor-pointer "
+          onClick={async (): Promise<void> => {
             await router.push(HomeRoute()); // to not get error on logout on profile page
             dispatch({ type: CLEAR_STORE });
             dispatch(logoutAction());
           }}
-          okText={t('global.yes')}
-          cancelText={t('global.no')}
-        >
-          <LogoutOutlined className="text-[20px] pr-[20px] cursor-pointer " />
-        </Popconfirm>
+        />
       </SExit>
     </div>
   );

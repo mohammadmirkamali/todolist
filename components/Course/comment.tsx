@@ -76,7 +76,6 @@ const UserComment: React.FC<CommentType> = (props) => {
             {comment && item.answer && (
               <AntComment
                 text={item.answer.text}
-                avatar={item.answer.avatar}
                 name={item.answer.nickname}
                 date={faNumber(item?.date?.split(' ')[0])}
               />
@@ -88,7 +87,6 @@ const UserComment: React.FC<CommentType> = (props) => {
                   key={key.id}
                   text={key.content || key.voice}
                   voice={!!key.voice}
-                  avatar={key.avatar}
                   name={key.nickname}
                   date={faNumber(convertToJalaliDate(key?.answer_time))}
                 />

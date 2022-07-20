@@ -68,6 +68,12 @@ const Information: React.FC<InfoType> = ({ course }) => {
         <div className="px-[15px] toRight">{faNumber(course.lessons_count)}</div>
         <div>{t('global.course')}</div>
       </div>
+      <div className="py-[7px] text-[16px] flex items-center pr-[6px]">
+        <div>{t('course.courseProgress')}: </div>
+        <div className="px-[15px] toRight">
+          {faNumber(course?.progress_percent || 100)}%
+        </div>
+      </div>
 
       {course.registered && (
         <div className="py-[7px] text-[16px] items-center pr-[6px]">

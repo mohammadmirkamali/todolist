@@ -44,6 +44,7 @@ const Papers: React.FC<{ data: LessonNotesType }> = ({ data }) => {
               setLoading(false);
               res.ok && message.success(res.data.message);
               res.ok && resetForm();
+              res.ok && setFileList([]);
             }}
           >
             <div className="flex flex-col md:flex-row">
@@ -72,7 +73,10 @@ const Papers: React.FC<{ data: LessonNotesType }> = ({ data }) => {
                 />
 
                 <div className="w-full my-[16px]">
-                  <Upload onChange={(item): void => setFileList(item.fileList)}>
+                  <Upload
+                    onChange={(item): void => setFileList(item.fileList)}
+                    fileList={fileList}
+                  >
                     <AntButton fontSize={16}>
                       {t('course.uploadFile')}{' '}
                       <span className="ml-[6px]">
