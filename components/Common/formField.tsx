@@ -72,8 +72,12 @@ const SField = styled(Field)`
   color: ${({ theme }): string => theme.colors.red[0]};
 `;
 
-type RadioType = { items: { title: string; value: string }[]; name: string };
-export const RadioForm: React.FC<RadioType> = ({ items, name }) => {
+type RadioType = {
+  items: { title: string; value: string }[];
+  name: string;
+  onClick?: (item) => void;
+};
+export const RadioForm: React.FC<RadioType> = ({ items, name, onClick }) => {
   const { errors, touched, values } = useFormikContext();
   const hasError = touched[name] && errors[name];
   return (
@@ -86,6 +90,7 @@ export const RadioForm: React.FC<RadioType> = ({ items, name }) => {
           >
             <SField
               type="radio"
+              onClick={(): void => onClick && onClick(item.value)}
               name={name}
               value={item.value}
               checked={item.value === values[name]}

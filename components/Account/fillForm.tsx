@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { t } from 'i18next';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { Radio, Select } from 'antd';
+import { Select } from 'antd';
 import { SSubmitForm } from './style';
 import AppForm from 'components/Common/appForm';
 import FormField, { RadioForm } from 'components/Common/formField';
@@ -52,7 +52,7 @@ const FillForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
           password: '',
           confirm: '',
           sex: '',
-          education: '',
+          formEducation: '',
         }}
         validationSchema={validationSchema}
         onSubmit={async (props): Promise<void> => {
@@ -101,7 +101,7 @@ const FillForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
         )}
 
         <div className="w-full mt-[15px]">
-          {loginData.sex && (
+          {!loginData.sex && (
             <div className="flex-1">
               <p className="m-0 w-full mr-[5px]">{t('global.sex')}</p>
               <RadioForm
@@ -113,17 +113,19 @@ const FillForm: React.FC<FormType> = ({ loginData, setIsVisible }) => {
               />
             </div>
           )}
-          {loginData.daneshAmooz && loginData.daneshjoo && loginData.talabe && (
+          {!loginData.daneshAmooz && !loginData.daneshjoo && !loginData.talabe && (
             <div className="mt-[15px] flex">
               <div>
                 <p className="m-0 w-full mr-[5px]">{t('global.education')}</p>
-                <Radio.Group
-                  onChange={(e): void => (setEducation(e.target.value), setLevel(1))}
-                >
-                  <Radio value="daneshAmooz">{t('global.daneshAmooz')}</Radio>
-                  <Radio value="daneshjoo">{t('global.daneshjoo')}</Radio>
-                  <Radio value="talabe">{t('global.talabe')}</Radio>
-                </Radio.Group>
+                <RadioForm
+                  onClick={(item): void => (setEducation(item), setLevel(1))}
+                  items={[
+                    { title: t('global.daneshAmooz'), value: 'daneshAmooz' },
+                    { title: t('global.daneshjoo'), value: 'daneshjoo' },
+                    { title: t('global.talabe'), value: 'talabe' },
+                  ]}
+                  name="formEducation"
+                />
               </div>
               {education && (
                 <div>

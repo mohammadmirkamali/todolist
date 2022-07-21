@@ -10,7 +10,6 @@ import { postLoginAction } from 'store/account/account.action';
 type ModalType = {
   isVisible: boolean;
   setIsVisible: (value) => void;
-  // nextAction?: { type: string; id: number[] };
 };
 const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
   const loginData = useSelector((state) => state.account.login);
@@ -36,11 +35,7 @@ const Login: React.FC<ModalType> = ({ isVisible, setIsVisible }) => {
       ) : loginData?.next === 'ForgetPassword_step2' ? (
         <EditPassword setIsVisible={setIsVisible} />
       ) : (
-        <SimpleForm
-          loginData={loginData}
-          // nextAction={nextAction}
-          setIsVisible={setIsVisible}
-        />
+        <SimpleForm loginData={loginData} setIsVisible={setIsVisible} />
       )}
     </SModal>
   );
