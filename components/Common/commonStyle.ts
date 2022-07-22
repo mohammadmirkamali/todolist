@@ -11,7 +11,11 @@ export type ComposeType = ss.SpaceProps &
   ss.PositionProps &
   ss.FlexBoxProps &
   ss.ShadowProps &
-  ss.TypographyProps;
+  ss.TypographyProps & {
+    direction?: string;
+    cursor?: string;
+    centered?: boolean;
+  };
 
 export const Compose = ss.compose(
   ss.space,
@@ -30,21 +34,26 @@ export const CommonStyle = (
   component,
   style = '',
 ): StyledComponent<ComposeType> => styled(component)`
-  ${Compose}
-  ${ss.background}
-    ${ss.grid}
-    ${ss.color}
-    ${ss.layout}
-    ${ss.border}
-    ${ss.position}
-    ${ss.shadow}
-    ${ss.flexbox}
-    ${ss.typography}
-    ${style}
-    display:${({ isCenter }): string => isCenter && 'flex'};
-  justify-content: ${({ isCenter }): string => isCenter && 'center'};
-  align-items: ${({ isCenter }): string => isCenter && 'center'};
+  ${Compose};
+  ${ss.background};
+  ${ss.grid};
+  ${ss.color};
+  ${ss.layout};
+  ${ss.border};
+  ${ss.position};
+  ${ss.shadow};
+  ${ss.flexbox};
+  ${ss.typography};
+  ${style};
+  direction: ${({ direction }): string => direction};
+  cursor: ${({ cursor }): string => cursor};
+  display: ${({ centered }): string => centered && 'flex'};
+  justify-content: ${({ centered }): string => centered && 'center'};
+  align-items: ${({ centered }): string => centered && 'center'};
 `;
 
 export const StyledDiv = CommonStyle('div');
+export const StyledInput = CommonStyle('input');
+export const StyledTextArea = CommonStyle('textarea');
+export const StyledLabel = CommonStyle('label');
 export const StyledButton = CommonStyle(Button);

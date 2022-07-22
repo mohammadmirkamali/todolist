@@ -1,26 +1,17 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { GetServerSideProps } from 'next';
-import { t } from 'i18next';
 
-const Navbar = dynamic(() => import('components/Navbar'));
-const Landing = dynamic(() => import('components/landing'));
 const Head = dynamic(() => import('next/head'));
+const ToDo = dynamic(() => import('components/ToDo'));
 
-const Home: React.FC = () => (
+const HomePage: React.FC = () => (
   <>
     <Head>
-      <title>{t('global.homeHead')}</title>
-      <meta name="description" content={t('global.ceoDescription')} />
+      <title>TODO APP</title>
     </Head>
 
-    <Navbar />
-    <Landing />
+    <ToDo />
   </>
 );
 
-export default Home;
-
-export const getServerSideProps: GetServerSideProps = async () => ({
-  props: { data: null },
-});
+export default HomePage;

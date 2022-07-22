@@ -1,11 +1,7 @@
 import { combineReducers } from 'redux';
-import account from './account/account.reducer';
-import course from './course/course.reducer';
+import tasks from './tasks/tasks.reducer';
 
-const appReducer = combineReducers({
-  account,
-  course,
-});
+const appReducer = combineReducers({ tasks });
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const rootReducer = (state, action) => {

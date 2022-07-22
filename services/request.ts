@@ -1,6 +1,4 @@
-import { message } from 'antd';
 import { ApisauceInstance, create } from 'apisauce';
-import { t } from 'i18next';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'https://api.taalei-edu.com';
@@ -12,7 +10,7 @@ const request = ((): ApisauceInstance => {
     'Accept-Language': 'fa',
   };
 
-  return create({ baseURL, headers, withCredentials: true });
+  return create({ baseURL, headers });
 })();
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,39 +28,6 @@ request.axiosInstance.interceptors.response.use(
     return error;
   },
 );
-
-// for show notification on errors.
-export const requestMonitor = (response): void => {
-  const originalMessage = response?.originalError?.response?.data?.message;
-  const showErrorMessage = response?.config?.params?.showErrorMessage !== false;
-
-  const dict = {
-    CLIENT_ERROR: 'خطا در عملیات',
-    SERVER_ERROR: 'خطای سرور',
-    TIMEOUT_ERROR: 'خطای سرور',
-    CONNECTION_ERROR: 'خطای سرور',
-    NETWORK_ERROR: 'خطای سرور',
-    CANCEL_ERROR: 'لغو عملیات',
-    UNKNOWN_ERROR: 'خطای ناشناخته',
-  };
-
-  const messages = (originalMessage &&
-    (typeof originalMessage === 'string'
-      ? [originalMessage]
-      : Object.keys(originalMessage).map((item) => originalMessage[item][0]))) || [
-    dict[response.problem],
-  ];
-
-  if (response.config.url.includes('user')) return;
-  if (response.config.url.includes('DirectPay/result') && !response.ok) {
-    message.warn(t('global.failedPay'));
-    return;
-  }
-
-  if (!response.ok) {
-    showErrorMessage && messages.forEach((key) => message.warn(key));
-  }
-};
 
 export default request;
 export { baseURL, isDevelopment };
