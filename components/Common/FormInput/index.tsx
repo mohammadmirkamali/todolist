@@ -3,7 +3,8 @@ import { StyledDiv, StyledInput, StyledTextArea } from 'components/Common/common
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const FormInput: React.FC<any> = (props) => {
-  const { label, placeholder, register, required, errors, textArea } = props;
+  const { label, placeholder, register, required, errors, textArea, defaultValue } =
+    props;
   return (
     <StyledDiv my="8px">
       {textArea ? (
@@ -12,6 +13,7 @@ const FormInput: React.FC<any> = (props) => {
           minHeight="120px"
           fontSize={18}
           mb="-6px"
+          defaultValue={defaultValue}
           border={errors?.[label] ? 1 : 0}
           placeholder={placeholder}
           {...register(label, { required })}
@@ -20,6 +22,7 @@ const FormInput: React.FC<any> = (props) => {
         <StyledInput
           width="100%"
           fontSize={18}
+          defaultValue={defaultValue}
           border={errors?.[label] ? 1 : 0}
           placeholder={placeholder}
           {...register(label, { required })}

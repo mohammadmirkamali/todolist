@@ -56,4 +56,6 @@ export const StyledDiv = CommonStyle('div');
 export const StyledInput = CommonStyle('input');
 export const StyledTextArea = CommonStyle('textarea');
 export const StyledLabel = CommonStyle('label');
+export const StyledH1 = CommonStyle('h1');
+export const StyledH2 = CommonStyle('h2');
 export const StyledButton = CommonStyle(Button);

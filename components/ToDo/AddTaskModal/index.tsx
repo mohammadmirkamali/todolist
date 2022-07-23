@@ -1,33 +1,43 @@
-import { Modal } from 'antd';
+import { Modal, Radio } from 'antd';
 import { StyledDiv } from 'components/Common/commonStyle';
 import FormInput from 'components/Common/FormInput';
-import FormRadio from 'components/Common/FormRadio';
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { ReactElement, useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { ADD_TASK } from 'store/tasks/tasks.constants';
+import { v4 as uuidv4 } from 'uuid';
+import { ADD_TASK, EDIT_TASK } from 'store/tasks/tasks.constants';
+import { TaskType } from 'types/tasks.type';
 import { StyledSubmitButton } from './style';
 
 type AddModalType = {
-  setIsVisible: (status) => void;
-  isVisible: boolean;
+  setTask: (status) => void;
+  task: TaskType | boolean;
 };
 
-const AddTaskModal: React.FC<AddModalType> = ({ setIsVisible, isVisible }) => {
+const AddTaskModal: React.FC<AddModalType> = ({ setTask, task }) => {
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm();
   const onSubmit = (data): void => {
-    dispatch({ type: ADD_TASK, payload: data });
-    reset();
+    typeof task === 'boolean'
+      ? dispatch({ type: ADD_TASK, payload: { ...data, id: uuidv4() } })
+      : dispatch({ type: EDIT_TASK, payload: data });
+    setTask(false);
   };
 
+  useEffect(() => {
+    typeof task !== 'boolean'
+      ? reset(task)
+      : reset({ title: '', description: '', gif: '', priority: '' });
+  }, [task]);
+
   return (
-    <Modal visible={isVisible} footer={null} onCancel={(): void => setIsVisible(false)}>
+    <Modal visible={!!task} footer={null} onCancel={(): void => setTask(false)}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <StyledDiv p="30px" display="flex" flexDirection="column" direction="initial">
           <FormInput
@@ -52,19 +62,25 @@ const AddTaskModal: React.FC<AddModalType> = ({ setIsVisible, isVisible }) => {
             errors={errors}
           />
 
-          <div>
-            <FormRadio
-              items={[
-                { label: 'priority', value: 'low', title: 'Low' },
-                { label: 'priority', value: 'medium', title: 'Medium' },
-                { label: 'priority', value: 'high', title: 'High' },
-              ]}
-              register={register}
-              required
-            />
-          </div>
+          <Controller
+            render={({ field }): ReactElement => (
+              <Radio.Group aria-label="gender" {...field}>
+                <Radio value="Low">Low</Radio>
+                <Radio value="Medium">Medium</Radio>
+                <Radio value="HIGH">HIGH</Radio>
+              </Radio.Group>
+            )}
+            name="priority"
+            rules={{ required: true }}
+            control={control}
+          />
+          {errors?.priority && (
+            <StyledDiv color="rose80">This field is required</StyledDiv>
+          )}
 
-          <StyledSubmitButton htmlType="submit">Add To Tasks</StyledSubmitButton>
+          <StyledSubmitButton htmlType="submit">
+            {typeof task !== 'boolean' ? 'Edit Task' : 'Add To Tasks'}
+          </StyledSubmitButton>
         </StyledDiv>
       </form>
     </Modal>
