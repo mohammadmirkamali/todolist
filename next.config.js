@@ -13,7 +13,6 @@ if (typeof require !== 'undefined') {
 const nextConfig = {
   output: 'standalone',
   poweredByHeader: false,
-  images: { domains: ['dl.taalei-edu.ir', 'taalei-edu.ir'] },
   webpack: (config, { isServer, dev }) => {
     // Do whatever you want in build-time
     // ask Webpack to replace @sentry/node imports with @sentry/browser when building the browser's bundle.

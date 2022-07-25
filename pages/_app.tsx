@@ -3,7 +3,7 @@ import { ThemeProvider } from '@emotion/react';
 import type { AppProps } from 'next/app';
 import { ConfigProvider } from 'antd';
 import ReduxLayout from 'store/with-redux-store';
-import theme from 'services/theme';
+import theme from 'components/Common/theme';
 import 'public/css/antd-rtl.css';
 import 'public/css/public.css';
 import 'antd/dist/antd.css';
