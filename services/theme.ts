@@ -101,5 +101,7 @@ export default {
     // others
     other1: '#ff9900',
   },
-  shadows: {},
+  shadows: {
+    card: '0px 15px 30px rgba(15, 24, 66, 0.2)',
+  },
 };

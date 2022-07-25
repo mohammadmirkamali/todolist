@@ -12,7 +12,12 @@ type DoneTasksType = {
 const DoneTasksModal: React.FC<DoneTasksType> = ({ visible, setVisible }) => {
   const tasks = useSelector((state) => state.tasks.doneTasks);
   return (
-    <Modal visible={visible} footer={null} onCancel={(): void => setVisible(false)}>
+    <Modal
+      visible={visible}
+      footer={null}
+      width={700}
+      onCancel={(): void => setVisible(false)}
+    >
       <StyledDiv p="16px" minHeight="300px">
         <StyledH2 textAlign="center" mb="24px">
           Done Tasks

@@ -1,73 +1,23 @@
 import { PlusOutlined } from '@ant-design/icons';
-import styled from '@emotion/styled';
-import { Button } from 'antd';
 import { StyledDiv, StyledH1 } from 'components/Common/commonStyle';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import AddTaskModal from './AddTaskModal';
 import DoneTasksModal from './DoneTasksModal';
+import {
+  StyledAddTaskButton,
+  StyledContainer,
+  StyledDoneTaskButton,
+  StyledFirstTaskButton,
+} from './style';
 import TaskCard from './TaskCard';
-
-const StyledContainer = styled.div`
-  width: 700px;
-  height: 500px;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
-  position: relative;
-`;
-
-const StyledFirstTaskButton = styled(Button)`
-  border-radius: 6px;
-  direction: initial;
-  font-size: 1.8rem;
-  height: 50px;
-  margin-top: 100px;
-  background: ${({ theme }): string => theme.colors.other1};
-`;
-
-const StyledDoneTaskButton = styled(Button)`
-  border-radius: 6px;
-  direction: initial;
-  font-size: 1.4rem;
-  height: 30px;
-  position: absolute;
-  top: 40px;
-  left: 32px;
-  background: ${({ theme }): string => theme.colors.berry40};
-
-  :focus {
-    background: ${({ theme }): string => theme.colors.berry40};
-    color: #000;
-  }
-
-  :hover {
-    background: ${({ theme }): string => theme.colors.berry80};
-    color: #000;
-  }
-`;
-
-const StyledAddTaskButton = styled(Button)`
-  border-radius: 50%;
-  font-size: 2.4rem;
-  height: 50px;
-  width: 60px;
-  height: 60px;
-  background: ${({ theme }): string => theme.colors.rose90};
-  position: absolute;
-  bottom: 18px;
-  right: 18px;
-  :hover {
-    background: ${({ theme }): string => theme.colors.rose50};
-    color: #000;
-  }
-`;
+import TaskDetailsModal from './TaskDetailsModal';
 
 const ToDo: React.FC = () => {
   const [taskModal, setTaskModal] = useState(false); // boolean for add task, object for edit task
   const [isDoneTaskModalVisible, setIsDoneTaskModalVisible] = useState(false);
+  const [detailsModalTask, setDetailsModalTask] = useState(null);
+
   const taskList = useSelector((state) => state.tasks.taskList);
   const doneTasks = useSelector((state) => state.tasks.doneTasks);
 
@@ -77,35 +27,49 @@ const ToDo: React.FC = () => {
       <StyledContainer>
         <StyledH1 mb="12px">Hello World</StyledH1>
 
+        {/* startup button */}
         {isEmpty && (
           <StyledFirstTaskButton onClick={(): void => setTaskModal(true)}>
             Create Your First Task ;)
           </StyledFirstTaskButton>
         )}
 
-        <StyledDiv width="100%">
+        {/* list of tasks */}
+        <StyledDiv width="100%" p="0 24px 24px" overflowY="scroll">
           {taskList.map((task) => (
-            <TaskCard task={task} key={task.title} setTask={setTaskModal} />
+            <TaskCard
+              task={task}
+              key={task.id}
+              setTask={setTaskModal}
+              setDetailsModalTask={setDetailsModalTask}
+            />
           ))}
         </StyledDiv>
 
+        {/* add task button */}
         {!isEmpty && (
           <StyledAddTaskButton onClick={(): void => setTaskModal(true)}>
             <PlusOutlined />
           </StyledAddTaskButton>
         )}
 
+        {/* view done tasks button */}
         {!isEmpty && (
           <StyledDoneTaskButton onClick={(): void => setIsDoneTaskModalVisible(true)}>
             View Done Tasks
           </StyledDoneTaskButton>
         )}
 
+        <AddTaskModal task={taskModal} setTask={setTaskModal} />
         <DoneTasksModal
           setVisible={setIsDoneTaskModalVisible}
           visible={isDoneTaskModalVisible}
         />
-        <AddTaskModal task={taskModal} setTask={setTaskModal} />
+        <TaskDetailsModal
+          setDetailsModalTask={setDetailsModalTask}
+          task={detailsModalTask}
+          setTask={setTaskModal}
+        />
       </StyledContainer>
     </StyledDiv>
   );
