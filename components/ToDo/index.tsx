@@ -25,7 +25,7 @@ const ToDo: React.FC = () => {
   return (
     <StyledDiv centered minHeight="100vh" bg="blue20">
       <StyledContainer>
-        <StyledH1 mb="12px">Hello World</StyledH1>
+        <StyledH1 mb="11px">Hello World</StyledH1>
 
         {/* startup button */}
         {isEmpty && (
